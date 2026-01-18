@@ -7,6 +7,7 @@ import { BlendFunction } from 'postprocessing';
 import { Vector2 } from 'three';
 import { detectAutoTier, getStoredTier, type PerfTier } from '../lib/perfGate';
 import { getSceneSheet } from '../lib/theatre';
+import { useResolvedTheme } from '../lib/theme';
 import FluidDistortion from './postfx/FluidDistortion';
 
 const defaultTier: PerfTier = 'standard';
@@ -85,12 +86,15 @@ function GlassCluster({ samples, resolution, distortionScale }: GlassProps) {
 export default function HeroScene() {
 	const tier = usePerfTier();
 	const sheet = useMemo(() => getSceneSheet('Hero'), []);
+	const theme = useResolvedTheme();
 	const isHigh = tier === 'high';
 	const samples = isHigh ? 12 : 6;
 	const resolution = isHigh ? 1024 : 512;
 	const distortionScale = isHigh ? 0.4 : 0.2;
 	const bloomIntensity = isHigh ? 0.7 : 0.35;
 	const chromaOffset = useMemo(() => new Vector2(0.0014, 0.0011), []);
+	const background =
+		theme === 'bright' ? [244 / 255, 247 / 255, 251 / 255] : [0, 0, 0];
 	if (tier === 'off') return null;
 
 	return (
@@ -99,7 +103,7 @@ export default function HeroScene() {
 				dpr={tier === 'high' ? [1, 2] : [1, 1.5]}
 				camera={{ position: [0, 0, 4], fov: 48 }}
 			>
-				<color attach="background" args={[0, 0, 0]} />
+				<color attach="background" args={background} />
 				<ambientLight intensity={0.7} />
 				<pointLight position={[4, 3, 2]} intensity={1.5} />
 				<SheetProvider sheet={sheet}>

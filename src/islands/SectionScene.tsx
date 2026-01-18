@@ -4,6 +4,7 @@ import { Environment, Float, OrbitControls } from '@react-three/drei';
 import { SheetProvider, editable as e } from '@theatre/r3f';
 import { detectAutoTier, getStoredTier, type PerfTier } from '../lib/perfGate';
 import { getSceneSheet } from '../lib/theatre';
+import { useResolvedTheme } from '../lib/theme';
 
 type Variant = 'pipeline' | 'carousel' | 'calm';
 
@@ -87,6 +88,9 @@ const variantMap: Record<Variant, JSX.Element> = {
 export default function SectionScene({ variant = 'pipeline' }: { variant?: Variant }) {
 	const tier = usePerfTier();
 	const sheet = useMemo(() => getSceneSheet(`Section-${variant}`), [variant]);
+	const theme = useResolvedTheme();
+	const background =
+		theme === 'bright' ? [244 / 255, 247 / 255, 251 / 255] : [0, 0, 0];
 	if (tier === 'off') return null;
 
 	return (
@@ -95,6 +99,7 @@ export default function SectionScene({ variant = 'pipeline' }: { variant?: Varia
 				dpr={tier === 'high' ? [1, 2] : [1, 1.5]}
 				camera={{ position: [0, 0, 4], fov: 52 }}
 			>
+				<color attach="background" args={background} />
 				<ambientLight intensity={0.6} />
 				<pointLight position={[3, 2, 2]} intensity={1.2} />
 			<SheetProvider sheet={sheet}>
