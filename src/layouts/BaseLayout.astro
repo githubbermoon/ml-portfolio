@@ -1,0 +1,23 @@
+---
+const {
+	title = 'Clawd ML Portfolio',
+	description = 'ML portfolio with cinematic WebGL scenes and project demos.',
+	bodyClass,
+} = Astro.props;
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{title}</title>
+	</head>
+	<body class:list={[bodyClass]}>
+		<slot />
+	</body>
+</html>

@@ -1,0 +1,22 @@
+---
+const links = [
+	{ href: '#hero', label: 'Home' },
+	{ href: '#capabilities', label: 'Capabilities' },
+	{ href: '#work', label: 'Work' },
+	{ href: '#contact', label: 'Contact' },
+];
+---
+
+<nav class="sticky top-0 z-20 w-full border-b border-white/10 bg-ink/70 backdrop-blur">
+	<div class="section-shell flex items-center justify-between py-4">
+		<a href="#hero" class="font-display text-xl text-glass">Clawd</a>
+		<div class="hidden items-center gap-6 text-sm text-mist md:flex">
+			{links.map((link) => (
+				<a class="transition hover:text-glass" href={link.href}>{link.label}</a>
+			))}
+		</div>
+		<a class="rounded-full border border-white/20 px-4 py-2 text-sm text-glass transition hover:border-white/40" href="#contact">
+			Start a project
+		</a>
+	</div>
+</nav>

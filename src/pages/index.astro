@@ -1,16 +1,117 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Section from '../components/Section.astro';
+import HeroScene from '../islands/HeroScene';
+import SectionScene from '../islands/SectionScene';
+import PerformanceToggle from '../islands/PerformanceToggle';
+import MermaidDiagram from '../islands/MermaidDiagram';
+import ChartBlock from '../islands/ChartBlock';
 
+const mermaidDefinition = `graph LR
+A[Sensor Inputs] --> B[Feature Fusion]
+B --> C[Representation]
+C --> D[Inference]
+D --> E[Dashboard]
+`;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+	title="Clawd ML Portfolio"
+	description="Cinematic ML portfolio with glassmorphism and WebGL scenes."
+	bodyClass="snap-sections"
+>
+	<Nav />
+	<main>
+		<section id="hero" class="relative min-h-screen overflow-hidden">
+			<div aria-hidden="true" class="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_20%_20%,rgba(125,211,252,0.24),transparent_55%),radial-gradient(circle_at_80%_10%,rgba(245,158,11,0.18),transparent_55%)]" />
+			<HeroScene client:visible />
+			<div class="section-shell relative z-10 flex min-h-screen flex-col justify-center gap-10">
+				<div class="max-w-3xl">
+					<p class="text-xs uppercase tracking-[0.3em] text-mist">ML Portfolio</p>
+					<h1 class="mt-4 text-5xl md:text-6xl">
+						Glassmorphism and cinematic ML systems
+					</h1>
+					<p class="mt-6 text-lg text-mist md:text-xl">
+						An ML student portfolio focused on applied vision, data products, and interactive storytelling.
+					</p>
+					<div class="mt-8 flex flex-wrap gap-4">
+						<a class="glass-panel px-6 py-3 text-sm text-glass" href="#work">View featured work</a>
+						<a class="rounded-full border border-white/20 px-6 py-3 text-sm text-mist" href="#contact">Contact</a>
+					</div>
+				</div>
+				<div class="glass-panel flex flex-wrap items-center justify-between gap-6 px-6 py-4">
+					<div>
+						<p class="text-xs uppercase tracking-[0.2em] text-mist">Proof points</p>
+						<p class="mt-2 text-sm text-glass">2 internships, 4 demos, 1 research preprint</p>
+					</div>
+					<PerformanceToggle client:load />
+				</div>
+			</div>
+		</section>
+
+		<Section
+			id="capabilities"
+			class="relative overflow-hidden"
+			eyebrow="Capabilities"
+			title="Systems that connect models and meaning"
+			subtitle="Pipeline design, model experimentation, and interactive explanation with diagrams and live demos."
+		>
+			<SectionScene client:visible variant="pipeline" />
+			<div class="grid gap-6 md:grid-cols-2">
+				<MermaidDiagram client:load definition={mermaidDefinition} />
+				<ChartBlock client:load />
+			</div>
+		</Section>
+
+		<Section
+			id="work"
+			class="relative overflow-hidden"
+			eyebrow="Selected Work"
+			title="Cinematic demos with measurable impact"
+			subtitle="Each project includes an ML demo, results, and a visual story."
+		>
+			<SectionScene client:visible variant="carousel" />
+			<div class="grid gap-6 md:grid-cols-3">
+				<div class="glass-panel p-6">
+					<p class="text-sm text-mist">Glass Spectral Classifier</p>
+					<p class="mt-2 text-2xl text-glass">92% accuracy, 28ms latency</p>
+					<a class="mt-4 inline-block text-sm text-glow" href="/projects/glass-spectral/">Read case study</a>
+				</div>
+				<div class="glass-panel p-6">
+					<p class="text-sm text-mist">Haze Forecast Pipeline</p>
+					<p class="mt-2 text-2xl text-glass">18% lift over baseline</p>
+					<a class="mt-4 inline-block text-sm text-glow" href="/projects/haze-pipeline/">Read case study</a>
+				</div>
+				<div class="glass-panel p-6">
+					<p class="text-sm text-mist">Interactive Demo Suite</p>
+					<p class="mt-2 text-2xl text-glass">HF Spaces + realtime charts</p>
+					<a class="mt-4 inline-block text-sm text-glow" href="/projects/">Explore all</a>
+				</div>
+			</div>
+		</Section>
+
+		<Section
+			id="contact"
+			class="relative overflow-hidden"
+			eyebrow="Impact"
+			title="Ready for new collaborations"
+			subtitle="Let us connect the model story to the product story."
+		>
+			<SectionScene client:visible variant="calm" />
+			<div class="glass-panel grid gap-6 p-8 md:grid-cols-[1.4fr_1fr]">
+				<div>
+					<p class="text-sm uppercase tracking-[0.2em] text-mist">Availability</p>
+					<p class="mt-3 text-2xl text-glass">Open for ML internships and research collaborations.</p>
+				</div>
+				<form class="grid gap-4">
+					<input class="rounded-full border border-white/15 bg-white/5 px-4 py-3 text-sm text-glass" placeholder="Your email" />
+					<input class="rounded-full border border-white/15 bg-white/5 px-4 py-3 text-sm text-glass" placeholder="Project idea" />
+					<button class="rounded-full border border-white/30 px-4 py-3 text-sm text-glass">Send message</button>
+				</form>
+			</div>
+		</Section>
+	</main>
+	<Footer />
+</BaseLayout>

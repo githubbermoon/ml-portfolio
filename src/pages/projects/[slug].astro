@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import SectionScene from '../../islands/SectionScene';
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+	const projects = await getCollection('projects');
+	return projects.map((project) => ({
+		params: { slug: project.slug },
+		props: { project },
+	}));
+}
+
+const { project } = Astro.props as { project: CollectionEntry<'projects'> };
+const { Content } = await project.render();
+---
+
+<BaseLayout title={`${project.data.title} | Clawd ML Portfolio`}>
+	<Nav />
+	<main>
+		<section class="relative min-h-[60vh] overflow-hidden">
+			<SectionScene client:visible variant="calm" />
+			<div class="section-shell relative z-10">
+				<p class="text-sm text-mist">{project.data.tags.join(' / ')}</p>
+				<h1 class="mt-4 text-4xl md:text-5xl">{project.data.title}</h1>
+				<p class="mt-4 max-w-2xl text-mist">{project.data.summary}</p>
+			</div>
+		</section>
+		<div class="section-shell prose prose-invert max-w-3xl">
+			<Content />
+		</div>
+	</main>
+	<Footer />
+</BaseLayout>
