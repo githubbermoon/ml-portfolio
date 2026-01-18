@@ -35,12 +35,13 @@ D --> E[Dashboard]
 			<HeroScene client:only="react" />
 			<div class="section-shell relative z-10 flex min-h-screen flex-col justify-center gap-10">
 				<div class="max-w-3xl" data-parallax>
-					<p class="text-xs uppercase tracking-[0.3em] text-mist" data-animate>ML Portfolio</p>
+					<p class="text-xs uppercase tracking-[0.3em] text-mist" data-animate>Pranjal Prakash</p>
 					<h1 class="mt-4 text-5xl md:text-6xl" data-animate>
-						Glassmorphism and cinematic ML systems
+						Applied ML and computer vision systems
 					</h1>
 					<p class="mt-6 text-lg text-mist md:text-xl" data-animate>
-						An ML student portfolio focused on applied vision, data products, and interactive storytelling.
+						MCA student at Reva University (CGPA 8.47) building real-time vision pipelines, ML demos, and
+						reliable backends with PyTorch and FastAPI.
 					</p>
 					<div class="mt-8 flex flex-wrap gap-4" data-animate>
 						<a class="glass-panel px-6 py-3 text-sm text-glass" href="#work">View featured work</a>
@@ -50,7 +51,9 @@ D --> E[Dashboard]
 				<div class="glass-panel flex flex-wrap items-center justify-between gap-6 px-6 py-4" data-animate>
 					<div>
 						<p class="text-xs uppercase tracking-[0.2em] text-mist">Proof points</p>
-						<p class="mt-2 text-sm text-glass">2 internships, 4 demos, 1 research preprint</p>
+						<p class="mt-2 text-sm text-glass">
+							NCSC national winner · Hugging Face hackathon · Python + C++ foundation
+						</p>
 					</div>
 					<PerformanceToggle client:load />
 				</div>
@@ -62,7 +65,7 @@ D --> E[Dashboard]
 			class="relative overflow-hidden"
 			eyebrow="Capabilities"
 			title="Systems that connect models and meaning"
-			subtitle="Pipeline design, model experimentation, and interactive explanation with diagrams and live demos."
+			subtitle="Computer vision, ML prototyping, and backend delivery with clean, explainable artifacts."
 		>
 			<SectionScene client:only="react" variant="pipeline" />
 			<div class="grid gap-6 md:grid-cols-2">
@@ -71,6 +74,30 @@ D --> E[Dashboard]
 				</div>
 				<div data-animate>
 					<ChartBlock client:load />
+				</div>
+			</div>
+			<div class="mt-10 grid gap-6 md:grid-cols-2">
+				<div class="glass-panel p-6" data-animate>
+					<p class="text-xs uppercase tracking-[0.2em] text-mist">Core Skills</p>
+					<ul class="mt-4 space-y-2 text-sm text-glass">
+						<li>ML: PyTorch, OpenCV, NLP, Computer Vision, Hugging Face</li>
+						<li>Backend: FastAPI, REST APIs, SQLAlchemy, PostgreSQL</li>
+						<li>CS: Data Structures, OS, Computer Networks</li>
+						<li>Tools: AWS (EC2, S3), GitHub Actions, W&amp;B, Linux, Postman</li>
+					</ul>
+				</div>
+				<div class="glass-panel p-6" data-animate>
+					<p class="text-xs uppercase tracking-[0.2em] text-mist">Education</p>
+					<div class="mt-4 space-y-4 text-sm text-glass">
+						<div>
+							<p class="font-semibold">MCA, Reva University</p>
+							<p class="text-mist">2nd Semester · CGPA 8.47 · Expected 2026</p>
+						</div>
+						<div>
+							<p class="font-semibold">B.Sc, Integral University</p>
+							<p class="text-mist">Physics, Maths, Computer Science · CGPA 7.6</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</Section>
@@ -85,18 +112,18 @@ D --> E[Dashboard]
 			<SectionScene client:only="react" variant="carousel" />
 			<div class="grid gap-6 md:grid-cols-3">
 				<div class="glass-panel p-6" data-animate>
-					<p class="text-sm text-mist">Glass Spectral Classifier</p>
-					<p class="mt-2 text-2xl text-glass">92% accuracy, 28ms latency</p>
-					<a class="mt-4 inline-block text-sm text-glow" href="/projects/glass-spectral/">Read case study</a>
+					<p class="text-sm text-mist">Terrain Safety Analysis &amp; Navigation</p>
+					<p class="mt-2 text-2xl text-glass">SegFormer + Depth Anything V2 + A*</p>
+					<a class="mt-4 inline-block text-sm text-glow" href="/projects/terrain-safety/">Read case study</a>
 				</div>
 				<div class="glass-panel p-6" data-animate>
-					<p class="text-sm text-mist">Haze Forecast Pipeline</p>
-					<p class="mt-2 text-2xl text-glass">18% lift over baseline</p>
-					<a class="mt-4 inline-block text-sm text-glow" href="/projects/haze-pipeline/">Read case study</a>
+					<p class="text-sm text-mist">Python API Development</p>
+					<p class="mt-2 text-2xl text-glass">FastAPI + PostgreSQL, 15% faster queries</p>
+					<a class="mt-4 inline-block text-sm text-glow" href="/projects/python-api/">Read case study</a>
 				</div>
 				<div class="glass-panel p-6" data-animate>
-					<p class="text-sm text-mist">Interactive Demo Suite</p>
-					<p class="mt-2 text-2xl text-glass">HF Spaces + realtime charts</p>
+					<p class="text-sm text-mist">Hugging Face Hackathon</p>
+					<p class="mt-2 text-2xl text-glass">Global hackathon entry, demos in progress</p>
 					<a class="mt-4 inline-block text-sm text-glow" href="/projects/">Explore all</a>
 				</div>
 			</div>
@@ -113,7 +140,12 @@ D --> E[Dashboard]
 			<div class="glass-panel grid gap-6 p-8 md:grid-cols-[1.4fr_1fr]" data-animate>
 				<div>
 					<p class="text-sm uppercase tracking-[0.2em] text-mist">Availability</p>
-					<p class="mt-3 text-2xl text-glass">Open for ML internships and research collaborations.</p>
+					<p class="mt-3 text-2xl text-glass">Open for ML internships, CV research, and backend work.</p>
+					<div class="mt-4 space-y-2 text-sm text-mist">
+						<p><a class="text-glow" href="mailto:prakashpranjal001@gmail.com">prakashpranjal001@gmail.com</a></p>
+						<p><a class="text-glow" href="https://linkedin.com/in/pranjal-prakash">linkedin.com/in/pranjal-prakash</a></p>
+						<p><a class="text-glow" href="https://github.com/githubbermoon">github.com/githubbermoon</a></p>
+					</div>
 				</div>
 				<form class="grid gap-4">
 					<input class="rounded-full border border-mist/30 bg-glass/5 px-4 py-3 text-sm text-glass placeholder:text-mist/70" placeholder="Your email" />

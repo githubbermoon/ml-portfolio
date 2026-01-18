@@ -1,0 +1,19 @@
+---
+title: "Terrain Safety Analysis & Navigation Assistant"
+summary: "Vision prototype for autonomous navigation using segmentation, depth, and a safety-score engine."
+date: 2025-01-10
+tags: ["Computer Vision", "PyTorch", "Gradio"]
+featured: true
+---
+
+## Problem
+Assess traversability and visualize safe navigation paths for autonomous terrain traversal.
+
+## Approach
+Used SegFormer for 150-class semantic segmentation and Depth Anything V2 for monocular depth. Built a safety-score
+algorithm with A* pathfinding to render optimal routes on a 3D terrain mesh. Added slope + morphology refinements to
+reduce false positives and wired W&B for experiment tracking.
+
+## Results
+- 3D terrain mesh routing visualization
+- Robust hazard detection with geometric refinement
