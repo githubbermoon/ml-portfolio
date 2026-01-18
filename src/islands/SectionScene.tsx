@@ -247,13 +247,22 @@ const VideoScene = () => {
 		muted: true,
 		loop: true,
 		autoplay: true,
+		crossOrigin: 'Anonymous',
 	});
+
+	// Ensure the video element has playsInline for mobile/safari
+	useEffect(() => {
+		if (texture.image instanceof HTMLVideoElement) {
+			texture.image.setAttribute('playsinline', '');
+			texture.image.setAttribute('webkit-playsinline', '');
+		}
+	}, [texture]);
 
 	return (
 		<e.group theatreKey="video-group">
-			<e.mesh theatreKey="video-plane" position={[0, 0, -2]} scale={[16, 9, 1]}>
+			<e.mesh theatreKey="video-plane" position={[0, 0.5, -3]} scale={[18, 10, 1]}>
 				<planeGeometry />
-				<meshBasicMaterial map={texture} transparent opacity={0.4} />
+				<meshBasicMaterial map={texture} transparent opacity={0.7} />
 			</e.mesh>
 		</e.group>
 	);
