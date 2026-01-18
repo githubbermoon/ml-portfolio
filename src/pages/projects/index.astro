@@ -5,6 +5,7 @@ import Footer from '../../components/Footer.astro';
 import { getCollection } from 'astro:content';
 
 const projects = await getCollection('projects');
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title="Projects | Clawd ML Portfolio">
@@ -20,7 +21,7 @@ const projects = await getCollection('projects');
 					<p class="text-sm text-mist">{project.data.tags.join(' / ')}</p>
 					<h2 class="mt-3 text-2xl text-glass">{project.data.title}</h2>
 					<p class="mt-3 text-mist">{project.data.summary}</p>
-					<a class="mt-4 inline-block text-sm text-glow" href={`/projects/${project.slug}/`}>Read case study</a>
+					<a class="mt-4 inline-block text-sm text-glow" href={`${base}projects/${project.slug}/`}>Read case study</a>
 				</article>
 			))}
 		</div>

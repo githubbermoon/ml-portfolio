@@ -16,6 +16,7 @@ B --> C[Representation]
 C --> D[Inference]
 D --> E[Dashboard]
 `;
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout
@@ -117,17 +118,17 @@ D --> E[Dashboard]
 				<div class="glass-panel p-6" data-animate>
 					<p class="text-sm text-mist">Terrain Safety Analysis &amp; Navigation</p>
 					<p class="mt-2 text-2xl text-glass">SegFormer + Depth Anything V2 + A*</p>
-					<a class="mt-4 inline-block text-sm text-glow" href="/projects/terrain-safety/">Read case study</a>
+					<a class="mt-4 inline-block text-sm text-glow" href={`${base}projects/terrain-safety/`}>Read case study</a>
 				</div>
 				<div class="glass-panel p-6" data-animate>
 					<p class="text-sm text-mist">Python API Development</p>
 					<p class="mt-2 text-2xl text-glass">FastAPI + PostgreSQL, 15% faster queries</p>
-					<a class="mt-4 inline-block text-sm text-glow" href="/projects/python-api/">Read case study</a>
+					<a class="mt-4 inline-block text-sm text-glow" href={`${base}projects/python-api/`}>Read case study</a>
 				</div>
 				<div class="glass-panel p-6" data-animate>
 					<p class="text-sm text-mist">Hugging Face Hackathon</p>
 					<p class="mt-2 text-2xl text-glass">Global hackathon entry, demos in progress</p>
-					<a class="mt-4 inline-block text-sm text-glow" href="/projects/">Explore all</a>
+					<a class="mt-4 inline-block text-sm text-glow" href={`${base}projects/`}>Explore all</a>
 				</div>
 			</div>
 		</Section>

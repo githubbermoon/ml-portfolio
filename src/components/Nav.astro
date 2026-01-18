@@ -3,17 +3,19 @@ import ThemeToggle from '../islands/ThemeToggle';
 import FilmToggle from '../islands/FilmToggle';
 import MagneticButton from '../islands/MagneticButton';
 
+const base = import.meta.env.BASE_URL;
+
 const links = [
-	{ href: '/#hero', label: 'Home' },
-	{ href: '/#capabilities', label: 'Capabilities' },
-	{ href: '/#work', label: 'Work' },
-	{ href: '/#contact', label: 'Contact' },
+	{ href: `${base}#hero`, label: 'Home' },
+	{ href: `${base}#capabilities`, label: 'Capabilities' },
+	{ href: `${base}#work`, label: 'Work' },
+	{ href: `${base}#contact`, label: 'Contact' },
 ];
 ---
 
 <nav class="sticky top-0 z-20 w-full bg-ink/80 backdrop-blur">
 	<div class="section-shell flex items-center justify-between py-4">
-		<a href="/#hero" class="font-display text-xl text-glass">Clawd</a>
+		<a href={`${base}#hero`} class="font-display text-xl text-glass">Clawd</a>
 		<div class="hidden items-center gap-6 text-sm text-mist md:flex">
 			{links.map((link) => (
 				<a class="transition hover:text-glass" href={link.href}>{link.label}</a>
@@ -24,7 +26,7 @@ const links = [
 			<ThemeToggle client:load />
 			<MagneticButton
 				client:load
-				href="/#contact"
+				href={`${base}#contact`}
 				className="rounded-full border border-mist/40 px-4 py-2 text-sm text-glass transition hover:border-glass/50"
 			>
 				Start a project
