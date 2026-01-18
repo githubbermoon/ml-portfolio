@@ -1,10 +1,10 @@
 import { Suspense, useEffect, useMemo, useState, useRef } from 'react';
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Float, MeshTransmissionMaterial } from '@react-three/drei';
 import { Bloom, ChromaticAberration, EffectComposer, Noise, Vignette } from '@react-three/postprocessing';
 import { SheetProvider, editable as e } from '@theatre/r3f';
 import { BlendFunction } from 'postprocessing';
-import { Vector2 } from 'three';
+import { AdditiveBlending, BufferAttribute, BufferGeometry, Vector2 } from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { detectAutoTier, getStoredTier, type PerfTier } from '../lib/perfGate';
@@ -42,6 +42,9 @@ type GlassProps = {
 	distortionScale: number;
 	clusterRef: React.MutableRefObject<THREE.Group | null>;
 };
+
+const flowNoise = (x: number, y: number, z: number) =>
+	Math.sin(x * 0.6 + z * 0.4 + Math.cos(y * 0.7)) * Math.cos(y * 0.5 + x * 0.3);
 
 function GlassCluster({ samples, resolution, distortionScale, clusterRef }: GlassProps) {
 	return (
@@ -86,6 +89,84 @@ function GlassCluster({ samples, resolution, distortionScale, clusterRef }: Glas
 	);
 }
 
+function FlowField({
+	count,
+	color,
+	opacity,
+	size,
+}: {
+	count: number;
+	color: string;
+	opacity: number;
+	size: number;
+}) {
+	const { geometry, basePositions, offsets } = useMemo(() => {
+		const positions = new Float32Array(count * 3);
+		const basePositions = new Float32Array(count * 3);
+		const offsets = new Float32Array(count);
+		const spread = { x: 4.6, y: 3.2, z: 1.8 };
+
+		for (let i = 0; i < count; i += 1) {
+			const i3 = i * 3;
+			const x = (Math.random() - 0.5) * spread.x;
+			const y = (Math.random() - 0.5) * spread.y;
+			const z = (Math.random() - 0.5) * spread.z - 1.1;
+			positions[i3] = x;
+			positions[i3 + 1] = y;
+			positions[i3 + 2] = z;
+			basePositions[i3] = x;
+			basePositions[i3 + 1] = y;
+			basePositions[i3 + 2] = z;
+			offsets[i] = Math.random() * 10;
+		}
+
+		const geometry = new BufferGeometry();
+		geometry.setAttribute('position', new BufferAttribute(positions, 3));
+		return { geometry, basePositions, offsets };
+	}, [count]);
+
+	useEffect(() => {
+		return () => geometry.dispose();
+	}, [geometry]);
+
+	useFrame((state) => {
+		const positions = geometry.attributes.position.array as Float32Array;
+		const time = state.clock.getElapsedTime() * 0.12;
+		const drift = 0.22;
+
+		for (let i = 0; i < count; i += 1) {
+			const i3 = i * 3;
+			const baseX = basePositions[i3];
+			const baseY = basePositions[i3 + 1];
+			const baseZ = basePositions[i3 + 2];
+			const offset = offsets[i];
+			const nx = flowNoise(baseX * 0.7 + time + offset, baseY * 0.5, baseZ * 0.6);
+			const ny = flowNoise(baseY * 0.6 - time * 0.8 + offset, baseZ * 0.7, baseX * 0.4);
+			const nz = flowNoise(baseZ * 0.5 + time * 0.6 + offset, baseX * 0.6, baseY * 0.6);
+
+			positions[i3] = baseX + nx * drift;
+			positions[i3 + 1] = baseY + ny * drift * 0.8;
+			positions[i3 + 2] = baseZ + nz * drift * 0.9;
+		}
+
+		geometry.attributes.position.needsUpdate = true;
+	});
+
+	return (
+		<points geometry={geometry} frustumCulled={false}>
+			<pointsMaterial
+				color={color}
+				size={size}
+				transparent
+				opacity={opacity}
+				depthWrite={false}
+				blending={AdditiveBlending}
+				sizeAttenuation
+			/>
+		</points>
+	);
+}
+
 export default function HeroScene() {
 	const tier = usePerfTier();
 	const sheet = useMemo(() => getSceneSheet('Hero'), []);
@@ -99,6 +180,7 @@ export default function HeroScene() {
 	const background =
 		theme === 'bright' ? [244 / 255, 247 / 255, 251 / 255] : [0, 0, 0];
 	const clusterRef = useRef<THREE.Group | null>(null);
+	const flowColor = theme === 'bright' ? '#0ea5e9' : '#7dd3fc';
 	if (tier === 'off') return null;
 
 	return (
@@ -112,6 +194,12 @@ export default function HeroScene() {
 				<pointLight position={[4, 3, 2]} intensity={1.5} />
 				<SheetProvider sheet={sheet}>
 					<HeroCameraRig clusterRef={clusterRef} />
+					<FlowField
+						count={isHigh ? 360 : 220}
+						color={flowColor}
+						opacity={isHigh ? 0.3 : 0.22}
+						size={isHigh ? 0.03 : 0.025}
+					/>
 					<Suspense fallback={null}>
 						<Environment preset="city" />
 						<GlassCluster

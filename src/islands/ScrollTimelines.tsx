@@ -21,7 +21,7 @@ export default function ScrollTimelines() {
 				gsap.from(animateItems, {
 					y: 32,
 					ease: 'power2.out',
-					stagger: 0.08,
+					stagger: 0.12,
 					duration: 0.8,
 					scrollTrigger: {
 						trigger: section,
@@ -46,6 +46,54 @@ export default function ScrollTimelines() {
 						scrub: true,
 					},
 				});
+			}
+
+			const displacement = document.querySelector('#liquid-hero-displacement');
+			const heroHeading = hero.querySelector('[data-hero-heading]');
+			const heroContent = hero.querySelector('[data-hero-content]');
+
+			if (displacement) {
+				const tl = gsap.timeline({
+					scrollTrigger: {
+						trigger: hero,
+						start: 'top top',
+						end: 'bottom top',
+						scrub: true,
+					},
+				});
+
+				tl.to(
+					displacement,
+					{
+						attr: { scale: 150 },
+						ease: 'none',
+					},
+					0
+				);
+
+				if (heroHeading) {
+					tl.to(
+						heroHeading,
+						{
+							opacity: 0.25,
+							y: -20,
+							ease: 'none',
+						},
+						0
+					);
+				}
+
+				if (heroContent) {
+					tl.to(
+						heroContent,
+						{
+							opacity: 0,
+							y: -80,
+							ease: 'none',
+						},
+						0
+					);
+				}
 			}
 		}
 
