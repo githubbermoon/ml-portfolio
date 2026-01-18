@@ -18,8 +18,8 @@
 	--color-amber: 245 158 11;
 	--panel-bg: 255 255 255;
 	--panel-border: 255 255 255;
-	--panel-alpha: 0.06;
-	--panel-border-alpha: 0.12;
+	--panel-alpha: 0.04;
+	--panel-border-alpha: 0.08;
 	--panel-shadow: 0 10px 40px rgba(15, 23, 42, 0.2);
 	--haze-a: 125 211 252;
 	--haze-b: 245 158 11;
@@ -35,8 +35,8 @@
 	--color-amber: 234 88 12;
 	--panel-bg: 15 23 42;
 	--panel-border: 15 23 42;
-	--panel-alpha: 0.04;
-	--panel-border-alpha: 0.14;
+	--panel-alpha: 0.03;
+	--panel-border-alpha: 0.1;
 	--panel-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
 	--haze-a: 56 189 248;
 	--haze-b: 251 191 36;
@@ -90,7 +90,7 @@ body::after {
 }
 
 .film-grain {
-	opacity: 0.05;
+	opacity: 0.03;
 	background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGZpbHRlciBpZD0ibiIgeD0iMCIgeT0iMCIgd2lkdGg9IjEyMCUiIGhlaWdodD0iMTIwJSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuOCIgbnVtT2N0YXZlcz0iMiIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWx0ZXI9InVybCgjbikiIG9wYWNpdHk9IjAuNCIvPjwvc3ZnPg==");
 	background-size: 140px 140px;
 	mix-blend-mode: soft-light;
@@ -119,16 +119,14 @@ h1, h2, h3, h4 {
 
 .glass-panel {
 	@apply rounded-3xl backdrop-blur-xl;
-	border: 1px solid rgb(var(--panel-border) / var(--panel-border-alpha));
+	border: 0.5px solid rgb(var(--panel-border) / var(--panel-border-alpha));
 	background: rgb(var(--panel-bg) / var(--panel-alpha));
 	box-shadow: var(--panel-shadow);
+	transition: border-color 220ms ease;
 }
 
-.snap-sections {
-	scroll-snap-type: y mandatory;
-}
-
-.snap-sections section {
-	scroll-snap-align: start;
-	scroll-snap-stop: always;
+@media (hover: hover) {
+	.glass-panel:hover {
+		border-color: rgb(var(--panel-border) / calc(var(--panel-border-alpha) + 0.04));
+	}
 }
