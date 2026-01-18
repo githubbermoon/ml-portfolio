@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Environment, Float } from '@react-three/drei';
+import { Environment, Float, useVideoTexture } from '@react-three/drei';
 import { Bloom, EffectComposer, Noise } from '@react-three/postprocessing';
 import { SheetProvider, editable as e } from '@theatre/r3f';
 import { Color, DoubleSide, MathUtils, Group, ShaderMaterial } from 'three';
@@ -10,7 +10,7 @@ import { useResolvedTheme } from '../lib/theme';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-type Variant = 'pipeline' | 'carousel' | 'calm' | 'terrain';
+type Variant = 'pipeline' | 'carousel' | 'calm' | 'terrain' | 'video';
 
 const defaultTier: PerfTier = 'standard';
 const fallbackInk: [number, number, number] = [5, 7, 13];
@@ -242,6 +242,23 @@ const Terrain = ({ tier }: { tier: PerfTier }) => {
 	);
 };
 
+const VideoScene = () => {
+	const texture = useVideoTexture('/videos/alcrego_graphic.mp4', {
+		muted: true,
+		loop: true,
+		autoplay: true,
+	});
+
+	return (
+		<e.group theatreKey="video-group">
+			<e.mesh theatreKey="video-plane" position={[0, 0, -2]} scale={[16, 9, 1]}>
+				<planeGeometry />
+				<meshBasicMaterial map={texture} transparent opacity={0.4} />
+			</e.mesh>
+		</e.group>
+	);
+};
+
 const Calm = () => (
 	<e.group theatreKey="calm-group">
 		<Float speed={0.4} rotationIntensity={0.1} floatIntensity={0.2}>
@@ -258,6 +275,7 @@ const variantMap: Record<Variant, (tier: PerfTier) => JSX.Element> = {
 	carousel: () => <Carousel />,
 	calm: () => <Calm />,
 	terrain: (tier) => <Terrain tier={tier} />,
+	video: () => <VideoScene />,
 };
 
 export default function SectionScene({
