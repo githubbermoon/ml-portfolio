@@ -5,8 +5,10 @@ type ResolvedTheme = 'dark' | 'bright';
 
 const STORAGE_KEY = 'clawd-theme';
 
-const getPreferredTheme = (): ResolvedTheme =>
-	window.matchMedia('(prefers-color-scheme: light)').matches ? 'bright' : 'dark';
+const getPreferredTheme = (): ResolvedTheme => {
+	if (typeof window === 'undefined') return 'dark';
+	return window.matchMedia('(prefers-color-scheme: light)').matches ? 'bright' : 'dark';
+};
 
 const resolveTheme = (mode: ThemeMode): ResolvedTheme =>
 	mode === 'auto' ? getPreferredTheme() : mode;
