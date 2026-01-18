@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Float } from '@react-three/drei';
+import { Bloom, EffectComposer, Noise } from '@react-three/postprocessing';
 import { SheetProvider, editable as e } from '@theatre/r3f';
 import { Color, DoubleSide, MathUtils, Group, ShaderMaterial } from 'three';
 import { detectAutoTier, getStoredTier, type PerfTier } from '../lib/perfGate';
@@ -270,15 +271,24 @@ export default function SectionScene({
 	const sheet = useMemo(() => getSceneSheet(`Section-${variant}`), [variant]);
 	const theme = useResolvedTheme();
 	const isTerrain = variant === 'terrain';
+	const isHigh = tier === 'high';
 	const [terrainBackground, setTerrainBackground] = useState<[number, number, number]>([
 		fallbackInk[0] / 255,
 		fallbackInk[1] / 255,
 		fallbackInk[2] / 255,
 	]);
+	const [fogRgb, setFogRgb] = useState<[number, number, number]>(fallbackInk);
+	const fogColor = useMemo(
+		() => new Color(fogRgb[0] / 255, fogRgb[1] / 255, fogRgb[2] / 255),
+		[fogRgb]
+	);
+	const bloomIntensity = isHigh ? 0.45 : 0.22;
+	const noiseOpacity = isHigh ? 0.08 : 0;
 
 	useEffect(() => {
 		const ink = readCssRgb('--color-ink', fallbackInk);
 		setTerrainBackground([ink[0] / 255, ink[1] / 255, ink[2] / 255]);
+		setFogRgb(ink);
 	}, [theme]);
 
 	const background = isTerrain
@@ -286,6 +296,8 @@ export default function SectionScene({
 		: theme === 'bright'
 			? [244 / 255, 247 / 255, 251 / 255]
 			: [0, 0, 0];
+	const fogNear = isTerrain ? 3.4 : 2.6;
+	const fogFar = isTerrain ? 8.4 : 6.6;
 	if (tier === 'off') return null;
 
 	return (
@@ -297,13 +309,21 @@ export default function SectionScene({
 				<color attach="background" args={background} />
 				<ambientLight intensity={isTerrain ? 0.3 : 0.6} />
 				<pointLight position={[3, 2, 2]} intensity={isTerrain ? 0.6 : 1.2} />
-				{isTerrain && <fog attach="fog" args={['#05070d', 3.5, 8]} />}
+				<fog attach="fog" args={[fogColor, fogNear, fogFar]} />
 				<SectionCameraRig sectionId={sectionId ?? variant} isTerrain={isTerrain} />
 				<SheetProvider sheet={sheet}>
 					<Suspense fallback={null}>
 						<Environment preset={isTerrain ? 'night' : 'warehouse'} />
 						{variantMap[variant](tier)}
 					</Suspense>
+					<EffectComposer multisampling={isHigh ? 4 : 0}>
+						<Bloom
+							intensity={bloomIntensity}
+							luminanceThreshold={0.2}
+							luminanceSmoothing={0.9}
+						/>
+						{noiseOpacity > 0 && <Noise opacity={noiseOpacity} />}
+					</EffectComposer>
 				</SheetProvider>
 			</Canvas>
 		</div>
@@ -322,18 +342,26 @@ function SectionCameraRig({ sectionId, isTerrain }: { sectionId: string; isTerra
 		gsap.registerPlugin(ScrollTrigger);
 
 		const ctx = gsap.context(() => {
-			gsap.to(camera.position, {
-				x: isTerrain ? 0.3 : 0.18,
-				y: isTerrain ? 0.8 : -0.1,
-				z: isTerrain ? 3.1 : 3.4,
-				ease: 'none',
-				scrollTrigger: {
-					trigger: section,
-					start: 'top bottom',
-					end: 'bottom top',
-					scrub: true,
+			gsap.fromTo(
+				camera.position,
+				{
+					x: isTerrain ? -0.2 : -0.3,
+					y: isTerrain ? 0.35 : -0.55,
+					z: isTerrain ? 4.3 : 4.6,
 				},
-			});
+				{
+					x: isTerrain ? 0.45 : 0.28,
+					y: isTerrain ? 1.0 : 0.2,
+					z: isTerrain ? 3.1 : 3.3,
+					ease: 'none',
+					scrollTrigger: {
+						trigger: section,
+						start: 'top 90%',
+						end: 'bottom 10%',
+						scrub: true,
+					},
+				}
+			);
 		}, section);
 
 		return () => ctx.revert();

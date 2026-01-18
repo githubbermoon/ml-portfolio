@@ -2,7 +2,12 @@
 const { id, title, eyebrow, subtitle, class: className } = Astro.props;
 ---
 
-<section id={id} class:list={['min-h-screen', className]} data-section>
+<section id={id} class:list={['relative', 'min-h-screen', className]} data-section>
+	<div
+		class="pointer-events-none absolute inset-0 z-0"
+		style="background: linear-gradient(to bottom, transparent, rgb(var(--color-ink) / 0.5), transparent);"
+		aria-hidden="true"
+	/>
 	<div class="section-shell">
 		{eyebrow && <p class="text-xs uppercase tracking-[0.2em] text-mist" data-animate>{eyebrow}</p>}
 		{title && <h2 class="mt-4 text-4xl md:text-5xl" data-animate>{title}</h2>}
