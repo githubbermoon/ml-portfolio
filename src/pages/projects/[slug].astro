@@ -22,7 +22,7 @@ const { Content } = await project.render();
 	<Nav />
 	<main>
 		<section class="relative min-h-[60vh] overflow-hidden">
-			<SectionScene client:visible variant="calm" />
+			<SectionScene client:only="react" variant="calm" />
 			<div class="section-shell relative z-10">
 				<p class="text-sm text-mist">{project.data.tags.join(' / ')}</p>
 				<h1 class="mt-4 text-4xl md:text-5xl">{project.data.title}</h1>
