@@ -21,6 +21,6 @@ export default function MermaidDiagram({ definition }: { definition: string }) {
 	}, [definition]);
 
 	return (
-		<div className="glass-panel overflow-hidden p-6 text-sm text-glass" ref={containerRef} />
+		<div className="glass-panel overflow-x-auto p-6 text-sm text-glass" ref={containerRef} />
 	);
 }

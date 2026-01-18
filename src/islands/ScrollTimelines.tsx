@@ -16,42 +16,19 @@ export default function ScrollTimelines() {
 
 		sections.forEach((section) => {
 			const animateItems = section.querySelectorAll('[data-animate]');
-			const fadeItems = section.querySelectorAll('[data-fade]');
 
 			if (animateItems.length) {
-				gsap.fromTo(
-					animateItems,
-					{ y: 40, opacity: 0 },
-					{
-						y: 0,
-						opacity: 1,
-						ease: 'none',
-						stagger: 0.08,
-						scrollTrigger: {
-							trigger: section,
-							start: 'top 70%',
-							end: 'bottom 45%',
-							scrub: true,
-						},
-					}
-				);
-			}
-
-			if (fadeItems.length) {
-				gsap.fromTo(
-					fadeItems,
-					{ opacity: 0 },
-					{
-						opacity: 1,
-						ease: 'none',
-						scrollTrigger: {
-							trigger: section,
-							start: 'top 80%',
-							end: 'bottom 60%',
-							scrub: true,
-						},
-					}
-				);
+				gsap.from(animateItems, {
+					y: 32,
+					ease: 'power2.out',
+					stagger: 0.08,
+					duration: 0.8,
+					scrollTrigger: {
+						trigger: section,
+						start: 'top 80%',
+						toggleActions: 'play none none none',
+					},
+				});
 			}
 		});
 
