@@ -12,6 +12,24 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 type Variant = 'pipeline' | 'carousel' | 'calm' | 'terrain';
 
 const defaultTier: PerfTier = 'standard';
+const fallbackInk: [number, number, number] = [5, 7, 13];
+const fallbackMist: [number, number, number] = [23, 32, 53];
+const fallbackGlow: [number, number, number] = [125, 211, 252];
+
+const readCssRgb = (name: string, fallback: [number, number, number]) => {
+	if (typeof document === 'undefined') return fallback;
+	const value = getComputedStyle(document.documentElement).getPropertyValue(name);
+	const parts = value
+		.trim()
+		.split(/\s+/)
+		.map((part) => Number(part));
+	if (parts.length < 3 || parts.some((part) => Number.isNaN(part))) return fallback;
+	return [parts[0], parts[1], parts[2]] as [number, number, number];
+};
+
+const applyRgbToColor = (color: Color, rgb: [number, number, number]) => {
+	color.setRGB(rgb[0] / 255, rgb[1] / 255, rgb[2] / 255);
+};
 
 const usePerfTier = () => {
 	const [tier, setTier] = useState<PerfTier>(defaultTier);
@@ -77,6 +95,7 @@ uniform float uElevation;
 uniform float uFrequency;
 varying float vHeight;
 varying vec3 vPosition;
+varying vec2 vUv;
 
 float hash(vec2 p) {
 	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
@@ -116,6 +135,7 @@ void main() {
 	pos.xy += vec2(n2 - 0.5, n1 - 0.5) * 0.08;
 	vHeight = pos.z;
 	vPosition = pos;
+	vUv = uv;
 	gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
 }
 `;
@@ -124,10 +144,12 @@ const terrainFragmentShader = `
 uniform vec3 uColorDeep;
 uniform vec3 uColorHigh;
 uniform vec3 uColorGlow;
+uniform vec3 uColorVoid;
 uniform float uContourSteps;
 uniform float uElevation;
 varying float vHeight;
 varying vec3 vPosition;
+varying vec2 vUv;
 
 void main() {
 	float heightFactor = clamp((vHeight / (uElevation * 1.2)) * 0.5 + 0.5, 0.0, 1.0);
@@ -141,13 +163,16 @@ void main() {
 	float light = dot(normal, normalize(vec3(0.35, 0.75, 0.55)));
 	light = clamp(light * 0.6 + 0.4, 0.0, 1.0);
 	color *= light;
-	gl_FragColor = vec4(color, 1.0);
+	float sink = smoothstep(0.0, 0.35, vUv.y);
+	vec3 finalColor = mix(uColorVoid, color, sink);
+	gl_FragColor = vec4(finalColor, 1.0);
 }
 `;
 
 const Terrain = ({ tier }: { tier: PerfTier }) => {
 	const groupRef = useRef<Group | null>(null);
 	const materialRef = useRef<ShaderMaterial | null>(null);
+	const theme = useResolvedTheme();
 	const isHigh = tier === 'high';
 	const segments = isHigh ? 200 : 120;
 	const elevation = isHigh ? 0.55 : 0.42;
@@ -164,9 +189,20 @@ const Terrain = ({ tier }: { tier: PerfTier }) => {
 			uColorDeep: { value: new Color('#05070d') },
 			uColorHigh: { value: new Color('#172035') },
 			uColorGlow: { value: new Color('#7dd3fc') },
+			uColorVoid: { value: new Color('#05070d') },
 		}),
 		[elevation, frequency, contourSteps]
 	);
+
+	useEffect(() => {
+		const ink = readCssRgb('--color-ink', fallbackInk);
+		const mist = readCssRgb('--color-mist', fallbackMist);
+		const glow = readCssRgb('--color-glow', fallbackGlow);
+		applyRgbToColor(uniforms.uColorDeep.value, ink);
+		applyRgbToColor(uniforms.uColorHigh.value, mist);
+		applyRgbToColor(uniforms.uColorGlow.value, glow);
+		applyRgbToColor(uniforms.uColorVoid.value, ink);
+	}, [theme, uniforms]);
 
 	useFrame((state) => {
 		if (materialRef.current) {
@@ -234,8 +270,19 @@ export default function SectionScene({
 	const sheet = useMemo(() => getSceneSheet(`Section-${variant}`), [variant]);
 	const theme = useResolvedTheme();
 	const isTerrain = variant === 'terrain';
+	const [terrainBackground, setTerrainBackground] = useState<[number, number, number]>([
+		fallbackInk[0] / 255,
+		fallbackInk[1] / 255,
+		fallbackInk[2] / 255,
+	]);
+
+	useEffect(() => {
+		const ink = readCssRgb('--color-ink', fallbackInk);
+		setTerrainBackground([ink[0] / 255, ink[1] / 255, ink[2] / 255]);
+	}, [theme]);
+
 	const background = isTerrain
-		? [5 / 255, 7 / 255, 12 / 255]
+		? terrainBackground
 		: theme === 'bright'
 			? [244 / 255, 247 / 255, 251 / 255]
 			: [0, 0, 0];
