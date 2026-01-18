@@ -1,12 +1,13 @@
 ---
+import '../styles/global.css';
+import SmoothScroll from '../islands/SmoothScroll';
+
 const {
 	title = 'Clawd ML Portfolio',
 	description = 'ML portfolio with cinematic WebGL scenes and project demos.',
 	bodyClass,
 } = Astro.props;
 const base = import.meta.env.BASE_URL;
-import '../styles/global.css';
-import SmoothScroll from '../islands/SmoothScroll';
 ---
 
 <!doctype html>
