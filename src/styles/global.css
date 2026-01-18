@@ -117,6 +117,10 @@ h1, h2, h3, h4 {
 	z-index: 10;
 }
 
+.smooth-section-mask {
+	mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+}
+
 .glass-panel {
 	@apply rounded-3xl backdrop-blur-xl;
 	border: 0.5px solid rgb(var(--panel-border) / var(--panel-border-alpha));

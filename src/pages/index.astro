@@ -26,18 +26,18 @@ const base = import.meta.env.BASE_URL;
 	<Nav />
 	<ScrollTimelines client:load />
 	<main>
-		<section id="hero" class="relative min-h-screen overflow-hidden" data-section data-hero>
+		<section id="hero" class="relative min-h-[120vh] overflow-hidden" data-section data-hero>
 			<div
 				aria-hidden="true"
 				class="absolute inset-0 -z-20"
 				style="background: radial-gradient(circle at 20% 20%, rgb(var(--haze-a) / 0.28), transparent 55%), radial-gradient(circle at 80% 10%, rgb(var(--haze-b) / 0.2), transparent 55%);"
 			/>
 			<HeroScene client:only="react" />
-			<div class="section-shell relative z-10 flex min-h-screen flex-col justify-center gap-10" data-hero-content>
+			<div class="section-shell relative z-10 flex min-h-screen flex-col justify-start gap-10 pt-44 md:pt-52" data-hero-content>
 				<div class="max-w-3xl" data-parallax>
 					<p class="text-xs uppercase tracking-[0.3em] text-mist" data-animate>ML + Computer Vision</p>
-					<h1 class="mt-4 text-6xl md:text-7xl" data-animate data-hero-heading style="filter: url(#liquid-hero-filter);">
-						<span class="text-glow-cinematic font-bold">Pranjal Prakash</span>
+					<h1 class="mt-4 text-7xl md:text-9xl" data-animate data-hero-heading style="filter: url(#liquid-hero-filter);">
+						<span class="text-glow-cinematic text-7xl md:text-9xl font-black">Pranjal Prakash</span>
 					</h1>
 					<p class="mt-10 text-3xl text-glass md:text-4xl" data-animate>
 						Applied ML and computer vision systems

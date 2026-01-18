@@ -2,10 +2,10 @@
 const { id, title, eyebrow, subtitle, class: className } = Astro.props;
 ---
 
-<section id={id} class:list={['relative', 'min-h-[70vh]', 'py-32', className]} data-section>
+<section id={id} class:list={['relative', 'min-h-[70vh]', 'py-32', 'smooth-section-mask', className]} data-section>
 	<div
 		class="pointer-events-none absolute inset-0 z-0"
-		style="background: linear-gradient(to bottom, transparent, rgb(var(--color-ink) / 0.5), transparent);"
+		style="background: linear-gradient(to bottom, rgb(var(--color-ink) / 0), rgb(var(--color-ink) / 0.8) 15%, rgb(var(--color-ink) / 0.8) 85%, rgb(var(--color-ink) / 0));"
 		aria-hidden="true"
 	/>
 	<div class="section-shell">
