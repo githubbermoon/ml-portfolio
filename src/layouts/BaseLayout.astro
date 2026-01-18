@@ -15,6 +15,14 @@ import '../styles/global.css';
 		<meta name="description" content={description} />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<script is:inline>
+			const storedTheme = localStorage.getItem('clawd-theme');
+			const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+			const resolvedTheme = storedTheme === 'bright' || storedTheme === 'dark'
+				? storedTheme
+				: (prefersLight ? 'bright' : 'dark');
+			document.documentElement.dataset.theme = resolvedTheme;
+		</script>
 		<title>{title}</title>
 	</head>
 	<body class:list={[bodyClass]}>

@@ -54,8 +54,8 @@ export default function PerformanceToggle() {
 						onClick={() => handleSelect(option.value)}
 						className={`rounded-full border px-3 py-1 transition ${
 							tier === option.value
-								? 'border-white/60 text-glass'
-								: 'border-white/20 hover:border-white/40'
+								? 'border-glass/60 text-glass'
+								: 'border-mist/40 hover:border-glass/50'
 						}`}
 					>
 						{option.label}

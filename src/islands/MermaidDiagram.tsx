@@ -6,12 +6,21 @@ export default function MermaidDiagram({ definition }: { definition: string }) {
 
 	useEffect(() => {
 		if (!containerRef.current) return;
-		mermaid.initialize({ startOnLoad: false, theme: 'dark' });
-		containerRef.current.innerHTML = `<div class="mermaid">${definition}</div>`;
-		mermaid.run({ nodes: [containerRef.current] });
+
+		const render = () => {
+			const isBright = document.documentElement.dataset.theme === 'bright';
+			mermaid.initialize({ startOnLoad: false, theme: isBright ? 'neutral' : 'dark' });
+			containerRef.current!.innerHTML = `<div class="mermaid">${definition}</div>`;
+			mermaid.run({ nodes: [containerRef.current!] });
+		};
+
+		render();
+		const handle = () => render();
+		window.addEventListener('theme-change', handle);
+		return () => window.removeEventListener('theme-change', handle);
 	}, [definition]);
 
 	return (
-		<div className="glass-panel overflow-hidden p-6 text-sm" ref={containerRef} />
+		<div className="glass-panel overflow-hidden p-6 text-sm text-glass" ref={containerRef} />
 	);
 }

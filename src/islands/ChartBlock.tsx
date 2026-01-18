@@ -18,17 +18,34 @@ export default function ChartBlock() {
 
 	useEffect(() => {
 		if (!containerRef.current) return;
-		const plot = Plot.plot({
-			marginLeft: 60,
-			height: 220,
-			y: { label: null, grid: true },
-			x: { label: null },
-			color: { range: ['#7dd3fc'] },
-			marks: [Plot.barX(data, { x: 'value', y: 'label', fill: 'label' })],
-		});
-		containerRef.current.append(plot);
-		return () => plot.remove();
+		let plot: HTMLElement | SVGSVGElement | null = null;
+		const render = () => {
+			if (!containerRef.current) return;
+			if (plot) plot.remove();
+			plot = Plot.plot({
+				marginLeft: 60,
+				height: 220,
+				y: { label: null, grid: true },
+				x: { label: null },
+				style: {
+					background: 'transparent',
+					color: 'currentColor',
+					fontFamily: 'var(--font-ui)',
+				},
+				color: { range: ['#7dd3fc'] },
+				marks: [Plot.barX(data, { x: 'value', y: 'label', fill: 'label' })],
+			});
+			containerRef.current.append(plot);
+		};
+
+		render();
+		const handle = () => render();
+		window.addEventListener('theme-change', handle);
+		return () => {
+			window.removeEventListener('theme-change', handle);
+			if (plot) plot.remove();
+		};
 	}, []);
 
-	return <div className="glass-panel p-6" ref={containerRef} />;
+	return <div className="glass-panel p-6 text-glass" ref={containerRef} />;
 }

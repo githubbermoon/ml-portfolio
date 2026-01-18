@@ -7,7 +7,37 @@
 :root {
 	--font-display: 'Fraunces', serif;
 	--font-ui: 'Satoshi', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	color-scheme: only dark;
+	--color-ink: 11 15 20;
+	--color-fog: 207 216 227;
+	--color-glass: 230 237 245;
+	--color-mist: 148 163 184;
+	--color-glow: 125 211 252;
+	--color-amber: 245 158 11;
+	--panel-bg: 255 255 255;
+	--panel-border: 255 255 255;
+	--panel-alpha: 0.06;
+	--panel-border-alpha: 0.12;
+	--panel-shadow: 0 10px 40px rgba(15, 23, 42, 0.2);
+	--haze-a: 125 211 252;
+	--haze-b: 245 158 11;
+}
+
+[data-theme='bright'] {
 	color-scheme: only light;
+	--color-ink: 244 247 251;
+	--color-fog: 15 23 42;
+	--color-glass: 15 23 42;
+	--color-mist: 71 85 105;
+	--color-glow: 14 165 233;
+	--color-amber: 234 88 12;
+	--panel-bg: 15 23 42;
+	--panel-border: 15 23 42;
+	--panel-alpha: 0.04;
+	--panel-border-alpha: 0.14;
+	--panel-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+	--haze-a: 56 189 248;
+	--haze-b: 251 191 36;
 }
 
 html {
@@ -17,8 +47,8 @@ html {
 body {
 	@apply bg-ink text-fog font-ui antialiased;
 	min-height: 100vh;
-	background-image: radial-gradient(1200px 800px at 20% -20%, rgba(125, 211, 252, 0.18), transparent 60%),
-		radial-gradient(800px 600px at 90% 20%, rgba(245, 158, 11, 0.12), transparent 60%);
+	background-image: radial-gradient(1200px 800px at 20% -20%, rgb(var(--haze-a) / 0.22), transparent 60%),
+		radial-gradient(800px 600px at 90% 20%, rgb(var(--haze-b) / 0.16), transparent 60%);
 	background-attachment: fixed;
 }
 
@@ -32,8 +62,10 @@ h1, h2, h3, h4 {
 }
 
 .glass-panel {
-	@apply rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl;
-	box-shadow: theme('boxShadow.glass');
+	@apply rounded-3xl backdrop-blur-xl;
+	border: 1px solid rgb(var(--panel-border) / var(--panel-border-alpha));
+	background: rgb(var(--panel-bg) / var(--panel-alpha));
+	box-shadow: var(--panel-shadow);
 }
 
 .snap-sections {
@@ -42,4 +74,5 @@ h1, h2, h3, h4 {
 
 .snap-sections section {
 	scroll-snap-align: start;
+	scroll-snap-stop: always;
 }
