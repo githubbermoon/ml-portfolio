@@ -5,6 +5,7 @@ const {
 	bodyClass,
 } = Astro.props;
 import '../styles/global.css';
+import SmoothScroll from '../islands/SmoothScroll';
 ---
 
 <!doctype html>
@@ -26,6 +27,7 @@ import '../styles/global.css';
 		<title>{title}</title>
 	</head>
 	<body class:list={[bodyClass]}>
+		<SmoothScroll client:load />
 		<slot />
 	</body>
 </html>

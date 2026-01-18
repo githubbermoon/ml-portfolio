@@ -1,5 +1,6 @@
 ---
 import ThemeToggle from '../islands/ThemeToggle';
+import MagneticButton from '../islands/MagneticButton';
 
 const links = [
 	{ href: '#hero', label: 'Home' },
@@ -19,9 +20,13 @@ const links = [
 		</div>
 		<div class="flex items-center gap-4">
 			<ThemeToggle client:load />
-			<a class="rounded-full border border-mist/40 px-4 py-2 text-sm text-glass transition hover:border-glass/50" href="#contact">
+			<MagneticButton
+				client:load
+				href="#contact"
+				className="rounded-full border border-mist/40 px-4 py-2 text-sm text-glass transition hover:border-glass/50"
+			>
 				Start a project
-			</a>
+			</MagneticButton>
 		</div>
 	</div>
 </nav>

@@ -7,6 +7,8 @@
 :root {
 	--font-display: 'Fraunces', serif;
 	--font-ui: 'Satoshi', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	--font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+		'Courier New', monospace;
 	color-scheme: only dark;
 	--color-ink: 11 15 20;
 	--color-fog: 207 216 227;
@@ -41,7 +43,7 @@
 }
 
 html {
-	scroll-behavior: smooth;
+	scroll-behavior: auto;
 }
 
 body {

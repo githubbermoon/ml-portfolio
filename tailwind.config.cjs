@@ -6,6 +6,7 @@ module.exports = {
 			fontFamily: {
 				display: ['var(--font-display)'],
 				ui: ['var(--font-ui)'],
+				mono: ['var(--font-mono)'],
 			},
 			colors: {
 				ink: 'rgb(var(--color-ink) / <alpha-value>)',
