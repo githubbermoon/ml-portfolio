@@ -1,5 +1,6 @@
 ---
 import ThemeToggle from '../islands/ThemeToggle';
+import FilmToggle from '../islands/FilmToggle';
 import MagneticButton from '../islands/MagneticButton';
 
 const links = [
@@ -19,6 +20,7 @@ const links = [
 			))}
 		</div>
 		<div class="flex items-center gap-4">
+			<FilmToggle client:load />
 			<ThemeToggle client:load />
 			<MagneticButton
 				client:load

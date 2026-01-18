@@ -23,11 +23,22 @@ import SmoothScroll from '../islands/SmoothScroll';
 				? storedTheme
 				: (prefersLight ? 'bright' : 'dark');
 			document.documentElement.dataset.theme = resolvedTheme;
+			const storedFilm = localStorage.getItem('clawd-film');
+			const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			const prefersContrast = window.matchMedia('(prefers-contrast: more)').matches;
+			const filmEnabled = !prefersReduced && !prefersContrast && (
+				storedFilm === 'on' ? true : storedFilm === 'off' ? false : resolvedTheme !== 'bright'
+			);
+			document.documentElement.dataset.film = filmEnabled ? 'on' : 'off';
 		</script>
 		<title>{title}</title>
 	</head>
 	<body class:list={[bodyClass]}>
 		<SmoothScroll client:load />
 		<slot />
+		<div class="film-overlay" aria-hidden="true">
+			<div class="film-grain"></div>
+			<div class="film-vignette"></div>
+		</div>
 	</body>
 </html>

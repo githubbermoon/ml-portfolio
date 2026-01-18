@@ -65,6 +65,43 @@ body::after {
 	background: linear-gradient(to bottom, transparent, rgb(var(--color-ink) / 1));
 }
 
+.film-overlay {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	opacity: 0;
+	z-index: 40;
+}
+
+[data-film='on'] .film-overlay {
+	opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce), (prefers-contrast: more) {
+	.film-overlay {
+		opacity: 0 !important;
+	}
+}
+
+.film-grain,
+.film-vignette {
+	position: absolute;
+	inset: 0;
+}
+
+.film-grain {
+	opacity: 0.05;
+	background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGZpbHRlciBpZD0ibiIgeD0iMCIgeT0iMCIgd2lkdGg9IjEyMCUiIGhlaWdodD0iMTIwJSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuOCIgbnVtT2N0YXZlcz0iMiIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWx0ZXI9InVybCgjbikiIG9wYWNpdHk9IjAuNCIvPjwvc3ZnPg==");
+	background-size: 140px 140px;
+	mix-blend-mode: soft-light;
+}
+
+.film-vignette {
+	opacity: 0.35;
+	background: radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.25) 100%);
+	mix-blend-mode: multiply;
+}
+
 h1, h2, h3, h4 {
 	@apply font-display text-glass;
 	letter-spacing: -0.01em;
