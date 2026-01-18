@@ -23,8 +23,8 @@ const headerVariant = isTerrainProject ? 'terrain' : 'calm';
 <BaseLayout title={`${project.data.title} | Clawd ML Portfolio`}>
 	<Nav />
 	<main>
-		<section class="relative min-h-[60vh] overflow-hidden">
-			<SectionScene client:only="react" variant={headerVariant} />
+		<section id="project-hero" class="relative min-h-[60vh] overflow-hidden">
+			<SectionScene client:only="react" variant={headerVariant} sectionId="project-hero" />
 			{isTerrainProject && (
 				<div class="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_20%_15%,rgba(125,211,252,0.18),transparent_55%),radial-gradient(circle_at_80%_0%,rgba(245,158,11,0.14),transparent_50%),linear-gradient(to_bottom,rgba(2,6,12,0.35),rgba(2,6,12,0.95))]"></div>
 			)}

@@ -70,7 +70,7 @@ D --> E[Dashboard]
 			title="Systems that connect models and meaning"
 			subtitle="Computer vision, ML prototyping, and backend delivery with clean, explainable artifacts."
 		>
-			<SectionScene client:only="react" variant="pipeline" />
+			<SectionScene client:only="react" variant="pipeline" sectionId="capabilities" />
 			<div class="grid gap-6 md:grid-cols-[1.2fr_1fr]">
 				<div data-animate>
 					<MermaidDiagram client:load definition={mermaidDefinition} />
@@ -112,7 +112,7 @@ D --> E[Dashboard]
 			title="Cinematic demos with measurable impact"
 			subtitle="Each project includes an ML demo, results, and a visual story."
 		>
-			<SectionScene client:only="react" variant="carousel" />
+			<SectionScene client:only="react" variant="carousel" sectionId="work" />
 			<div class="grid gap-6 md:grid-cols-3">
 				<div class="glass-panel p-6" data-animate>
 					<p class="text-sm text-mist">Terrain Safety Analysis &amp; Navigation</p>
@@ -139,7 +139,7 @@ D --> E[Dashboard]
 			title="Ready for new collaborations"
 			subtitle="Let us connect the model story to the product story."
 		>
-			<SectionScene client:only="react" variant="calm" />
+			<SectionScene client:only="react" variant="calm" sectionId="contact" />
 			<div class="glass-panel grid gap-6 p-8 md:grid-cols-[1.4fr_1fr]" data-animate>
 				<div>
 					<p class="text-sm uppercase tracking-[0.2em] text-mist">Availability</p>

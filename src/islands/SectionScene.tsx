@@ -1,11 +1,13 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Environment, Float, OrbitControls } from '@react-three/drei';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Environment, Float } from '@react-three/drei';
 import { SheetProvider, editable as e } from '@theatre/r3f';
 import { Color, DoubleSide, MathUtils, Group, ShaderMaterial } from 'three';
 import { detectAutoTier, getStoredTier, type PerfTier } from '../lib/perfGate';
 import { getSceneSheet } from '../lib/theatre';
 import { useResolvedTheme } from '../lib/theme';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 type Variant = 'pipeline' | 'carousel' | 'calm' | 'terrain';
 
@@ -221,7 +223,13 @@ const variantMap: Record<Variant, (tier: PerfTier) => JSX.Element> = {
 	terrain: (tier) => <Terrain tier={tier} />,
 };
 
-export default function SectionScene({ variant = 'pipeline' }: { variant?: Variant }) {
+export default function SectionScene({
+	variant = 'pipeline',
+	sectionId,
+}: {
+	variant?: Variant;
+	sectionId?: string;
+}) {
 	const tier = usePerfTier();
 	const sheet = useMemo(() => getSceneSheet(`Section-${variant}`), [variant]);
 	const theme = useResolvedTheme();
@@ -243,16 +251,46 @@ export default function SectionScene({ variant = 'pipeline' }: { variant?: Varia
 				<ambientLight intensity={isTerrain ? 0.3 : 0.6} />
 				<pointLight position={[3, 2, 2]} intensity={isTerrain ? 0.6 : 1.2} />
 				{isTerrain && <fog attach="fog" args={['#05070d', 3.5, 8]} />}
+				<SectionCameraRig sectionId={sectionId ?? variant} isTerrain={isTerrain} />
 				<SheetProvider sheet={sheet}>
 					<Suspense fallback={null}>
 						<Environment preset={isTerrain ? 'night' : 'warehouse'} />
 						{variantMap[variant](tier)}
 					</Suspense>
 				</SheetProvider>
-				{tier === 'high' && !isTerrain && (
-					<OrbitControls enableZoom={false} enablePan={false} />
-				)}
 			</Canvas>
 		</div>
 	);
+}
+
+function SectionCameraRig({ sectionId, isTerrain }: { sectionId: string; isTerrain: boolean }) {
+	const { camera } = useThree();
+
+	useEffect(() => {
+		if (typeof window === 'undefined') return;
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		const section = document.getElementById(sectionId);
+		if (!section) return;
+
+		gsap.registerPlugin(ScrollTrigger);
+
+		const ctx = gsap.context(() => {
+			gsap.to(camera.position, {
+				x: isTerrain ? 0.3 : 0.18,
+				y: isTerrain ? 0.8 : -0.1,
+				z: isTerrain ? 3.1 : 3.4,
+				ease: 'none',
+				scrollTrigger: {
+					trigger: section,
+					start: 'top bottom',
+					end: 'bottom top',
+					scrub: true,
+				},
+			});
+		}, section);
+
+		return () => ctx.revert();
+	}, [camera, sectionId, isTerrain]);
+
+	return null;
 }

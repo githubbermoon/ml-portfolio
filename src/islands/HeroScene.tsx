@@ -1,10 +1,12 @@
-import { Suspense, useEffect, useMemo, useState } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Suspense, useEffect, useMemo, useState, useRef } from 'react';
+import { Canvas, useThree } from '@react-three/fiber';
 import { Environment, Float, MeshTransmissionMaterial } from '@react-three/drei';
 import { Bloom, ChromaticAberration, EffectComposer, Noise, Vignette } from '@react-three/postprocessing';
 import { SheetProvider, editable as e } from '@theatre/r3f';
 import { BlendFunction } from 'postprocessing';
 import { Vector2 } from 'three';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { detectAutoTier, getStoredTier, type PerfTier } from '../lib/perfGate';
 import { getSceneSheet } from '../lib/theatre';
 import { useResolvedTheme } from '../lib/theme';
@@ -38,11 +40,12 @@ type GlassProps = {
 	samples: number;
 	resolution: number;
 	distortionScale: number;
+	clusterRef: React.MutableRefObject<THREE.Group | null>;
 };
 
-function GlassCluster({ samples, resolution, distortionScale }: GlassProps) {
+function GlassCluster({ samples, resolution, distortionScale, clusterRef }: GlassProps) {
 	return (
-		<e.group theatreKey="hero-cluster">
+		<e.group theatreKey="hero-cluster" ref={clusterRef}>
 			<Float speed={1.2} rotationIntensity={0.2} floatIntensity={0.6}>
 				<e.mesh theatreKey="hero-icosa" position={[-1.2, 0.2, 0]}>
 					<icosahedronGeometry args={[0.8, 1]} />
@@ -95,6 +98,7 @@ export default function HeroScene() {
 	const chromaOffset = useMemo(() => new Vector2(0.0014, 0.0011), []);
 	const background =
 		theme === 'bright' ? [244 / 255, 247 / 255, 251 / 255] : [0, 0, 0];
+	const clusterRef = useRef<THREE.Group | null>(null);
 	if (tier === 'off') return null;
 
 	return (
@@ -107,12 +111,14 @@ export default function HeroScene() {
 				<ambientLight intensity={0.7} />
 				<pointLight position={[4, 3, 2]} intensity={1.5} />
 				<SheetProvider sheet={sheet}>
+					<HeroCameraRig clusterRef={clusterRef} />
 					<Suspense fallback={null}>
 						<Environment preset="city" />
 						<GlassCluster
 							samples={samples}
 							resolution={resolution}
 							distortionScale={distortionScale}
+							clusterRef={clusterRef}
 						/>
 					</Suspense>
 					<EffectComposer multisampling={isHigh ? 4 : 0}>
@@ -133,4 +139,48 @@ export default function HeroScene() {
 			</Canvas>
 		</div>
 	);
+}
+
+function HeroCameraRig({ clusterRef }: { clusterRef: React.MutableRefObject<THREE.Group | null> }) {
+	const { camera } = useThree();
+
+	useEffect(() => {
+		if (typeof window === 'undefined') return;
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		const heroSection = document.querySelector('#hero');
+		if (!heroSection || !clusterRef.current) return;
+
+		gsap.registerPlugin(ScrollTrigger);
+
+		const ctx = gsap.context(() => {
+			gsap.to(camera.position, {
+				x: 0.25,
+				y: -0.15,
+				z: 3.2,
+				ease: 'none',
+				scrollTrigger: {
+					trigger: heroSection,
+					start: 'top top',
+					end: 'bottom top',
+					scrub: true,
+				},
+			});
+
+			gsap.to(clusterRef.current!.rotation, {
+				y: 0.6,
+				x: -0.15,
+				ease: 'none',
+				scrollTrigger: {
+					trigger: heroSection,
+					start: 'top top',
+					end: 'bottom top',
+					scrub: true,
+				},
+			});
+		}, heroSection);
+
+		return () => ctx.revert();
+	}, [camera, clusterRef]);
+
+	return null;
 }
