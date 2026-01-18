@@ -33,6 +33,7 @@ export default function ScrollTimelines() {
 		});
 
 		const hero = document.querySelector('[data-hero]');
+		const navLinks = document.querySelectorAll('[data-nav-link]');
 		if (hero) {
 			const parallaxTargets = hero.querySelectorAll('[data-parallax]');
 			if (parallaxTargets.length) {
@@ -78,6 +79,21 @@ export default function ScrollTimelines() {
 							opacity: 0.25,
 							y: -20,
 							ease: 'none',
+						},
+						0
+					);
+				}
+
+				if (navLinks.length) {
+					tl.to(
+						navLinks,
+						{
+							opacity: 0,
+							y: -12,
+							skewY: -3,
+							filter: 'blur(2px)',
+							ease: 'none',
+							stagger: 0.04,
 						},
 						0
 					);

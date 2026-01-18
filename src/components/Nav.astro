@@ -13,12 +13,11 @@ const links = [
 ];
 ---
 
-<nav class="sticky top-0 z-20 w-full bg-ink/80 backdrop-blur">
+<nav class="fixed top-0 left-0 z-30 w-full">
 	<div class="section-shell flex items-center justify-between py-4">
-		<a href={base + '#hero'} class="font-display text-xl text-glass">Clawd</a>
 		<div class="hidden items-center gap-6 text-sm text-mist md:flex">
 			{links.map((link) => (
-				<a class="transition hover:text-glass" href={link.href}>{link.label}</a>
+				<a class="transition hover:text-glass" href={link.href} data-nav-link>{link.label}</a>
 			))}
 		</div>
 		<div class="flex items-center gap-4">
