@@ -2,12 +2,7 @@
 const { id, title, eyebrow, subtitle, class: className } = Astro.props;
 ---
 
-<section id={id} class:list={['relative', 'min-h-[70vh]', 'py-32', 'smooth-section-mask', className]} data-section>
-	<div
-		class="pointer-events-none absolute inset-0 z-0"
-		style="background: linear-gradient(to bottom, rgb(var(--color-ink) / 0), rgb(var(--color-ink) / 0.8) 15%, rgb(var(--color-ink) / 0.8) 85%, rgb(var(--color-ink) / 0));"
-		aria-hidden="true"
-	/>
+<section id={id} class:list={['relative', 'min-h-[50vh]', 'py-16', 'md:py-24', 'smooth-section-mask', className]} data-section>
 	<div class="section-shell">
 		{eyebrow && <p class="text-xs uppercase tracking-[0.2em] text-mist" data-animate>{eyebrow}</p>}
 		{title && <h2 class="mt-4 text-4xl md:text-5xl" data-animate>{title}</h2>}

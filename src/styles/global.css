@@ -118,7 +118,7 @@ h1, h2, h3, h4 {
 }
 
 .smooth-section-mask {
-	mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+	mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);
 }
 
 .glass-panel {
