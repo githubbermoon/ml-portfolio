@@ -32,6 +32,38 @@ export default function ScrollTimelines() {
 			}
 		});
 
+		const floatPanels = Array.from(document.querySelectorAll('[data-float]'));
+		floatPanels.forEach((panel, index) => {
+			gsap.to(panel, {
+				y: index % 2 === 0 ? -6 : 6,
+				duration: 3.4 + index * 0.3,
+				ease: 'sine.inOut',
+				yoyo: true,
+				repeat: -1,
+			});
+		});
+
+		const panelStacks = Array.from(document.querySelectorAll('[data-panel-stack]'));
+		panelStacks.forEach((stack) => {
+			const sheen = stack.querySelector('[data-panel-sheen]');
+			if (!sheen) return;
+			gsap.fromTo(
+				sheen,
+				{ xPercent: -30, opacity: 0.12 },
+				{
+					xPercent: 30,
+					opacity: 0.4,
+					ease: 'none',
+					scrollTrigger: {
+						trigger: stack,
+						start: 'top 85%',
+						end: 'bottom 15%',
+						scrub: true,
+					},
+				}
+			);
+		});
+
 		const hero = document.querySelector('[data-hero]');
 		const navLinks = document.querySelectorAll('[data-nav-link]');
 		if (hero) {

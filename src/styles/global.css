@@ -134,3 +134,65 @@ h1, h2, h3, h4 {
 		border-color: rgb(var(--panel-border) / calc(var(--panel-border-alpha) + 0.04));
 	}
 }
+
+.panel-stack {
+	position: relative;
+}
+
+.panel-stack::before {
+	content: '';
+	position: absolute;
+	inset: -18px;
+	border-radius: 36px;
+	background:
+		radial-gradient(120% 120% at 10% 0%, rgb(var(--color-glow) / 0.12), transparent 55%),
+		radial-gradient(120% 120% at 90% 20%, rgb(var(--color-amber) / 0.1), transparent 60%),
+		linear-gradient(180deg, rgb(255 255 255 / 0.04), transparent 65%);
+	box-shadow: 0 35px 90px rgba(2, 6, 23, 0.45);
+	opacity: 0.9;
+	z-index: 0;
+}
+
+.panel-sheen {
+	position: absolute;
+	inset: -35% -25%;
+	border-radius: 40px;
+	background: linear-gradient(120deg, transparent 20%, rgba(125, 211, 252, 0.25) 45%, transparent 70%);
+	filter: blur(6px);
+	mix-blend-mode: screen;
+	opacity: 0.18;
+	pointer-events: none;
+	z-index: 1;
+}
+
+.panel-stack > :not(.panel-sheen) {
+	position: relative;
+	z-index: 2;
+}
+
+.panel-emphasized {
+	position: relative;
+	overflow: hidden;
+}
+
+.panel-emphasized::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 45%);
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.panel-emphasized::after {
+	content: '';
+	position: absolute;
+	inset: 1px;
+	border-radius: inherit;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+	pointer-events: none;
+}
+
+.panel-float {
+	will-change: transform;
+}

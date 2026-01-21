@@ -70,7 +70,7 @@ const base = import.meta.env.BASE_URL;
 			title="Systems that connect models and meaning"
 			subtitle="Computer vision, ML prototyping, and backend delivery with clean, explainable artifacts."
 		>
-			<SectionScene client:only="react" variant="video" sectionId="capabilities" />
+			<SectionScene client:only="react" variant="video" sectionId="capabilities" enableSweep />
 			<div class="grid gap-6 md:grid-cols-[1.2fr_1fr]">
 				<div data-animate>
 					<MermaidDiagram client:load definition={mermaidDefinition} />
@@ -79,8 +79,9 @@ const base = import.meta.env.BASE_URL;
 					<ChartBlock client:load />
 				</div>
 			</div>
-			<div class="mt-10 grid gap-6 md:grid-cols-2">
-				<div class="glass-panel p-6" data-animate>
+			<div class="panel-stack mt-10 grid gap-6 md:grid-cols-2" data-panel-stack>
+				<div class="panel-sheen" aria-hidden="true" data-panel-sheen></div>
+				<div class="glass-panel panel-emphasized panel-float p-6" data-animate data-float>
 					<p class="text-xs uppercase tracking-[0.2em] text-mist">Core Skills</p>
 					<ul class="mt-4 space-y-2 text-sm text-glass font-mono">
 						<li>ML: PyTorch, OpenCV, NLP, Computer Vision, Hugging Face</li>
@@ -89,7 +90,7 @@ const base = import.meta.env.BASE_URL;
 						<li>Tools: AWS (EC2, S3), GitHub Actions, W&amp;B, Linux, Postman</li>
 					</ul>
 				</div>
-				<div class="glass-panel p-6" data-animate>
+				<div class="glass-panel panel-emphasized panel-float p-6" data-animate data-float>
 					<p class="text-xs uppercase tracking-[0.2em] text-mist">Education</p>
 					<div class="mt-4 space-y-4 text-sm text-glass">
 						<div>
