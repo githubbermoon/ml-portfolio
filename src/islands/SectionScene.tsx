@@ -200,7 +200,15 @@ const Terrain = ({ tier }: { tier: PerfTier }) => {
 		const mist = readCssRgb('--color-mist', fallbackMist);
 		const glow = readCssRgb('--color-glow', fallbackGlow);
 		applyRgbToColor(uniforms.uColorDeep.value, ink);
-		applyRgbToColor(uniforms.uColorHigh.value, mist);
+
+		// In bright mode, use a softer color for the terrain peaks so it doesn't look too dark/muddy
+		if (theme === 'bright') {
+			// Slate 400 [148, 163, 184] for a subtle technical drawing look
+			applyRgbToColor(uniforms.uColorHigh.value, [148, 163, 184]);
+		} else {
+			applyRgbToColor(uniforms.uColorHigh.value, mist);
+		}
+		
 		applyRgbToColor(uniforms.uColorGlow.value, glow);
 		applyRgbToColor(uniforms.uColorVoid.value, ink);
 	}, [theme, uniforms]);
@@ -243,7 +251,8 @@ const Terrain = ({ tier }: { tier: PerfTier }) => {
 };
 
 const VideoScene = () => {
-	const texture = useVideoTexture('/videos/alcrego_graphic.mp4', {
+	const videoSrc = `${import.meta.env.BASE_URL}videos/alcrego_graphic.mp4`;
+	const texture = useVideoTexture(videoSrc, {
 		muted: true,
 		loop: true,
 		autoplay: true,
