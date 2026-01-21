@@ -141,7 +141,7 @@ h1, h2, h3, h4 {
 }
 
 .glass-panel {
-	@apply rounded-3xl backdrop-blur-xl;
+	@apply rounded-[2.5rem] backdrop-blur-xl;
 	border: 0.5px solid rgb(var(--panel-border) / var(--panel-border-alpha));
 	background: rgb(var(--panel-bg) / var(--panel-alpha));
 	box-shadow: var(--panel-shadow);
@@ -162,7 +162,7 @@ h1, h2, h3, h4 {
 	content: '';
 	position: absolute;
 	inset: -18px;
-	border-radius: 36px;
+	border-radius: 56px;
 	background:
 		radial-gradient(120% 120% at 10% 0%, rgb(var(--color-glow) / 0.12), transparent 55%),
 		radial-gradient(120% 120% at 90% 20%, rgb(var(--color-amber) / 0.1), transparent 60%),
