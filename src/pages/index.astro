@@ -205,22 +205,24 @@ const base = import.meta.env.BASE_URL;
           </span>
         </ProjectCard>
 
-        <ProjectCard
-          client:visible
-          className="flex-1 min-w-[300px] max-w-[400px] p-6"
-          delay={0.3}
-          themeColor="#e3dcd2"
-          href={base + "blog-concept/"}
-        >
-          <p class="text-xs uppercase tracking-wider text-mist">Concept Lab</p>
-          <p class="mt-2 text-2xl font-light text-glass">Jiva Niharika</p>
-          <p class="mt-1 text-sm text-mist/60">SVG Path Animation</p>
-          <span
-            class="mt-8 inline-flex items-center text-sm text-glow group-hover:text-white transition-colors"
+        <div id="concept-lab-card" hidden aria-hidden="true">
+          <ProjectCard
+            client:visible
+            className="flex-1 min-w-[300px] max-w-[400px] p-6"
+            delay={0.3}
+            themeColor="#e3dcd2"
+            href={base + "blog-concept/"}
           >
-            View Concept <span class="ml-2">→</span>
-          </span>
-        </ProjectCard>
+            <p class="text-xs uppercase tracking-wider text-mist">Concept Lab</p>
+            <p class="mt-2 text-2xl font-light text-glass">Jiva Niharika</p>
+            <p class="mt-1 text-sm text-mist/60">SVG Path Animation</p>
+            <span
+              class="mt-8 inline-flex items-center text-sm text-glow group-hover:text-white transition-colors"
+            >
+              View Concept <span class="ml-2">→</span>
+            </span>
+          </ProjectCard>
+        </div>
 
         <ProjectCard
           client:visible
@@ -293,6 +295,50 @@ const base = import.meta.env.BASE_URL;
         </form>
       </div>
     </Section>
+
+    <script is:inline>
+      const conceptCard = document.getElementById("concept-lab-card");
+      const STORAGE_KEY = "concept-lab-visible";
+
+      const showConcept = () => {
+        if (!conceptCard) return;
+        conceptCard.hidden = false;
+        conceptCard.setAttribute("aria-hidden", "false");
+        sessionStorage.setItem(STORAGE_KEY, "true");
+      };
+
+      const hideConcept = () => {
+        if (!conceptCard) return;
+        conceptCard.hidden = true;
+        conceptCard.setAttribute("aria-hidden", "true");
+        sessionStorage.removeItem(STORAGE_KEY);
+      };
+
+      if (sessionStorage.getItem(STORAGE_KEY) === "true") {
+        showConcept();
+      }
+
+      window.addEventListener("keydown", (event) => {
+        const target = event.target;
+        if (
+          target instanceof HTMLElement &&
+          (target.tagName === "INPUT" ||
+            target.tagName === "TEXTAREA" ||
+            target.isContentEditable)
+        ) {
+          return;
+        }
+
+        if (event.shiftKey && (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "l") {
+          event.preventDefault();
+          if (conceptCard?.hidden) {
+            showConcept();
+          } else {
+            hideConcept();
+          }
+        }
+      });
+    </script>
   </main>
   <Footer />
 </BaseLayout>
