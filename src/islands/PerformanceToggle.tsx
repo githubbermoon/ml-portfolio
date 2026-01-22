@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { detectAutoTier, getStoredTier, setStoredTier, type PerfTier } from '../lib/perfGate';
 
 type ToggleTier = PerfTier | 'auto';
@@ -47,23 +48,37 @@ export default function PerformanceToggle() {
 	return (
 		<div className="flex flex-wrap items-center gap-2 text-xs text-mist">
 			<span className="uppercase tracking-[0.2em]">Performance</span>
-			<div className="flex gap-2">
-				{options.map((option) => (
-					<button
-						key={option.value}
-						onClick={() => handleSelect(option.value)}
-						className={`rounded-full border px-3 py-1 transition ${
-							tier === option.value
-								? 'border-glass/60 text-glass'
-								: 'border-mist/40 hover:border-glass/50'
-						}`}
-					>
-						{option.label}
-					</button>
-				))}
-			</div>
+			<motion.div layout className="flex gap-2 rounded-full border border-mist/20 bg-glass/5 p-1">
+				{options.map((option) => {
+					const isActive = tier === option.value;
+					return (
+						<button
+							key={option.value}
+							onClick={() => handleSelect(option.value)}
+							className={`relative rounded-full px-3 py-1 transition-colors ${
+								isActive ? 'text-ink' : 'text-mist hover:text-glass'
+							}`}
+						>
+							{isActive && (
+								<motion.div
+									layoutId="activeTier"
+									className="absolute inset-0 rounded-full bg-glass"
+									transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+								/>
+							)}
+							<span className="relative z-10">{option.label}</span>
+						</button>
+					);
+				})}
+			</motion.div>
 			{tier === 'auto' && (
-				<span className="text-mist">Auto: {autoTier}</span>
+				<motion.span 
+					initial={{ opacity: 0, x: -10 }} 
+					animate={{ opacity: 1, x: 0 }}
+					className="text-mist"
+				>
+					Auto: {autoTier}
+				</motion.span>
 			)}
 		</div>
 	);

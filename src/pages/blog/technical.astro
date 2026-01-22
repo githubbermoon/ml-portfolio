@@ -1,0 +1,916 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import GhostSilk from "../../islands/GhostSilk";
+
+const base = import.meta.env.BASE_URL;
+
+const posts = [
+  {
+    title: "Evaluating SegFormer on Edge Devices: A 3-Month Study",
+    date: "2024-12-15",
+    tags: ["Semantic Segmentation", "Edge Deployment"],
+    summary:
+      "Benchmarking SegFormer variants (B0-B5) on NVIDIA Jetson Nano and comparing inference latency vs. mIoU. Key findings on quantization strategies and memory bandwidth bottlenecks.",
+    code: `# SegFormer inference benchmark
+import torch
+from transformers import SegformerForSemanticSegmentation
+
+model = SegformerForSemanticSegmentation.from_pretrained(
+    "nvidia/segformer-b0-finetuned-ade-512-512"
+)
+model.eval().to("cuda")
+
+# Measure latency
+with torch.no_grad():
+    latency = benchmark(model, input_tensor)
+print(f"mIoU: {miou:.2f}, Latency: {latency:.2f}ms")`,
+  },
+  {
+    title: "Building a Reliable ML Pipeline with DVC and FastAPI",
+    date: "2024-11-28",
+    tags: ["MLOps", "Data Versioning"],
+    summary:
+      "How we achieved reproducible experiments and zero-downtime model updates using DVC for versioning, FastAPI for serving, and Prometheus for observability.",
+    code: `# FastAPI model serving endpoint
+from fastapi import FastAPI
+import dvc.api
+
+app = FastAPI()
+
+@app.post("/predict")
+async def predict(data: InputData):
+    # Load versioned model with DVC
+    model = dvc.api.load_model("models/v1.2.pkl")
+    result = model.predict(data.features)
+    return {"prediction": result}`,
+  },
+  {
+    title:
+      "Error Analysis: Why Our Object Detector Failed on Reflective Surfaces",
+    date: "2024-11-10",
+    tags: ["Computer Vision", "Debugging"],
+    summary:
+      "A deep dive into failure modes of YOLOv8 on glass and metallic surfaces. We trained a specialized augmentation pipeline and reduced false negatives by 34%.",
+    code: `# Custom augmentation for reflective surfaces
+import albumentations as A
+
+transform = A.Compose([
+    A.RandomBrightnessContrast(p=0.8),
+    A.GaussNoise(var_limit=(10.0, 50.0), p=0.5),
+    A.Blur(blur_limit=5, p=0.3),
+    # Simulates reflections
+    A.RandomSunFlare(p=0.4),
+])
+
+augmented = transform(image=image)["image"]`,
+  },
+  {
+    title: "Comparing Depth Estimation Models: MiDaS vs Depth Anything V2",
+    date: "2024-10-22",
+    tags: ["Depth Estimation", "Benchmarks"],
+    summary:
+      "Side-by-side evaluation of monocular depth models on real-world terrain navigation tasks. Depth Anything V2 showed superior edge preservation but higher latency.",
+    code: `# Depth model comparison
+from transformers import pipeline
+
+midas = pipeline("depth-estimation", model="Intel/dpt-large")
+depth_anything = pipeline("depth-estimation", 
+                         model="depth-anything/Depth-Anything-V2-Large")
+
+# Benchmark on 1000 frames
+for img in test_set:
+    depth_map = model(img)
+    metrics = evaluate_depth(depth_map, ground_truth)`,
+  },
+];
+
+const getReadingTime = (text: string) => {
+  const words = text.split(" ").length;
+  return Math.ceil(words / 200);
+};
+---
+
+<BaseLayout title="Technical Blog | Clawd ML Portfolio">
+  <div
+    class="page-root relative min-h-screen overflow-hidden"
+    data-theme="dark"
+  >
+    <div class="absolute inset-0 z-0 pointer-events-none">
+      <GhostSilk client:only="react" />
+    </div>
+
+    <!-- BACK BUTTON -->
+    <a
+      href={base + "blog/"}
+      class="fixed top-8 left-8 z-50 p-3 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-mist hover:text-fog hover:bg-white/10 hover:border-white/20 transition-all duration-300 group"
+      aria-label="Back to Blog"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="group-hover:-translate-x-1 transition-transform duration-300"
+      >
+        <path d="m15 18-6-6 6-6"></path>
+      </svg>
+    </a>
+
+    <!-- THEME TOGGLE BUTTON -->
+    <button
+      id="theme-toggle"
+      class="fixed top-20 right-4 z-50 p-3 rounded-full bg-black/30 dark:bg-white/10 border border-white/20 hover:border-white/40 transition-all backdrop-blur-sm"
+    >
+      <svg
+        id="sun-icon"
+        class="w-5 h-5 text-yellow-400 hidden"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+        ></path>
+      </svg>
+      <svg
+        id="moon-icon"
+        class="w-5 h-5 text-blue-400"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+        ></path>
+      </svg>
+    </button>
+
+    <!-- SCROLL PROGRESS SVG LINE -->
+    <div
+      id="scroll-progress-container"
+      class="fixed top-0 left-0 right-0 z-50 transition-opacity"
+    >
+      <svg class="w-full h-3" preserveAspectRatio="none">
+        <defs>
+          <linearGradient
+            id="progress-gradient"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="0%"
+          >
+            <stop offset="0%" style="stop-color:#a8a29e;stop-opacity:1"></stop>
+            <stop offset="50%" style="stop-color:#e7e5e4;stop-opacity:1"></stop>
+            <stop offset="100%" style="stop-color:#fafaf9;stop-opacity:1"
+            ></stop>
+          </linearGradient>
+          <filter id="progress-glow">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"
+            ></feGaussianBlur>
+            <feMerge>
+              <feMergeNode in="coloredBlur"></feMergeNode>
+              <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+          </filter>
+        </defs>
+        <line
+          x1="0"
+          y1="6"
+          x2="100%"
+          y2="6"
+          stroke="rgba(128,128,128,0.2)"
+          stroke-width="1"
+          class="track-line"></line>
+        <line
+          id="progress-line"
+          x1="0"
+          y1="6"
+          x2="100%"
+          y2="6"
+          stroke="url(#progress-gradient)"
+          stroke-width="3"
+          stroke-linecap="round"
+          filter="url(#progress-glow)"
+          style="stroke-dasharray: 2000; stroke-dashoffset: 2000;"></line>
+      </svg>
+    </div>
+
+    <!-- DETAIL VIEW OVERLAY (Always mounted for Canvas size) -->
+    <div
+      id="detail-view"
+      class="fixed inset-0 z-[100] flex flex-col bg-black/95 backdrop-blur-xl opacity-0 pointer-events-none transition-opacity duration-500"
+    >
+      <!-- GHOST SILK (Only visible here) -->
+      <div class="absolute inset-0 z-0 pointer-events-none">
+        <GhostSilk client:only="react" />
+      </div>
+
+      <!-- CLOSE BUTTON -->
+      <button
+        id="close-detail"
+        class="absolute top-6 right-6 z-50 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors border border-white/10 text-mist hover:text-fog"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <!-- CONTENT CONTAINER -->
+      <div
+        class="relative z-10 w-full max-w-4xl mx-auto h-full overflow-y-auto px-6 py-20 no-scrollbar"
+      >
+        <div class="space-y-8 animate-fade-in-up">
+          <div class="flex items-center gap-4 text-sm font-mono text-mist/70">
+            <span id="detail-date"></span>
+            <span class="w-px h-4 bg-white/20"></span>
+            <span id="detail-read-time"></span>
+          </div>
+
+          <h1
+            id="detail-title"
+            class="text-4xl md:text-6xl font-serif text-transparent bg-clip-text bg-gradient-to-b from-glass to-mist/70"
+          >
+          </h1>
+
+          <div id="detail-tags" class="flex flex-wrap gap-2"></div>
+
+          <p
+            id="detail-summary"
+            class="text-xl text-fog/80 leading-relaxed font-light font-serif italic border-l-2 border-fog/20 pl-6 my-8"
+          >
+          </p>
+
+          <!-- CODE BLOCK (Monochrome) -->
+          <div
+            class="rounded-xl overflow-hidden border border-white/10 bg-black/50 backdrop-blur-md shadow-2xl"
+          >
+            <div
+              class="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-white/5"
+            >
+              <div class="flex gap-2">
+                <div class="w-3 h-3 rounded-full bg-white/20"></div>
+                <div class="w-3 h-3 rounded-full bg-white/10"></div>
+                <div class="w-3 h-3 rounded-full bg-white/5"></div>
+              </div>
+              <span class="text-xs font-mono text-mist/70">snippet.py</span>
+            </div>
+            <pre
+              class="p-6 overflow-x-auto text-sm font-mono leading-relaxed text-fog/90">
+                        <code id="detail-code" />
+                    </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TERMINAL OVERLAY (Kept if needed, but updated colors) -->
+    <div
+      id="terminal-overlay"
+      class="terminal-overlay fixed inset-0 z-[100] backdrop-blur-md hidden items-center justify-center"
+    >
+      <div class="w-full max-w-2xl mx-4">
+        <div class="terminal-window overflow-hidden">
+          <div
+            class="terminal-header px-4 py-2 flex items-center justify-between"
+          >
+            <span class="terminal-title text-sm font-mono"
+              >clawd://terminal</span
+            >
+            <button
+              id="close-terminal"
+              class="terminal-close transition-colors"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="p-6 font-mono text-sm terminal-body">
+            <div class="terminal-welcome mb-4">
+              <span class="terminal-prompt">></span> Welcome to Clawd Terminal v1.0
+            </div>
+            <div class="space-y-2 terminal-help mb-6">
+              <div>> Available commands:</div>
+              <div class="pl-4 space-y-1">
+                <div>
+                  <span class="terminal-cmd">skills</span> - View technical skills
+                </div>
+                <div>
+                  <span class="terminal-cmd">contact</span> - Get contact information
+                </div>
+                <div>
+                  <span class="terminal-cmd">resume</span> - Download resume
+                </div>
+                <div>
+                  <span class="terminal-cmd">clear</span> - Clear terminal
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="terminal-prompt">></span>
+              <input
+                id="terminal-input"
+                type="text"
+                class="terminal-input flex-1 bg-transparent outline-none"
+                placeholder="Type a command..."
+                autocomplete="off"
+              />
+            </div>
+            <div id="terminal-output" class="terminal-output mt-4 space-y-1">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="relative z-10">
+      <Nav />
+      <main class="section-shell pb-20">
+        <div class="mb-16">
+          <h1
+            class="page-title text-5xl md:text-6xl font-serif tracking-wide text-transparent bg-clip-text bg-gradient-to-b from-glass to-mist/80"
+          >
+            Technical Blog
+          </h1>
+          <p class="page-subtitle mt-6 max-w-2xl text-lg">
+            Systems thinking, model evaluation, and build notes from applied ML
+            work.
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <button class="filter-tag active" data-tag="all">All Posts</button>
+            <button class="filter-tag" data-tag="Semantic Segmentation"
+              >Semantic Segmentation</button
+            >
+            <button class="filter-tag" data-tag="MLOps">MLOps</button>
+            <button class="filter-tag" data-tag="Computer Vision"
+              >Computer Vision</button
+            >
+            <button class="filter-tag" data-tag="Depth Estimation"
+              >Depth Estimation</button
+            >
+          </div>
+        </div>
+
+        <div id="blog-grid" class="grid gap-8 md:grid-cols-2 lg:grid-cols-2">
+          {
+            posts.map((post) => (
+              <article
+                class="post-card group glass-panel relative overflow-hidden p-8 transition-all duration-300 cursor-pointer"
+                data-title={post.title}
+                data-summary={post.summary}
+                data-date={post.date}
+                data-tags={post.tags.join(",")}
+                data-code={post.code}
+              >
+                <div class="absolute inset-0 glass-reflection pointer-events-none" />
+                <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-r from-transparent via-white/5 to-transparent shimmer" />
+
+                <div class="relative z-10">
+                  <div class="flex items-center gap-3 mb-4">
+                    <time class="card-meta text-xs font-mono">{post.date}</time>
+                    <span class="card-meta text-xs font-mono">
+                      {getReadingTime(post.summary)} min read
+                    </span>
+                    <div class="flex-1 h-px meta-divider" />
+                  </div>
+
+                  <h2 class="card-title text-2xl font-semibold mb-3 transition-colors">
+                    {post.title}
+                  </h2>
+
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    {post.tags.map((tag) => (
+                      <span class="tag-badge px-2 py-1 text-xs rounded backdrop-blur-sm">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <p class="card-summary text-sm leading-relaxed mb-4">
+                    {post.summary}
+                  </p>
+
+                  <div class="flex items-center gap-2 mt-6 text-xs font-mono text-[#a8a29e] opacity-50 group-hover:opacity-100 transition-opacity">
+                    <span>Read Analysis</span>
+                    <svg
+                      class="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </main>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  /* Light/Dark Mode Variables */
+  .page-root {
+    background: #0a0a0a; /* Default solid background for list view */
+  }
+
+  .page-root[data-theme="bright"] {
+    background: #fafafa;
+  }
+
+  /* MONOCHROME / GLASS STYLING (No Green) */
+  .page-root[data-theme="bright"] .terminal-window {
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  .page-root[data-theme="bright"] .terminal-header {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+  .page-root[data-theme="bright"] .terminal-body {
+    color: #333;
+  }
+  .page-root[data-theme="bright"] .terminal-title,
+  .terminal-close,
+  .terminal-prompt {
+    color: #555;
+  }
+
+  .terminal-window {
+    background: #050505;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  }
+  .terminal-header {
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .terminal-title {
+    color: #a8a29e;
+  }
+  .terminal-close {
+    color: #a8a29e;
+  }
+  .terminal-body {
+    color: #d6d3d1;
+  }
+  .terminal-welcome {
+    color: #a8a29e;
+  }
+  .terminal-prompt {
+    color: #78716c;
+  }
+  .terminal-cmd {
+    color: #fff;
+  }
+  .terminal-output {
+    color: #a8a29e;
+  }
+  .terminal-input {
+    color: #fff;
+  }
+
+  /* Existing styles adapted */
+  .page-root[data-theme="bright"] .canvas-layer {
+    opacity: 0.15 !important;
+  }
+  .page-root[data-theme="bright"] .glow-1 {
+    background: radial-gradient(
+      circle at 30% 20%,
+      rgba(0, 0, 0, 0.05),
+      transparent 40%
+    );
+  }
+  .page-root[data-theme="bright"] .glow-2 {
+    background: radial-gradient(
+      circle at 70% 80%,
+      rgba(0, 0, 0, 0.05),
+      transparent 40%
+    );
+  }
+  .page-root[data-theme="bright"] .page-subtitle {
+    color: #666;
+  }
+  .page-root[data-theme="bright"] .card-title {
+    color: #1a1a1a;
+  }
+  .page-root[data-theme="bright"] .card-title:hover {
+    color: #333;
+  }
+  .page-root[data-theme="bright"] .card-summary {
+    color: #555;
+  }
+  .page-root[data-theme="bright"] .card-meta {
+    color: #888;
+  }
+  .page-root[data-theme="bright"] .meta-divider {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.2), transparent);
+  }
+  .page-root[data-theme="bright"] .tag-badge {
+    background: rgba(0, 0, 0, 0.05);
+    color: #666;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .page-root[data-theme="bright"] .glass-panel {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+  }
+  .page-root[data-theme="bright"] .glass-panel:hover {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+  .page-root[data-theme="bright"] .filter-tag {
+    background: rgba(0, 0, 0, 0.05);
+    color: #666;
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+  .page-root[data-theme="bright"] .filter-tag:hover {
+    border-color: rgba(0, 0, 0, 0.3);
+    color: #000;
+  }
+  .page-root[data-theme="bright"] .filter-tag.active {
+    background: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.5);
+    color: #000;
+  }
+  .page-root[data-theme="bright"] .hide-btn {
+    background: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .page-root[data-theme="bright"] .hide-btn:hover {
+    color: rgba(0, 0, 0, 0.9);
+  }
+  .page-root[data-theme="bright"] .track-line {
+    stroke: rgba(0, 0, 0, 0.2) !important;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .canvas-layer {
+      opacity: 0.5;
+    }
+    .glow-1 {
+      background: radial-gradient(
+        circle at 30% 20%,
+        rgba(255, 255, 255, 0.02),
+        transparent 40%
+      );
+    }
+    .glow-2 {
+      background: radial-gradient(
+        circle at 70% 80%,
+        rgba(255, 255, 255, 0.02),
+        transparent 40%
+      );
+    }
+    .page-subtitle {
+      color: #a8a29e;
+    }
+    .card-title {
+      color: #e7e5e4;
+    }
+    .card-title:hover {
+      color: #e3dcd2;
+    }
+    .card-summary {
+      color: #a8a29e;
+    }
+    .card-meta {
+      color: #8c8881;
+    }
+    .meta-divider {
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+    }
+    .tag-badge {
+      background: rgba(0, 0, 0, 0.3);
+      color: #a8a29e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .glass-panel {
+      background: rgba(20, 20, 20, 0.6);
+      backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow:
+        0 8px 32px 0 rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+    }
+    .glass-panel:hover {
+      background: rgba(30, 30, 30, 0.8);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    .filter-tag {
+      background: rgba(255, 255, 255, 0.05);
+      color: #a8a29e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .filter-tag:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+    .filter-tag.active {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+      color: #fff;
+    }
+    .hide-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .hide-btn:hover {
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .track-line {
+      stroke: rgba(255, 255, 255, 0.1) !important;
+    }
+  }
+
+  .glass-reflection {
+    background: linear-gradient(
+      to bottom right,
+      rgba(255, 255, 255, 0.03),
+      transparent
+    );
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  .shimmer {
+    animation: shimmer 2s ease-in-out;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .filter-tag {
+    @apply px-4 py-2 rounded-full text-sm font-mono transition-all cursor-pointer;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+
+<script>
+  const pageRoot = document.querySelector(".page-root");
+  const themeToggle = document.getElementById("theme-toggle");
+  const sunIcon = document.getElementById("sun-icon");
+  const moonIcon = document.getElementById("moon-icon");
+  const THEME_KEY = "clawd-theme";
+
+  const setPageTheme = (theme: string) => {
+    const resolved = theme === "bright" ? "bright" : "dark";
+    pageRoot?.setAttribute("data-theme", resolved);
+    if (resolved === "bright") {
+      sunIcon?.classList.remove("hidden");
+      moonIcon?.classList.add("hidden");
+    } else {
+      sunIcon?.classList.add("hidden");
+      moonIcon?.classList.remove("hidden");
+    }
+  };
+
+  const syncThemeFromDocument = () => {
+    const current =
+      document.documentElement.dataset.theme === "bright" ? "bright" : "dark";
+    setPageTheme(current);
+  };
+
+  syncThemeFromDocument();
+
+  window.addEventListener("theme-change", (event) => {
+    const detail = (event as CustomEvent<{ theme?: string }>).detail;
+    if (detail?.theme) {
+      setPageTheme(detail.theme);
+      return;
+    }
+    syncThemeFromDocument();
+  });
+
+  // Interaction Elements
+  const detailView = document.getElementById("detail-view");
+  const closeDetailBtn = document.getElementById("close-detail");
+  const detailTitle = document.getElementById("detail-title");
+  const detailSummary = document.getElementById("detail-summary");
+  const detailDate = document.getElementById("detail-date");
+  const detailTags = document.getElementById("detail-tags");
+  const detailCode = document.getElementById("detail-code");
+  const detailReadTime = document.getElementById("detail-read-time");
+
+  // Open Detail View
+  document.querySelectorAll(".post-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      console.log("Post Card Clicked!");
+      const title = (card as HTMLElement).dataset.title || "";
+      const summary = (card as HTMLElement).dataset.summary || "";
+      const date = (card as HTMLElement).dataset.date || "";
+      const tags = ((card as HTMLElement).dataset.tags || "").split(",");
+      const code = (card as HTMLElement).dataset.code || "";
+
+      if (detailTitle) detailTitle.textContent = title;
+      if (detailSummary) detailSummary.textContent = summary;
+      if (detailDate) detailDate.textContent = date;
+      if (detailCode) detailCode.textContent = code;
+
+      // Calc read time
+      const words = summary.split(" ").length;
+      const min = Math.ceil(words / 200);
+      if (detailReadTime) detailReadTime.textContent = `${min} min read`;
+
+      if (detailTags) {
+        detailTags.innerHTML = "";
+        tags.forEach((tag) => {
+          const span = document.createElement("span");
+          span.className =
+            "px-3 py-1 rounded-full bg-glass/10 text-xs font-mono text-mist border border-fog/10";
+          span.textContent = tag;
+          detailTags.appendChild(span);
+        });
+      }
+
+      console.log("Detail View Element found:", !!detailView);
+      if (detailView) {
+        // Show: Remove pointer-events-none, add opacity-100
+        detailView.classList.remove("pointer-events-none", "opacity-0");
+        detailView.classList.add("pointer-events-auto", "opacity-100");
+        document.body.style.overflow = "hidden"; // Lock scroll
+        console.log("Classes updated:", detailView.className);
+      }
+    });
+  });
+
+  // Close Detail View
+  closeDetailBtn?.addEventListener("click", () => {
+    if (detailView) {
+      // Hide: Add pointer-events-none, remove opacity-100
+      detailView.classList.remove("pointer-events-auto", "opacity-100");
+      detailView.classList.add("pointer-events-none", "opacity-0");
+      document.body.style.overflow = ""; // Unlock scroll
+    }
+  });
+
+  // Theme toggle
+  themeToggle?.addEventListener("click", () => {
+    const current =
+      document.documentElement.dataset.theme === "bright" ? "bright" : "dark";
+    const next = current === "dark" ? "bright" : "dark";
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem(THEME_KEY, next);
+    window.dispatchEvent(new CustomEvent("theme-change", { detail: { theme: next } }));
+  });
+
+  const progressLine = document.getElementById("progress-line");
+  const progressContainer = document.getElementById(
+    "scroll-progress-container",
+  );
+  const hideBtn = document.getElementById("hide-progress");
+  const terminal = document.getElementById("terminal-overlay");
+  const terminalInput = document.getElementById(
+    "terminal-input",
+  ) as HTMLInputElement;
+  const terminalOutput = document.getElementById("terminal-output");
+  const closeTerminal = document.getElementById("close-terminal");
+
+  // Scroll progress
+  window.addEventListener("scroll", () => {
+    const height = document.documentElement.scrollHeight - window.innerHeight;
+    const scrolled = window.scrollY / height;
+    const dashLength = 2000;
+    const offset = dashLength - scrolled * dashLength;
+    if (progressLine) progressLine.style.strokeDashoffset = String(offset);
+  });
+
+  hideBtn?.addEventListener("click", () => {
+    if (progressContainer) progressContainer.style.opacity = "0";
+  });
+
+  // Filter
+  const filterBtns = document.querySelectorAll(".filter-tag");
+  const posts = document.querySelectorAll(".post-card");
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filterBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      const tag = (btn as HTMLElement).dataset.tag;
+      posts.forEach((post) => {
+        const tags = (post as HTMLElement).dataset.tags || "";
+        if (tag === "all" || tags.includes(tag || "")) {
+          (post as HTMLElement).style.display = "block";
+        } else {
+          (post as HTMLElement).style.display = "none";
+        }
+      });
+    });
+  });
+
+  // Terminal (Ctrl+K)
+  document.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+      e.preventDefault();
+      terminal?.classList.remove("hidden");
+      terminal?.classList.add("flex");
+      terminalInput?.focus();
+    }
+  });
+  closeTerminal?.addEventListener("click", () => {
+    terminal?.classList.add("hidden");
+    terminal?.classList.remove("flex");
+  });
+  terminalInput?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const cmd = terminalInput.value.trim().toLowerCase();
+      let response = "";
+      switch (cmd) {
+        case "skills":
+          response = "PyTorch, TensorFlow, OpenCV, FastAPI, Docker, AWS, MLOps";
+          break;
+        case "contact":
+          response = "Email: pranjal@example.com | GitHub: @pranjal";
+          break;
+        case "resume":
+          response = "Downloading resume... (Not implemented yet)";
+          break;
+        case "clear":
+          if (terminalOutput) terminalOutput.innerHTML = "";
+          terminalInput.value = "";
+          return;
+        default:
+          response = `Command not found: ${cmd}`;
+      }
+      if (terminalOutput) {
+        const line = document.createElement("div");
+        line.innerHTML = `<span class="terminal-prompt">></span> ${cmd}`;
+        terminalOutput.appendChild(line);
+        const output = document.createElement("div");
+        output.textContent = response;
+        output.className = "pl-4 terminal-output";
+        terminalOutput.appendChild(output);
+      }
+      terminalInput.value = "";
+    }
+  });
+</script>

@@ -8,14 +8,32 @@ const posts = await getCollection('blog');
 const base = import.meta.env.BASE_URL;
 ---
 
-<BaseLayout title="Writing | Clawd ML Portfolio">
+<BaseLayout title="Blog | Clawd ML Portfolio">
 	<Nav />
 	<main class="section-shell">
-		<h1 class="text-4xl md:text-5xl">Writing</h1>
+		<h1 class="text-4xl md:text-5xl">Blog</h1>
 		<p class="mt-4 max-w-2xl text-mist">
-			Notes on ML systems, visuals, and interactive storytelling.
+			Long-form notes, experiments, and visual essays.
 		</p>
-		<div class="mt-10 grid gap-6">
+		<div class="mt-10 grid gap-6 md:grid-cols-2">
+			<section class="glass-panel p-6">
+				<p class="text-xs uppercase tracking-[0.2em] text-mist">Technical Blog</p>
+				<h2 class="mt-4 text-2xl text-glass">Systems, models, and reproducible experiments</h2>
+				<p class="mt-3 text-mist">
+					Deep dives into ML pipelines, evaluation choices, and production-ready thinking.
+				</p>
+				<a class="mt-4 inline-block text-sm text-glow" href={base + 'blog/technical/'}>Explore</a>
+			</section>
+			<section class="glass-panel p-6">
+				<p class="text-xs uppercase tracking-[0.2em] text-mist">Ananta Nīhāra</p>
+				<h2 class="mt-4 text-2xl text-glass">Speculative essays and visual research</h2>
+				<p class="mt-3 text-mist">
+					Explorations of perception, cognition, and the cinematic side of intelligence.
+				</p>
+				<a class="mt-4 inline-block text-sm text-glow" href={base + 'blog/ananta-nihara/'}>Explore</a>
+			</section>
+		</div>
+		<div class="mt-12 grid gap-6">
 			{posts.map((post) => (
 				<article class="glass-panel p-6">
 					<p class="text-sm text-mist">{post.data.tags.join(' / ')}</p>

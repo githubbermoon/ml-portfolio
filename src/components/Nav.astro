@@ -1,35 +1,104 @@
 ---
-import ThemeToggle from '../islands/ThemeToggle';
-import FilmToggle from '../islands/FilmToggle';
-import MagneticButton from '../islands/MagneticButton';
+import ThemeToggle from "../islands/ThemeToggle";
+import MagneticButton from "../islands/MagneticButton";
+import MobileNav from "../islands/MobileNav";
 
 const base = import.meta.env.BASE_URL;
 
 const links = [
-	{ href: `${base}#hero`, label: 'Home' },
-	{ href: `${base}#capabilities`, label: 'Capabilities' },
-	{ href: `${base}#work`, label: 'Work' },
-	{ href: `${base}#contact`, label: 'Contact' },
+  { href: `${base}#hero`, label: "Home" },
+  { href: `${base}#capabilities`, label: "Capabilities" },
+  { href: `${base}#work`, label: "Work" },
+  { href: `${base}blog/`, label: "Blog" },
+  { href: `${base}#contact`, label: "Contact" },
 ];
 ---
 
-<nav class="fixed top-0 left-0 z-30 w-full">
-	<div class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 md:px-10">
-		<div class="hidden items-center gap-6 text-sm text-mist md:flex">
-			{links.map((link) => (
-				<a class="transition hover:text-glass" href={link.href} data-nav-link>{link.label}</a>
-			))}
-		</div>
-		<div class="flex items-center gap-4">
-			<FilmToggle client:load />
-			<ThemeToggle client:load />
-			<MagneticButton
-				client:load
-				href={base + '#contact'}
-				className="rounded-full border border-mist/40 px-4 py-2 text-sm text-glass transition hover:border-glass/50"
-			>
-				Start a project
-			</MagneticButton>
-		</div>
-	</div>
+<!-- Fixed Theme Toggle (Always Top Right) -->
+<div class="fixed top-6 right-6 z-50 mix-blend-difference">
+  <ThemeToggle client:load />
+</div>
+
+<!-- Swerving Nav Container -->
+<nav
+  id="main-nav"
+  class="fixed top-0 left-0 z-50 w-full transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)]"
+  data-scrolled="false"
+>
+  <div
+    id="nav-container"
+    class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 md:px-10 transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)]
+		data-[scrolled=true]:flex-col data-[scrolled=true]:w-auto data-[scrolled=true]:h-auto data-[scrolled=true]:gap-6 data-[scrolled=true]:items-start data-[scrolled=true]:mx-0"
+  >
+    <!-- Mobile Menu Trigger (Visible only on mobile) -->
+    <MobileNav client:load links={links} base={base} />
+
+    <!-- Links Group -->
+    <div
+      id="nav-links"
+      class="hidden items-center gap-6 text-sm font-medium tracking-wide md:flex transition-all duration-500
+			data-[scrolled=true]:flex-col data-[scrolled=true]:gap-4 data-[scrolled=true]:items-start
+            text-mist data-[scrolled=true]:text-white data-[scrolled=true]:font-bold data-[scrolled=true]:mix-blend-difference"
+    >
+      {
+        links.map((link) => (
+          <a
+            class="transition hover:text-white relative group"
+            href={link.href}
+            data-nav-link
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+
+    <!-- CTA Button (Only visible in top state) -->
+    <div
+      class="hidden md:block transition-all duration-500 opacity-100 overflow-hidden w-auto
+            data-[scrolled=true]:opacity-0 data-[scrolled=true]:w-0 data-[scrolled=true]:h-0 data-[scrolled=true]:m-0 data-[scrolled=true]:p-0"
+    >
+      <MagneticButton
+        client:load
+        href={base + "#contact"}
+        className="rounded-full border border-mist/40 px-4 py-2 text-sm text-glass transition hover:border-glass/50 whitespace-nowrap"
+      >
+        Start a project
+      </MagneticButton>
+    </div>
+  </div>
 </nav>
+
+<script>
+  const nav = document.getElementById("main-nav");
+  const container = document.getElementById("nav-container");
+  const linkContainer = document.getElementById("nav-links");
+  const cta = document.querySelector(".MagneticButton");
+
+  function updateNav() {
+    // Swerve early (standard scroll feel)
+    const scrolled = window.scrollY > 100;
+
+    if (nav && container && linkContainer) {
+      // Apply data attributes for styling
+      nav.setAttribute("data-scrolled", scrolled.toString());
+      container.setAttribute("data-scrolled", scrolled.toString());
+      linkContainer.setAttribute("data-scrolled", scrolled.toString());
+
+      if (scrolled) {
+        // Move to left vertical position
+        nav.classList.remove("top-0", "left-0", "w-full");
+        nav.classList.add("top-1/2", "left-8", "-translate-y-1/2", "w-auto");
+      } else {
+        // Reset to top bar
+        nav.classList.add("top-0", "left-0", "w-full");
+        nav.classList.remove("top-1/2", "left-8", "-translate-y-1/2", "w-auto");
+      }
+    }
+  }
+
+  window.addEventListener("scroll", updateNav, { passive: true });
+  window.addEventListener("resize", updateNav, { passive: true });
+  // Initial check
+  updateNav();
+</script>

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Moon as MoonIcon, Sun as SunIcon } from 'lucide-react';
 
 type ThemeMode = 'dark' | 'bright' | 'auto';
 type ResolvedTheme = 'dark' | 'bright';
@@ -25,31 +26,6 @@ const storeTheme = (mode: ThemeMode) => {
 	}
 	localStorage.setItem(STORAGE_KEY, mode);
 };
-
-const SunIcon = () => (
-	<svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-		<circle cx="12" cy="12" r="4" fill="currentColor" />
-		<g stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-			<path d="M12 3v2" />
-			<path d="M12 19v2" />
-			<path d="M4.5 4.5l1.4 1.4" />
-			<path d="M18.1 18.1l1.4 1.4" />
-			<path d="M3 12h2" />
-			<path d="M19 12h2" />
-			<path d="M4.5 19.5l1.4-1.4" />
-			<path d="M18.1 5.9l1.4-1.4" />
-		</g>
-	</svg>
-);
-
-const MoonIcon = () => (
-	<svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-		<path
-			d="M20.5 14.5a8.5 8.5 0 0 1-11-11 7 7 0 1 0 11 11Z"
-			fill="currentColor"
-		/>
-	</svg>
-);
 
 export default function ThemeToggle() {
 	const [mode, setMode] = useState<ThemeMode>('auto');
@@ -103,7 +79,7 @@ export default function ThemeToggle() {
 					aria-pressed={mode === 'dark'}
 					title="Dark"
 				>
-					<MoonIcon />
+					<MoonIcon className="h-4 w-4" />
 					<span className="sr-only">Dark</span>
 				</button>
 				<button
@@ -115,7 +91,7 @@ export default function ThemeToggle() {
 					aria-pressed={mode === 'bright'}
 					title="Bright"
 				>
-					<SunIcon />
+					<SunIcon className="h-4 w-4" />
 					<span className="sr-only">Bright</span>
 				</button>
 			</div>

@@ -1,164 +1,298 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
-import Section from '../components/Section.astro';
-import HeroScene from '../islands/HeroScene';
-import SectionScene from '../islands/SectionScene';
-import PerformanceToggle from '../islands/PerformanceToggle';
-import MermaidDiagram from '../islands/MermaidDiagram';
-import ChartBlock from '../islands/ChartBlock';
-import ScrollTimelines from '../islands/ScrollTimelines';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import Section from "../components/Section.astro";
+import HeroScene from "../islands/HeroScene";
+import SectionScene from "../islands/SectionScene";
+import PerformanceToggle from "../islands/PerformanceToggle";
+import MermaidDiagram from "../islands/MermaidDiagram";
+import ChartBlock from "../islands/ChartBlock";
+import ScrollTimelines from "../islands/ScrollTimelines";
+import ScrollReveal from "../islands/ScrollReveal";
+import HeroContent from "../islands/HeroContent";
+import BentoCard from "../islands/BentoCard";
+import ProjectCard from "../islands/ProjectCard";
 
 const mermaidDefinition = `graph LR
 A[Sensor Inputs] --> B[Feature Fusion]
 B --> C[Representation]
 C --> D[Inference]
-D --> E[Dashboard]
-`;
+D --> E[Dashboard]`;
 const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout
-	title="Clawd ML Portfolio"
-	description="Cinematic ML portfolio with glassmorphism and WebGL scenes."
+  title="Clawd ML Portfolio"
+  description="Cinematic ML portfolio with glassmorphism and WebGL scenes."
 >
-	<Nav />
-	<ScrollTimelines client:load />
-	<main>
-		<section id="hero" class="relative min-h-[120vh] overflow-hidden rounded-b-[3rem]" data-section data-hero>
-			<div
-				aria-hidden="true"
-				class="absolute inset-0 -z-20"
-				style="background: radial-gradient(circle at 20% 20%, rgb(var(--haze-a) / 0.28), transparent 55%), radial-gradient(circle at 80% 10%, rgb(var(--haze-b) / 0.2), transparent 55%);"
-			/>
-			<HeroScene client:only="react" />
-			<div class="section-shell relative z-10 flex min-h-screen flex-col justify-start gap-10 pt-44 md:pt-52" data-hero-content>
-				<div class="max-w-3xl" data-parallax>
-					<p class="text-xs uppercase tracking-[0.3em] text-mist" data-animate>ML + Computer Vision</p>
-					<h1 class="mt-4 text-7xl md:text-9xl" data-animate data-hero-heading style="filter: url(#liquid-hero-filter);">
-						<span class="text-glow-cinematic text-7xl md:text-9xl font-black">Pranjal Prakash</span>
-					</h1>
-					<p class="mt-10 text-3xl text-glass md:text-4xl" data-animate>
-						Applied ML and computer vision systems
-					</p>
-					<p class="mt-6 text-lg text-mist md:text-xl" data-animate>
-						MCA student at Reva University (CGPA 8.47) building real-time vision pipelines, ML demos, and
-						reliable backends with PyTorch and FastAPI.
-					</p>
-					<div class="mt-8 flex flex-wrap gap-4" data-animate>
-						<a class="glass-panel px-6 py-3 text-sm text-glass" href="#work">View featured work</a>
-						<a class="rounded-full border border-mist/40 px-6 py-3 text-sm text-mist" href="#contact">Contact</a>
-					</div>
-				</div>
-				<div class="glass-panel flex flex-wrap items-center justify-between gap-6 px-6 py-4" data-animate>
-					<div>
-						<p class="text-xs uppercase tracking-[0.2em] text-mist">Proof points</p>
-						<p class="mt-2 text-sm text-glass font-mono">
-							NCSC national winner · Hugging Face hackathon · Python + C++ foundation
-						</p>
-					</div>
-					<PerformanceToggle client:load />
-				</div>
-			</div>
-		</section>
+  <Nav />
+  <ScrollTimelines client:load />
+  <main>
+    <section
+      id="hero"
+      class="relative min-h-[120vh] overflow-hidden rounded-b-[3rem]"
+      data-section
+      data-hero
+    >
+      <div
+        aria-hidden="true"
+        class="absolute inset-0 -z-20"
+        style="background: radial-gradient(circle at 20% 20%, rgb(var(--haze-a) / 0.28), transparent 55%), radial-gradient(circle at 80% 10%, rgb(var(--haze-b) / 0.2), transparent 55%);"
+      >
+      </div>
+      <HeroScene client:only="react" />
+      <div
+        class="section-shell relative z-10 flex min-h-screen flex-col justify-start gap-10 pt-44 md:pt-52"
+        data-hero-content
+      >
+        <HeroContent client:load />
+        <ScrollReveal client:load delay={0.4}>
+          <BentoCard
+            client:visible
+            className="flex flex-wrap items-center justify-between gap-6 px-6 py-4"
+          >
+            <div>
+              <p class="text-xs uppercase tracking-[0.2em] text-mist">
+                Proof points
+              </p>
+              <p class="mt-2 text-sm text-glass font-mono">
+                NCSC national winner · Hugging Face hackathon · Python + C++
+                foundation
+              </p>
+            </div>
+            <PerformanceToggle client:load />
+          </BentoCard>
+        </ScrollReveal>
+      </div>
+    </section>
 
-		<Section
-			id="capabilities"
-			class="relative overflow-hidden"
-			eyebrow="Capabilities"
-			title="Systems that connect models and meaning"
-			subtitle="Computer vision, ML prototyping, and backend delivery with clean, explainable artifacts."
-		>
-			<SectionScene client:only="react" variant="video" sectionId="capabilities" enableSweep />
-			<div class="grid gap-6 md:grid-cols-[1.2fr_1fr]">
-				<div data-animate>
-					<MermaidDiagram client:load definition={mermaidDefinition} />
-				</div>
-				<div data-animate>
-					<ChartBlock client:load />
-				</div>
-			</div>
-			<div class="panel-stack mt-10 grid gap-6 md:grid-cols-2" data-panel-stack>
-				<div class="panel-sheen" aria-hidden="true" data-panel-sheen></div>
-				<div class="glass-panel panel-emphasized panel-float p-6" data-animate data-float>
-					<p class="text-xs uppercase tracking-[0.2em] text-mist">Core Skills</p>
-					<ul class="mt-4 space-y-2 text-sm text-glass font-mono">
-						<li>ML: PyTorch, OpenCV, NLP, Computer Vision, Hugging Face</li>
-						<li>Backend: FastAPI, REST APIs, SQLAlchemy, PostgreSQL</li>
-						<li>CS: Data Structures, OS, Computer Networks</li>
-						<li>Tools: AWS (EC2, S3), GitHub Actions, W&amp;B, Linux, Postman</li>
-					</ul>
-				</div>
-				<div class="glass-panel panel-emphasized panel-float p-6" data-animate data-float>
-					<p class="text-xs uppercase tracking-[0.2em] text-mist">Education</p>
-					<div class="mt-4 space-y-4 text-sm text-glass">
-						<div>
-							<p class="font-semibold">MCA, Reva University</p>
-							<p class="text-mist">2nd Semester · CGPA 8.47 · Expected 2026</p>
-						</div>
-						<div>
-							<p class="font-semibold">B.Sc, Integral University</p>
-							<p class="text-mist">Physics, Maths, Computer Science · CGPA 7.6</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</Section>
+    <Section
+      id="capabilities"
+      class="relative overflow-hidden"
+      eyebrow="Capabilities"
+      title="Systems that connect models and meaning"
+      subtitle="Computer vision, ML prototyping, and backend delivery with clean, explainable artifacts."
+      expanded
+    >
+      <SectionScene
+        client:only="react"
+        variant="video"
+        sectionId="capabilities"
+        enableSweep
+      />
+      <div class="grid gap-6 md:grid-cols-[1.2fr_1fr]">
+        <div data-animate>
+          <MermaidDiagram client:load definition={mermaidDefinition} />
+        </div>
+        <div data-animate>
+          <ChartBlock client:load />
+        </div>
+      </div>
+      <div class="panel-stack mt-10 grid gap-6 md:grid-cols-2" data-panel-stack>
+        <div class="panel-sheen" aria-hidden="true" data-panel-sheen></div>
+        <BentoCard
+          client:visible
+          className="panel-emphasized panel-float p-6"
+          delay={0.1}
+        >
+          <p class="text-xs uppercase tracking-[0.2em] text-mist">
+            Core Skills
+          </p>
+          <ul class="mt-4 space-y-2 text-sm text-glass font-mono">
+            <li>ML: PyTorch, OpenCV, NLP, Computer Vision, Hugging Face</li>
+            <li>Backend: FastAPI, REST APIs, SQLAlchemy, PostgreSQL</li>
+            <li>CS: Data Structures, OS, Computer Networks</li>
+            <li>
+              Tools: AWS (EC2, S3), GitHub Actions, W&amp;B, Linux, Postman
+            </li>
+          </ul>
+        </BentoCard>
+        <BentoCard
+          client:visible
+          className="panel-emphasized panel-float p-6"
+          delay={0.2}
+        >
+          <p class="text-xs uppercase tracking-[0.2em] text-mist">Education</p>
+          <div class="mt-4 space-y-4 text-sm text-glass">
+            <div>
+              <p class="font-semibold">MCA, Reva University</p>
+              <p class="text-mist">2nd Semester · CGPA 8.47 · Expected 2026</p>
+            </div>
+            <div>
+              <p class="font-semibold">B.Sc, Integral University</p>
+              <p class="text-mist">
+                Physics, Maths, Computer Science · CGPA 7.6
+              </p>
+            </div>
+          </div>
+        </BentoCard>
+      </div>
+    </Section>
 
-		<Section
-			id="work"
-			class="relative overflow-hidden"
-			eyebrow="Selected Work"
-			title="Cinematic demos with measurable impact"
-			subtitle="Each project includes an ML demo, results, and a visual story."
-		>
-			<SectionScene client:only="react" variant="carousel" sectionId="work" />
-			<div class="grid gap-6 md:grid-cols-3">
-				<div class="glass-panel p-6" data-animate>
-					<p class="text-sm text-mist">Terrain Safety Analysis &amp; Navigation</p>
-					<p class="mt-2 text-2xl text-glass">SegFormer + Depth Anything V2 + A*</p>
-					<a class="mt-4 inline-block text-sm text-glow" href={base + 'projects/terrain-safety/'}>Read case study</a>
-				</div>
-				<div class="glass-panel p-6" data-animate>
-					<p class="text-sm text-mist">Python API Development</p>
-					<p class="mt-2 text-2xl text-glass">FastAPI + PostgreSQL, 15% faster queries</p>
-					<a class="mt-4 inline-block text-sm text-glow" href={base + 'projects/python-api/'}>Read case study</a>
-				</div>
-				<div class="glass-panel p-6" data-animate>
-					<p class="text-sm text-mist">Hugging Face Hackathon</p>
-					<p class="mt-2 text-2xl text-glass">Global hackathon entry, demos in progress</p>
-					<a class="mt-4 inline-block text-sm text-glow" href={base + 'projects/'}>Explore all</a>
-				</div>
-			</div>
-		</Section>
+    <Section
+      id="work"
+      class="relative overflow-hidden"
+      eyebrow="Selected Work"
+      title="Cinematic demos with measurable impact"
+      subtitle="Each project includes an ML demo, results, and a visual story."
+      expanded
+    >
+      <div class="data-grid-scene" aria-hidden="true">
+        <div class="data-grid-plane"></div>
+        <div class="data-grid-fade"></div>
+        <div class="data-grid-pulse"></div>
+      </div>
+      <SectionScene client:only="react" variant="carousel" sectionId="work" />
+      <div class="relative z-10 flex flex-wrap justify-center gap-6">
+        <ProjectCard
+          client:visible
+          className="flex-1 min-w-[300px] max-w-[400px] p-6"
+          delay={0}
+          themeColor="#10b981"
+          href={base + "projects/terrain-safety/"}
+        >
+          <p class="text-xs uppercase tracking-wider text-mist">
+            Terrain Analysis
+          </p>
+          <p class="mt-2 text-2xl font-light text-glass">
+            SegFormer + Depth Anything V2 + A*
+          </p>
+          <span
+            class="mt-8 inline-flex items-center text-sm text-glow group-hover:text-white transition-colors"
+          >
+            Read case study <span class="ml-2">→</span>
+          </span>
+        </ProjectCard>
 
-		<Section
-			id="contact"
-			class="relative overflow-hidden"
-			eyebrow="Impact"
-			title="Ready for new collaborations"
-			subtitle="Let us connect the model story to the product story."
-		>
-			<SectionScene client:only="react" variant="calm" sectionId="contact" />
-			<div class="glass-panel grid gap-6 p-8 md:grid-cols-[1.4fr_1fr]" data-animate>
-				<div>
-					<p class="text-sm uppercase tracking-[0.2em] text-mist">Availability</p>
-					<p class="mt-3 text-3xl text-glass md:text-4xl">Open for ML internships, CV research, and backend work.</p>
-					<p class="mt-4 text-lg text-mist">Based in Bengaluru · Open to global remote roles</p>
-					<div class="mt-4 space-y-2 text-sm text-mist">
-						<p><a class="text-glow" href="mailto:prakashpranjal001@gmail.com">prakashpranjal001@gmail.com</a></p>
-						<p><a class="text-glow" href="https://linkedin.com/in/pranjal-prakash">linkedin.com/in/pranjal-prakash</a></p>
-						<p><a class="text-glow" href="https://github.com/githubbermoon">github.com/githubbermoon</a></p>
-					</div>
-				</div>
-				<form class="grid gap-4">
-					<input class="rounded-full border border-mist/30 bg-glass/5 px-4 py-3 text-sm text-glass placeholder:text-mist/70" placeholder="Your email" />
-					<input class="rounded-full border border-mist/30 bg-glass/5 px-4 py-3 text-sm text-glass placeholder:text-mist/70" placeholder="Project idea" />
-					<button class="rounded-full border border-mist/40 px-4 py-3 text-sm text-glass transition hover:border-glass/50">Send message</button>
-				</form>
-			</div>
-		</Section>
-	</main>
-	<Footer />
+        <ProjectCard
+          client:visible
+          className="flex-1 min-w-[300px] max-w-[400px] p-6"
+          delay={0.1}
+          themeColor="#3b82f6"
+          href={base + "projects/python-api/"}
+        >
+          <p class="text-xs uppercase tracking-wider text-mist">
+            API Development
+          </p>
+          <p class="mt-2 text-2xl font-light text-glass">
+            FastAPI + PostgreSQL, 15% faster queries
+          </p>
+          <span
+            class="mt-8 inline-flex items-center text-sm text-glow group-hover:text-white transition-colors"
+          >
+            Read case study <span class="ml-2">→</span>
+          </span>
+        </ProjectCard>
+
+        <ProjectCard
+          client:visible
+          className="flex-1 min-w-[300px] max-w-[400px] p-6"
+          delay={0.2}
+          themeColor="#f59e0b"
+          href={base + "projects/"}
+        >
+          <p class="text-xs uppercase tracking-wider text-mist">
+            Global Hackathon
+          </p>
+          <p class="mt-2 text-2xl font-light text-glass">
+            Hugging Face entry, experimental demos
+          </p>
+          <span
+            class="mt-8 inline-flex items-center text-sm text-glow group-hover:text-white transition-colors"
+          >
+            Explore all <span class="ml-2">→</span>
+          </span>
+        </ProjectCard>
+
+        <ProjectCard
+          client:visible
+          className="flex-1 min-w-[300px] max-w-[400px] p-6"
+          delay={0.3}
+          themeColor="#e3dcd2"
+          href={base + "blog-concept/"}
+        >
+          <p class="text-xs uppercase tracking-wider text-mist">Concept Lab</p>
+          <p class="mt-2 text-2xl font-light text-glass">Jiva Niharika</p>
+          <p class="mt-1 text-sm text-mist/60">SVG Path Animation</p>
+          <span
+            class="mt-8 inline-flex items-center text-sm text-glow group-hover:text-white transition-colors"
+          >
+            View Concept <span class="ml-2">→</span>
+          </span>
+        </ProjectCard>
+
+        <ProjectCard
+          client:visible
+          className="flex-1 min-w-[300px] max-w-[400px] p-6"
+          delay={0.4}
+          themeColor="#f59e0b"
+          href={base + "dharma-kshetra/"}
+        >
+          <p class="text-xs uppercase tracking-wider text-mist">
+            Concept Design
+          </p>
+          <p class="mt-2 text-2xl font-light text-glass">Dharma Kshetra</p>
+          <p class="mt-1 text-sm text-mist/60">Bow & Arrow Physics</p>
+          <span
+            class="mt-8 inline-flex items-center text-sm text-glow group-hover:text-white transition-colors"
+          >
+            Launch Demo <span class="ml-2">→</span>
+          </span>
+        </ProjectCard>
+      </div>
+    </Section>
+
+    <Section
+      id="contact"
+      class="relative overflow-hidden"
+      eyebrow="Impact"
+      title="Ready for new collaborations"
+      subtitle="Let us connect the model story to the product story."
+      expanded
+    >
+      <SectionScene client:only="react" variant="calm" sectionId="contact" />
+      <div
+        class="relative z-10 mt-12 grid gap-8 p-1 md:grid-cols-[1.4fr_1fr]"
+        data-animate
+      >
+        {/* Soft gradient background blending into scene */}
+        <div
+          class="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-b from-white/[0.03] to-transparent backdrop-blur-[2px]"
+        >
+        </div>
+
+        <div class="p-6 md:p-8">
+          <p class="text-sm uppercase tracking-[0.2em] text-mist/60">
+            Availability
+          </p>
+          <p
+            class="mt-4 text-3xl font-light leading-tight text-glass md:text-4xl"
+          >
+            Open for ML internships, CV research, and backend work.
+          </p>
+          <p class="mt-6 text-sm text-mist/60">
+            Based in Bengaluru · Open to global remote roles
+          </p>
+        </div>
+
+        <form class="flex flex-col gap-4 p-6 md:p-8">
+          <input
+            class="w-full border-b border-white/10 bg-transparent py-3 text-sm text-glass placeholder:text-mist/30 focus:border-white/30 focus:outline-none transition-colors"
+            placeholder="Your email"
+          />
+          <input
+            class="w-full border-b border-white/10 bg-transparent py-3 text-sm text-glass placeholder:text-mist/30 focus:border-white/30 focus:outline-none transition-colors"
+            placeholder="Project idea"
+          />
+          <button
+            class="mt-4 self-start text-sm uppercase tracking-widest text-mist hover:text-white transition-colors"
+          >
+            Send Message →
+          </button>
+        </form>
+      </div>
+    </Section>
+  </main>
+  <Footer />
 </BaseLayout>

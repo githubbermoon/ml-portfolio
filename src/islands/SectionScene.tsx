@@ -288,12 +288,15 @@ const Calm = () => (
 	</e.group>
 );
 
-const variantMap: Record<Variant, (tier: PerfTier) => JSX.Element> = {
-	pipeline: () => <Pipeline />,
-	carousel: () => <Carousel />,
-	calm: () => <Calm />,
-	terrain: (tier) => <Terrain tier={tier} />,
-	video: () => <VideoScene />,
+const RenderVariant = ({ variant, tier }: { variant: Variant, tier: PerfTier }) => {
+	switch (variant) {
+		case 'pipeline': return <Pipeline />;
+		case 'carousel': return <Carousel />;
+		case 'calm': return <Calm />;
+		case 'terrain': return <Terrain tier={tier} />;
+		case 'video': return <VideoScene />;
+		default: return null;
+	}
 };
 
 export default function SectionScene({
@@ -350,7 +353,7 @@ export default function SectionScene({
 				<SheetProvider sheet={sheet}>
 					<Suspense fallback={null}>
 						<Environment preset={isTerrain ? 'night' : 'warehouse'} />
-						{variantMap[variant](tier)}
+						<RenderVariant variant={variant} tier={tier} />
 					</Suspense>
 					<EffectComposer multisampling={isHigh ? 4 : 0}>
 						<Bloom
@@ -375,10 +378,15 @@ function SectionCameraRig({ sectionId, isTerrain }: { sectionId: string; isTerra
 		const section = document.getElementById(sectionId);
 		if (!section) return;
 
+		// We only want the creative 'cut' on the work section (carousel)
+		const isWorkSection = sectionId === 'work' || sectionId === 'carousel';
+
 		gsap.registerPlugin(ScrollTrigger);
 
+		let scrollTween: gsap.core.Tween | undefined;
+
 		const ctx = gsap.context(() => {
-			gsap.fromTo(
+			scrollTween = gsap.fromTo(
 				camera.position,
 				{
 					x: isTerrain ? -0.2 : -0.3,
@@ -400,7 +408,59 @@ function SectionCameraRig({ sectionId, isTerrain }: { sectionId: string; isTerra
 			);
 		}, section);
 
-		return () => ctx.revert();
+
+		const handleCut = (event: Event) => {
+			// Always trigger warp, regardless of which section we're viewing
+			const detail = (event as CustomEvent<{ themeColor: string }>).detail;
+			console.log('🚀 Warp triggered with color:', detail.themeColor);
+			
+			// Kill the scroll control
+			if (scrollTween) {
+				scrollTween.kill();
+				scrollTween = undefined;
+			}
+			
+			// WARP EFFECT 🚀
+			const tl = gsap.timeline();
+
+			// 1. Pull back slightly/anticipate (100ms)
+			tl.to(camera.position, {
+				z: '+=0.3',
+				duration: 0.1,
+				ease: 'power2.out'
+			});
+
+			// 2. Punch it (Warp) - Fly DEEP into the tunnel
+			tl.to(camera.position, {
+				z: -15, // Fly deeply THROUGH the rest of the scene
+				x: 0,
+				y: 0,
+				duration: 1.8, // Faster warp
+				ease: 'expo.in'
+			}, 0.1);
+
+			// 3. Widen FOV for hyperspace effect
+			tl.to(camera, {
+				fov: 120, // Extreme FOV
+				duration: 1.5,
+				ease: 'expo.in',
+				onUpdate: () => camera.updateProjectionMatrix()
+			}, 0.1);
+
+			// 4. Barrel Roll
+			gsap.to(camera.rotation, {
+				z: Math.PI * 1.5, // 270 degree spin (less dizzying)
+				duration: 1.8,
+				ease: 'power2.inOut'
+			});
+		};
+
+		window.addEventListener('cut-to-project', handleCut);
+
+		return () => {
+			ctx.revert();
+			window.removeEventListener('cut-to-project', handleCut);
+		};
 	}, [camera, sectionId, isTerrain]);
 
 	return null;

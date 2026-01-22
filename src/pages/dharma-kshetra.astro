@@ -1,0 +1,267 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Dharma-Kshetra: The Arrow of Duty">
+  <div class="relative bg-[#050505] text-[#e3dcd2] overflow-x-hidden">
+    
+    <!-- Fixed Background Ambiance -->
+    <div class="fixed inset-0 bg-[radial-gradient(circle_at_center,_#2a1b0a_0%,_#000000_100%)] opacity-40 pointer-events-none z-0"></div>
+    
+    <!-- Fireflies (Fixed) -->
+    <div id="fireflies" class="fixed inset-0 pointer-events-none z-10"></div>
+
+    <!-- STAGE 1: The Bow (Sticky) -->
+    <!-- It stays pinned while we scroll through the narrative -->
+    <section class="h-[100vh] sticky top-0 flex items-center justify-center z-20 overflow-hidden" id="hero-stage">
+      <div class="relative w-full max-w-6xl flex items-center justify-center">
+        <!-- The Bow SVG -->
+        <svg id="scene" viewBox="0 0 800 400" class="w-full h-auto drop-shadow-[0_0_30px_rgba(255,100,0,0.3)] transition-transform duration-700 ease-out">
+          <defs>
+            <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#bf953f;stop-opacity:1" />
+              <stop offset="50%" style="stop-color:#fcf6ba;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#b38728;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="fire-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#ff4500;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ffcc00;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+
+          <!-- Bow & Arrow Elements -->
+          <path id="bow" d="M200,50 Q100,200 200,350" fill="none" stroke="url(#gold-gradient)" stroke-width="6" stroke-linecap="round" class="draw-path filter drop-shadow-lg" />
+          <path id="string" d="M200,50 L200,350" fill="none" stroke="#fff" stroke-width="1" stroke-opacity="0.6" class="draw-path delay-500" />
+          <polyline id="arrow-trail" points="" fill="none" stroke="url(#fire-gradient)" stroke-width="2" opacity="0" />
+          
+          <g id="arrow-group" transform="translate(200, 200)">
+            <line x1="-150" y1="0" x2="0" y2="0" stroke="url(#gold-gradient)" stroke-width="4" class="draw-path delay-1000" />
+            <path d="M0,0 L-25,-12 L-25,12 Z" fill="url(#fire-gradient)" class="draw-fade delay-1200 filter drop-shadow-[0_0_10px_#ff4500]" />
+            <path d="M-150,0 L-170,-10 M-150,0 L-170,10 M-140,0 L-160,-10 M-140,0 L-160,10" stroke="#fff" stroke-width="1" class="draw-path delay-1000" />
+          </g>
+        </svg>
+        
+        <!-- Particles -->
+        <div id="particles" class="absolute inset-0 pointer-events-none"></div>
+      </div>
+
+      <!-- Title (Fades out on scroll) -->
+      <div id="main-title" class="absolute bottom-20 left-0 w-full text-center space-y-2 opacity-0 animate-title transition-opacity duration-500">
+        <h1 class="text-4xl md:text-7xl font-serif tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-200 to-orange-400 bg-300% animate-shine">
+          DHARMA KSHETRA
+        </h1>
+        <p class="text-sm text-amber-500/50 tracking-[0.5em] uppercase font-sans">
+          The Field of Duty
+        </p>
+        <p class="mt-8 text-xs text-white/30 animate-bounce">Scroll to Witness</p>
+      </div>
+    </section>
+
+    <!-- STAGE 2: The Narrative (Scroll Triggered) -->
+    <div class="relative z-30">
+      <!-- Spacer to allow initial scroll -->
+      <div class="h-[50vh]"></div>
+
+      <!-- Section 1: The Doubt -->
+      <section class="min-h-screen flex items-center justify-center p-8 scroll-section" data-index="1">
+        <div class="glass-panel p-12 max-w-2xl text-center transform transition-all duration-1000 translate-y-20 opacity-0 reveal-text">
+          <h2 class="text-3xl font-serif text-amber-200 mb-4">I. The Despair</h2>
+          <p class="text-lg text-mist leading-relaxed font-serif italic">
+            "My bow Gandiva slips from my hand, and my skin burns. I cannot fight my own blood."
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 2: The Knowledge -->
+      <section class="min-h-screen flex items-center justify-center p-8 scroll-section" data-index="2">
+        <div class="glass-panel p-12 max-w-2xl text-center transform transition-all duration-1000 translate-y-20 opacity-0 reveal-text">
+          <h2 class="text-3xl font-serif text-amber-200 mb-4">II. The Truth</h2>
+          <p class="text-lg text-mist leading-relaxed font-serif italic">
+            "You have a right to perform your prescribed duty, but you are not entitled to the fruits of action."
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 3: The Action (Arrow Flies Again) -->
+      <section class="min-h-screen flex items-center justify-center p-8 scroll-section" data-index="3">
+        <div class="glass-panel p-12 max-w-2xl text-center transform transition-all duration-1000 translate-y-20 opacity-0 reveal-text">
+          <h2 class="text-3xl font-serif text-amber-200 mb-4">III. The Release</h2>
+          <p class="text-lg text-mist leading-relaxed font-serif italic">
+            "Stand up and fight. Conquer your enemies and enjoy a prosperous kingdom."
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <!-- Foreground Field (Fixed) -->
+    <div class="fixed bottom-0 left-0 w-full h-64 z-40 pointer-events-none overflow-hidden">
+      <div id="field-foreground" class="w-full h-full flex items-end justify-center relative"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+    </div>
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* Reuse animations from before */
+  .draw-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 2s ease-out forwards; }
+  .draw-fade { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
+  .delay-500 { animation-delay: 0.5s; }
+  .delay-1000 { animation-delay: 1.5s; }
+  .delay-1200 { animation-delay: 1.7s; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .animate-title { animation: fadeUp 2s ease-out forwards 3s; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .bg-300\% { background-size: 300% 300%; }
+  .animate-shine { animation: shine 5s linear infinite; }
+  @keyframes shine { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+  /* New Scroll Reveal Class */
+  .reveal-active { opacity: 1 !important; transform: translateY(0) !important; }
+  
+  /* Glass Panel for Text */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  :global(.particle) { position: absolute; width: 4px; height: 4px; background: #ffcc00; border-radius: 50%; pointer-events: none; box-shadow: 0 0 10px #ff4500; }
+  :global(.firefly) { position: absolute; width: 3px; height: 3px; background: #aaffaa; border-radius: 50%; box-shadow: 0 0 8px #aaffaa; opacity: 0; animation: floatUp 8s ease-in-out infinite; }
+  @keyframes floatUp { 0% { transform: translateY(0) translateX(0); opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.5; } 100% { transform: translateY(-300px) translateX(20px); opacity: 0; } }
+  :global(.sway-slow) { animation: sway 6s ease-in-out infinite alternate; transform-origin: bottom center; }
+  :global(.sway-fast) { animation: sway 4s ease-in-out infinite alternate; transform-origin: bottom center; }
+  @keyframes sway { 0% { transform: rotate(-5deg); } 100% { transform: rotate(5deg); } }
+</style>
+
+<script>
+  // ... (Include previous particle/field generation code here) ...
+  // Re-implementing simplified for brevity in this step, full logic below
+  
+  const bow = document.getElementById('bow');
+  const string = document.getElementById('string');
+  const arrowGroup = document.getElementById('arrow-group');
+  const trail = document.getElementById('arrow-trail');
+  const particles = document.getElementById('particles');
+  const field = document.getElementById('field-foreground');
+  const fireflies = document.getElementById('fireflies');
+  const title = document.getElementById('main-title');
+  const scene = document.getElementById('scene');
+
+  // --- Field & Fireflies (Same as before) ---
+  if (field) {
+    for (let i = 0; i < window.innerWidth / 20; i++) {
+      const el = document.createElement('div');
+      const isFlower = Math.random() > 0.8;
+      const height = Math.random() * 100 + 50;
+      const left = Math.random() * 100;
+      el.style.cssText = `position:absolute; bottom:-20px; left:${left}%; transform-origin:bottom center; animation-delay:${Math.random() * -5}s`;
+      if (isFlower) {
+        el.innerHTML = `<div class="w-1 h-${height}px bg-green-900 mx-auto opacity-60"></div><div class="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-br from-red-600 to-purple-800 shadow-[0_0_10px_rgba(255,0,0,0.4)]"></div>`;
+        el.classList.add('sway-slow');
+      } else {
+        el.style.cssText += `width:4px; height:${height}px; background:linear-gradient(to top, #0f2e12, #2d5a31); opacity:0.5; border-radius:100% 100% 0 0;`;
+        el.classList.add('sway-fast');
+      }
+      field.appendChild(el);
+    }
+  }
+  if (fireflies) {
+    setInterval(() => {
+        const f = document.createElement('div');
+        f.classList.add('firefly');
+        f.style.left = Math.random() * 100 + '%';
+        f.style.bottom = Math.random() * 50 + '%';
+        fireflies.appendChild(f);
+        setTimeout(() => f.remove(), 10000);
+    }, 800);
+  }
+
+  // --- Scroll & Animation Logic ---
+  let hasLaunched = false;
+
+  // Initial Launch (Auto)
+  setTimeout(() => startSequence(), 2000);
+
+  function startSequence() {
+    if (!bow || !string || !arrowGroup) return;
+    // ... (Pull back logic) ...
+    let startTime = performance.now();
+    function animatePull(time) {
+        let p = Math.min((time - startTime) / 2000, 1);
+        let ease = 1 - Math.pow(1 - p, 3);
+        let x = 200 - (150 * ease);
+        string.setAttribute('d', `M200,50 Q${x},200 200,350`);
+        arrowGroup.setAttribute('transform', `translate(${x}, 200)`);
+        bow.setAttribute('d', `M200,50 Q${100 - (20 * ease)},200 200,350`);
+        if (p < 1) requestAnimationFrame(animatePull);
+        else setTimeout(releaseArrow, 500);
+    }
+    requestAnimationFrame(animatePull);
+  }
+
+  function releaseArrow() {
+    if (hasLaunched) return;
+    hasLaunched = true;
+    string.setAttribute('d', `M200,50 L200,350`); // Snap
+    
+    // Launch
+    let startX = 50; let endX = 2000; let startTime = performance.now();
+    trail.style.opacity = '1';
+    let points = [];
+    
+    function fly(time) {
+        let p = (time - startTime) / 800;
+        let x = startX + (endX - startX) * (p * (2 - p));
+        arrowGroup.setAttribute('transform', `translate(${x}, 200)`);
+        if (p < 1) {
+            points.push(`${x},200`);
+            if (points.length > 20) points.shift();
+            trail.setAttribute('points', points.join(' '));
+            spawnParticle(x, 200);
+            requestAnimationFrame(fly);
+        } else {
+            trail.style.opacity = '0';
+            // Reset Arrow for Scroll Phase
+            setTimeout(() => {
+                arrowGroup.style.display = 'none'; // Hide flying arrow
+            }, 500);
+        }
+    }
+    requestAnimationFrame(fly);
+  }
+
+  function spawnParticle(x, y) {
+      if (Math.random() > 0.5) return;
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      p.style.left = x+'px'; p.style.top = y+'px';
+      particles.appendChild(p);
+      p.animate([{transform:`scale(1)`, opacity:1}, {transform:`translate(-50px, ${(Math.random()-0.5)*50}px) scale(0)`, opacity:0}], {duration:600}).onfinish = () => p.remove();
+  }
+
+  // --- Scroll Listener ---
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    
+    // 1. Fade out Title
+    if (title) title.style.opacity = Math.max(0, 1 - scrollY / 300).toString();
+
+    // 2. Parallax Bow
+    // Move bow up slightly and scale down as we scroll deeper
+    if (scene) {
+        scene.style.transform = `translateY(${scrollY * -0.2}px) scale(${1 - scrollY * 0.0005})`;
+    }
+
+    // 3. Reveal Text Sections
+    const sections = document.querySelectorAll('.reveal-text');
+    sections.forEach(sec => {
+        const rect = sec.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.8) {
+            sec.classList.add('reveal-active');
+        }
+    });
+  });
+</script>

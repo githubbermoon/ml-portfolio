@@ -1,0 +1,224 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import LiquidOrb from "../../islands/LiquidOrb";
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Ananta Nīhāra | Clawd ML Portfolio">
+  <!-- SCROLL TRACK: Creates scrollbar for scrubbing -->
+  <div class="relative h-[300vh] bg-[#050505]">
+    <!-- FIXED VIEWPORT: Cannot scroll away -->
+    <div class="fixed inset-0 w-full h-full overflow-hidden flex flex-col z-0">
+      <!-- Background -->
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] to-[#000000] z-0"
+      >
+      </div>
+
+      <!-- CONTENT (Fixed) -->
+      <div class="relative z-20 h-full flex flex-col">
+        <!-- BACK BUTTON -->
+        <a
+          href={base + "blog/"}
+          class="fixed top-8 left-8 z-50 p-3 rounded-full bg-black/20 backdrop-blur-md border border-white/10 text-mist hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 group"
+          aria-label="Back to Blog"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="group-hover:-translate-x-1 transition-transform duration-300"
+          >
+            <path d="m15 18-6-6 6-6"></path>
+          </svg>
+        </a>
+
+        <Nav />
+        <main
+          class="section-shell flex-grow flex flex-col justify-center items-center text-center"
+        >
+          <div class="space-y-8 max-w-4xl">
+            <div class="text-center space-y-3">
+              <p
+                class="text-2xl md:text-3xl font-serif text-[#a8a29e] opacity-0 animate-fade-in"
+                style="animation-delay: 0s;"
+              >
+                अनंत निहार
+              </p>
+              <h1
+                class="text-5xl md:text-8xl font-serif tracking-widest text-transparent bg-clip-text bg-gradient-to-b from-[#e3dcd2] to-[#8c8881] opacity-0 animate-fade-in"
+              >
+                Ananta Nīhāra
+              </h1>
+            </div>
+            <p
+              class="text-lg md:text-2xl text-[#a8a29e] font-serif italic tracking-wide opacity-0 animate-fade-in delay-300"
+            >
+              "The Endless Mist"
+            </p>
+            <div
+              class="grid gap-12 md:grid-cols-2 text-left mt-16 opacity-0 animate-fade-in delay-500"
+            >
+              <div class="border-l border-white/20 pl-6">
+                <p
+                  class="text-xs uppercase tracking-[0.2em] text-[#78716c] mb-3"
+                >
+                  Themes
+                </p>
+                <ul class="space-y-2 text-[#e7e5e4] font-light text-lg">
+                  <li>Embodied intelligence</li>
+                  <li>Machine narratives</li>
+                  <li>Speculative futures</li>
+                </ul>
+              </div>
+              <div class="border-l border-white/20 pl-6">
+                <p
+                  class="text-xs uppercase tracking-[0.2em] text-[#78716c] mb-3"
+                >
+                  Interaction
+                </p>
+                <p class="text-[#e7e5e4] font-light text-lg">
+                  Scroll to dissolve the veil. Watch the mist fade as you
+                  scroll.
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <div class="mt-auto"></div>
+      </div>
+
+      <!-- MIST LAYER -->
+      <div
+        id="mist-container"
+        class="absolute inset-0 z-40 pointer-events-none mix-blend-hard-light"
+      >
+        <svg class="w-full h-full opacity-90">
+          <filter id="fog-noise">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.015"
+              numOctaves="5"
+              result="noise"
+              seed="0"
+            >
+              <animate
+                attributeName="baseFrequency"
+                values="0.015;0.02;0.015"
+                dur="20s"
+                repeatCount="indefinite"></animate>
+            </feTurbulence>
+            <feColorMatrix
+              type="matrix"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9"
+              result="cloud"></feColorMatrix>
+            <feGaussianBlur stdDeviation="8" in="cloud" result="fog"
+            ></feGaussianBlur>
+          </filter>
+          <rect width="100%" height="100%" filter="url(#fog-noise)" fill="white"
+          ></rect>
+        </svg>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"
+        >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INFINITE COSMOS SECTION -->
+  <div
+    class="relative h-screen bg-black overflow-hidden flex items-center justify-center"
+  >
+    <LiquidOrb client:visible />
+
+    <!-- Text Overlay -->
+    <div
+      class="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
+    >
+      <div class="text-center space-y-6 mt-96">
+        <p
+          class="text-5xl md:text-7xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-blue-400 opacity-0 cosmic-text-fade"
+        >
+          अनंत
+        </p>
+        <p
+          class="text-xl md:text-2xl text-cyan-300/50 font-serif italic tracking-widest opacity-0 cosmic-text-fade"
+          style="animation-delay: 0.5s;"
+        >
+          The Infinite
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .animate-fade-in {
+    animation: fadeIn 1.5s ease-out forwards;
+  }
+  .delay-300 {
+    animation-delay: 0.3s;
+  }
+  .delay-500 {
+    animation-delay: 0.5s;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .cosmic-text-fade {
+    animation: cosmicFade 3s ease-out forwards;
+  }
+  @keyframes cosmicFade {
+    from {
+      opacity: 0;
+      transform: translateY(50px) scale(0.8);
+      filter: blur(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+</style>
+
+<script>
+  const mist = document.getElementById("mist-container");
+
+  const handleScroll = () => {
+    const scrolled =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+    const height = window.innerHeight;
+    const progress = Math.min(scrolled / (height * 1.5), 1);
+
+    if (mist) {
+      mist.style.opacity = String(Math.max(0, 1 - progress * 1.2));
+      mist.style.transform = `translateY(-${progress * 100}px) scale(${1 + progress * 0.1})`;
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  document.addEventListener("scroll", handleScroll, { passive: true });
+  handleScroll();
+</script>

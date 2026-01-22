@@ -131,9 +131,12 @@ const RealisticFlower = () => {
   );
 };
 
-export default function FloraFooter() {
+export default function FloraFooter({ height = '16rem' }: { height?: string }) {
 	return (
-		<div className="relative h-64 w-full overflow-hidden rounded-[2rem] border border-white/5 bg-black">
+		<div
+			className="relative w-full overflow-hidden"
+			style={{ height }}
+		>
 			<Canvas camera={{ position: [0, 1, 5], fov: 45 }}>
                 {/* Cinematic Lighting */}
                 <ambientLight intensity={0.2} />
@@ -141,7 +144,7 @@ export default function FloraFooter() {
                 <pointLight position={[-2, 1, 2]} intensity={2} color="#ff99cc" />
                 
                 {/* Atmosphere */}
-                <fog attach="fog" args={['#05070a', 2, 10]} />
+
                 <Sparkles count={50} scale={6} size={2} speed={0.4} opacity={0.5} color="#fff" />
 
                 {/* The Content */}
@@ -152,8 +155,7 @@ export default function FloraFooter() {
 			</Canvas>
             
             {/* Vignette Overlay */}
-			<div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(0,0,0,0.6)_100%)]" />
+			<div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 		</div>
 	);
 }

@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
+import GhostSilk from '../../islands/GhostSilk';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 
@@ -18,14 +19,21 @@ const { Content } = await post.render();
 ---
 
 <BaseLayout title={`${post.data.title} | Clawd ML Portfolio`}>
-	<Nav />
-	<main class="section-shell">
-		<p class="text-sm text-mist">{post.data.tags.join(' / ')}</p>
-		<h1 class="mt-4 text-4xl md:text-5xl">{post.data.title}</h1>
-		<p class="mt-4 max-w-2xl text-mist">{post.data.summary}</p>
-		<div class="prose prose-invert mt-10 max-w-3xl">
-			<Content />
+	<div class="relative min-h-screen overflow-hidden">
+		<div class="absolute inset-0 z-0 pointer-events-none">
+			<GhostSilk client:only="react" />
 		</div>
-	</main>
-	<Footer />
+		<div class="relative z-10">
+			<Nav />
+			<main class="section-shell">
+				<p class="text-sm text-mist">{post.data.tags.join(' / ')}</p>
+				<h1 class="mt-4 text-4xl md:text-5xl">{post.data.title}</h1>
+				<p class="mt-4 max-w-2xl text-mist">{post.data.summary}</p>
+				<div class="prose prose-invert mt-10 max-w-3xl">
+					<Content />
+				</div>
+			</main>
+			<Footer />
+		</div>
+	</div>
 </BaseLayout>

@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Concept: Jiva-Niharika">
+  <div class="fixed inset-0 flex flex-col items-center justify-center bg-[#050505] text-[#e3dcd2] selection:bg-[#e3dcd2] selection:text-black">
+    
+    <!-- The Container -->
+    <div class="relative flex flex-col items-center gap-12 z-10">
+      
+      <!-- SVG Animation: The Eternal Knot / Nebula -->
+      <div class="relative w-64 h-64 md:w-96 md:h-96 opacity-90">
+        <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-[0_0_15px_rgba(227,220,210,0.1)]">
+          <!-- Outer Ring (The Universe) -->
+          <circle cx="100" cy="100" r="90" 
+            class="path-draw opacity-20"
+            stroke="currentColor" 
+            fill="none" 
+            stroke-width="0.5" 
+          />
+          
+          <!-- The Infinite Path (Life/Sutra) -->
+          <path 
+            class="path-draw"
+            d="M100,100 m-50,0 a50,50 0 1,0 100,0 a50,50 0 1,0 -100,0 
+               M100,100 m-30,0 a30,30 0 1,1 60,0 a30,30 0 1,1 -60,0"
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="1.5"
+            stroke-linecap="round"
+          />
+          
+          <!-- Central Bindu (The Self) -->
+          <circle cx="100" cy="100" r="2" class="fill-current animate-pulse-slow" />
+        </svg>
+      </div>
+
+      <!-- Typography -->
+      <div class="text-center space-y-4 opacity-0 animate-fade-up">
+        <h1 class="text-4xl md:text-6xl font-serif tracking-[0.15em] font-light text-transparent bg-clip-text bg-gradient-to-b from-[#e3dcd2] to-[#8c8881]">
+          JIVA NIHARIKA
+        </h1>
+        <div class="flex items-center justify-center gap-4">
+          <span class="h-[1px] w-12 bg-white/20"></span>
+          <p class="text-xs md:text-sm text-[#8c8881] tracking-[0.4em] uppercase font-sans">
+            The Nebula of Life
+          </p>
+          <span class="h-[1px] w-12 bg-white/20"></span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Background Ambience -->
+    <div class="absolute inset-0 bg-[url('/noise.png')] opacity-5 pointer-events-none"></div>
+    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-transparent to-black/80 pointer-events-none"></div>
+  </div>
+</BaseLayout>
+
+<style>
+  /* SVG Path Animation */
+  .path-draw {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw 8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* Text Reveal */
+  .animate-fade-up {
+    animation: fadeUp 2s ease-out forwards;
+    animation-delay: 4s; /* Wait for line to draw mostly */
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+      filter: blur(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+</style>

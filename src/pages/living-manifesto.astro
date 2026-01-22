@@ -1,30 +1,40 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import LivingGridScene from '../components/LivingGrid';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LivingGridScene from "../components/LivingGrid";
 ---
 
 <BaseLayout title="Living Identities Manifesto | POC">
-  <main class="w-full h-screen overflow-hidden bg-black relative">
-    
+  <main
+    class="w-[calc(100%-2rem)] h-[calc(100vh-2rem)] overflow-hidden bg-black relative m-4 rounded-[2.5rem]"
+  >
     <!-- The 3D Scene -->
     <div class="absolute inset-0 z-0">
       <LivingGridScene client:only="react" />
     </div>
 
     <!-- Overlay Text (replicating the "Manifesto" typography) -->
-    <div class="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-center text-center mix-blend-difference text-white">
-      <h1 class="text-6xl md:text-8xl font-bold tracking-tighter uppercase opacity-90" style="font-family: 'Inter', sans-serif;">
-        Living<br/>Identities
+    <div
+      class="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-center text-center mix-blend-difference text-white"
+    >
+      <p class="tag-mono mb-6">── Selected Work 2024</p>
+      <h1
+        class="text-6xl md:text-8xl font-bold tracking-tighter uppercase opacity-90 gradient-text"
+        style="font-family: 'Inter', sans-serif;"
+      >
+        Living<br />Identities
       </h1>
-      <p class="mt-4 text-sm md:text-base tracking-[0.5em] uppercase opacity-70">
+      <p
+        class="mt-4 text-sm md:text-base tracking-[0.5em] uppercase opacity-70"
+      >
         Proof of Concept
       </p>
-      
-      <div class="absolute bottom-10 text-xs text-white/40 max-w-md leading-relaxed">
+
+      <div
+        class="absolute bottom-10 text-xs text-white/40 max-w-md leading-relaxed"
+      >
         <p>REPLICATING "PLENTY" MANIFESTO</p>
         <p>THREE.JS • REACT THREE FIBER • GLSL NOISE</p>
       </div>
     </div>
-
   </main>
 </BaseLayout>

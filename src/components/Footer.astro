@@ -1,58 +1,64 @@
 ---
+import FloraFooter from "../islands/FloraFooter";
+import FooterLinks from "../islands/FooterLinks";
 const base = import.meta.env.BASE_URL;
+const { showStudio = false, floraHeight } = Astro.props;
 ---
 
-<footer class="border-t border-white/10 bg-ink/40">
-	<div class="section-shell">
-		<div class="flex flex-col gap-12">
-			<div class="flex flex-col gap-6">
-				<p class="text-xs uppercase tracking-[0.4em] text-mist">Design Studio</p>
-				<p class="text-[clamp(2.5rem,9vw,6rem)] font-display leading-[0.9] text-glass">
-					LET'S BUILD SOMETHING
-				</p>
-			</div>
-			<div class="grid gap-10 border-t border-white/10 pt-8 md:grid-cols-[2fr_1fr]">
-				<div class="space-y-4">
-					<p class="text-2xl font-semibold text-glass md:text-3xl">Pranjal Prakash</p>
-					<a
-						class="text-xl font-semibold text-glow transition duration-300 hover:text-glass md:text-2xl"
-						href="mailto:prakashpranjal001@gmail.com"
-					>
-						prakashpranjal001@gmail.com
-					</a>
-					<p class="text-sm uppercase tracking-[0.2em] text-mist">ML + CV portfolio</p>
-				</div>
-				<div class="flex flex-col gap-4 text-sm uppercase tracking-[0.25em] text-mist">
-					<a
-						class="border-b border-white/10 pb-3 transition-all duration-300 hover:text-glass hover:tracking-[0.3em]"
-						href={base + 'projects/'}
-					>
-						Projects
-					</a>
-					<a
-						class="border-b border-white/10 pb-3 transition-all duration-300 hover:text-glass hover:tracking-[0.3em]"
-						href="https://linkedin.com/in/pranjal-prakash"
-					>
-						LinkedIn
-					</a>
-					<a
-						class="border-b border-white/10 pb-3 transition-all duration-300 hover:text-glass hover:tracking-[0.3em]"
-						href="https://github.com/githubbermoon"
-					>
-						GitHub
-					</a>
-					<a
-						class="transition-all duration-300 hover:text-glass hover:tracking-[0.3em]"
-						href="mailto:prakashpranjal001@gmail.com"
-					>
-						Email
-					</a>
-				</div>
-			</div>
-			<div class="flex flex-col gap-2 border-t border-white/10 pt-6 text-xs uppercase tracking-[0.3em] text-mist md:flex-row md:items-center md:justify-between">
-				<span>Bengaluru, India</span>
-				<span>Open to collaborations</span>
-			</div>
-		</div>
-	</div>
+<footer class="relative mt-20 min-h-[50vh] flex items-end overflow-hidden">
+  {
+    !showStudio && (
+      <div class="absolute inset-0 z-0 pointer-events-none">
+        <FloraFooter client:load height="100%" />
+      </div>
+    )
+  }
+
+  <div class="section-shell relative z-10 w-full pb-12">
+    <div class="grid gap-10 md:grid-cols-[2fr_1fr] items-end">
+      <div class="space-y-4">
+        <p class="text-2xl font-semibold text-glass md:text-3xl">
+          Pranjal Prakash
+        </p>
+        <p class="text-sm uppercase tracking-[0.2em] text-mist">
+          ML + CV portfolio
+        </p>
+        <div class="pt-4">
+          <FooterLinks base={base} client:visible />
+        </div>
+        <div class="pt-2">
+          <a
+            class="text-xs uppercase tracking-[0.25em] text-mist/70 transition hover:text-white"
+            href={base + "pranjal-cv.pdf"}
+            download
+          >
+            Download CV
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col gap-2 text-xs uppercase tracking-[0.3em] text-mist md:text-right"
+      >
+        <span>Bengaluru, India</span>
+      </div>
+    </div>
+    {/* Studio Copyright */}
+    <div class="relative mt-16 pt-8 border-t border-white/5">
+      {/* Readability Gradient Behind Text */}
+      <div
+        class="absolute inset-0 -z-10 bg-gradient-to-t from-black via-black/80 to-transparent blur-xl scale-125 transform-gpu opacity-80 pointer-events-none"
+      >
+      </div>
+
+      <div
+        class="flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-[0.25em] text-mist/40 font-medium"
+      >
+        <p>© 2026 Pranjal Prakash</p>
+        <div class="flex items-center gap-6">
+          <span>V 2.0.1</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </footer>

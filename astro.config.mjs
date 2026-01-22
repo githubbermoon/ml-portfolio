@@ -8,4 +8,9 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
 	integrations: [react(), mdx(), tailwind()],
 	base: '/ml-portfolio/',
+	vite: {
+		resolve: {
+			dedupe: ['react', 'react-dom'],
+		},
+	},
 });

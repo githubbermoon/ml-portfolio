@@ -1,14 +1,54 @@
 ---
-const { id, title, eyebrow, subtitle, class: className } = Astro.props;
+const {
+  id,
+  title,
+  eyebrow,
+  subtitle,
+  class: className,
+  expanded = false,
+} = Astro.props;
 ---
 
-<section id={id} class:list={['relative', 'min-h-[50vh]', 'py-16', 'md:py-24', 'smooth-section-mask', className]} data-section>
-	<div class="section-shell">
-		{eyebrow && <p class="text-xs uppercase tracking-[0.2em] text-mist" data-animate>{eyebrow}</p>}
-		{title && <h2 class="mt-4 text-4xl md:text-5xl" data-animate>{title}</h2>}
-		{subtitle && <p class="mt-4 max-w-2xl text-base text-mist md:text-lg" data-animate>{subtitle}</p>}
-		<div class="mt-10">
-			<slot />
-		</div>
-	</div>
+<section
+  id={id}
+  class:list={[
+    "relative",
+    "min-h-[50vh]",
+    "py-16",
+    "md:py-24",
+    "smooth-section-mask",
+    className,
+  ]}
+  data-section
+>
+  <div
+    class={expanded
+      ? "mx-auto w-full max-w-[94vw] px-4 md:px-10 relative z-10"
+      : "section-shell"}
+  >
+    {
+      eyebrow && (
+        <p class="text-xs uppercase tracking-[0.2em] text-mist" data-animate>
+          {eyebrow}
+        </p>
+      )
+    }
+    {
+      title && (
+        <h2 class="mt-4 text-4xl md:text-5xl" data-animate>
+          {title}
+        </h2>
+      )
+    }
+    {
+      subtitle && (
+        <p class="mt-4 max-w-2xl text-base text-mist md:text-lg" data-animate>
+          {subtitle}
+        </p>
+      )
+    }
+    <div class="mt-10">
+      <slot />
+    </div>
+  </div>
 </section>
