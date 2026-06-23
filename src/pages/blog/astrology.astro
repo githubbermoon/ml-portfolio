@@ -8,16 +8,149 @@ const base = import.meta.env.BASE_URL;
 
 <BaseLayout title="Jyotiṣa | Clawd ML Portfolio">
   <Nav />
-  <main class="section-shell">
-    <section class="library-hero">
-      <a class="text-xs uppercase tracking-[0.28em] text-mist" href={base + "blog/"}>Back to library</a>
-      <p class="mt-10 text-xs uppercase tracking-[0.35em] text-mist">Astrology</p>
-      <h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">Jyotiṣa</h1>
-      <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
-        Planetary notes, symbolic timing, archetypal study, and chart reflections. This realm is prepared for
-        essays that treat astrology as a language of pattern, not a replacement for judgment.
-      </p>
+  <main class="section-shell astrology-shell">
+    <section class="astrology-hero">
+      <div class="astrology-copy">
+        <a class="back-link" href={base + "blog/"}>Back to library</a>
+        <p class="realm-label">Astrology</p>
+        <h1>Jyotiṣa</h1>
+        <p>
+          Planetary notes, symbolic timing, archetypal study, and chart reflections. This realm is prepared for
+          essays that treat astrology as a language of pattern, not a replacement for judgment.
+        </p>
+      </div>
+
+      <figure class="momiji-orbit" aria-label="Animated Japanese maple and moon visual for the astrology archive">
+        <div class="moon-field" aria-hidden="true">
+          <span class="moon"></span>
+          <span class="star star-one"></span>
+          <span class="star star-two"></span>
+          <span class="star star-three"></span>
+          <span class="orbit orbit-one"></span>
+          <span class="orbit orbit-two"></span>
+        </div>
+
+        <svg class="maple-tree" viewBox="0 0 680 760" role="img" aria-labelledby="maple-title maple-desc">
+          <title id="maple-title">Golden Japanese maple tree</title>
+          <desc id="maple-desc">
+            A custom golden maple tree with red-orange leaves, dark branches, and a small accumulation of fallen leaves.
+          </desc>
+          <defs>
+            <radialGradient id="canopyGlow" cx="50%" cy="38%" r="58%">
+              <stop offset="0%" stop-color="#ffd56a" stop-opacity="0.98" />
+              <stop offset="52%" stop-color="#f59e0b" stop-opacity="0.92" />
+              <stop offset="100%" stop-color="#b91c1c" stop-opacity="0.9" />
+            </radialGradient>
+            <linearGradient id="branchInk" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#1f130d" />
+              <stop offset="52%" stop-color="#3b2216" />
+              <stop offset="100%" stop-color="#090605" />
+            </linearGradient>
+            <linearGradient id="leafGold" x1="0" x2="1">
+              <stop offset="0%" stop-color="#fef08a" />
+              <stop offset="55%" stop-color="#f59e0b" />
+              <stop offset="100%" stop-color="#dc2626" />
+            </linearGradient>
+            <filter id="softTreeShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="22" stdDeviation="18" flood-color="#120804" flood-opacity="0.22" />
+            </filter>
+            <symbol id="momijiLeaf" viewBox="-18 -18 36 36">
+              <path
+                d="M0-16 4-6 13-11 9-2 17 1 7 4 12 13 2 8 0 17-2 8-12 13-7 4-17 1-9-2-13-11-4-6Z"
+                fill="currentColor"
+              />
+            </symbol>
+          </defs>
+
+          <g class="canopy" filter="url(#softTreeShadow)">
+            <ellipse cx="336" cy="267" rx="220" ry="184" fill="url(#canopyGlow)" opacity="0.22" />
+            <g class="leaf-cloud leaf-cloud-back">
+              <circle cx="226" cy="274" r="98" />
+              <circle cx="320" cy="188" r="118" />
+              <circle cx="448" cy="238" r="112" />
+              <circle cx="496" cy="348" r="96" />
+              <circle cx="186" cy="382" r="92" />
+              <circle cx="342" cy="360" r="150" />
+            </g>
+            <g class="branch-system">
+              <path d="M346 703 C338 604 345 518 335 432 C328 368 319 316 340 236" class="trunk" />
+              <path d="M337 435 C284 387 235 343 158 324" />
+              <path d="M338 388 C280 332 266 257 200 207" />
+              <path d="M346 397 C397 350 436 303 521 276" />
+              <path d="M352 454 C410 417 477 405 565 421" />
+              <path d="M331 337 C366 280 383 225 396 145" />
+              <path d="M315 314 C268 276 232 252 167 249" />
+              <path d="M369 341 C434 322 487 313 590 324" />
+              <path d="M330 508 C278 482 220 470 143 492" />
+              <path d="M361 522 C417 502 477 501 565 548" />
+            </g>
+            <g class="branchlets">
+              <path d="M334 358 C294 313 249 300 197 292" />
+              <path d="M351 332 C384 283 424 255 489 244" />
+              <path d="M337 288 C305 244 272 218 218 198" />
+              <path d="M367 300 C418 290 475 284 548 298" />
+              <path d="M314 425 C259 397 211 396 149 417" />
+              <path d="M371 426 C426 397 480 385 550 398" />
+            </g>
+            <g class="leaf-cloud leaf-cloud-front">
+              <circle cx="247" cy="205" r="45" />
+              <circle cx="420" cy="165" r="54" />
+              <circle cx="525" cy="301" r="48" />
+              <circle cx="148" cy="335" r="42" />
+              <circle cx="264" cy="441" r="48" />
+              <circle cx="452" cy="434" r="54" />
+            </g>
+            <g class="leaf-sprays" aria-hidden="true">
+              {Array.from({ length: 188 }).map((_, index) => {
+                const angle = (index * 137) % 360;
+                const radius = 42 + (index * 29) % 208;
+                const cx = 338 + Math.cos(angle * Math.PI / 180) * radius * (index % 3 === 0 ? 1.18 : 0.94);
+                const cy = 320 + Math.sin(angle * Math.PI / 180) * radius * 0.73 - ((index * 17) % 88);
+                const size = 16 + (index % 8) * 2.6;
+                const color = ["#fef08a", "#fde047", "#f59e0b", "#f97316", "#ef4444", "#b91c1c"][index % 6];
+                return (
+                  <use
+                    href="#momijiLeaf"
+                    x={cx}
+                    y={cy}
+                    width={size}
+                    height={size}
+                    color={color}
+                    opacity={0.8 + (index % 4) * 0.05}
+                    transform={`rotate(${angle} ${cx} ${cy})`}
+                  />
+                );
+              })}
+            </g>
+          </g>
+
+          <g class="fallen-leaves" aria-hidden="true">
+            <ellipse cx="340" cy="719" rx="222" ry="26" fill="#f59e0b" opacity="0.2" />
+            {Array.from({ length: 46 }).map((_, index) => {
+              const x = 134 + (index * 41) % 410;
+              const y = 696 + (index * 11) % 34;
+              const size = 9 + (index % 5) * 2;
+              const color = ["#facc15", "#f97316", "#dc2626", "#f59e0b"][index % 4];
+              return (
+                <use
+                  href="#momijiLeaf"
+                  x={x}
+                  y={y}
+                  width={size}
+                  height={size}
+                  color={color}
+                  opacity="0.78"
+                  transform={`rotate(${(index * 23) % 360} ${x} ${y})`}
+                />
+              );
+            })}
+          </g>
+        </svg>
+
+        <div class="falling-leaves" aria-hidden="true"></div>
+      </figure>
     </section>
+
     <section class="mt-12 grid gap-6 md:grid-cols-3">
       <article class="glass-panel p-6">
         <p class="text-xs uppercase tracking-[0.24em] text-mist">Seed</p>
@@ -38,3 +171,346 @@ const base = import.meta.env.BASE_URL;
   </main>
   <Footer />
 </BaseLayout>
+
+<script>
+  const mapleScene = document.querySelector(".momiji-orbit");
+  const fallingLayer = mapleScene?.querySelector(".falling-leaves");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (fallingLayer && !reducedMotion) {
+    const leafColors = ["#fef08a", "#facc15", "#f97316", "#ef4444", "#b91c1c"];
+    const maxLeaves = 44;
+
+    for (let index = 0; index < maxLeaves; index += 1) {
+      const leaf = document.createElement("span");
+      leaf.className = "falling-leaf";
+      leaf.style.setProperty("--x", `${Math.random() * 88 + 4}%`);
+      leaf.style.setProperty("--dx", `${Math.random() * 160 - 80}px`);
+      leaf.style.setProperty("--delay", `${Math.random() * -18}s`);
+      leaf.style.setProperty("--duration", `${10 + Math.random() * 12}s`);
+      leaf.style.setProperty("--spin", `${Math.random() * 720 - 360}deg`);
+      leaf.style.setProperty("--scale", `${0.58 + Math.random() * 0.7}`);
+      leaf.style.setProperty("--leaf", leafColors[index % leafColors.length]);
+      fallingLayer.append(leaf);
+    }
+  }
+</script>
+
+<style>
+  .astrology-shell {
+    max-width: 76rem;
+    overflow: hidden;
+  }
+
+  .astrology-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.88fr) minmax(320px, 1.12fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5.5rem);
+    min-height: min(760px, calc(100vh - 5rem));
+    padding-block: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .astrology-copy {
+    position: relative;
+    z-index: 2;
+  }
+
+  .back-link,
+  .realm-label {
+    color: rgb(var(--color-mist));
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .back-link {
+    display: inline-flex;
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+
+  .back-link:hover {
+    color: rgb(var(--color-glass));
+  }
+
+  .realm-label {
+    margin-top: clamp(2.5rem, 7vw, 4.5rem);
+  }
+
+  .astrology-copy h1 {
+    margin-top: 1.25rem;
+    max-width: 34rem;
+    font-size: clamp(4.5rem, 12vw, 10.5rem);
+    line-height: 0.84;
+    letter-spacing: -0.045em;
+  }
+
+  .astrology-copy > p:last-child {
+    margin-top: 1.75rem;
+    max-width: 34rem;
+    color: rgb(var(--color-mist));
+    font-size: clamp(1rem, 1.35vw, 1.16rem);
+    line-height: 1.85;
+  }
+
+  .momiji-orbit {
+    position: relative;
+    min-height: clamp(500px, 72vw, 730px);
+    margin: 0;
+    isolation: isolate;
+  }
+
+  .moon-field,
+  .falling-leaves {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .moon-field {
+    z-index: 0;
+    opacity: 0.88;
+  }
+
+  .moon {
+    position: absolute;
+    top: 8%;
+    right: 10%;
+    width: clamp(5rem, 13vw, 9rem);
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background:
+      radial-gradient(circle at 42% 34%, rgb(255 250 219 / 0.98), rgb(251 191 36 / 0.55) 55%, transparent 70%),
+      rgb(255 244 179 / 0.75);
+    box-shadow:
+      0 0 52px rgb(251 191 36 / 0.32),
+      inset -20px -14px 38px rgb(124 45 18 / 0.12);
+  }
+
+  .orbit {
+    position: absolute;
+    border: 1px solid rgb(251 191 36 / 0.2);
+    border-radius: 50%;
+    transform: rotate(-22deg);
+  }
+
+  .orbit-one {
+    top: 3%;
+    right: 0;
+    width: 72%;
+    height: 42%;
+  }
+
+  .orbit-two {
+    top: 18%;
+    right: 16%;
+    width: 48%;
+    height: 34%;
+    border-color: rgb(239 68 68 / 0.18);
+  }
+
+  .star {
+    position: absolute;
+    width: 0.42rem;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background: rgb(254 240 138);
+    box-shadow: 0 0 18px rgb(254 240 138 / 0.8);
+  }
+
+  .star-one {
+    top: 14%;
+    left: 17%;
+  }
+
+  .star-two {
+    top: 29%;
+    right: 3%;
+    transform: scale(0.7);
+  }
+
+  .star-three {
+    top: 5%;
+    left: 48%;
+    transform: scale(0.52);
+  }
+
+  .maple-tree {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .canopy {
+    transform-origin: 340px 700px;
+    animation: maple-sway 8s ease-in-out infinite;
+  }
+
+  .leaf-cloud {
+    fill: url(#canopyGlow);
+    mix-blend-mode: screen;
+  }
+
+  .leaf-cloud-back {
+    opacity: 0.3;
+    filter: blur(8px);
+  }
+
+  .leaf-cloud-front {
+    opacity: 0.14;
+    filter: blur(3px);
+  }
+
+  .branch-system,
+  .branchlets {
+    fill: none;
+    stroke: url(#branchInk);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 8;
+  }
+
+  .branchlets {
+    opacity: 0.86;
+    stroke-width: 4;
+  }
+
+  .branch-system .trunk {
+    stroke-width: 28;
+  }
+
+  .leaf-sprays use,
+  .fallen-leaves use {
+    filter: drop-shadow(0 3px 2px rgb(88 28 18 / 0.24));
+  }
+
+  .falling-leaves {
+    z-index: 3;
+    overflow: hidden;
+  }
+
+  .falling-leaf {
+    position: absolute;
+    top: -12%;
+    left: var(--x);
+    width: 18px;
+    height: 18px;
+    color: var(--leaf);
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(var(--scale));
+    animation: leaf-fall var(--duration) linear var(--delay) infinite;
+  }
+
+  .falling-leaf::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: currentColor;
+    clip-path: polygon(
+      50% 0%,
+      61% 32%,
+      88% 14%,
+      74% 43%,
+      100% 54%,
+      67% 61%,
+      82% 92%,
+      54% 73%,
+      50% 100%,
+      46% 73%,
+      18% 92%,
+      33% 61%,
+      0% 54%,
+      26% 43%,
+      12% 14%,
+      39% 32%
+    );
+    filter: drop-shadow(0 5px 4px rgb(69 26 3 / 0.24));
+  }
+
+  [data-theme="bright"] .moon {
+    opacity: 0.58;
+  }
+
+  [data-theme="bright"] .leaf-cloud {
+    mix-blend-mode: multiply;
+  }
+
+  @keyframes maple-sway {
+    0%,
+    100% {
+      transform: rotate(-1.2deg) translateX(-4px);
+    }
+    50% {
+      transform: rotate(1.4deg) translateX(5px);
+    }
+  }
+
+  @keyframes leaf-fall {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, -10%, 0) rotate(0deg) scale(var(--scale));
+    }
+    10%,
+    82% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 0;
+      transform: translate3d(var(--dx), 112vh, 0) rotate(var(--spin)) scale(var(--scale));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .canopy,
+    .falling-leaf {
+      animation: none !important;
+    }
+
+    .falling-leaf {
+      display: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .astrology-hero {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      min-height: auto;
+    }
+
+    .astrology-copy h1 {
+      font-size: clamp(4rem, 23vw, 7rem);
+    }
+
+    .momiji-orbit {
+      min-height: min(112vw, 620px);
+      margin-top: -1rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .astrology-shell {
+      padding-inline: 1.1rem;
+      padding-top: 5rem;
+    }
+
+    .astrology-copy > p:last-child {
+      font-size: 0.98rem;
+      line-height: 1.72;
+    }
+
+    .momiji-orbit {
+      min-height: 108vw;
+      margin-inline: -1rem;
+    }
+
+    .moon {
+      top: 3%;
+      right: 13%;
+    }
+  }
+</style>
