@@ -22,6 +22,11 @@ const blogPassword = import.meta.env.PUBLIC_BLOG_PASSWORD ?? "open";
 const normalizedBase = base.endsWith("/") ? base : `${base}/`;
 const blogPrefix = `${normalizedBase}blog`;
 const devBlogPrefix = "/blog";
+const publicBlogPrefix = `${blogPrefix}/uhi-bengaluru`;
+const publicDevBlogPrefix = `${devBlogPrefix}/uhi-bengaluru`;
+const isPublicBlogRoute =
+  Astro.url.pathname.startsWith(publicBlogPrefix) ||
+  Astro.url.pathname.startsWith(publicDevBlogPrefix);
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": type === "article" ? "Article" : "WebSite",
@@ -44,8 +49,9 @@ const jsonLd = {
   ...(tags.length ? { keywords: tags.join(", ") } : {}),
 };
 const isBlogRoute =
-  Astro.url.pathname.startsWith(blogPrefix) ||
-  Astro.url.pathname.startsWith(devBlogPrefix);
+  !isPublicBlogRoute &&
+  (Astro.url.pathname.startsWith(blogPrefix) ||
+    Astro.url.pathname.startsWith(devBlogPrefix));
 ---
 
 <!doctype html>
@@ -75,7 +81,8 @@ const isBlogRoute =
     {tags.map((tag: string) => <meta property="article:tag" content={tag} />)}
     <link rel="icon" type="image/svg+xml" href={base + "favicon.svg"} />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-    <script is:inline define:vars={{ blogPassword, blogPrefix, devBlogPrefix }}>
+    <slot name="head" />
+    <script is:inline define:vars={{ blogPassword, blogPrefix, devBlogPrefix, publicBlogPrefix, publicDevBlogPrefix }}>
       const storedTheme = localStorage.getItem("clawd-theme");
       const prefersLight = window.matchMedia(
         "(prefers-color-scheme: light)",
@@ -110,9 +117,13 @@ const isBlogRoute =
 
       const BLOG_PASSWORD = blogPassword;
       const BLOG_KEY = "blog-gate-until";
+      const isPublicBlogRoute =
+        window.location.pathname.startsWith(publicBlogPrefix) ||
+        window.location.pathname.startsWith(publicDevBlogPrefix);
       const isBlogRoute =
-        window.location.pathname.startsWith(blogPrefix) ||
-        window.location.pathname.startsWith(devBlogPrefix);
+        !isPublicBlogRoute &&
+        (window.location.pathname.startsWith(blogPrefix) ||
+          window.location.pathname.startsWith(devBlogPrefix));
       if (isBlogRoute) {
         const until = sessionStorage.getItem(BLOG_KEY);
         const unlocked = until && Number(until) > Date.now();

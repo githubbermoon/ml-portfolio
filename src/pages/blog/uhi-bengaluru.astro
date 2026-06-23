@@ -1,0 +1,1293 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const base = import.meta.env.BASE_URL;
+
+const metrics = [
+  ["Samples", "10.2M", "aligned pixel samples"],
+  ["Tiles", "164", "spatially aligned tiles"],
+  ["Hold-out RMSE", "3.31 K", "Level-1 pixel hold-out"],
+  ["Hold-out R2", "0.554", "explained variance"],
+  ["UHI intensity", "1.97 K", "urban minus rural"],
+];
+
+const validationRows = [
+  ["Spatial CV", "RMSE", "3.487 K"],
+  ["Spatial CV", "R2", "0.527"],
+  ["Level-1 hold-out", "RMSE", "3.31 K"],
+  ["Level-1 hold-out", "MAE", "2.34 K"],
+  ["Level-1 hold-out", "R2", "0.554"],
+  ["Level-1 hold-out", "Bias", "+0.75 K"],
+  ["Level-1 hold-out", "N", "973,407 pixels"],
+  ["Level-2 regional", "Urban mean LST", "310.8 K"],
+  ["Level-2 regional", "Rural mean LST", "308.8 K"],
+  ["Level-2 regional", "UHI intensity", "1.97 K"],
+];
+
+const seasonalRows = [
+  ["2020 Summer", "312.8", "310.9", "1.95"],
+  ["2020 Winter", "302.2", "300.8", "1.35"],
+  ["2021 Summer", "310.9", "309.6", "1.37"],
+  ["2021 Winter", "306.6", "304.3", "2.29"],
+  ["2022 Summer", "310.4", "308.8", "1.54"],
+  ["2022 Winter", "302.5", "301.0", "1.52"],
+  ["2023 Summer", "312.2", "310.3", "1.85"],
+  ["2023 Winter", "305.4", "303.8", "1.61"],
+  ["2024 Summer", "312.3", "311.0", "1.31"],
+  ["2024 Winter", "302.8", "301.3", "1.57"],
+  ["2025 Summer", "311.9", "310.0", "1.87"],
+  ["2025 Winter", "304.2", "302.5", "1.62"],
+];
+
+const gateRows = [
+  ["Objective scorecard", "5/5 (100%)", "PASS"],
+  ["NDVI physical check", "corr(NDVI,LST) = -0.558", "PASS"],
+  ["NDBI physical check", "corr(NDBI,LST) = 0.622", "PASS"],
+  ["Seasonal UHI mean", "1.65 K", "PASS"],
+  ["Seasonal UHI range", "1.31-2.29 K", "PASS"],
+  ["Published envelope", "within 0.6 to 2.6 K: 100%", "PASS"],
+];
+
+const risks = [
+  ["Seasonal stack drift", "Step-12 envelope check against published Bengaluru UHI range"],
+  ["Spatial leakage in training", "Spatial block hold-out by tile identifiers"],
+  ["Masking artifacts and NaN regions", "Feature gates and documented downstream consistency checks"],
+  ["Overclaiming external validation", "MODIS used only for regional consistency interpretation"],
+  ["Reproducibility loss", "Manifest plus SHA-256 checksum records for artifact integrity"],
+];
+
+const references = [
+  "T. R. Oke, The energetic basis of the urban heat island, Quarterly Journal of the Royal Meteorological Society, 1982.",
+  "J. A. Voogt and T. R. Oke, Thermal remote sensing of urban climates, Remote Sensing of Environment, 2003.",
+  "Q. Weng, D. Lu, and J. Schubring, Estimation of land surface temperature-vegetation abundance relationship for urban heat island studies, Remote Sensing of Environment, 2004.",
+  "T. Chen and C. Guestrin, XGBoost: A scalable tree boosting system, KDD, 2016.",
+  "S. M. Lundberg and S.-I. Lee, A unified approach to interpreting model predictions, NIPS, 2017.",
+  "Y. Chen et al., Machine learning for urban heat island assessment from remote sensing data: A review, Remote Sensing, 2023.",
+  "W. Zhang et al., Landsat 8 LST retrieval and spatial-temporal migration capabilities based on random forest, Advances in Space Research, 2024.",
+];
+---
+
+<BaseLayout
+  title="Reproducible Urban Heat Island Modeling for Bengaluru"
+  description="A Distill-style technical article adapting a research paper on reproducible spatiotemporal Urban Heat Island modeling for Bengaluru using Earth observation and machine learning."
+  bodyClass="paper-body"
+>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </Fragment>
+  <main class="paper-page">
+    <header class="paper-topbar">
+      <a href={base + "blog/technical/"}>Technical Blog</a>
+      <span>Urban Climate</span>
+      <a href={base + "blog/uhi-bengaluru/reproducible-uhi-bengaluru-paper.pdf"}>PDF</a>
+    </header>
+
+    <section class="paper-hero">
+      <p class="paper-thread">Earth Observation · XGBoost · Explainable AI · Reproducibility</p>
+      <h1>Reproducible Spatiotemporal Urban Heat Island Modeling for Bengaluru Using Earth Observation and Machine Learning</h1>
+      <p class="paper-dek">
+        A leakage-aware workflow for estimating land surface temperature and Urban Heat Island intensity from multi-year satellite imagery, with spatial validation, SHAP interpretability, and fixed reproducibility artifacts.
+      </p>
+      <div class="paper-authors" aria-label="Authors">
+        <div>
+          <strong>Pranjal Prakash</strong>
+          <span>School of Computer Science and Applications, REVA University</span>
+          <a href="mailto:24130500752@reva.edu.in">24130500752@reva.edu.in</a>
+        </div>
+        <div>
+          <strong>Vinag G.</strong>
+          <span>School of Computer Science and Applications, REVA University</span>
+          <a href="mailto:vinay.g@reva.edu.in">vinay.g@reva.edu.in</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="paper-layout">
+      <aside class="paper-contents" aria-label="Table of contents">
+        <p>Contents</p>
+        <a href="#abstract">Abstract</a>
+        <a href="#problem">Problem</a>
+        <a href="#method">Methodology</a>
+        <a href="#validation">Validation</a>
+        <a href="#results">Results</a>
+        <a href="#interpretability">Interpretability</a>
+        <a href="#reproducibility">Reproducibility</a>
+        <a href="#limitations">Limitations</a>
+        <a href="#references">References</a>
+      </aside>
+
+      <article class="paper-article">
+        <section id="abstract" class="paper-section">
+          <h2>Abstract</h2>
+          <p>
+            The present research proposes a workflow for Urban Heat Island analysis for Bengaluru, utilizing multiple years of Earth Observation and interpretable machine learning. The methodology emphasizes spatial leakage control, multiple validation levels, and fixed artifacts.
+          </p>
+          <p>
+            The approach stacks Sentinel-2 and Landsat imagery for 2020-2025, applies physics-informed feature verification, and trains an XGBoost regressor with spatial block cross-validation. Held-out validation achieves an RMSE of <strong>3.31 K</strong> and an R2 of <strong>0.554</strong>. Regional validation estimates urban and rural mean temperatures of <strong>310.8 K</strong> and <strong>308.8 K</strong>, yielding a UHI intensity of <strong>1.97 K</strong>.
+          </p>
+
+          <div class="metric-strip">
+            {metrics.map(([label, value, note]) => (
+              <div>
+                <span>{label}</span>
+                <strong>{value}</strong>
+                <small>{note}</small>
+              </div>
+            ))}
+          </div>
+
+          <aside class="margin-note">
+            <b>Why this matters.</b>
+            UHI studies often report predictive performance without making spatial leakage controls and execution traceability explicit. This article frames the model as a reproducible evaluation protocol rather than a new architecture.
+          </aside>
+        </section>
+
+        <section id="problem" class="paper-section">
+          <h2>Problem Statement and Gap</h2>
+          <p>
+            Most Earth Observation based UHI analyses demonstrate predictive capability, but they often under-specify the controls used for spatial leakage, traceability of execution, and reproducibility. In geospatial regression, adjacent pixels and nearby tiles are autocorrelated; random splits can therefore overstate generalization.
+          </p>
+          <p>
+            Bengaluru adds two practical complications: strong seasonality and heterogeneous land cover. Vegetation, water, built-up surfaces, and temporal drift all affect land surface temperature, so the validation procedure needs to be spatially aware and physically interpretable.
+          </p>
+          <blockquote>
+            The contribution is not a new backbone architecture, but a reproducible and leakage-aware evaluation framework for EO-based UHI regression.
+          </blockquote>
+        </section>
+
+        <section id="method" class="paper-section">
+          <h2>Methodology</h2>
+          <p>
+            The workflow links EO ingestion, seasonal alignment, spatial block validation, model training, regional validation, and checksum-based artifact locking into one execution protocol.
+          </p>
+
+          <figure class="method-figure" id="method-figure">
+            <figcaption>
+              Fig. 1. Interactive methodology map. Hover or tap a stage to inspect how the workflow moves from
+              multi-year Earth Observation stacks to leakage-aware validation and locked artifacts.
+            </figcaption>
+
+            <div class="method-panels" aria-hidden="true">
+              <div class="method-panel method-panel-wide">
+                <h3>Seasonal stack profile</h3>
+                <p>12 year-season composites from 2020-2025</p>
+                <div class="season-strip" aria-label="Seasonal stack heat strip">
+                  {["s1","w1","s2","w2","s3","w3","s4","w4","s5","w5","s6","w6"].map((key) => (
+                    <span class={key}></span>
+                  ))}
+                </div>
+                <div class="strip-axis"><span>2020</span><span>2025</span></div>
+              </div>
+
+              <div class="method-panel">
+                <h3>Spatial hold-out</h3>
+                <p>Blocks are held out by tile identifiers</p>
+                <div class="tile-grid" aria-label="Spatial split grid">
+                  {Array.from({ length: 36 }).map((_, index) => (
+                    <span class:list={[index % 7 === 0 || index % 11 === 0 ? "held" : "train"]}></span>
+                  ))}
+                </div>
+              </div>
+
+              <div class="method-panel">
+                <h3>Validation gates</h3>
+                <p>Model, physics, drift, and artifact checks</p>
+                <div class="gate-matrix" aria-label="Publication gate matrix">
+                  {Array.from({ length: 25 }).map((_, index) => (
+                    <span class:list={[index === 6 || index === 12 || index === 18 || index === 24 ? "hot" : index % 2 === 0 ? "warm" : "cool"]}></span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div class="method-flow-shell">
+              <div class="method-flow-scroll">
+                <svg class="method-flow" viewBox="0 0 920 430" role="img" aria-labelledby="method-flow-title method-flow-desc">
+                  <title id="method-flow-title">Urban Heat Island methodology flow chart</title>
+                  <desc id="method-flow-desc">
+                    A seven-stage workflow from Earth Observation ingestion through seasonal alignment, feature checks,
+                    spatial split, model training, SHAP interpretation, MODIS validation, and checksum locking.
+                  </desc>
+                  <defs>
+                    <marker id="method-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                      <path d="M 0 0 L 10 5 L 0 10 z"></path>
+                    </marker>
+                    <linearGradient id="method-edge-gradient" x1="0" x2="1">
+                      <stop offset="0%" stop-color="#2f8b88" stop-opacity="0.25"></stop>
+                      <stop offset="52%" stop-color="#9d6d22" stop-opacity="0.55"></stop>
+                      <stop offset="100%" stop-color="#c24f2b" stop-opacity="0.72"></stop>
+                    </linearGradient>
+                  </defs>
+
+                  <g class="method-edges">
+                    <path data-edge="ingest align" d="M150 100 C205 80 232 80 286 100"></path>
+                    <path data-edge="align feature" d="M360 100 C414 72 446 72 500 100"></path>
+                    <path data-edge="feature split" d="M574 100 C626 90 652 122 690 162"></path>
+                    <path data-edge="split model" d="M704 224 C650 290 584 320 478 320"></path>
+                    <path data-edge="model shap" d="M404 320 C338 306 300 282 258 240"></path>
+                    <path data-edge="model modis" d="M480 320 C570 336 650 332 758 302"></path>
+                    <path data-edge="shap lock" d="M210 200 C170 250 160 300 198 352"></path>
+                    <path data-edge="modis lock" d="M758 302 C620 384 430 400 246 352"></path>
+                  </g>
+
+                  <g class="method-node is-active" data-step="ingest" tabindex="0" role="button" aria-label="EO ingestion">
+                    <rect x="38" y="54" width="128" height="92" rx="2"></rect>
+                    <text x="58" y="86">01</text>
+                    <text x="58" y="111">EO ingestion</text>
+                    <text x="58" y="130">Sentinel-2 + Landsat</text>
+                  </g>
+                  <g class="method-node" data-step="align" tabindex="0" role="button" aria-label="Seasonal alignment">
+                    <rect x="286" y="54" width="128" height="92" rx="2"></rect>
+                    <text x="306" y="86">02</text>
+                    <text x="306" y="111">Seasonal align</text>
+                    <text x="306" y="130">12 composites</text>
+                  </g>
+                  <g class="method-node" data-step="feature" tabindex="0" role="button" aria-label="Feature checks">
+                    <rect x="500" y="54" width="128" height="92" rx="2"></rect>
+                    <text x="520" y="86">03</text>
+                    <text x="520" y="111">Feature checks</text>
+                    <text x="520" y="130">NDVI, NDBI, classes</text>
+                  </g>
+                  <g class="method-node" data-step="split" tabindex="0" role="button" aria-label="Spatial block split">
+                    <rect x="682" y="162" width="150" height="92" rx="2"></rect>
+                    <text x="702" y="194">04</text>
+                    <text x="702" y="219">Spatial split</text>
+                    <text x="702" y="238">hold-out by tile</text>
+                  </g>
+                  <g class="method-node" data-step="model" tabindex="0" role="button" aria-label="XGBoost regression">
+                    <rect x="350" y="274" width="144" height="92" rx="2"></rect>
+                    <text x="370" y="306">05</text>
+                    <text x="370" y="331">XGBoost</text>
+                    <text x="370" y="350">LST regression</text>
+                  </g>
+                  <g class="method-node" data-step="shap" tabindex="0" role="button" aria-label="SHAP interpretation">
+                    <rect x="126" y="164" width="138" height="92" rx="2"></rect>
+                    <text x="146" y="196">06a</text>
+                    <text x="146" y="221">SHAP</text>
+                    <text x="146" y="240">physics signs</text>
+                  </g>
+                  <g class="method-node" data-step="modis" tabindex="0" role="button" aria-label="MODIS regional validation">
+                    <rect x="732" y="274" width="142" height="92" rx="2"></rect>
+                    <text x="752" y="306">06b</text>
+                    <text x="752" y="331">MODIS check</text>
+                    <text x="752" y="350">regional consistency</text>
+                  </g>
+                  <g class="method-node" data-step="lock" tabindex="0" role="button" aria-label="Checksum artifact bundle">
+                    <rect x="176" y="330" width="142" height="76" rx="2"></rect>
+                    <text x="196" y="360">07</text>
+                    <text x="196" y="385">Checksum lock</text>
+                  </g>
+                </svg>
+              </div>
+
+              <div class="method-detail" aria-live="polite">
+                <p class="method-detail-kicker">Selected stage</p>
+                <h3 id="method-detail-title">EO ingestion</h3>
+                <p id="method-detail-body">
+                  Multi-year Sentinel-2 and Landsat imagery are stacked into aligned Earth Observation inputs before
+                  seasonal aggregation and feature checks.
+                </p>
+                <dl>
+                  <div>
+                    <dt id="method-detail-stat">2020-2025</dt>
+                    <dd id="method-detail-label">time span</dd>
+                  </div>
+                  <div>
+                    <dt id="method-detail-artifact">aligned rasters</dt>
+                    <dd>artifact</dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </figure>
+
+          <p>
+            Predicted land-surface temperature at year <em>y</em>, season <em>s</em>, and pixel <em>p</em> is modeled as:
+          </p>
+          <div class="equation">T<sub>pred</sub>(y,s,p) = f(x(y,s,p))</div>
+          <p>
+            Here, <em>x(y,s,p)</em> is the feature vector for the corresponding year, season, and pixel. Features include NDVI, NDBI, latitude, longitude, seasonal variables, and WorldCover-derived class variables.
+          </p>
+        </section>
+
+        <section id="validation" class="paper-section">
+          <h2>Validation Design</h2>
+          <p>
+            The experiment uses two validation levels. Level-1 compares model predictions against held-out Landsat-derived targets at the pixel level. Level-2 checks regional urban-rural thermal contrast and seasonal consistency against MODIS seasonal means.
+          </p>
+          <div class="equation">ΔT<sub>UHI</sub> = T<sub>urban mean</sub> - T<sub>rural mean</sub></div>
+
+          <table class="paper-table">
+            <caption>Table 1. Model and validation metrics.</caption>
+            <thead>
+              <tr><th>Evaluation level</th><th>Metric</th><th>Value</th></tr>
+            </thead>
+            <tbody>
+              {validationRows.map((row) => (
+                <tr>{row.map((cell) => <td>{cell}</td>)}</tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
+        <section id="results" class="paper-section">
+          <h2>Prediction and UHI Results</h2>
+          <p>
+            The prediction map shows spatial thermal structure across evaluation tiles. Warm and cool clusters provide a qualitative check of the expected urban-rural contrast, while the scatter plot summarizes pixel-level agreement between observed and predicted LST.
+          </p>
+
+          <figure class="wide-figure">
+            <img src={base + "blog/uhi-bengaluru/prediction-map.jpeg"} alt="Actual LST, predicted LST, and residual map for an evaluation tile." loading="lazy" />
+            <figcaption>Fig. 2. Prediction map and residual structure for an evaluation tile. The panel preserves the original paper figure.</figcaption>
+          </figure>
+
+          <figure class="wide-figure">
+            <img src={base + "blog/uhi-bengaluru/observed-vs-predicted.jpeg"} alt="Scatter plot comparing actual and predicted land surface temperature." loading="lazy" />
+            <figcaption>Fig. 3. Observed versus predicted LST. The diagonal line represents perfect agreement; spread around the line shows residual error.</figcaption>
+          </figure>
+
+          <table class="paper-table compact">
+            <caption>Table 2. Seasonal urban-rural UHI from the Step-12 drift run.</caption>
+            <thead>
+              <tr><th>Year-season</th><th>Urban (K)</th><th>Rural (K)</th><th>UHI (K)</th></tr>
+            </thead>
+            <tbody>
+              {seasonalRows.map((row) => (
+                <tr>{row.map((cell) => <td>{cell}</td>)}</tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
+        <section id="interpretability" class="paper-section">
+          <h2>SHAP-Based Interpretability</h2>
+          <p>
+            Expected physical behavior appears in the SHAP analysis: NDVI contributes a cooling tendency, NDBI contributes a warming tendency, and seasonality is highly influential because summer and winter differ strongly in surface temperature.
+          </p>
+
+          <div class="figure-grid">
+            <figure>
+              <img src={base + "blog/uhi-bengaluru/shap-importance.png"} alt="SHAP feature importance bar chart." loading="lazy" />
+              <figcaption>Fig. 4. Global SHAP importance ranking.</figcaption>
+            </figure>
+            <figure>
+              <img src={base + "blog/uhi-bengaluru/shap-beeswarm.jpeg"} alt="SHAP beeswarm plot showing signed feature contributions." loading="lazy" />
+              <figcaption>Fig. 5. Signed SHAP contribution distribution.</figcaption>
+            </figure>
+          </div>
+
+          <div class="figure-grid">
+            <figure>
+              <img src={base + "blog/uhi-bengaluru/shap-ndvi.jpeg"} alt="SHAP dependence plot for NDVI." loading="lazy" />
+              <figcaption>Fig. 6. Increasing NDVI tends to reduce predicted temperature.</figcaption>
+            </figure>
+            <figure>
+              <img src={base + "blog/uhi-bengaluru/shap-ndbi.jpeg"} alt="SHAP dependence plot for NDBI." loading="lazy" />
+              <figcaption>Fig. 7. Higher NDBI increases positive SHAP contribution.</figcaption>
+            </figure>
+            <figure>
+              <img src={base + "blog/uhi-bengaluru/shap-urban.jpeg"} alt="SHAP dependence plot for the binary urban indicator." loading="lazy" />
+              <figcaption>Fig. 8. Urban-class samples have a positive SHAP shift.</figcaption>
+            </figure>
+          </div>
+
+          <p>
+            For a local explanation, a prediction can be expressed as a baseline plus the sum of feature contributions:
+          </p>
+          <div class="equation">T<sub>pred</sub>(x) = basevalue + shap<sub>1</sub>(x) + ... + shap<sub>d</sub>(x)</div>
+          <aside class="margin-note">
+            <b>Interpretability check.</b>
+            The model does not merely rank predictors; its attribution signs match the physical expectations of vegetation cooling and built-up intensity warming.
+          </aside>
+        </section>
+
+        <section id="reproducibility" class="paper-section">
+          <h2>Publication Gates and Reproducibility</h2>
+          <p>
+            The reported run includes pass/fail publication gates, drift envelope checks, and checksum records. These are used to make the manuscript traceable back to fixed artifacts rather than a loose sequence of notebooks.
+          </p>
+          <table class="paper-table">
+            <caption>Table 3. Gate and drift consistency results.</caption>
+            <thead>
+              <tr><th>Check</th><th>Result</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              {gateRows.map((row) => (
+                <tr>{row.map((cell) => <td>{cell}</td>)}</tr>
+              ))}
+            </tbody>
+          </table>
+          <table class="paper-table">
+            <caption>Table 4. Observed risks and mitigation strategy.</caption>
+            <thead>
+              <tr><th>Risk</th><th>Mitigation used in final run</th></tr>
+            </thead>
+            <tbody>
+              {risks.map((row) => (
+                <tr>{row.map((cell) => <td>{cell}</td>)}</tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
+        <section id="limitations" class="paper-section">
+          <h2>Threats to Validity and Future Work</h2>
+          <p>
+            Three limitations are identified. First, valid pixel count is lower for some winter year-season combinations. Second, heuristic NDVI/NDBI visualization masks are used qualitatively rather than quantitatively. Third, Level-2 MODIS validation is interpreted as regional consistency rather than per-pixel supervisory ground truth.
+          </p>
+          <p>
+            Future work includes evaluating Random Forest and CNN-based benchmarks under the same spatial split and reproducibility framework, expanding the spatial and temporal extent, and strengthening controlled benchmark comparisons.
+          </p>
+        </section>
+
+        <section id="references" class="paper-section references">
+          <h2>References</h2>
+          <ol>
+            {references.map((reference) => <li>{reference}</li>)}
+          </ol>
+        </section>
+      </article>
+
+      <aside class="paper-right-rail" aria-hidden="true"></aside>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  const methodFigure = document.getElementById("method-figure");
+  const methodNodes = methodFigure?.querySelectorAll<SVGGElement>(".method-node");
+  const methodEdges = methodFigure?.querySelectorAll<SVGPathElement>(".method-edges path");
+  const methodTitle = document.getElementById("method-detail-title");
+  const methodBody = document.getElementById("method-detail-body");
+  const methodStat = document.getElementById("method-detail-stat");
+  const methodLabel = document.getElementById("method-detail-label");
+  const methodArtifact = document.getElementById("method-detail-artifact");
+
+  const methodDetails: Record<string, {
+    title: string;
+    body: string;
+    stat: string;
+    label: string;
+    artifact: string;
+    related: string[];
+  }> = {
+    ingest: {
+      title: "EO ingestion",
+      body: "Sentinel-2 and Landsat scenes are collected as the raw observation layer for Bengaluru across the study window.",
+      stat: "2020-2025",
+      label: "time span",
+      artifact: "raw EO stacks",
+      related: ["align"],
+    },
+    align: {
+      title: "Seasonal alignment",
+      body: "Images are aligned into year-season composites so that summer and winter behavior can be compared under a fixed temporal protocol.",
+      stat: "12",
+      label: "seasonal stacks",
+      artifact: "aligned composites",
+      related: ["ingest", "feature"],
+    },
+    feature: {
+      title: "Feature checks",
+      body: "NDVI, NDBI, coordinates, season variables, and WorldCover classes are verified before the model sees the training table.",
+      stat: "NDVI/NDBI",
+      label: "physics features",
+      artifact: "feature table",
+      related: ["align", "split"],
+    },
+    split: {
+      title: "Spatial block split",
+      body: "The hold-out is defined by tile identifiers, reducing leakage from nearby pixels that would otherwise make validation too optimistic.",
+      stat: "164",
+      label: "aligned tiles",
+      artifact: "split manifest",
+      related: ["feature", "model"],
+    },
+    model: {
+      title: "XGBoost regression",
+      body: "A non-linear tabular baseline predicts land surface temperature from EO-derived predictors under the fixed split.",
+      stat: "3.31 K",
+      label: "hold-out RMSE",
+      artifact: "model + metrics",
+      related: ["split", "shap", "modis"],
+    },
+    shap: {
+      title: "SHAP interpretation",
+      body: "Global and dependence plots check whether the model learns physically plausible signs: vegetation cools, built-up intensity warms.",
+      stat: "-0.558",
+      label: "corr(NDVI,LST)",
+      artifact: "SHAP figures",
+      related: ["model", "lock"],
+    },
+    modis: {
+      title: "MODIS regional check",
+      body: "Level-2 validation compares seasonal urban-rural contrast against regional MODIS means rather than treating MODIS as pixel truth.",
+      stat: "1.97 K",
+      label: "regional UHI",
+      artifact: "validation tables",
+      related: ["model", "lock"],
+    },
+    lock: {
+      title: "Checksum lock",
+      body: "The final bundle fixes manifests and SHA-256 records so the reported run can be audited after publication.",
+      stat: "5/5",
+      label: "gate score",
+      artifact: "checksum bundle",
+      related: ["shap", "modis"],
+    },
+  };
+
+  const setMethodStep = (step: string) => {
+    const detail = methodDetails[step];
+    if (!detail) return;
+
+    methodNodes?.forEach((node) => {
+      const nodeStep = node.dataset.step ?? "";
+      node.classList.toggle("is-active", nodeStep === step);
+      node.classList.toggle("is-related", detail.related.includes(nodeStep));
+    });
+
+    methodEdges?.forEach((edge) => {
+      const edgeSteps = edge.dataset.edge?.split(" ") ?? [];
+      edge.classList.toggle("is-active", edgeSteps.includes(step));
+    });
+
+    if (methodTitle) methodTitle.textContent = detail.title;
+    if (methodBody) methodBody.textContent = detail.body;
+    if (methodStat) methodStat.textContent = detail.stat;
+    if (methodLabel) methodLabel.textContent = detail.label;
+    if (methodArtifact) methodArtifact.textContent = detail.artifact;
+  };
+
+  methodNodes?.forEach((node) => {
+    const step = node.dataset.step ?? "";
+    node.addEventListener("mouseenter", () => setMethodStep(step));
+    node.addEventListener("focus", () => setMethodStep(step));
+    node.addEventListener("click", () => setMethodStep(step));
+    node.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        setMethodStep(step);
+      }
+    });
+  });
+</script>
+
+<style>
+  :global(.paper-body > .fixed.top-6.right-6) {
+    display: none;
+  }
+
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  :global(body) {
+    background: #fbfaf7;
+  }
+
+  .paper-page {
+    --paper-sans: "Roboto", Arial, Helvetica, sans-serif;
+    --paper-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --font-mono: var(--paper-mono);
+    min-height: 100vh;
+    color: #151515;
+    background:
+      linear-gradient(90deg, rgba(27, 82, 99, 0.045) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(27, 82, 99, 0.04) 1px, transparent 1px),
+      radial-gradient(circle at 92% 8%, rgba(207, 111, 35, 0.12), transparent 28%),
+      #fbfaf7;
+    background-size: 72px 72px, 72px 72px, auto, auto;
+    font-family: var(--paper-sans);
+  }
+
+  .paper-topbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1rem;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.1rem 2rem;
+    border-bottom: 1px solid rgba(20, 20, 20, 0.12);
+    color: #4f5f62;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .paper-topbar a:last-child {
+    justify-self: end;
+  }
+
+  .paper-topbar a:hover {
+    color: #9b5b17;
+  }
+
+  .paper-hero {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: clamp(3.6rem, 7vw, 5.5rem) 2rem 2.4rem;
+  }
+
+  .paper-thread {
+    color: #287a79;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .paper-hero h1 {
+    margin-top: 1.3rem;
+    color: #111;
+    font-family: var(--paper-sans);
+    max-width: 1080px;
+    font-size: clamp(2.7rem, 4.5vw, 4.9rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.06;
+  }
+
+  .paper-dek {
+    max-width: 760px;
+    margin-top: 1.6rem;
+    color: #394448;
+    font-size: clamp(1.18rem, 2vw, 1.55rem);
+    line-height: 1.55;
+  }
+
+  .paper-authors {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 2.6rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid rgba(20, 20, 20, 0.14);
+  }
+
+  .paper-authors div {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .paper-authors strong {
+    font-size: 1rem;
+  }
+
+  .paper-authors span,
+  .paper-authors a {
+    color: #5f696b;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    line-height: 1.5;
+  }
+
+  .paper-layout {
+    display: grid;
+    grid-template-columns: minmax(150px, 210px) minmax(0, 760px) minmax(170px, 250px);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1rem 2rem 7rem;
+    align-items: start;
+  }
+
+  .paper-contents,
+  .paper-right-rail {
+    position: sticky;
+    top: 5rem;
+  }
+
+  .paper-contents {
+    display: grid;
+    gap: 0.75rem;
+    color: #5e696b;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    border-left: 1px solid rgba(20, 20, 20, 0.16);
+    padding-left: 1rem;
+  }
+
+  .paper-contents p {
+    margin-bottom: 0.25rem;
+    color: #9b5b17;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .paper-contents a:hover {
+    color: #111;
+  }
+
+  .margin-note {
+    border: 1px solid rgba(20, 20, 20, 0.14);
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.45);
+    padding: 1rem;
+    box-shadow: 0 24px 80px rgba(24, 39, 42, 0.05);
+  }
+
+  .margin-note b {
+    display: block;
+    color: #9b5b17;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .margin-note {
+    color: #596467;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .paper-section {
+    position: relative;
+    padding: 2.4rem 0;
+    border-top: 1px solid rgba(20, 20, 20, 0.12);
+  }
+
+  .paper-section:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .paper-section h2 {
+    color: #111;
+    font-family: var(--paper-sans);
+    font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+    font-weight: 400;
+    letter-spacing: -0.012em;
+    line-height: 1.12;
+  }
+
+  .paper-section p {
+    margin-top: 1rem;
+    color: #2f3435;
+    font-size: 1.06rem;
+    line-height: 1.7;
+  }
+
+  .paper-section strong {
+    color: #111;
+  }
+
+  .paper-section blockquote {
+    margin: 2rem auto;
+    max-width: 620px;
+    border-left: 3px solid #c26a1b;
+    background: rgba(194, 106, 27, 0.08);
+    padding: 1rem 1.25rem;
+    color: #683b13;
+    font-size: 1.08rem;
+    line-height: 1.55;
+  }
+
+  .metric-strip {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 2rem;
+    border: 1px solid rgba(20, 20, 20, 0.14);
+    background: rgba(20, 20, 20, 0.14);
+  }
+
+  .metric-strip div {
+    min-width: 0;
+    background: rgba(255, 255, 255, 0.72);
+    padding: 1rem 0.85rem;
+  }
+
+  .metric-strip span,
+  .metric-strip small {
+    display: block;
+    color: #596467;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    line-height: 1.45;
+  }
+
+  .metric-strip strong {
+    display: block;
+    margin: 0.4rem 0;
+    color: #111;
+    font-family: var(--paper-sans);
+    font-size: clamp(1.45rem, 3vw, 2.05rem);
+    font-weight: 700;
+  }
+
+  .margin-note {
+    position: absolute;
+    left: calc(100% + 2rem);
+    top: 3rem;
+    width: 230px;
+  }
+
+  .equation {
+    margin: 1.6rem 0;
+    border-top: 1px solid rgba(20, 20, 20, 0.14);
+    border-bottom: 1px solid rgba(20, 20, 20, 0.14);
+    padding: 1rem;
+    color: #111;
+    font-family: "Times New Roman", ui-serif, serif;
+    font-size: 1.35rem;
+    text-align: center;
+  }
+
+  figure {
+    margin: 2rem 0;
+  }
+
+  figcaption,
+  .paper-table caption {
+    caption-side: top;
+    margin-bottom: 0.7rem;
+    color: #5a6769;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    line-height: 1.55;
+    text-align: left;
+  }
+
+  .wide-figure,
+  .figure-grid figure,
+  .method-figure {
+    border: 1px solid rgba(20, 20, 20, 0.14);
+    background: rgba(255, 255, 255, 0.72);
+    padding: 1rem;
+  }
+
+  .wide-figure img,
+  .figure-grid img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: white;
+  }
+
+  .figure-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .figure-grid figure:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: 520px;
+  }
+
+  .method-figure {
+    overflow: hidden;
+  }
+
+  .method-panels {
+    display: grid;
+    grid-template-columns: 1.2fr 0.9fr 0.9fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .method-panel {
+    border: 1px solid rgba(20, 20, 20, 0.14);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(247, 243, 235, 0.72)),
+      #fff;
+    padding: 1rem;
+  }
+
+  .method-panel h3 {
+    color: #111;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .method-panel p {
+    margin-top: 0.35rem;
+    color: #596467;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.45;
+  }
+
+  .season-strip {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    height: 4.8rem;
+    margin-top: 1rem;
+    border: 1px solid rgba(20, 20, 20, 0.14);
+    background: #f6f2ea;
+  }
+
+  .season-strip span {
+    border-right: 1px solid rgba(20, 20, 20, 0.06);
+  }
+
+  .season-strip span:nth-child(odd) {
+    background: linear-gradient(90deg, #f8d7a8, #c94b2f);
+  }
+
+  .season-strip span:nth-child(even) {
+    background: linear-gradient(90deg, #c8e5e6, #eef5f0);
+  }
+
+  .season-strip .s4,
+  .season-strip .s7,
+  .season-strip .s11 {
+    background: linear-gradient(90deg, #f8d7a8, #8f241f);
+  }
+
+  .strip-axis {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.45rem;
+    color: #5a6769;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+  }
+
+  .tile-grid,
+  .gate-matrix {
+    display: grid;
+    gap: 3px;
+    margin-top: 1rem;
+  }
+
+  .tile-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .gate-matrix {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .tile-grid span,
+  .gate-matrix span {
+    aspect-ratio: 1;
+    border: 1px solid rgba(20, 20, 20, 0.1);
+    background: rgba(39, 122, 121, 0.12);
+  }
+
+  .tile-grid .held {
+    background: rgba(194, 79, 43, 0.72);
+  }
+
+  .tile-grid .train {
+    background: rgba(39, 122, 121, 0.18);
+  }
+
+  .gate-matrix .cool {
+    background: rgba(39, 122, 121, 0.14);
+  }
+
+  .gate-matrix .warm {
+    background: rgba(202, 124, 36, 0.22);
+  }
+
+  .gate-matrix .hot {
+    background: rgba(194, 79, 43, 0.7);
+  }
+
+  .method-flow-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .method-flow {
+    width: 100%;
+    height: auto;
+    min-height: 28rem;
+    border: 1px solid rgba(20, 20, 20, 0.14);
+    background:
+      linear-gradient(90deg, rgba(39, 122, 121, 0.06) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(39, 122, 121, 0.055) 1px, transparent 1px),
+      #fffdfa;
+    background-size: 42px 42px;
+  }
+
+  .method-flow-scroll {
+    overflow: visible;
+  }
+
+  .method-edges path {
+    fill: none;
+    stroke: url(#method-edge-gradient);
+    stroke-width: 2;
+    stroke-linecap: round;
+    marker-end: url(#method-arrow);
+    opacity: 0.55;
+    transition:
+      opacity 180ms ease,
+      stroke-width 180ms ease;
+  }
+
+  .method-edges path.is-active {
+    opacity: 1;
+    stroke-width: 3.5;
+  }
+
+  .method-flow marker path {
+    fill: #9d6d22;
+  }
+
+  .method-node {
+    cursor: pointer;
+    outline: none;
+  }
+
+  .method-node rect {
+    fill: rgba(255, 255, 255, 0.92);
+    stroke: rgba(20, 20, 20, 0.24);
+    stroke-width: 1;
+    transition:
+      fill 180ms ease,
+      stroke 180ms ease,
+      stroke-width 180ms ease,
+      filter 180ms ease;
+  }
+
+  .method-node text {
+    fill: #2f3b3d;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    pointer-events: none;
+  }
+
+  .method-node text:nth-of-type(1) {
+    fill: #a86419;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .method-node text:nth-of-type(2) {
+    fill: #111;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .method-node.is-active rect,
+  .method-node:focus rect {
+    fill: rgba(255, 248, 236, 0.98);
+    stroke: #b05f1a;
+    stroke-width: 2;
+    filter: drop-shadow(0 10px 18px rgba(83, 52, 21, 0.16));
+  }
+
+  .method-node.is-related rect {
+    stroke: rgba(47, 139, 136, 0.72);
+  }
+
+  .method-detail {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.45fr);
+    column-gap: 1.4rem;
+    align-items: start;
+    border: 1px solid rgba(20, 20, 20, 0.14);
+    background:
+      radial-gradient(circle at 100% 0%, rgba(194, 79, 43, 0.1), transparent 36%),
+      rgba(255, 255, 255, 0.84);
+    padding: 1rem;
+  }
+
+  .method-detail-kicker {
+    margin: 0;
+    color: #9b5b17;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .method-detail h3 {
+    margin-top: 0.55rem;
+    color: #111;
+    font-family: var(--paper-sans);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+  }
+
+  .method-detail p:not(.method-detail-kicker) {
+    margin-top: 0.9rem;
+    color: #384346;
+    font-size: 0.94rem;
+    line-height: 1.65;
+  }
+
+  .method-detail dl {
+    display: grid;
+    gap: 1px;
+    margin-top: 0;
+    border: 1px solid rgba(20, 20, 20, 0.12);
+    background: rgba(20, 20, 20, 0.12);
+  }
+
+  .method-detail dl div {
+    min-width: 0;
+    background: rgba(255, 255, 255, 0.72);
+    padding: 0.8rem;
+  }
+
+  .method-detail dt {
+    color: #111;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .method-detail dd {
+    margin-top: 0.3rem;
+    color: #596467;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    line-height: 1.4;
+  }
+
+  .paper-table {
+    width: 100%;
+    margin: 2rem 0;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.72);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  .paper-table th,
+  .paper-table td {
+    border: 1px solid rgba(20, 20, 20, 0.14);
+    padding: 0.72rem 0.8rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .paper-table th {
+    color: #111;
+    background: rgba(39, 122, 121, 0.08);
+    font-weight: 600;
+  }
+
+  .paper-table td {
+    color: #384346;
+  }
+
+  .paper-table.compact {
+    font-size: 0.72rem;
+  }
+
+  .references ol {
+    margin-top: 1rem;
+    padding-left: 1.2rem;
+  }
+
+  .references li {
+    margin-top: 0.7rem;
+    color: #384346;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 1180px) {
+    .paper-layout {
+      grid-template-columns: minmax(0, 1fr);
+      max-width: 860px;
+    }
+
+    .paper-contents,
+    .paper-right-rail {
+      position: static;
+    }
+
+    .paper-contents {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-left: 0;
+      border-top: 1px solid rgba(20, 20, 20, 0.14);
+      padding: 1rem 0 0;
+    }
+
+    .paper-contents p {
+      grid-column: 1 / -1;
+    }
+
+    .paper-right-rail {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      order: -1;
+    }
+
+    .margin-note {
+      position: static;
+      width: auto;
+      margin-top: 1.5rem;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .paper-topbar {
+      grid-template-columns: 1fr;
+      padding: 1rem 1.25rem;
+    }
+
+    .paper-topbar a:last-child {
+      justify-self: start;
+    }
+
+    .paper-hero {
+      padding: 4rem 1.25rem 2.25rem;
+    }
+
+    .paper-hero h1 {
+      font-size: clamp(2.35rem, 11vw, 3.4rem);
+      line-height: 1.05;
+    }
+
+    .paper-authors,
+    .metric-strip,
+    .figure-grid,
+    .paper-right-rail,
+    .paper-contents {
+      grid-template-columns: 1fr;
+    }
+
+    .paper-layout {
+      padding: 0 1.25rem 5rem;
+    }
+
+    .method-panels,
+    .method-flow-shell,
+    .method-detail {
+      grid-template-columns: 1fr;
+    }
+
+    .method-flow {
+      max-width: none;
+      width: 720px;
+      min-height: 18rem;
+    }
+
+    .method-flow-scroll {
+      overflow-x: auto;
+      padding-bottom: 0.4rem;
+    }
+
+    .method-detail dl {
+      margin-top: 1rem;
+    }
+
+    .paper-section p {
+      font-size: 1rem;
+    }
+  }
+</style>

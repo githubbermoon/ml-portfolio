@@ -364,6 +364,27 @@ const getReadingTime = (text: string) => {
         <section class="technical-figure-grid mb-14">
           <article class="technical-figure technical-figure-wide">
             <div class="figure-copy">
+              <p class="figure-kicker">Research paper</p>
+              <h2>Reproducible Urban Heat Island modeling for Bengaluru</h2>
+              <p>
+                A Distill-style article adapted from the paper, with spatial leakage control, two-level validation,
+                SHAP interpretability, seasonal UHI tables, and the original PDF.
+              </p>
+              <a class="inline-flex mt-4 text-sm text-glow" href={base + "blog/uhi-bengaluru/"}>
+                Open research article
+              </a>
+            </div>
+            <div class="trace-stack" aria-label="Urban Heat Island paper summary">
+              <span><b>10.2M</b> aligned samples</span>
+              <span><b>164</b> spatial tiles</span>
+              <span><b>3.31 K</b> hold-out RMSE</span>
+              <span><b>0.554</b> hold-out R2</span>
+              <span><b>1.97 K</b> UHI intensity</span>
+            </div>
+          </article>
+
+          <article class="technical-figure technical-figure-wide">
+            <div class="figure-copy">
               <p class="figure-kicker">Attribution sketch</p>
               <h2>Token evidence flowing through feature groups</h2>
               <p>
