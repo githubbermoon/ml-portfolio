@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Index | Clawd ML Portfolio">
+  <Nav />
+  <main class="section-shell">
+    <section class="library-hero">
+      <a class="text-xs uppercase tracking-[0.28em] text-mist" href={base + "blog/"}>Back to library</a>
+      <p class="mt-10 text-xs uppercase tracking-[0.35em] text-mist">Reference</p>
+      <h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">Index</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
+        A place for short notes, glossary entries, useful links, and reusable knowledge blocks. This can become the
+        connective tissue between technical, spiritual, astrological, and cooking posts.
+      </p>
+    </section>
+    <section class="mt-12 grid gap-6 md:grid-cols-3">
+      <article class="glass-panel p-6">
+        <p class="text-xs uppercase tracking-[0.24em] text-mist">Index</p>
+        <h2 class="mt-4 text-2xl text-glass">Glossary</h2>
+        <p class="mt-3 text-sm leading-6 text-mist">Definitions that can be linked from future essays.</p>
+      </article>
+      <article class="glass-panel p-6">
+        <p class="text-xs uppercase tracking-[0.24em] text-mist">Index</p>
+        <h2 class="mt-4 text-2xl text-glass">Links</h2>
+        <p class="mt-3 text-sm leading-6 text-mist">Tools, papers, recipes, ephemeris resources, and readings.</p>
+      </article>
+      <article class="glass-panel p-6">
+        <p class="text-xs uppercase tracking-[0.24em] text-mist">Index</p>
+        <h2 class="mt-4 text-2xl text-glass">Patterns</h2>
+        <p class="mt-3 text-sm leading-6 text-mist">Cross-domain motifs that show up repeatedly in your writing.</p>
+      </article>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

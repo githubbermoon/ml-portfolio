@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Field Notes | Clawd ML Portfolio">
+  <Nav />
+  <main class="section-shell">
+    <section class="library-hero">
+      <a class="text-xs uppercase tracking-[0.28em] text-mist" href={base + "blog/"}>Back to library</a>
+      <p class="mt-10 text-xs uppercase tracking-[0.35em] text-mist">Essays</p>
+      <h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">Field Notes</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
+        Personal essays, reading notes, observations, and unfinished thoughts. This realm is for slower writing that
+        does not need to fit into a technical or ritual category.
+      </p>
+    </section>
+    <section class="mt-12 grid gap-6 md:grid-cols-3">
+      <article class="glass-panel p-6">
+        <p class="text-xs uppercase tracking-[0.24em] text-mist">Format</p>
+        <h2 class="mt-4 text-2xl text-glass">Long essays</h2>
+        <p class="mt-3 text-sm leading-6 text-mist">Polished arguments with references and durable URLs.</p>
+      </article>
+      <article class="glass-panel p-6">
+        <p class="text-xs uppercase tracking-[0.24em] text-mist">Format</p>
+        <h2 class="mt-4 text-2xl text-glass">Reading notes</h2>
+        <p class="mt-3 text-sm leading-6 text-mist">Short summaries, quotes, links, and personal annotations.</p>
+      </article>
+      <article class="glass-panel p-6">
+        <p class="text-xs uppercase tracking-[0.24em] text-mist">Format</p>
+        <h2 class="mt-4 text-2xl text-glass">Fragments</h2>
+        <p class="mt-3 text-sm leading-6 text-mist">Half-formed ideas worth keeping visible for later synthesis.</p>
+      </article>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

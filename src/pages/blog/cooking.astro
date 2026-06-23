@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Rasam | Clawd ML Portfolio">
+  <Nav />
+  <main class="section-shell">
+    <section class="library-hero">
+      <a class="text-xs uppercase tracking-[0.28em] text-mist" href={base + "blog/"}>Back to library</a>
+      <p class="mt-10 text-xs uppercase tracking-[0.35em] text-mist">Cooking</p>
+      <h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">Rasam</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
+        Recipes, process notes, taste experiments, food memory, and kitchen systems. This section can become both a
+        practical cookbook and a sensory notebook.
+      </p>
+    </section>
+    <section class="mt-12 grid gap-6 md:grid-cols-3">
+      <article class="glass-panel p-6">
+        <p class="text-xs uppercase tracking-[0.24em] text-mist">Template</p>
+        <h2 class="mt-4 text-2xl text-glass">Recipe cards</h2>
+        <p class="mt-3 text-sm leading-6 text-mist">Ingredients, timing, method, variations, and failure notes.</p>
+      </article>
+      <article class="glass-panel p-6">
+        <p class="text-xs uppercase tracking-[0.24em] text-mist">Template</p>
+        <h2 class="mt-4 text-2xl text-glass">Technique notes</h2>
+        <p class="mt-3 text-sm leading-6 text-mist">Grinding, tempering, fermentation, heat control, and texture.</p>
+      </article>
+      <article class="glass-panel p-6">
+        <p class="text-xs uppercase tracking-[0.24em] text-mist">Template</p>
+        <h2 class="mt-4 text-2xl text-glass">Taste logs</h2>
+        <p class="mt-3 text-sm leading-6 text-mist">Small experiments with spice balance, acidity, fat, and aroma.</p>
+      </article>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

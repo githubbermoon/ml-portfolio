@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
-import GhostSilk from "../../islands/GhostSilk";
 
 const base = import.meta.env.BASE_URL;
 
@@ -96,8 +95,21 @@ const getReadingTime = (text: string) => {
     class="page-root relative min-h-screen overflow-hidden"
     data-theme="dark"
   >
-    <div class="absolute inset-0 z-0 pointer-events-none">
-      <GhostSilk client:only="react" />
+    <div class="technical-fabric absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+      <svg class="fabric-noise" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+        <filter id="technical-fabric-noise">
+          <feTurbulence type="fractalNoise" baseFrequency="0.006 0.018" numOctaves="3" seed="11" />
+          <feColorMatrix type="saturate" values="0" />
+          <feComponentTransfer>
+            <feFuncA type="table" tableValues="0 0.16" />
+          </feComponentTransfer>
+        </filter>
+        <rect width="1000" height="1000" filter="url(#technical-fabric-noise)" />
+      </svg>
+      <div class="fabric-ridge fabric-ridge-a"></div>
+      <div class="fabric-ridge fabric-ridge-b"></div>
+      <div class="fabric-ridge fabric-ridge-c"></div>
+      <div class="fabric-graph-field"></div>
     </div>
 
     <!-- BACK BUTTON -->
@@ -121,41 +133,6 @@ const getReadingTime = (text: string) => {
         <path d="m15 18-6-6 6-6"></path>
       </svg>
     </a>
-
-    <!-- THEME TOGGLE BUTTON -->
-    <button
-      id="theme-toggle"
-      class="fixed top-20 right-4 z-50 p-3 rounded-full bg-black/30 dark:bg-white/10 border border-white/20 hover:border-white/40 transition-all backdrop-blur-sm"
-    >
-      <svg
-        id="sun-icon"
-        class="w-5 h-5 text-yellow-400 hidden"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-        ></path>
-      </svg>
-      <svg
-        id="moon-icon"
-        class="w-5 h-5 text-blue-400"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-        ></path>
-      </svg>
-    </button>
 
     <!-- SCROLL PROGRESS SVG LINE -->
     <div
@@ -212,9 +189,10 @@ const getReadingTime = (text: string) => {
       id="detail-view"
       class="fixed inset-0 z-[100] flex flex-col bg-black/95 backdrop-blur-xl opacity-0 pointer-events-none transition-opacity duration-500"
     >
-      <!-- GHOST SILK (Only visible here) -->
-      <div class="absolute inset-0 z-0 pointer-events-none">
-        <GhostSilk client:only="react" />
+      <div class="technical-fabric detail-fabric absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+        <div class="fabric-ridge fabric-ridge-a"></div>
+        <div class="fabric-ridge fabric-ridge-b"></div>
+        <div class="fabric-graph-field"></div>
       </div>
 
       <!-- CLOSE BUTTON -->
@@ -383,6 +361,83 @@ const getReadingTime = (text: string) => {
           </div>
         </div>
 
+        <section class="technical-figure-grid mb-14">
+          <article class="technical-figure technical-figure-wide">
+            <div class="figure-copy">
+              <p class="figure-kicker">Attribution sketch</p>
+              <h2>Token evidence flowing through feature groups</h2>
+              <p>
+                A lightweight SVG graph for posts about model behavior: prompt tokens at the base, feature groups in
+                the middle, and the target decision at the top.
+              </p>
+            </div>
+            <svg class="attribution-figure" viewBox="0 0 760 360" role="img" aria-label="Attribution graph figure">
+              <defs>
+                <linearGradient id="edgeGlow" x1="0" x2="1">
+                  <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.2" />
+                  <stop offset="100%" stop-color="#f5d38a" stop-opacity="0.74" />
+                </linearGradient>
+              </defs>
+              <g class="edge-layer">
+                <path d="M120 300 C190 240 230 220 290 170" />
+                <path d="M265 300 C315 244 370 230 420 176" />
+                <path d="M415 300 C470 244 514 220 550 170" />
+                <path d="M290 170 C355 120 438 118 520 82" />
+                <path d="M420 176 C455 126 498 114 520 82" />
+                <path d="M550 170 C560 126 548 112 520 82" />
+              </g>
+              <g class="token-row">
+                <rect x="72" y="274" width="96" height="44" rx="12" />
+                <rect x="217" y="274" width="96" height="44" rx="12" />
+                <rect x="367" y="274" width="96" height="44" rx="12" />
+                <text x="120" y="302">image</text>
+                <text x="265" y="302">mask</text>
+                <text x="415" y="302">edge</text>
+              </g>
+              <g class="feature-row">
+                <rect x="238" y="141" width="116" height="58" rx="16" />
+                <rect x="368" y="146" width="116" height="58" rx="16" />
+                <rect x="500" y="141" width="116" height="58" rx="16" />
+                <text x="296" y="166">boundary</text>
+                <text x="296" y="184">feature</text>
+                <text x="426" y="171">shape cue</text>
+                <text x="558" y="166">terrain</text>
+                <text x="558" y="184">prior</text>
+              </g>
+              <g class="logit-node">
+                <rect x="462" y="52" width="116" height="54" rx="18" />
+                <text x="520" y="84">safe path</text>
+              </g>
+            </svg>
+          </article>
+
+          <article class="technical-figure">
+            <p class="figure-kicker">Benchmark surface</p>
+            <h2>Accuracy vs latency</h2>
+            <div class="scatter-plot" aria-label="Model benchmark scatter plot">
+              <span class="axis axis-x"></span>
+              <span class="axis axis-y"></span>
+              <span class="plot-point point-a" title="B0"></span>
+              <span class="plot-point point-b" title="B2"></span>
+              <span class="plot-point point-c" title="B4"></span>
+              <span class="plot-point point-d" title="B5"></span>
+              <span class="pareto-line"></span>
+            </div>
+          </article>
+
+          <article class="technical-figure">
+            <p class="figure-kicker">Pipeline trace</p>
+            <h2>Data to deployment</h2>
+            <div class="trace-stack" aria-label="Pipeline trace diagram">
+              <span><b>01</b> dataset audit</span>
+              <span><b>02</b> augmentation test</span>
+              <span><b>03</b> eval harness</span>
+              <span><b>04</b> edge profile</span>
+              <span><b>05</b> release gate</span>
+            </div>
+          </article>
+        </section>
+
         <div id="blog-grid" class="grid gap-8 md:grid-cols-2 lg:grid-cols-2">
           {
             posts.map((post) => (
@@ -456,6 +511,304 @@ const getReadingTime = (text: string) => {
 
   .page-root[data-theme="bright"] {
     background: #fafafa;
+  }
+
+  .technical-fabric {
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 18% 16%, rgba(125, 211, 252, 0.09), transparent 28%),
+      radial-gradient(circle at 78% 64%, rgba(245, 211, 138, 0.08), transparent 30%),
+      linear-gradient(135deg, #050506, #111113 54%, #060606);
+  }
+
+  .technical-fabric::before {
+    content: "";
+    position: absolute;
+    inset: -24%;
+    background:
+      repeating-linear-gradient(
+        112deg,
+        transparent 0 34px,
+        rgba(255, 255, 255, 0.035) 35px 36px,
+        transparent 37px 68px
+      ),
+      repeating-linear-gradient(
+        24deg,
+        transparent 0 46px,
+        rgba(125, 211, 252, 0.035) 47px 48px,
+        transparent 49px 92px
+      );
+    transform: rotate(-5deg);
+    mask-image: radial-gradient(ellipse at 50% 45%, black, transparent 72%);
+  }
+
+  .fabric-noise {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.55;
+    mix-blend-mode: screen;
+  }
+
+  .fabric-ridge {
+    position: absolute;
+    left: -12%;
+    right: -12%;
+    height: 32%;
+    border-radius: 50%;
+    filter: blur(0.2px);
+    transform: rotate(-10deg);
+    opacity: 0.64;
+  }
+
+  .fabric-ridge-a {
+    top: 12%;
+    background:
+      radial-gradient(ellipse at 45% 50%, rgba(255, 255, 255, 0.12), transparent 12%),
+      linear-gradient(180deg, transparent 38%, rgba(255, 255, 255, 0.055), transparent 62%);
+    animation: fabric-drift-a 18s ease-in-out infinite;
+  }
+
+  .fabric-ridge-b {
+    top: 36%;
+    background:
+      radial-gradient(ellipse at 58% 52%, rgba(125, 211, 252, 0.13), transparent 16%),
+      linear-gradient(180deg, transparent 40%, rgba(255, 255, 255, 0.045), transparent 64%);
+    animation: fabric-drift-b 22s ease-in-out infinite;
+  }
+
+  .fabric-ridge-c {
+    bottom: 6%;
+    background:
+      radial-gradient(ellipse at 36% 52%, rgba(245, 211, 138, 0.1), transparent 15%),
+      linear-gradient(180deg, transparent 40%, rgba(255, 255, 255, 0.04), transparent 66%);
+    animation: fabric-drift-c 26s ease-in-out infinite;
+  }
+
+  .fabric-graph-field {
+    position: absolute;
+    inset: 0;
+    opacity: 0.38;
+    background-image:
+      radial-gradient(circle, rgba(255, 255, 255, 0.34) 0 1px, transparent 1.4px),
+      linear-gradient(35deg, transparent 48%, rgba(125, 211, 252, 0.09) 49%, transparent 50%),
+      linear-gradient(145deg, transparent 49%, rgba(255, 255, 255, 0.045) 50%, transparent 51%);
+    background-position: 18px 24px, 0 0, 0 0;
+    background-size: 124px 124px, 220px 220px, 280px 280px;
+    mask-image: linear-gradient(to bottom, black, black 45%, transparent 88%);
+  }
+
+  .detail-fabric {
+    opacity: 0.36;
+  }
+
+  .technical-figure-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .technical-figure {
+    position: relative;
+    overflow: hidden;
+    min-width: 0;
+    min-height: 320px;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background:
+      radial-gradient(circle at 84% 14%, rgba(125, 211, 252, 0.1), transparent 30%),
+      rgba(8, 8, 9, 0.72);
+    backdrop-filter: blur(16px);
+  }
+
+  .technical-figure::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(120deg, rgba(255, 255, 255, 0.06), transparent 38%),
+      repeating-linear-gradient(90deg, transparent 0 56px, rgba(255, 255, 255, 0.025) 57px 58px);
+  }
+
+  .technical-figure > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .technical-figure-wide {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.78fr) minmax(420px, 1.22fr);
+    gap: clamp(1rem, 4vw, 3rem);
+    align-items: center;
+    min-height: 390px;
+  }
+
+  .figure-kicker {
+    margin-bottom: 0.9rem;
+    color: rgba(168, 162, 158, 0.82);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .technical-figure h2 {
+    color: #e7e5e4;
+    font-size: clamp(1.55rem, 3vw, 2.35rem);
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+  }
+
+  .technical-figure p:not(.figure-kicker) {
+    margin-top: 1rem;
+    color: #a8a29e;
+    line-height: 1.75;
+    overflow-wrap: anywhere;
+  }
+
+  .attribution-figure {
+    width: 100%;
+    max-width: 100%;
+    min-height: 280px;
+    overflow: visible;
+  }
+
+  .edge-layer path {
+    fill: none;
+    stroke: url(#edgeGlow);
+    stroke-width: 3;
+    stroke-linecap: round;
+    opacity: 0.86;
+  }
+
+  .token-row rect,
+  .feature-row rect,
+  .logit-node rect {
+    fill: rgba(255, 255, 255, 0.045);
+    stroke: rgba(255, 255, 255, 0.15);
+  }
+
+  .feature-row rect {
+    fill: rgba(125, 211, 252, 0.075);
+  }
+
+  .logit-node rect {
+    fill: rgba(245, 211, 138, 0.12);
+    stroke: rgba(245, 211, 138, 0.26);
+  }
+
+  .attribution-figure text {
+    fill: #e7e5e4;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-anchor: middle;
+  }
+
+  .scatter-plot {
+    position: relative;
+    height: 210px;
+    margin-top: 2rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 42px 42px;
+  }
+
+  .scatter-plot::before {
+    content: "mIoU";
+    position: absolute;
+    left: 0;
+    top: -1.6rem;
+    color: rgba(168, 162, 158, 0.72);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .scatter-plot::after {
+    content: "latency";
+    position: absolute;
+    right: 0;
+    bottom: -1.55rem;
+    color: rgba(168, 162, 158, 0.72);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .plot-point {
+    position: absolute;
+    width: 14px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #e7e5e4;
+    box-shadow: 0 0 20px rgba(125, 211, 252, 0.35);
+  }
+
+  .point-a { left: 18%; bottom: 26%; }
+  .point-b { left: 34%; bottom: 48%; }
+  .point-c { left: 58%; bottom: 62%; }
+  .point-d { left: 78%; bottom: 69%; background: #f5d38a; }
+
+  .pareto-line {
+    position: absolute;
+    left: 19%;
+    right: 18%;
+    bottom: 34%;
+    height: 2px;
+    transform: rotate(-18deg);
+    transform-origin: left center;
+    background: linear-gradient(90deg, rgba(125, 211, 252, 0.24), rgba(245, 211, 138, 0.84));
+  }
+
+  .trace-stack {
+    display: grid;
+    gap: 0.85rem;
+    margin-top: 2rem;
+  }
+
+  .trace-stack span {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 0.9rem;
+    align-items: center;
+    min-height: 2.6rem;
+    padding: 0.72rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    background:
+      linear-gradient(90deg, rgba(125, 211, 252, 0.09), transparent 68%),
+      rgba(255, 255, 255, 0.035);
+    color: #d6d3d1;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+  }
+
+  .trace-stack b {
+    color: #f5d38a;
+    font-weight: 400;
+  }
+
+  @keyframes fabric-drift-a {
+    0%, 100% { transform: translate3d(-2%, 0, 0) rotate(-10deg) scaleY(0.96); }
+    50% { transform: translate3d(3%, 12px, 0) rotate(-8deg) scaleY(1.05); }
+  }
+
+  @keyframes fabric-drift-b {
+    0%, 100% { transform: translate3d(2%, 0, 0) rotate(-7deg) scaleY(1); }
+    50% { transform: translate3d(-3%, -10px, 0) rotate(-11deg) scaleY(0.94); }
+  }
+
+  @keyframes fabric-drift-c {
+    0%, 100% { transform: translate3d(-1%, 0, 0) rotate(-12deg) scaleY(0.98); }
+    50% { transform: translate3d(4%, -8px, 0) rotate(-9deg) scaleY(1.04); }
   }
 
   /* MONOCHROME / GLASS STYLING (No Green) */
@@ -585,6 +938,67 @@ const getReadingTime = (text: string) => {
     stroke: rgba(0, 0, 0, 0.2) !important;
   }
 
+  .page-root[data-theme="bright"] .technical-fabric {
+    background:
+      radial-gradient(circle at 20% 16%, rgba(14, 116, 144, 0.08), transparent 28%),
+      radial-gradient(circle at 78% 64%, rgba(146, 64, 14, 0.07), transparent 30%),
+      linear-gradient(135deg, #fbfbfb, #f3f4f6 54%, #ffffff);
+  }
+
+  .page-root[data-theme="bright"] .technical-fabric::before {
+    background:
+      repeating-linear-gradient(
+        112deg,
+        transparent 0 34px,
+        rgba(0, 0, 0, 0.045) 35px 36px,
+        transparent 37px 68px
+      ),
+      repeating-linear-gradient(
+        24deg,
+        transparent 0 46px,
+        rgba(14, 116, 144, 0.04) 47px 48px,
+        transparent 49px 92px
+      );
+  }
+
+  .page-root[data-theme="bright"] .fabric-graph-field {
+    opacity: 0.28;
+    background-image:
+      radial-gradient(circle, rgba(0, 0, 0, 0.28) 0 1px, transparent 1.4px),
+      linear-gradient(35deg, transparent 48%, rgba(14, 116, 144, 0.08) 49%, transparent 50%),
+      linear-gradient(145deg, transparent 49%, rgba(0, 0, 0, 0.04) 50%, transparent 51%);
+  }
+
+  .page-root[data-theme="bright"] .technical-figure-grid {
+    border-color: rgba(0, 0, 0, 0.08);
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  .page-root[data-theme="bright"] .technical-figure {
+    background:
+      radial-gradient(circle at 84% 14%, rgba(14, 116, 144, 0.08), transparent 30%),
+      rgba(255, 255, 255, 0.78);
+  }
+
+  .page-root[data-theme="bright"] .technical-figure h2,
+  .page-root[data-theme="bright"] .attribution-figure text {
+    color: #1a1a1a;
+    fill: #1a1a1a;
+  }
+
+  .page-root[data-theme="bright"] .technical-figure p:not(.figure-kicker),
+  .page-root[data-theme="bright"] .trace-stack span {
+    color: #555;
+  }
+
+  .page-root[data-theme="bright"] .token-row rect,
+  .page-root[data-theme="bright"] .feature-row rect,
+  .page-root[data-theme="bright"] .logit-node rect,
+  .page-root[data-theme="bright"] .trace-stack span {
+    border-color: rgba(0, 0, 0, 0.1);
+    stroke: rgba(0, 0, 0, 0.14);
+  }
+
   @media (prefers-color-scheme: dark) {
     .canvas-layer {
       opacity: 0.5;
@@ -706,6 +1120,80 @@ const getReadingTime = (text: string) => {
     @apply px-4 py-2 rounded-full text-sm font-mono transition-all cursor-pointer;
   }
 
+  @media (max-width: 900px) {
+    .technical-figure-grid,
+    .technical-figure-wide {
+      grid-template-columns: 1fr;
+    }
+
+    .technical-figure-wide {
+      min-height: 0;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-root .section-shell {
+      width: 100vw;
+      max-width: 100vw;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+      overflow-x: clip;
+    }
+
+    .page-root .page-title {
+      max-width: calc(100vw - 2.5rem);
+      font-size: clamp(3rem, 13vw, 3.8rem) !important;
+      line-height: 0.98 !important;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    .page-root .page-subtitle {
+      width: calc(100vw - 2.5rem);
+      max-width: calc(100vw - 2.5rem) !important;
+      overflow-wrap: anywhere;
+    }
+
+    .page-root .technical-figure-grid,
+    .page-root #blog-grid {
+      width: calc(100vw - 2.5rem);
+      max-width: calc(100vw - 2.5rem) !important;
+    }
+
+    .filter-tag {
+      max-width: 100%;
+      white-space: normal;
+    }
+
+    .page-root .technical-figure {
+      padding: 1.25rem;
+      min-height: 0;
+    }
+
+    .page-root .technical-figure h2,
+    .page-root .technical-figure p {
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
+
+    .attribution-figure {
+      min-height: 220px;
+      transform: scale(0.92);
+      transform-origin: center;
+    }
+
+    .trace-stack span {
+      grid-template-columns: 2.4rem minmax(0, 1fr);
+      font-size: 0.76rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce), (prefers-contrast: more) {
+    .fabric-ridge {
+      animation: none !important;
+    }
+  }
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -717,21 +1205,10 @@ const getReadingTime = (text: string) => {
 
 <script>
   const pageRoot = document.querySelector(".page-root");
-  const themeToggle = document.getElementById("theme-toggle");
-  const sunIcon = document.getElementById("sun-icon");
-  const moonIcon = document.getElementById("moon-icon");
-  const THEME_KEY = "clawd-theme";
 
   const setPageTheme = (theme: string) => {
     const resolved = theme === "bright" ? "bright" : "dark";
     pageRoot?.setAttribute("data-theme", resolved);
-    if (resolved === "bright") {
-      sunIcon?.classList.remove("hidden");
-      moonIcon?.classList.add("hidden");
-    } else {
-      sunIcon?.classList.add("hidden");
-      moonIcon?.classList.remove("hidden");
-    }
   };
 
   const syncThemeFromDocument = () => {
@@ -811,16 +1288,6 @@ const getReadingTime = (text: string) => {
       detailView.classList.add("pointer-events-none", "opacity-0");
       document.body.style.overflow = ""; // Unlock scroll
     }
-  });
-
-  // Theme toggle
-  themeToggle?.addEventListener("click", () => {
-    const current =
-      document.documentElement.dataset.theme === "bright" ? "bright" : "dark";
-    const next = current === "dark" ? "bright" : "dark";
-    document.documentElement.dataset.theme = next;
-    localStorage.setItem(THEME_KEY, next);
-    window.dispatchEvent(new CustomEvent("theme-change", { detail: { theme: next } }));
   });
 
   const progressLine = document.getElementById("progress-line");

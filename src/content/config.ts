@@ -18,6 +18,9 @@ const blog = defineCollection({
 		summary: z.string(),
 		date: z.date(),
 		tags: z.array(z.string()),
+		realm: z.string().optional(),
+		type: z.string().optional(),
+		mood: z.string().optional(),
 	}),
 });
 

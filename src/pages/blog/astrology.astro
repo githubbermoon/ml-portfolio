@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Jyotiṣa | Clawd ML Portfolio">
+  <Nav />
+  <main class="section-shell">
+    <section class="library-hero">
+      <a class="text-xs uppercase tracking-[0.28em] text-mist" href={base + "blog/"}>Back to library</a>
+      <p class="mt-10 text-xs uppercase tracking-[0.35em] text-mist">Astrology</p>
+      <h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">Jyotiṣa</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
+        Planetary notes, symbolic timing, archetypal study, and chart reflections. This realm is prepared for
+        essays that treat astrology as a language of pattern, not a replacement for judgment.
+      </p>
+    </section>
+    <section class="mt-12 grid gap-6 md:grid-cols-3">
+      <article class="glass-panel p-6">
+        <p class="text-xs uppercase tracking-[0.24em] text-mist">Seed</p>
+        <h2 class="mt-4 text-2xl text-glass">Transits journal</h2>
+        <p class="mt-3 text-sm leading-6 text-mist">Short notes tied to dates, observations, and recurring symbols.</p>
+      </article>
+      <article class="glass-panel p-6">
+        <p class="text-xs uppercase tracking-[0.24em] text-mist">Seed</p>
+        <h2 class="mt-4 text-2xl text-glass">Chart studies</h2>
+        <p class="mt-3 text-sm leading-6 text-mist">Structured readings with sources, caveats, and repeatable method.</p>
+      </article>
+      <article class="glass-panel p-6">
+        <p class="text-xs uppercase tracking-[0.24em] text-mist">Seed</p>
+        <h2 class="mt-4 text-2xl text-glass">Glossary</h2>
+        <p class="mt-3 text-sm leading-6 text-mist">Reusable definitions for signs, houses, aspects, and yogas.</p>
+      </article>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
