@@ -2,10 +2,8 @@ import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Float, useVideoTexture } from '@react-three/drei';
 import { Bloom, EffectComposer, Noise } from '@react-three/postprocessing';
-import { SheetProvider, editable as e } from '@theatre/r3f';
-import { Color, DoubleSide, MathUtils, Group, ShaderMaterial } from 'three';
+import { Color, DoubleSide, MathUtils } from 'three';
 import { detectAutoTier, getStoredTier, type PerfTier } from '../lib/perfGate';
-import { getSceneSheet } from '../lib/theatre';
 import { useResolvedTheme } from '../lib/theme';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -55,39 +53,39 @@ const usePerfTier = () => {
 };
 
 const Pipeline = () => (
-	<e.group theatreKey="pipeline-group">
+	<group>
 		<Float speed={1} rotationIntensity={0.2} floatIntensity={0.4}>
-			<e.mesh theatreKey="pipeline-sphere" position={[-1.4, 0, 0]}>
+			<mesh position={[-1.4, 0, 0]}>
 				<sphereGeometry args={[0.35, 32, 32]} />
 				<meshStandardMaterial color="#7dd3fc" metalness={0.4} roughness={0.25} />
-			</e.mesh>
+			</mesh>
 		</Float>
 		<Float speed={1.1} rotationIntensity={0.2} floatIntensity={0.4}>
-			<e.mesh theatreKey="pipeline-box" position={[0, 0.4, 0]}>
+			<mesh position={[0, 0.4, 0]}>
 				<boxGeometry args={[0.6, 0.6, 0.6]} />
 				<meshStandardMaterial color="#e6edf5" metalness={0.2} roughness={0.2} />
-			</e.mesh>
+			</mesh>
 		</Float>
 		<Float speed={0.8} rotationIntensity={0.2} floatIntensity={0.4}>
-			<e.mesh theatreKey="pipeline-icosa" position={[1.4, -0.2, 0]}>
+			<mesh position={[1.4, -0.2, 0]}>
 				<icosahedronGeometry args={[0.4, 1]} />
 				<meshStandardMaterial color="#f59e0b" metalness={0.2} roughness={0.4} />
-			</e.mesh>
+			</mesh>
 		</Float>
-	</e.group>
+	</group>
 );
 
 const Carousel = () => (
-	<e.group theatreKey="carousel-group">
+	<group>
 		{[-1.4, 0, 1.4].map((x) => (
 			<Float key={x} speed={0.6} rotationIntensity={0.4} floatIntensity={0.5}>
-				<e.mesh theatreKey={`carousel-ring-${x}`} position={[x, 0, 0]}>
+				<mesh position={[x, 0, 0]}>
 					<torusGeometry args={[0.35, 0.12, 24, 72]} />
 					<meshStandardMaterial color="#e6edf5" metalness={0.3} roughness={0.3} />
-				</e.mesh>
+				</mesh>
 			</Float>
 		))}
-	</e.group>
+	</group>
 );
 
 const terrainVertexShader = `
@@ -234,8 +232,8 @@ const Terrain = ({ tier }: { tier: PerfTier }) => {
 	});
 
 	return (
-		<e.group theatreKey="terrain-group" ref={groupRef}>
-			<e.mesh theatreKey="terrain-plane" rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.2, 0]}>
+		<group ref={groupRef}>
+			<mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.2, 0]}>
 				<planeGeometry args={[6.6, 4.4, segments, segments]} />
 				<shaderMaterial
 					ref={materialRef}
@@ -245,8 +243,8 @@ const Terrain = ({ tier }: { tier: PerfTier }) => {
 					side={DoubleSide}
 					extensions={{ derivatives: true }}
 				/>
-			</e.mesh>
-		</e.group>
+			</mesh>
+		</group>
 	);
 };
 
@@ -268,24 +266,24 @@ const VideoScene = () => {
 	}, [texture]);
 
 	return (
-		<e.group theatreKey="video-group">
-			<e.mesh theatreKey="video-plane" position={[0, 0.5, -3]} scale={[18, 10, 1]}>
+		<group>
+			<mesh position={[0, 0.5, -3]} scale={[18, 10, 1]}>
 				<planeGeometry />
 				<meshBasicMaterial map={texture} transparent opacity={0.7} />
-			</e.mesh>
-		</e.group>
+			</mesh>
+		</group>
 	);
 };
 
 const Calm = () => (
-	<e.group theatreKey="calm-group">
+	<group>
 		<Float speed={0.4} rotationIntensity={0.1} floatIntensity={0.2}>
-			<e.mesh theatreKey="calm-plane" position={[0, 0, 0]}>
+			<mesh position={[0, 0, 0]}>
 				<planeGeometry args={[3.2, 2.2]} />
 				<meshStandardMaterial color="#0f172a" metalness={0.2} roughness={0.1} />
-			</e.mesh>
+			</mesh>
 		</Float>
-	</e.group>
+	</group>
 );
 
 const RenderVariant = ({ variant, tier }: { variant: Variant, tier: PerfTier }) => {
@@ -307,7 +305,6 @@ export default function SectionScene({
 	sectionId?: string;
 }) {
 	const tier = usePerfTier();
-	const sheet = useMemo(() => getSceneSheet(`Section-${variant}`), [variant]);
 	const theme = useResolvedTheme();
 	const isTerrain = variant === 'terrain';
 	const isHigh = tier === 'high';
@@ -350,20 +347,18 @@ export default function SectionScene({
 				<pointLight position={[3, 2, 2]} intensity={isTerrain ? 0.6 : 1.2} />
 				<fog attach="fog" args={[fogColor, fogNear, fogFar]} />
 				<SectionCameraRig sectionId={sectionId ?? variant} isTerrain={isTerrain} />
-				<SheetProvider sheet={sheet}>
-					<Suspense fallback={null}>
-						<Environment preset={isTerrain ? 'night' : 'warehouse'} />
-						<RenderVariant variant={variant} tier={tier} />
-					</Suspense>
-					<EffectComposer multisampling={isHigh ? 4 : 0}>
-						<Bloom
-							intensity={bloomIntensity}
-							luminanceThreshold={0.2}
-							luminanceSmoothing={0.9}
-						/>
-						{noiseOpacity > 0 && <Noise opacity={noiseOpacity} />}
-					</EffectComposer>
-				</SheetProvider>
+				<Suspense fallback={null}>
+					<Environment preset={isTerrain ? 'night' : 'warehouse'} />
+					<RenderVariant variant={variant} tier={tier} />
+				</Suspense>
+				<EffectComposer multisampling={isHigh ? 4 : 0}>
+					<Bloom
+						intensity={bloomIntensity}
+						luminanceThreshold={0.2}
+						luminanceSmoothing={0.9}
+					/>
+					{noiseOpacity > 0 && <Noise opacity={noiseOpacity} />}
+				</EffectComposer>
 			</Canvas>
 		</div>
 	);

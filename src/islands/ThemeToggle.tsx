@@ -57,9 +57,9 @@ export default function ThemeToggle() {
 	};
 
 	return (
-		<div className="flex items-center gap-2 text-xs text-mist">
-			<span className="uppercase tracking-[0.2em]">Theme</span>
-			<div className="flex items-center gap-1 rounded-full border border-mist/40 p-1">
+		<div className="flex items-center text-xs text-mist">
+			<span className="sr-only">Theme</span>
+			<div className="flex items-center gap-0.5 rounded-full border border-mist/40 bg-ink/20 p-1 backdrop-blur-xl">
 				<button
 					type="button"
 					onClick={() => handleSelect('auto')}
@@ -67,8 +67,9 @@ export default function ThemeToggle() {
 						mode === 'auto' ? 'bg-glass/10 text-glass' : 'text-mist'
 					}`}
 					aria-pressed={mode === 'auto'}
+					title="Auto theme"
 				>
-					Auto
+					A
 				</button>
 				<button
 					type="button"
@@ -95,7 +96,6 @@ export default function ThemeToggle() {
 					<span className="sr-only">Bright</span>
 				</button>
 			</div>
-			{mode === 'auto' && <span className="text-mist">Auto: {resolved}</span>}
 		</div>
 	);
 }

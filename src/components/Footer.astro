@@ -1,18 +1,31 @@
 ---
-import FloraFooter from "../islands/FloraFooter";
 import FooterLinks from "../islands/FooterLinks";
+import FloraGate from "../islands/FloraGate";
 const base = import.meta.env.BASE_URL;
-const { showStudio = false, floraHeight } = Astro.props;
+const { showStudio = false } = Astro.props;
 ---
 
 <footer class="relative mt-20 min-h-[50vh] flex items-end overflow-hidden">
   {
     !showStudio && (
-      <div class="absolute inset-0 z-0 pointer-events-none">
-        <FloraFooter client:load height="100%" />
+      <div class="footer-still-scene absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+        <div class="footer-orbit"></div>
+        <div class="footer-bloom">
+          <span class="footer-petal footer-petal-1"></span>
+          <span class="footer-petal footer-petal-2"></span>
+          <span class="footer-petal footer-petal-3"></span>
+          <span class="footer-petal footer-petal-4"></span>
+          <span class="footer-petal footer-petal-5"></span>
+          <span class="footer-petal footer-petal-6"></span>
+          <span class="footer-petal footer-petal-7"></span>
+          <span class="footer-petal footer-petal-8"></span>
+          <span class="footer-flower-core"></span>
+        </div>
+        <div class="footer-grass"></div>
       </div>
     )
   }
+  {!showStudio && <FloraGate client:visible />}
 
   <div class="section-shell relative z-10 w-full pb-12">
     <div class="grid gap-10 md:grid-cols-[2fr_1fr] items-end">

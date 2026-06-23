@@ -2,13 +2,11 @@ import { Suspense, useEffect, useMemo, useState, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Float, MeshTransmissionMaterial } from '@react-three/drei';
 import { Bloom, ChromaticAberration, EffectComposer, Noise, Vignette } from '@react-three/postprocessing';
-import { SheetProvider, editable as e } from '@theatre/r3f';
 import { BlendFunction } from 'postprocessing';
 import { AdditiveBlending, BufferAttribute, BufferGeometry, Vector2 } from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { detectAutoTier, getStoredTier, type PerfTier } from '../lib/perfGate';
-import { getSceneSheet } from '../lib/theatre';
 import { useResolvedTheme } from '../lib/theme';
 import FluidDistortion from './postfx/FluidDistortion';
 
@@ -48,9 +46,9 @@ const flowNoise = (x: number, y: number, z: number) =>
 
 function GlassCluster({ samples, resolution, distortionScale, clusterRef }: GlassProps) {
 	return (
-		<e.group theatreKey="hero-cluster" ref={clusterRef}>
+		<group ref={clusterRef}>
 			<Float speed={1.2} rotationIntensity={0.2} floatIntensity={0.6}>
-				<e.mesh theatreKey="hero-icosa" position={[-1.2, 0.2, 0]}>
+				<mesh position={[-1.2, 0.2, 0]}>
 					<icosahedronGeometry args={[0.8, 1]} />
 					<MeshTransmissionMaterial
 						color="#e6edf5"
@@ -65,10 +63,10 @@ function GlassCluster({ samples, resolution, distortionScale, clusterRef }: Glas
 						samples={samples}
 						resolution={resolution}
 					/>
-				</e.mesh>
+				</mesh>
 			</Float>
 			<Float speed={0.8} rotationIntensity={0.3} floatIntensity={0.5}>
-				<e.mesh theatreKey="hero-knot" position={[0.9, -0.3, 0.4]}>
+				<mesh position={[0.9, -0.3, 0.4]}>
 					<torusKnotGeometry args={[0.45, 0.16, 120, 16]} />
 					<MeshTransmissionMaterial
 						color="#7dd3fc"
@@ -83,9 +81,9 @@ function GlassCluster({ samples, resolution, distortionScale, clusterRef }: Glas
 						samples={samples}
 						resolution={resolution}
 					/>
-				</e.mesh>
+				</mesh>
 			</Float>
-		</e.group>
+		</group>
 	);
 }
 
@@ -169,7 +167,6 @@ function FlowField({
 
 export default function HeroScene() {
 	const tier = usePerfTier();
-	const sheet = useMemo(() => getSceneSheet('Hero'), []);
 	const theme = useResolvedTheme();
 	const isHigh = tier === 'high';
 	const samples = isHigh ? 12 : 6;
@@ -192,38 +189,36 @@ export default function HeroScene() {
 				<color attach="background" args={background} />
 				<ambientLight intensity={0.7} />
 				<pointLight position={[4, 3, 2]} intensity={1.5} />
-				<SheetProvider sheet={sheet}>
-					<HeroCameraRig clusterRef={clusterRef} />
-					<FlowField
-						count={isHigh ? 360 : 220}
-						color={flowColor}
-						opacity={isHigh ? 0.3 : 0.22}
-						size={isHigh ? 0.03 : 0.025}
+				<HeroCameraRig clusterRef={clusterRef} />
+				<FlowField
+					count={isHigh ? 360 : 220}
+					color={flowColor}
+					opacity={isHigh ? 0.3 : 0.22}
+					size={isHigh ? 0.03 : 0.025}
+				/>
+				<Suspense fallback={null}>
+					<Environment preset="city" />
+					<GlassCluster
+						samples={samples}
+						resolution={resolution}
+						distortionScale={distortionScale}
+						clusterRef={clusterRef}
 					/>
-					<Suspense fallback={null}>
-						<Environment preset="city" />
-						<GlassCluster
-							samples={samples}
-							resolution={resolution}
-							distortionScale={distortionScale}
-							clusterRef={clusterRef}
-						/>
-					</Suspense>
-					<EffectComposer multisampling={isHigh ? 4 : 0}>
-						<FluidDistortion strength={isHigh ? 0.04 : 0.02} />
-						<Bloom
-							intensity={bloomIntensity}
-							luminanceThreshold={0.2}
-							luminanceSmoothing={0.9}
-						/>
-						<ChromaticAberration
-							blendFunction={BlendFunction.NORMAL}
-							offset={chromaOffset}
-						/>
-						<Vignette eskil offset={0.25} darkness={0.7} />
-						<Noise opacity={isHigh ? 0.12 : 0.06} />
-					</EffectComposer>
-				</SheetProvider>
+				</Suspense>
+				<EffectComposer multisampling={isHigh ? 4 : 0}>
+					<FluidDistortion strength={isHigh ? 0.04 : 0.02} />
+					<Bloom
+						intensity={bloomIntensity}
+						luminanceThreshold={0.2}
+						luminanceSmoothing={0.9}
+					/>
+					<ChromaticAberration
+						blendFunction={BlendFunction.NORMAL}
+						offset={chromaOffset}
+					/>
+					<Vignette eskil offset={0.25} darkness={0.7} />
+					<Noise opacity={isHigh ? 0.12 : 0.06} />
+				</EffectComposer>
 			</Canvas>
 		</div>
 	);

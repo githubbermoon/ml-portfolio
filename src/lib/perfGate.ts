@@ -3,8 +3,8 @@ export type PerfTier = 'off' | 'standard' | 'high';
 const STORAGE_KEY = 'clawd-perf-tier';
 
 export const getStoredTier = (): PerfTier | 'auto' => {
-	if (typeof window === 'undefined') return 'auto';
-	return (localStorage.getItem(STORAGE_KEY) as PerfTier | null) ?? 'auto';
+	if (typeof window === 'undefined') return 'off';
+	return (localStorage.getItem(STORAGE_KEY) as PerfTier | 'auto' | null) ?? 'off';
 };
 
 export const setStoredTier = (tier: PerfTier | 'auto') => {

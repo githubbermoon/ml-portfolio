@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
-import SmoothScroll from "../islands/SmoothScroll";
 import Spotlight from "../islands/Spotlight";
+import ThemeToggle from "../islands/ThemeToggle";
 
 const {
   title = "Clawd ML Portfolio",
@@ -98,7 +98,9 @@ const isBlogRoute =
     <title>{title}</title>
   </head>
   <body class:list={[bodyClass, isBlogRoute && "blog-locked"]}>
-    <SmoothScroll client:load />
+    <div class="fixed top-6 right-6 z-50">
+      <ThemeToggle client:load />
+    </div>
     <Spotlight client:load />
     <slot />
     <div

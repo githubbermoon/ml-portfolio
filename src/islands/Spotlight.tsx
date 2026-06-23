@@ -1,23 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function Spotlight() {
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [opacity, setOpacity] = useState(0);
+  const spotlightRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const spotlight = spotlightRef.current;
+    if (!spotlight) return;
+    if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
+
+    let frame = 0;
+
     const handleMouseMove = (e: MouseEvent) => {
-      setPos({ x: e.clientX, y: e.clientY });
-      setOpacity(1);
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        spotlight.style.setProperty('--spotlight-x', `${e.clientX}px`);
+        spotlight.style.setProperty('--spotlight-y', `${e.clientY}px`);
+        spotlight.style.opacity = '1';
+      });
     };
 
     const handleMouseLeave = () => {
-      setOpacity(0);
+      spotlight.style.opacity = '0';
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
+      cancelAnimationFrame(frame);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
     };
@@ -25,10 +35,12 @@ export default function Spotlight() {
 
   return (
     <div
+      ref={spotlightRef}
       className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 ease-in-out"
       style={{
-        opacity,
-        background: `radial-gradient(600px circle at ${pos.x}px ${pos.y}px, rgba(255,255,255,0.06), transparent 40%)`,
+        opacity: 0,
+        background:
+          'radial-gradient(600px circle at var(--spotlight-x, 50vw) var(--spotlight-y, 50vh), rgba(255,255,255,0.06), transparent 40%)',
       }}
     />
   );

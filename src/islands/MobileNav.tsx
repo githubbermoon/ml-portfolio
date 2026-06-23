@@ -32,7 +32,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ links, base }) => {
       {/* Menu Trigger */}
       <button
         onClick={() => setIsOpen(true)}
-        className="relative z-50 text-sm font-medium tracking-wide text-white mix-blend-difference transition-opacity hover:opacity-70 md:hidden"
+        className="relative z-50 text-sm font-medium tracking-wide text-glass transition-opacity hover:opacity-70 md:hidden"
       >
         MENU
       </button>

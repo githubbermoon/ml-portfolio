@@ -5,10 +5,10 @@ import { detectAutoTier, getStoredTier, setStoredTier, type PerfTier } from '../
 type ToggleTier = PerfTier | 'auto';
 
 const options: { label: string; value: ToggleTier }[] = [
+	{ label: 'Still', value: 'off' },
 	{ label: 'Auto', value: 'auto' },
 	{ label: 'High', value: 'high' },
 	{ label: 'Standard', value: 'standard' },
-	{ label: 'Off', value: 'off' },
 ];
 
 const emitTier = (tier: ToggleTier) => {
@@ -16,7 +16,7 @@ const emitTier = (tier: ToggleTier) => {
 };
 
 export default function PerformanceToggle() {
-	const [tier, setTier] = useState<ToggleTier>('auto');
+	const [tier, setTier] = useState<ToggleTier>('off');
 	const [autoTier, setAutoTier] = useState<PerfTier>('standard');
 
 	useEffect(() => {
@@ -47,7 +47,7 @@ export default function PerformanceToggle() {
 
 	return (
 		<div className="flex flex-wrap items-center gap-2 text-xs text-mist">
-			<span className="uppercase tracking-[0.2em]">Performance</span>
+			<span className="uppercase tracking-[0.2em]">Visual effects</span>
 			<motion.div layout className="flex gap-2 rounded-full border border-mist/20 bg-glass/5 p-1">
 				{options.map((option) => {
 					const isActive = tier === option.value;
