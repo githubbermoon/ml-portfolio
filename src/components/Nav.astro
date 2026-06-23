@@ -1,5 +1,4 @@
 ---
-import ThemeToggle from "../islands/ThemeToggle";
 import MagneticButton from "../islands/MagneticButton";
 import MobileNav from "../islands/MobileNav";
 
@@ -7,17 +6,12 @@ const base = import.meta.env.BASE_URL;
 
 const links = [
   { href: `${base}#hero`, label: "Home" },
-  { href: `${base}#capabilities`, label: "Capabilities" },
+  { href: `${base}#capabilities`, label: "Realms" },
   { href: `${base}#work`, label: "Work" },
   { href: `${base}blog/`, label: "Blog" },
   { href: `${base}#contact`, label: "Contact" },
 ];
 ---
-
-<!-- Fixed Theme Toggle (Always Top Right) -->
-<div class="fixed top-6 right-6 z-50 mix-blend-difference">
-  <ThemeToggle client:load />
-</div>
 
 <!-- Swerving Nav Container -->
 <nav
