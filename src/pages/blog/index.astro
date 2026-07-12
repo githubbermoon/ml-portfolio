@@ -59,13 +59,32 @@ const realms = [
 >
 	<Nav />
 	<main class="section-shell">
-		<section class="library-hero">
-			<p class="text-xs uppercase tracking-[0.35em] text-mist">Private library</p>
-			<h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">A field guide for machines, myths, stars, and kitchens</h1>
-			<p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
-				A living archive for technical work and inner-world research: ML notes, spiritual essays, astrology fragments,
-				cooking experiments, and reference entries that connect over time.
-			</p>
+		<section class="library-hero library-hero-atmosphere">
+			<div class="library-hero-copy">
+				<p class="text-xs uppercase tracking-[0.35em] text-mist">Private library</p>
+				<h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">A field guide for machines, myths, stars, and kitchens</h1>
+				<p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
+					A living archive for technical work and inner-world research: ML notes, spiritual essays, astrology fragments,
+					cooking experiments, and reference entries that connect over time.
+				</p>
+			</div>
+			<figure class="library-atmosphere-frame" aria-label="Orange ritual water scene">
+				<img
+					class="library-atmosphere-bleed"
+					src={base + "images/atmosphere/ritual-water.webp"}
+					alt=""
+					loading="eager"
+					decoding="async"
+					aria-hidden="true"
+				/>
+				<img
+					class="library-atmosphere-image"
+					src={base + "images/atmosphere/ritual-water.webp"}
+					alt="People standing in orange-lit water and mist."
+					loading="eager"
+					decoding="async"
+				/>
+			</figure>
 		</section>
 
 		<div class="library-realm-grid mt-12">
@@ -114,3 +133,99 @@ const realms = [
 	</main>
 	<Footer />
 </BaseLayout>
+
+<style>
+	.library-hero-atmosphere {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(280px, 0.52fr);
+		align-items: end;
+		gap: clamp(2rem, 5vw, 4.5rem);
+	}
+
+	.library-hero-copy {
+		min-width: 0;
+	}
+
+	.library-atmosphere-frame {
+		position: relative;
+		overflow: visible;
+		height: clamp(18rem, 33vw, 28rem);
+		margin: 0;
+		border-radius: 2rem;
+		isolation: isolate;
+	}
+
+	.library-atmosphere-frame::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: 2;
+		border-radius: inherit;
+		background:
+			linear-gradient(to top, rgb(var(--color-ink) / 0.18), transparent 48%),
+			radial-gradient(circle at 74% 18%, rgb(251 191 36 / 0.2), transparent 42%);
+		pointer-events: none;
+	}
+
+	.library-atmosphere-image {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: 58% 50%;
+		display: block;
+		border: 1px solid rgb(var(--color-glass) / 0.12);
+		border-radius: inherit;
+		box-shadow: 0 28px 80px rgb(0 0 0 / 0.26);
+		filter: saturate(1.08) contrast(1.04);
+	}
+
+	.library-atmosphere-bleed {
+		position: absolute;
+		top: -18%;
+		left: -34%;
+		z-index: -1;
+		width: 168%;
+		max-width: none;
+		height: 138%;
+		object-fit: cover;
+		object-position: 58% 50%;
+		border-radius: 3rem;
+		opacity: 0.2;
+		filter: blur(26px) saturate(1.2) contrast(1.08);
+		mask-image: radial-gradient(ellipse at 58% 48%, black 0 34%, rgb(0 0 0 / 0.72) 48%, transparent 72%);
+	}
+
+	[data-theme="bright"] .library-atmosphere-frame {
+		filter: none;
+	}
+
+	[data-theme="bright"] .library-atmosphere-image {
+		box-shadow: 0 22px 54px rgb(15 23 42 / 0.12);
+	}
+
+	[data-theme="bright"] .library-atmosphere-bleed {
+		opacity: 0.16;
+		mix-blend-mode: multiply;
+	}
+
+	@media (max-width: 860px) {
+		.library-hero-atmosphere {
+			grid-template-columns: 1fr;
+			align-items: start;
+		}
+
+		.library-atmosphere-frame {
+			height: 18rem;
+			border-radius: 1.5rem;
+		}
+
+		.library-atmosphere-bleed {
+			left: -10%;
+			width: 120%;
+			opacity: 0.18;
+		}
+	}
+</style>

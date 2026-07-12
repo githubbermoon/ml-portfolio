@@ -10,6 +10,14 @@ const base = import.meta.env.BASE_URL;
   <Nav />
   <main class="section-shell astrology-shell">
     <section class="astrology-hero">
+      <img
+        class="cosmic-horizon"
+        src={base + "images/atmosphere/cosmic-horizon.webp"}
+        alt=""
+        loading="eager"
+        decoding="async"
+        aria-hidden="true"
+      />
       <div class="astrology-copy">
         <a class="back-link" href={base + "blog/"}>Back to library</a>
         <p class="realm-label">Astrology</p>
@@ -20,7 +28,7 @@ const base = import.meta.env.BASE_URL;
         </p>
       </div>
 
-      <figure class="momiji-orbit" aria-label="Animated Japanese maple and moon visual for the astrology archive">
+      <figure class="momiji-orbit" aria-label="Japanese maple and moon visual for the astrology archive">
         <div class="moon-field" aria-hidden="true">
           <span class="moon"></span>
           <span class="star star-one"></span>
@@ -147,7 +155,6 @@ const base = import.meta.env.BASE_URL;
           </g>
         </svg>
 
-        <div class="falling-leaves" aria-hidden="true"></div>
       </figure>
     </section>
 
@@ -172,48 +179,49 @@ const base = import.meta.env.BASE_URL;
   <Footer />
 </BaseLayout>
 
-<script>
-  const mapleScene = document.querySelector(".momiji-orbit");
-  const fallingLayer = mapleScene?.querySelector(".falling-leaves");
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  if (fallingLayer && !reducedMotion) {
-    const leafColors = ["#fef08a", "#facc15", "#f97316", "#ef4444", "#b91c1c"];
-    const maxLeaves = 44;
-
-    for (let index = 0; index < maxLeaves; index += 1) {
-      const leaf = document.createElement("span");
-      leaf.className = "falling-leaf";
-      leaf.style.setProperty("--x", `${Math.random() * 88 + 4}%`);
-      leaf.style.setProperty("--dx", `${Math.random() * 160 - 80}px`);
-      leaf.style.setProperty("--delay", `${Math.random() * -18}s`);
-      leaf.style.setProperty("--duration", `${10 + Math.random() * 12}s`);
-      leaf.style.setProperty("--spin", `${Math.random() * 720 - 360}deg`);
-      leaf.style.setProperty("--scale", `${0.58 + Math.random() * 0.7}`);
-      leaf.style.setProperty("--leaf", leafColors[index % leafColors.length]);
-      fallingLayer.append(leaf);
-    }
-  }
-</script>
-
 <style>
   .astrology-shell {
-    max-width: 76rem;
     overflow: hidden;
   }
 
   .astrology-hero {
+    position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 0.88fr) minmax(320px, 1.12fr);
+    grid-template-columns: minmax(0, 0.82fr) minmax(320px, 1.18fr);
     align-items: center;
     gap: clamp(2rem, 5vw, 5.5rem);
-    min-height: min(760px, calc(100vh - 5rem));
-    padding-block: clamp(1.5rem, 4vw, 3rem);
+    width: 100dvw;
+    max-width: 100dvw;
+    min-height: min(780px, calc(100vh - 5rem));
+    margin-left: calc(50% - 50dvw);
+    padding:
+      clamp(5rem, 10vw, 7rem)
+      max(1.5rem, calc((100dvw - 76rem) / 2 + 2.5rem))
+      clamp(4rem, 8vw, 5rem);
+    isolation: isolate;
+  }
+
+  .astrology-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      linear-gradient(90deg, rgb(var(--color-ink) / 0.9) 0%, rgb(var(--color-ink) / 0.72) 32%, rgb(var(--color-ink) / 0.28) 62%, transparent 100%),
+      linear-gradient(to top, rgb(var(--color-ink) / 0.62), transparent 48%);
+    pointer-events: none;
+  }
+
+  [data-theme="bright"] .astrology-hero::before {
+    background:
+      linear-gradient(90deg, rgb(244 247 251 / 0.96) 0%, rgb(244 247 251 / 0.78) 34%, rgb(244 247 251 / 0.28) 66%, transparent 100%),
+      linear-gradient(to top, rgb(244 247 251 / 0.64), transparent 48%);
   }
 
   .astrology-copy {
     position: relative;
-    z-index: 2;
+    z-index: 3;
+    min-width: 0;
   }
 
   .back-link,
@@ -256,16 +264,29 @@ const base = import.meta.env.BASE_URL;
 
   .momiji-orbit {
     position: relative;
-    min-height: clamp(500px, 72vw, 730px);
+    z-index: 2;
+    min-height: clamp(500px, 56vw, 730px);
     margin: 0;
     isolation: isolate;
   }
 
-  .moon-field,
-  .falling-leaves {
+  .moon-field {
     position: absolute;
     inset: 0;
     pointer-events: none;
+  }
+
+  .cosmic-horizon {
+    z-index: -1;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    object-fit: cover;
+    object-position: 62% 50%;
+    opacity: 0.84;
+    filter: saturate(1.1) contrast(1.04);
   }
 
   .moon-field {
@@ -347,7 +368,6 @@ const base = import.meta.env.BASE_URL;
 
   .canopy {
     transform-origin: 340px 700px;
-    animation: maple-sway 8s ease-in-out infinite;
   }
 
   .leaf-cloud {
@@ -388,91 +408,17 @@ const base = import.meta.env.BASE_URL;
     filter: drop-shadow(0 3px 2px rgb(88 28 18 / 0.24));
   }
 
-  .falling-leaves {
-    z-index: 3;
-    overflow: hidden;
-  }
-
-  .falling-leaf {
-    position: absolute;
-    top: -12%;
-    left: var(--x);
-    width: 18px;
-    height: 18px;
-    color: var(--leaf);
-    opacity: 0;
-    transform: translate3d(0, 0, 0) scale(var(--scale));
-    animation: leaf-fall var(--duration) linear var(--delay) infinite;
-  }
-
-  .falling-leaf::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: currentColor;
-    clip-path: polygon(
-      50% 0%,
-      61% 32%,
-      88% 14%,
-      74% 43%,
-      100% 54%,
-      67% 61%,
-      82% 92%,
-      54% 73%,
-      50% 100%,
-      46% 73%,
-      18% 92%,
-      33% 61%,
-      0% 54%,
-      26% 43%,
-      12% 14%,
-      39% 32%
-    );
-    filter: drop-shadow(0 5px 4px rgb(69 26 3 / 0.24));
-  }
-
   [data-theme="bright"] .moon {
     opacity: 0.58;
   }
 
-  [data-theme="bright"] .leaf-cloud {
+  [data-theme="bright"] .cosmic-horizon {
+    opacity: 0.78;
     mix-blend-mode: multiply;
   }
 
-  @keyframes maple-sway {
-    0%,
-    100% {
-      transform: rotate(-1.2deg) translateX(-4px);
-    }
-    50% {
-      transform: rotate(1.4deg) translateX(5px);
-    }
-  }
-
-  @keyframes leaf-fall {
-    0% {
-      opacity: 0;
-      transform: translate3d(0, -10%, 0) rotate(0deg) scale(var(--scale));
-    }
-    10%,
-    82% {
-      opacity: 0.9;
-    }
-    100% {
-      opacity: 0;
-      transform: translate3d(var(--dx), 112vh, 0) rotate(var(--spin)) scale(var(--scale));
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .canopy,
-    .falling-leaf {
-      animation: none !important;
-    }
-
-    .falling-leaf {
-      display: none;
-    }
+  [data-theme="bright"] .leaf-cloud {
+    mix-blend-mode: multiply;
   }
 
   @media (max-width: 900px) {
@@ -480,6 +426,22 @@ const base = import.meta.env.BASE_URL;
       grid-template-columns: 1fr;
       gap: 1.5rem;
       min-height: auto;
+      padding:
+        clamp(5.5rem, 16vw, 7rem)
+        1.5rem
+        clamp(3rem, 10vw, 4rem);
+    }
+
+    .astrology-hero::before {
+      background:
+        linear-gradient(to bottom, rgb(var(--color-ink) / 0.88) 0%, rgb(var(--color-ink) / 0.5) 42%, rgb(var(--color-ink) / 0.72) 100%),
+        linear-gradient(90deg, rgb(var(--color-ink) / 0.72), transparent);
+    }
+
+    [data-theme="bright"] .astrology-hero::before {
+      background:
+        linear-gradient(to bottom, rgb(244 247 251 / 0.92) 0%, rgb(244 247 251 / 0.54) 42%, rgb(244 247 251 / 0.78) 100%),
+        linear-gradient(90deg, rgb(244 247 251 / 0.78), transparent);
     }
 
     .astrology-copy h1 {
@@ -490,12 +452,17 @@ const base = import.meta.env.BASE_URL;
       min-height: min(112vw, 620px);
       margin-top: -1rem;
     }
+
+    .cosmic-horizon {
+      height: 100%;
+      object-position: 58% 50%;
+    }
   }
 
   @media (max-width: 560px) {
     .astrology-shell {
-      padding-inline: 1.1rem;
-      padding-top: 5rem;
+      padding-inline: 0;
+      padding-top: 0;
     }
 
     .astrology-copy > p:last-child {

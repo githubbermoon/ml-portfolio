@@ -4,19 +4,29 @@ import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 
 const base = import.meta.env.BASE_URL;
+const foodCover = base + "images/atmosphere/food-cover.webp";
 ---
 
 <BaseLayout title="Rasam | Clawd ML Portfolio">
   <Nav />
   <main class="section-shell">
-    <section class="library-hero">
-      <a class="text-xs uppercase tracking-[0.28em] text-mist" href={base + "blog/"}>Back to library</a>
-      <p class="mt-10 text-xs uppercase tracking-[0.35em] text-mist">Cooking</p>
-      <h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">Rasam</h1>
-      <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
-        Recipes, process notes, taste experiments, food memory, and kitchen systems. This section can become both a
-        practical cookbook and a sensory notebook.
-      </p>
+    <section class="library-hero cooking-hero">
+      <img
+        class="cooking-hero-image"
+        src={foodCover}
+        alt=""
+        loading="eager"
+        decoding="async"
+      />
+      <div class="cooking-hero-copy">
+        <a class="text-xs uppercase tracking-[0.28em] text-mist" href={base + "blog/"}>Back to library</a>
+        <p class="mt-10 text-xs uppercase tracking-[0.35em] text-mist">Cooking</p>
+        <h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">Rasam</h1>
+        <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
+          Recipes, process notes, taste experiments, food memory, and kitchen systems. This section can become both a
+          practical cookbook and a sensory notebook.
+        </p>
+      </div>
     </section>
     <section class="mt-12 grid gap-6 md:grid-cols-3">
       <article class="glass-panel p-6">
@@ -38,3 +48,117 @@ const base = import.meta.env.BASE_URL;
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  :global(html),
+  :global(body) {
+    overflow-x: clip;
+  }
+
+  .cooking-hero {
+    width: 100dvw;
+    max-width: 100dvw;
+    min-height: clamp(28rem, 72vh, 46rem);
+    margin-left: calc(50% - 50dvw);
+    padding:
+      clamp(7rem, 14vw, 10rem)
+      max(1.5rem, calc((100dvw - 72rem) / 2 + 2.5rem))
+      clamp(4rem, 8vw, 6rem);
+    isolation: isolate;
+    border-bottom: 1px solid rgb(var(--color-glass) / 0.12);
+  }
+
+  .cooking-hero::before,
+  .cooking-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: auto;
+    height: auto;
+    aspect-ratio: auto;
+    border: 0;
+    border-radius: 0;
+    transform: none;
+    opacity: 1;
+    pointer-events: none;
+  }
+
+  .cooking-hero::before {
+    z-index: 1;
+    background:
+      linear-gradient(90deg, rgb(5 9 14 / 0.86) 0%, rgb(5 9 14 / 0.58) 42%, rgb(5 9 14 / 0.12) 78%, transparent 100%),
+      linear-gradient(to top, rgb(5 9 14 / 0.5) 0%, transparent 50%),
+      radial-gradient(circle at 20% 42%, rgb(245 158 11 / 0.2), transparent 38%);
+  }
+
+  .cooking-hero::after {
+    z-index: -1;
+    background: rgb(var(--color-ink));
+  }
+
+  .cooking-hero-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: saturate(1.08) contrast(1.05);
+  }
+
+  .cooking-hero-copy {
+    position: relative;
+    z-index: 2;
+    max-width: 72rem;
+  }
+
+  .cooking-hero-copy h1,
+  .cooking-hero-copy p,
+  .cooking-hero-copy a {
+    color: rgb(248 250 252);
+    text-shadow: 0 2px 28px rgb(0 0 0 / 0.68);
+  }
+
+  .cooking-hero-copy :global(.text-mist) {
+    color: rgb(226 232 240 / 0.86);
+  }
+
+  [data-theme="bright"] .cooking-hero::before {
+    background:
+      linear-gradient(90deg, rgb(5 9 14 / 0.82) 0%, rgb(5 9 14 / 0.52) 42%, rgb(5 9 14 / 0.1) 78%, transparent 100%),
+      linear-gradient(to top, rgb(5 9 14 / 0.34) 0%, transparent 50%),
+      radial-gradient(circle at 20% 42%, rgb(245 158 11 / 0.16), transparent 38%);
+  }
+
+  [data-theme="bright"] .cooking-hero-copy h1,
+  [data-theme="bright"] .cooking-hero-copy p,
+  [data-theme="bright"] .cooking-hero-copy a {
+    text-shadow: 0 2px 24px rgb(244 247 251 / 0.9);
+  }
+
+  @media (max-width: 720px) {
+    .cooking-hero {
+      min-height: clamp(28rem, 78vh, 38rem);
+      padding:
+        clamp(6rem, 24vw, 8rem)
+        1.5rem
+        clamp(3rem, 13vw, 4.5rem);
+    }
+
+    .cooking-hero::before {
+      background:
+        linear-gradient(to bottom, rgb(5 9 14 / 0.76) 0%, rgb(5 9 14 / 0.48) 42%, rgb(5 9 14 / 0.7) 100%),
+        linear-gradient(90deg, rgb(5 9 14 / 0.7), rgb(5 9 14 / 0.12)),
+        radial-gradient(circle at 28% 34%, rgb(245 158 11 / 0.18), transparent 42%);
+    }
+
+    [data-theme="bright"] .cooking-hero::before {
+      background:
+        linear-gradient(to bottom, rgb(5 9 14 / 0.76) 0%, rgb(5 9 14 / 0.48) 42%, rgb(5 9 14 / 0.7) 100%),
+        linear-gradient(90deg, rgb(5 9 14 / 0.7), rgb(5 9 14 / 0.12)),
+        radial-gradient(circle at 28% 34%, rgb(245 158 11 / 0.16), transparent 42%);
+    }
+  }
+</style>
