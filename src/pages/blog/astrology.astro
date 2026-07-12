@@ -4,6 +4,9 @@ import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 
 const base = import.meta.env.BASE_URL;
+
+const isRealmsMode = import.meta.env.SITE_MODE === "realms";
+if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
 ---
 
 <BaseLayout title="Jyotiṣa | Clawd ML Portfolio">

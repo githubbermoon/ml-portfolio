@@ -1,6 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import LivingGridScene from "../components/LivingGrid";
+
+const isRealmsMode = import.meta.env.SITE_MODE === "realms";
+if (!isRealmsMode) return Astro.redirect("/ml-portfolio/");
 ---
 
 <BaseLayout title="Living Identities Manifesto | POC">

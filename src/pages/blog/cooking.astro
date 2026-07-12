@@ -5,6 +5,9 @@ import Footer from "../../components/Footer.astro";
 
 const base = import.meta.env.BASE_URL;
 const foodCover = base + "images/atmosphere/food-cover.webp";
+
+const isRealmsMode = import.meta.env.SITE_MODE === "realms";
+if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
 ---
 
 <BaseLayout title="Rasam | Clawd ML Portfolio">
