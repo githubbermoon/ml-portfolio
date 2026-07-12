@@ -18,7 +18,13 @@ const { post } = Astro.props as { post: CollectionEntry<'blog'> };
 const { Content } = await post.render();
 ---
 
-<BaseLayout title={`${post.data.title} | Clawd ML Portfolio`}>
+<BaseLayout
+	title={`${post.data.title} | Realms Blog`}
+	description={post.data.summary}
+	type="article"
+	publishedDate={post.data.date.toISOString()}
+	tags={post.data.tags}
+>
 	<div class="relative min-h-screen overflow-hidden">
 		<div class="absolute inset-0 z-0 pointer-events-none">
 			<GhostSilk client:only="react" />

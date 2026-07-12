@@ -20,7 +20,13 @@ const isTerrainProject = project.slug === 'terrain-safety';
 const headerVariant = isTerrainProject ? 'terrain' : 'calm';
 ---
 
-<BaseLayout title={`${project.data.title} | Clawd ML Portfolio`}>
+<BaseLayout
+	title={`${project.data.title} | Pranjal Prakash ML Portfolio`}
+	description={project.data.summary}
+	type="article"
+	publishedDate={project.data.date.toISOString()}
+	tags={project.data.tags}
+>
 	<Nav />
 	<main>
 		<section id="project-hero" class="relative min-h-[60vh] overflow-hidden rounded-b-[3rem]">
