@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:cloudflare": "SITE_BASE=/ astro build",
+    "build:github": "SITE_BASE=/ml-portfolio/ astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
