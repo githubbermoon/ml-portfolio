@@ -1,0 +1,14 @@
+name = "realms"
+compatibility_date = "2026-07-12"
+pages_build_output_dir = "dist"
+
+[vars]
+DAILY_AI_LIMIT = "100"
+MAX_PROMPT_CHARS = "600"
+
+[[kv_namespaces]]
+binding = "REALMS_KV"
+id = "41c4a281c6c54337a1726398260b50b2"
+
+[ai]
+binding = "AI"
