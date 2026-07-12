@@ -1,0 +1,11 @@
+# Cloudflare Pages only: keep professional portfolio content off Realms.
+# GitHub Pages ignores this file.
+/projects /blog/ 302
+/projects/* /blog/ 302
+/pranjal-cv.pdf /blog/ 302
+/blog/technical /blog/ 302
+/blog/technical/ /blog/ 302
+/blog/uhi-bengaluru /blog/ 302
+/blog/uhi-bengaluru/ /blog/ 302
+/blog/glass-fidelity /blog/ 302
+/blog/glass-fidelity/ /blog/ 302

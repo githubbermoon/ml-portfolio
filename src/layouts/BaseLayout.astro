@@ -48,7 +48,9 @@ const jsonLd = {
   ...(modifiedDate ? { dateModified: modifiedDate } : {}),
   ...(tags.length ? { keywords: tags.join(", ") } : {}),
 };
+const isRealmsMode = import.meta.env.SITE_MODE === "realms";
 const isBlogRoute =
+  isRealmsMode &&
   !isPublicBlogRoute &&
   (Astro.url.pathname.startsWith(blogPrefix) ||
     Astro.url.pathname.startsWith(devBlogPrefix));
@@ -163,32 +165,34 @@ const isBlogRoute =
     </div>
     <Spotlight client:load />
     <slot />
-    <div
-      id="blog-gate"
-      class:list={["blog-gate", isBlogRoute && "is-visible"]}
-      aria-hidden={!isBlogRoute}
-    >
-      <div class="blog-gate-card">
-        <p class="text-xs uppercase tracking-[0.3em] text-mist">Private</p>
-        <h2 class="mt-3 text-2xl text-glass">Enter password</h2>
-        <form id="blog-gate-form" class="mt-6 flex flex-col gap-3">
-          <input
-            id="blog-gate-input"
-            class="rounded-full border border-mist/30 bg-glass/5 px-4 py-3 text-sm text-glass placeholder:text-mist/70"
-            type="password"
-            autocomplete="current-password"
-            placeholder="Password"
-          />
-          <button
-            type="submit"
-            class="rounded-full border border-mist/40 px-4 py-3 text-sm text-glass transition hover:border-glass/50"
-          >
-            Unlock
-          </button>
-        </form>
-        <p id="blog-gate-error" class="mt-3 text-xs text-amber-400"></p>
+    {isRealmsMode && (
+      <div
+        id="blog-gate"
+        class:list={["blog-gate", isBlogRoute && "is-visible"]}
+        aria-hidden={!isBlogRoute}
+      >
+        <div class="blog-gate-card">
+          <p class="text-xs uppercase tracking-[0.3em] text-mist">Private</p>
+          <h2 class="mt-3 text-2xl text-glass">Enter password</h2>
+          <form id="blog-gate-form" class="mt-6 flex flex-col gap-3">
+            <input
+              id="blog-gate-input"
+              class="rounded-full border border-mist/30 bg-glass/5 px-4 py-3 text-sm text-glass placeholder:text-mist/70"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Password"
+            />
+            <button
+              type="submit"
+              class="rounded-full border border-mist/40 px-4 py-3 text-sm text-glass transition hover:border-glass/50"
+            >
+              Unlock
+            </button>
+          </form>
+          <p id="blog-gate-error" class="mt-3 text-xs text-amber-400"></p>
+        </div>
       </div>
-    </div>
+    )}
     <svg
       aria-hidden="true"
       focusable="false"

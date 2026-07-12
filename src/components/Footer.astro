@@ -3,6 +3,7 @@ import FooterLinks from "../islands/FooterLinks";
 import FloraGate from "../islands/FloraGate";
 const base = import.meta.env.BASE_URL;
 const { showStudio = false } = Astro.props;
+const isRealmsMode = import.meta.env.SITE_MODE === "realms";
 ---
 
 <footer class="relative mt-20 min-h-[50vh] flex items-end overflow-hidden">
@@ -39,15 +40,17 @@ const { showStudio = false } = Astro.props;
         <div class="pt-4">
           <FooterLinks base={base} client:visible />
         </div>
-        <div class="pt-2">
-          <a
-            class="text-xs uppercase tracking-[0.25em] text-mist/70 transition hover:text-white"
-            href={base + "pranjal-cv.pdf"}
-            download
-          >
-            Download CV
-          </a>
-        </div>
+        {!isRealmsMode && (
+          <div class="pt-2">
+            <a
+              class="text-xs uppercase tracking-[0.25em] text-mist/70 transition hover:text-white"
+              href={base + "pranjal-cv.pdf"}
+              download
+            >
+              Download CV
+            </a>
+          </div>
+        )}
       </div>
 
       <div

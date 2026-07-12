@@ -1,0 +1,719 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import Section from "../components/Section.astro";
+import SceneGate from "../islands/SceneGate";
+import PerformanceToggle from "../islands/PerformanceToggle";
+
+const base = import.meta.env.BASE_URL;
+
+const realms = [
+  {
+    label: "Mechanica",
+    title: "Technical Work",
+    href: base + "projects/",
+    mark: "01",
+    description:
+      "Computer vision, ML systems, backend APIs, benchmarks, and reproducible engineering notes.",
+  },
+  {
+    label: "Archive",
+    title: "Private Library",
+    href: base + "blog/",
+    mark: "⌁",
+    description:
+      "Technical essays, spiritual field notes, astrology fragments, cooking logs, and references.",
+  },
+  {
+    label: "Mist",
+    title: "Ananta Nīhāra",
+    href: base + "blog/ananta-nihara/",
+    mark: "∞",
+    description:
+      "A speculative inner-world room for perception, mythic language, intelligence, and visual essays.",
+  },
+  {
+    label: "Proof",
+    title: "Projects",
+    href: base + "projects/terrain-safety/",
+    mark: "△",
+    description:
+      "Selected case studies with model choices, product framing, and measurable technical decisions.",
+  },
+];
+
+const artifacts = [
+  {
+    kind: "ML case study",
+    title: "Terrain safety pipeline",
+    href: base + "projects/terrain-safety/",
+    body: "SegFormer, Depth Anything V2, and A* path planning shaped into a practical CV workflow.",
+  },
+  {
+    kind: "Technical writing",
+    title: "Attribution-style technical blog",
+    href: base + "blog/technical/",
+    body: "Low-power graph fabric, SVG figures, pipeline traces, and benchmark surfaces for ML notes.",
+  },
+  {
+    kind: "Library realm",
+    title: "Machines, myths, stars, kitchens",
+    href: base + "blog/",
+    body: "A mixed archive that can hold engineering work and symbolic personal research without splitting identity.",
+  },
+];
+
+const practices = [
+  ["Building", "CV demos, APIs, and readable ML artifacts"],
+  ["Studying", "Mechanistic interpretability, symbolic systems, and Sanskritic thought"],
+  ["Writing", "Technical notes, Ananta Nīhāra fragments, and future recipe logs"],
+];
+---
+
+<BaseLayout
+  title="Pranjal Prakash | Machine Learning Portfolio & Realms"
+  description="Machine learning portfolio by Pranjal Prakash: computer vision projects, ML systems, FastAPI work, technical writing, and immersive Realms field notes."
+  tags={["machine learning portfolio", "computer vision", "ML systems", "Pranjal Prakash", "AI portfolio"]}
+>
+  <Nav />
+  <main>
+    <section
+      id="hero"
+      class="home-hero relative overflow-hidden"
+      data-section
+      data-hero
+    >
+      <div class="home-field" aria-hidden="true">
+        <div class="home-orbit home-orbit-a"></div>
+        <div class="home-orbit home-orbit-b"></div>
+        <div class="home-sigil"></div>
+        <div class="home-bloom">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="section-shell home-hero-inner">
+        <div class="home-hero-copy">
+          <h1>Pranjal Prakash</h1>
+          <p>
+            Machine learning, symbolic systems, and field notes from a curious life.
+          </p>
+          <div class="home-actions">
+            <a href={base + "blog/"}>Enter Library</a>
+            <a href={base + "projects/"}>View Work</a>
+          </div>
+        </div>
+
+        <div class="home-hero-panel" aria-label="Current coordinates">
+          <div>
+            <span>Location</span>
+            <strong>Bengaluru, India</strong>
+          </div>
+          <div>
+            <span>Focus</span>
+            <strong>ML + CV systems</strong>
+          </div>
+          <div>
+            <span>Archive</span>
+            <strong>Technical and esoteric notes</strong>
+          </div>
+          <PerformanceToggle client:load />
+        </div>
+      </div>
+    </section>
+
+    <section id="capabilities" class="home-section home-realms" data-section>
+      <div class="section-shell">
+        <div class="home-section-heading">
+          <p>Realms</p>
+          <h2>A map of the site</h2>
+          <span>
+            The homepage is now a gateway: professional proof, private library,
+            spiritual mist, and selected projects each have a clear door.
+          </span>
+        </div>
+
+        <div class="realm-grid">
+          {
+            realms.map((realm) => (
+              <a class="realm-card" href={realm.href}>
+                <span class="realm-mark">{realm.mark}</span>
+                <span class="realm-label">{realm.label}</span>
+                <h3>{realm.title}</h3>
+                <p>{realm.description}</p>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="home-section home-artifacts" data-section>
+      <div class="section-shell">
+        <div class="home-section-heading">
+          <p>Selected artifacts</p>
+          <h2>Proof without clutter</h2>
+          <span>
+            A few strong entrances replace the earlier pile of panels. Each one
+            points to something concrete.
+          </span>
+        </div>
+
+        <div class="artifact-list">
+          {
+            artifacts.map((artifact, index) => (
+              <a class="artifact-row" href={artifact.href}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <p>{artifact.kind}</p>
+                  <h3>{artifact.title}</h3>
+                </div>
+                <p>{artifact.body}</p>
+              </a>
+            ))
+          }
+        </div>
+
+        <div class="practice-strip">
+          {
+            practices.map(([label, value]) => (
+              <div>
+                <span>{label}</span>
+                <p>{value}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <Section
+      id="contact"
+      class="relative overflow-hidden"
+      eyebrow="Impact"
+      title="Ready for new collaborations"
+      subtitle="Let us connect the model story to the product story."
+      expanded
+    >
+      <SceneGate client:load kind="section" variant="calm" sectionId="contact" />
+      <div
+        class="relative z-10 mt-12 grid gap-8 p-1 md:grid-cols-[1.4fr_1fr]"
+        data-animate
+      >
+        {/* Soft gradient background blending into scene */}
+        <div
+          class="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-b from-white/[0.03] to-transparent backdrop-blur-[2px]"
+        >
+        </div>
+
+        <div class="p-6 md:p-8">
+          <p class="text-sm uppercase tracking-[0.2em] text-mist/60">
+            Availability
+          </p>
+          <p
+            class="mt-4 text-3xl font-light leading-tight text-glass md:text-4xl"
+          >
+            Open for ML internships, CV research, and backend work.
+          </p>
+          <p class="mt-6 text-sm text-mist/60">
+            Based in Bengaluru · Open to global remote roles
+          </p>
+        </div>
+
+        <form class="flex flex-col gap-4 p-6 md:p-8">
+          <input
+            class="w-full border-b border-white/10 bg-transparent py-3 text-sm text-glass placeholder:text-mist/30 focus:border-white/30 focus:outline-none transition-colors"
+            placeholder="Your email"
+          />
+          <input
+            class="w-full border-b border-white/10 bg-transparent py-3 text-sm text-glass placeholder:text-mist/30 focus:border-white/30 focus:outline-none transition-colors"
+            placeholder="Project idea"
+          />
+          <button
+            class="mt-4 self-start text-sm uppercase tracking-widest text-mist hover:text-white transition-colors"
+          >
+            Send Message →
+          </button>
+        </form>
+      </div>
+    </Section>
+
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .home-hero {
+    min-height: 82svh;
+    border-bottom: 1px solid rgb(var(--color-glass) / 0.08);
+    background:
+      radial-gradient(circle at 16% 18%, rgb(var(--color-glow) / 0.12), transparent 28%),
+      radial-gradient(circle at 82% 30%, rgb(var(--color-amber) / 0.1), transparent 30%),
+      linear-gradient(145deg, rgb(var(--color-ink)), #050507 62%, #000);
+  }
+
+  .home-field {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .home-field::before {
+    content: "";
+    position: absolute;
+    inset: -12%;
+    background-image:
+      radial-gradient(circle, rgb(var(--color-glass) / 0.34) 0 1px, transparent 1.4px),
+      linear-gradient(34deg, transparent 48%, rgb(var(--color-glow) / 0.08) 49%, transparent 50%),
+      linear-gradient(118deg, transparent 49%, rgb(var(--color-glass) / 0.045) 50%, transparent 51%);
+    background-size: 140px 140px, 260px 260px, 340px 340px;
+    mask-image: linear-gradient(to bottom, black, black 76%, transparent);
+    opacity: 0.55;
+  }
+
+  .home-field::after {
+    content: "";
+    position: absolute;
+    inset: auto -8% 0;
+    height: 42%;
+    background: linear-gradient(to top, rgb(0 0 0 / 0.86), transparent);
+  }
+
+  .home-orbit {
+    position: absolute;
+    right: max(6vw, 4rem);
+    top: 18%;
+    border: 1px solid rgb(var(--color-glass) / 0.1);
+    border-radius: 50%;
+    transform: rotate(var(--orbit-rotate));
+  }
+
+  .home-orbit-a {
+    --orbit-rotate: -18deg;
+    width: min(58vw, 760px);
+    aspect-ratio: 1 / 0.44;
+  }
+
+  .home-orbit-b {
+    --orbit-rotate: 24deg;
+    width: min(42vw, 540px);
+    aspect-ratio: 1 / 0.5;
+    border-color: rgb(var(--color-amber) / 0.14);
+  }
+
+  .home-sigil {
+    position: absolute;
+    right: max(9vw, 5rem);
+    top: 17%;
+    width: min(28vw, 280px);
+    aspect-ratio: 1;
+    border: 1px solid rgb(var(--color-glass) / 0.12);
+    border-radius: 50%;
+    background:
+      linear-gradient(45deg, transparent 49.5%, rgb(var(--color-glass) / 0.18) 50%, transparent 50.5%),
+      linear-gradient(-45deg, transparent 49.5%, rgb(var(--color-glow) / 0.12) 50%, transparent 50.5%),
+      radial-gradient(circle, transparent 38%, rgb(var(--color-amber) / 0.14) 39%, transparent 40%);
+    opacity: 0.68;
+  }
+
+  .home-bloom {
+    position: absolute;
+    left: 8%;
+    bottom: 12%;
+    width: min(32vw, 260px);
+    aspect-ratio: 1;
+    opacity: 0.38;
+    filter: drop-shadow(0 0 36px rgb(var(--color-amber) / 0.2));
+  }
+
+  .home-bloom span {
+    position: absolute;
+    inset: 18%;
+    border: 1px solid rgb(var(--color-amber) / 0.2);
+    border-radius: 70% 30% 70% 30%;
+    transform: rotate(calc(var(--i, 0) * 30deg));
+  }
+
+  .home-bloom span:nth-child(1) { --i: 0; }
+  .home-bloom span:nth-child(2) { --i: 2; }
+  .home-bloom span:nth-child(3) { --i: 4; }
+
+  .home-hero-inner {
+    min-height: 82svh;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+    align-items: center;
+    gap: clamp(2rem, 8vw, 6rem);
+    padding-top: clamp(8rem, 16vh, 11rem);
+    padding-bottom: 4rem;
+  }
+
+  .home-hero-copy {
+    min-width: 0;
+    max-width: 860px;
+  }
+
+  .home-hero-copy h1 {
+    max-width: 8ch;
+    font-size: clamp(5rem, 13vw, 11rem);
+    line-height: 0.86;
+    letter-spacing: 0;
+  }
+
+  .home-hero-copy p {
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 680px;
+    color: rgb(var(--color-mist) / 0.92);
+    font-size: clamp(1.25rem, 2.2vw, 2rem);
+    line-height: 1.45;
+  }
+
+  .home-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 2.4rem;
+  }
+
+  .home-actions a {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    border: 1px solid rgb(var(--color-glass) / 0.18);
+    border-radius: 999px;
+    padding: 0 1.25rem;
+    color: rgb(var(--color-glass) / 0.94);
+    font-size: 0.86rem;
+    transition:
+      border-color 200ms ease,
+      background 200ms ease,
+      transform 200ms ease;
+  }
+
+  .home-actions a:first-child {
+    background: rgb(var(--color-glass) / 0.1);
+  }
+
+  .home-actions a:hover {
+    border-color: rgb(var(--color-glass) / 0.38);
+    background: rgb(var(--color-glass) / 0.08);
+    transform: translateY(-2px);
+  }
+
+  .home-hero-panel {
+    display: grid;
+    gap: 1px;
+    border: 1px solid rgb(var(--color-glass) / 0.09);
+    background: rgb(var(--color-glass) / 0.08);
+  }
+
+  .home-hero-panel > * {
+    min-width: 0;
+    padding: 1.1rem;
+    background:
+      radial-gradient(circle at 100% 0%, rgb(var(--color-glow) / 0.08), transparent 42%),
+      rgb(var(--color-ink) / 0.78);
+    backdrop-filter: blur(16px);
+  }
+
+  .home-hero-panel span,
+  .home-section-heading p,
+  .realm-label,
+  .artifact-row > span,
+  .artifact-row div p,
+  .practice-strip span {
+    color: rgb(var(--color-mist) / 0.74);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .home-hero-panel strong {
+    display: block;
+    margin-top: 0.45rem;
+    color: rgb(var(--color-glass) / 0.95);
+    font-size: 0.95rem;
+    font-weight: 400;
+  }
+
+  .home-section {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(5rem, 10vw, 8rem) 0;
+  }
+
+  .home-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 8% 20%, rgb(var(--color-glow) / 0.08), transparent 28%),
+      radial-gradient(circle at 90% 72%, rgb(var(--color-amber) / 0.07), transparent 30%);
+    pointer-events: none;
+  }
+
+  .home-section-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(280px, 0.75fr);
+    align-items: end;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .home-section-heading p {
+    grid-column: 1 / -1;
+  }
+
+  .home-section-heading h2 {
+    max-width: 9ch;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 0.92;
+    letter-spacing: 0;
+  }
+
+  .home-section-heading span {
+    max-width: 520px;
+    color: rgb(var(--color-mist) / 0.86);
+    line-height: 1.75;
+  }
+
+  .realm-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    border: 1px solid rgb(var(--color-glass) / 0.08);
+    background: rgb(var(--color-glass) / 0.08);
+  }
+
+  .realm-card {
+    position: relative;
+    min-height: 340px;
+    overflow: hidden;
+    padding: clamp(1.25rem, 2vw, 1.8rem);
+    background:
+      linear-gradient(160deg, rgb(var(--color-ink) / 0.92), rgb(var(--color-ink) / 0.74)),
+      radial-gradient(circle at 88% 14%, rgb(var(--color-amber) / 0.14), transparent 32%);
+  }
+
+  .realm-card::before {
+    content: "";
+    position: absolute;
+    inset: auto -18% -24%;
+    height: 58%;
+    border-top: 1px solid rgb(var(--color-glow) / 0.13);
+    border-radius: 50% 50% 0 0;
+    background: radial-gradient(ellipse at 50% 0%, rgb(var(--color-glow) / 0.09), transparent 58%);
+    pointer-events: none;
+  }
+
+  .realm-card:hover .realm-mark {
+    color: rgb(var(--color-amber) / 0.28);
+  }
+
+  .realm-mark {
+    position: absolute;
+    right: 1rem;
+    top: 0.7rem;
+    color: rgb(var(--color-glass) / 0.1);
+    font-family: ui-serif, Georgia, serif;
+    font-size: clamp(3.8rem, 7vw, 6rem);
+    line-height: 1;
+    transition: color 200ms ease;
+  }
+
+  .realm-card h3 {
+    position: relative;
+    margin-top: 4.8rem;
+    max-width: 8ch;
+    color: rgb(var(--color-glass) / 0.95);
+    font-size: clamp(2rem, 3vw, 3rem);
+    line-height: 0.98;
+  }
+
+  .realm-card p {
+    position: relative;
+    margin-top: 1.2rem;
+    color: rgb(var(--color-mist) / 0.84);
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+
+  .artifact-list {
+    border-top: 1px solid rgb(var(--color-glass) / 0.1);
+  }
+
+  .artifact-row {
+    display: grid;
+    grid-template-columns: 5rem minmax(220px, 0.78fr) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: center;
+    min-height: 9rem;
+    border-bottom: 1px solid rgb(var(--color-glass) / 0.1);
+    color: rgb(var(--color-glass) / 0.9);
+  }
+
+  .artifact-row h3 {
+    margin-top: 0.35rem;
+    font-size: clamp(1.7rem, 3vw, 2.6rem);
+    line-height: 1.05;
+  }
+
+  .artifact-row > p {
+    max-width: 680px;
+    color: rgb(var(--color-mist) / 0.82);
+    line-height: 1.7;
+  }
+
+  .practice-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 3rem;
+    border: 1px solid rgb(var(--color-glass) / 0.08);
+    background: rgb(var(--color-glass) / 0.08);
+  }
+
+  .practice-strip div {
+    min-height: 8rem;
+    padding: 1.2rem;
+    background: rgb(var(--color-ink) / 0.72);
+  }
+
+  .practice-strip p {
+    margin-top: 1rem;
+    color: rgb(var(--color-glass) / 0.9);
+    line-height: 1.55;
+  }
+
+  :global(html[data-theme="bright"]) .home-hero {
+    background:
+      radial-gradient(circle at 16% 18%, rgb(var(--color-glow) / 0.14), transparent 30%),
+      radial-gradient(circle at 82% 30%, rgb(var(--color-amber) / 0.14), transparent 32%),
+      linear-gradient(145deg, #f8fafc, #eef2f6 54%, #e8edf1);
+  }
+
+  :global(html[data-theme="bright"]) .home-field::before {
+    opacity: 0.4;
+  }
+
+  :global(html[data-theme="bright"]) .home-field::after {
+    background: linear-gradient(to top, rgb(248 250 252 / 0.78), transparent);
+  }
+
+  :global(html[data-theme="bright"]) .home-hero-copy h1 {
+    color: rgb(15 23 42 / 0.94);
+  }
+
+  :global(html[data-theme="bright"]) .home-hero-copy p,
+  :global(html[data-theme="bright"]) .home-section-heading span,
+  :global(html[data-theme="bright"]) .realm-card p,
+  :global(html[data-theme="bright"]) .artifact-row > p,
+  :global(html[data-theme="bright"]) .practice-strip p {
+    color: rgb(30 41 59 / 0.78);
+  }
+
+  :global(html[data-theme="bright"]) .home-actions a {
+    border-color: rgb(15 23 42 / 0.18);
+    color: rgb(15 23 42 / 0.9);
+    background: rgb(255 255 255 / 0.34);
+  }
+
+  :global(html[data-theme="bright"]) .home-actions a:first-child {
+    background: rgb(15 23 42 / 0.08);
+  }
+
+  :global(html[data-theme="bright"]) .home-section {
+    background: #f8fafc;
+  }
+
+  :global(html[data-theme="bright"]) .realm-grid,
+  :global(html[data-theme="bright"]) .practice-strip,
+  :global(html[data-theme="bright"]) .artifact-list {
+    border-color: rgb(15 23 42 / 0.1);
+    background: rgb(15 23 42 / 0.1);
+  }
+
+  :global(html[data-theme="bright"]) .realm-card,
+  :global(html[data-theme="bright"]) .practice-strip div {
+    background:
+      linear-gradient(160deg, rgb(255 255 255 / 0.92), rgb(241 245 249 / 0.76)),
+      radial-gradient(circle at 88% 14%, rgb(var(--color-amber) / 0.12), transparent 32%);
+  }
+
+  :global(html[data-theme="bright"]) .realm-card h3,
+  :global(html[data-theme="bright"]) .artifact-row,
+  :global(html[data-theme="bright"]) .artifact-row h3 {
+    color: rgb(15 23 42 / 0.92);
+  }
+
+  @media (max-width: 980px) {
+    .home-hero-inner,
+    .home-section-heading,
+    .artifact-row {
+      grid-template-columns: 1fr;
+    }
+
+    .home-hero-panel {
+      max-width: 520px;
+    }
+
+    .realm-grid,
+    .practice-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .home-hero-inner {
+      padding-top: 8rem;
+    }
+
+    .home-hero-copy,
+    .home-hero-copy p,
+    .home-actions {
+      max-width: calc(100vw - 3rem);
+    }
+
+    .home-hero-copy h1 {
+      max-width: min(8ch, calc(100vw - 3rem));
+      font-size: clamp(4rem, 19vw, 5.8rem);
+      overflow-wrap: anywhere;
+    }
+
+    .home-section-heading h2,
+    .realm-card h3,
+    .artifact-row h3 {
+      overflow-wrap: anywhere;
+    }
+
+    .home-hero-panel {
+      display: none;
+    }
+
+    .home-sigil,
+    .home-orbit {
+      right: -28%;
+      top: 16%;
+      width: 90vw;
+    }
+
+    .realm-grid,
+    .practice-strip {
+      grid-template-columns: 1fr;
+    }
+
+    .realm-card {
+      min-height: 260px;
+    }
+
+    .artifact-row {
+      gap: 1rem;
+      padding: 1.6rem 0;
+    }
+  }
+</style>

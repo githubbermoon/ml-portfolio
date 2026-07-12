@@ -1,0 +1,88 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import { getCollection } from "astro:content";
+
+const base = import.meta.env.BASE_URL;
+const projects = (await getCollection("projects")).filter((project) => project.data.featured);
+const technicalPosts = (await getCollection("blog")).filter((post) =>
+  post.data.tags.some((tag) => ["ML", "AI", "Computer Vision", "Design", "WebGL", "UX", "Research"].includes(tag)) ||
+  post.slug === "glass-fidelity"
+);
+---
+
+<BaseLayout
+  title="Pranjal Prakash | Machine Learning Portfolio"
+  description="Professional machine learning portfolio by Pranjal Prakash: computer vision, ML systems, FastAPI backends, reproducible research, and technical writing."
+  tags={["machine learning portfolio", "computer vision", "ML systems", "FastAPI", "Pranjal Prakash"]}
+>
+  <Nav />
+  <main class="section-shell py-24">
+    <section class="grid gap-10 md:grid-cols-[1.4fr_0.8fr] md:items-end">
+      <div>
+        <p class="text-xs uppercase tracking-[0.35em] text-mist">Machine Learning Portfolio</p>
+        <h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">Pranjal Prakash</h1>
+        <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
+          ML student and builder focused on computer vision, backend systems, reproducible experiments,
+          and clear technical communication.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a class="rounded-full border border-mist/40 px-5 py-3 text-sm text-glass transition hover:border-glass/70" href={base + "projects/"}>View Projects</a>
+          <a class="rounded-full border border-mist/40 px-5 py-3 text-sm text-glass transition hover:border-glass/70" href={base + "blog/technical/"}>Read Technical Notes</a>
+          <a class="rounded-full border border-mist/40 px-5 py-3 text-sm text-glass transition hover:border-glass/70" href={base + "pranjal-cv.pdf"} download>Download CV</a>
+        </div>
+      </div>
+      <aside class="glass-panel p-6">
+        <p class="text-xs uppercase tracking-[0.24em] text-mist">Focus</p>
+        <ul class="mt-5 space-y-3 text-sm leading-6 text-mist">
+          <li><strong class="text-glass">Computer Vision:</strong> segmentation, depth, safety scoring.</li>
+          <li><strong class="text-glass">ML Systems:</strong> experiment tracking, reproducible pipelines.</li>
+          <li><strong class="text-glass">Backend:</strong> FastAPI, PostgreSQL, clean APIs.</li>
+          <li><strong class="text-glass">Writing:</strong> readable technical notes and case studies.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="mt-20">
+      <div class="flex flex-col justify-between gap-4 border-t border-white/10 pt-8 md:flex-row md:items-end">
+        <div>
+          <p class="text-xs uppercase tracking-[0.24em] text-mist">Selected Work</p>
+          <h2 class="mt-3 text-3xl text-glass">Projects</h2>
+        </div>
+        <a class="text-sm text-glow" href={base + "projects/"}>All projects →</a>
+      </div>
+      <div class="mt-8 grid gap-6 md:grid-cols-2">
+        {projects.map((project) => (
+          <article class="glass-panel p-6">
+            <p class="text-sm text-mist">{project.data.tags.join(" / ")}</p>
+            <h3 class="mt-3 text-2xl text-glass">{project.data.title}</h3>
+            <p class="mt-3 text-mist">{project.data.summary}</p>
+            <a class="mt-4 inline-block text-sm text-glow" href={base + "projects/" + project.slug + "/"}>Read case study</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="mt-20">
+      <div class="flex flex-col justify-between gap-4 border-t border-white/10 pt-8 md:flex-row md:items-end">
+        <div>
+          <p class="text-xs uppercase tracking-[0.24em] text-mist">Technical Writing</p>
+          <h2 class="mt-3 text-3xl text-glass">Professional notes</h2>
+        </div>
+        <a class="text-sm text-glow" href={base + "blog/technical/"}>Technical archive →</a>
+      </div>
+      <div class="mt-8 grid gap-6">
+        {technicalPosts.map((post) => (
+          <article class="glass-panel p-6">
+            <p class="text-sm text-mist">{post.data.tags.join(" / ")}</p>
+            <h3 class="mt-3 text-2xl text-glass">{post.data.title}</h3>
+            <p class="mt-3 text-mist">{post.data.summary}</p>
+            <a class="mt-4 inline-block text-sm text-glow" href={base + "blog/" + post.slug + "/"}>Read note</a>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
