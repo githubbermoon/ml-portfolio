@@ -7,6 +7,7 @@
     "build": "astro build",
     "build:cloudflare": "SITE_BASE=/ astro build",
     "build:github": "SITE_BASE=/ml-portfolio/ astro build",
+    "deploy:cloudflare": "pnpm build:cloudflare && npx wrangler pages deploy ./dist --project-name=realms --branch=master",
     "preview": "astro preview",
     "astro": "astro"
   },
