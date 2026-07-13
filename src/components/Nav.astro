@@ -34,7 +34,6 @@ const links = isRealmsMode
 		data-[scrolled=true]:flex-col data-[scrolled=true]:w-auto data-[scrolled=true]:h-auto data-[scrolled=true]:gap-6 data-[scrolled=true]:items-start data-[scrolled=true]:mx-0"
   >
     <!-- Mobile Menu Trigger (Visible only on mobile) -->
-    {isRealmsInnerPage && <div class="w-8" aria-hidden="true"></div>}
     <MobileNav client:load links={links} base={base} simple={isRealmsInnerPage} />
 
     <!-- Links Group -->

@@ -188,10 +188,16 @@ const isBlogRoute =
       <a
         href={base}
         aria-label="Back to Realms home"
-        class="fixed left-6 top-6 z-[100] inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-300/70 bg-[#fdfcfb]/80 text-lg leading-none text-slate-900 shadow-sm backdrop-blur-md transition hover:border-slate-950 hover:bg-white"
+        class="fixed left-8 top-8 z-[100] text-sm uppercase tracking-[0.2em] text-slate-600 transition hover:text-slate-950 dark:text-white/60 dark:hover:text-white"
       >
-        ←
+        ← Index
       </a>
+    )}
+    
+    {isRealmsInnerPage && (
+      <div class="fixed top-8 right-8 z-[100] text-right font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-white/40">
+        <p>12.9716° N, 77.5946° E</p>
+      </div>
     )}
     {!isRealmsInnerPage && (
       <div class="fixed top-6 right-6 z-[100] pointer-events-auto">
