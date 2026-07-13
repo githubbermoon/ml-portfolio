@@ -1,4 +1,5 @@
-const SITE = import.meta.env.PUBLIC_SITE_URL ?? import.meta.env.SITE_URL ?? 'https://realms-58q.pages.dev';
+const isRealms = import.meta.env.SITE_MODE === 'realms';
+const SITE = isRealms ? 'https://realms-58q.pages.dev' : 'https://githubbermoon.github.io';
 const BASE = import.meta.env.BASE_URL ?? '/';
 
 export function GET() {

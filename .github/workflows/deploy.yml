@@ -31,6 +31,8 @@ jobs:
       - name: Install
         run: pnpm install
       - name: Build
+        env:
+          PUBLIC_GOATCOUNTER_CODE: ${{ vars.PUBLIC_GOATCOUNTER_CODE }}
         run: pnpm build:github
       - name: Configure Pages
         uses: actions/configure-pages@v5
