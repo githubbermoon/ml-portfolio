@@ -9,20 +9,20 @@ const base = import.meta.env.BASE_URL;
 
 const realms = [
   {
-    label: "Mechanica",
-    title: "Technical Work",
-    href: base + "projects/",
+    label: "Technical Work",
+    title: "Vedic Sciences",
+    href: base + "technical-work/",
     mark: "01",
     description:
-      "Computer vision, ML systems, backend APIs, benchmarks, and reproducible engineering notes.",
+      "Structured notes and research experiments around Vedic sciences, symbolic systems, and computation.",
   },
   {
-    label: "Archive",
-    title: "Private Library",
+    label: "Kosh",
+    title: "कोश",
     href: base + "blog/",
     mark: "⌁",
     description:
-      "Technical essays, spiritual field notes, astrology fragments, cooking logs, and references.",
+      "Kosh means a treasury or library — a living archive of notes, references, essays, and fragments.",
   },
   {
     label: "Mist",
@@ -33,12 +33,12 @@ const realms = [
       "A speculative inner-world room for perception, mythic language, intelligence, and visual essays.",
   },
   {
-    label: "Proof",
-    title: "Projects",
-    href: base + "projects/terrain-safety/",
+    label: "Projects",
+    title: "Ancient Sciences Builds",
+    href: base + "projects/",
     mark: "△",
     description:
-      "Selected case studies with model choices, product framing, and measurable technical decisions.",
+      "Projects and prototypes inspired by ancient sciences, knowledge systems, and practical tools.",
   },
 ];
 
@@ -46,9 +46,9 @@ const realms = [
 ---
 
 <BaseLayout
-  title="Pranjal Prakash | Machine Learning Portfolio & Realms"
-  description="Machine learning portfolio by Pranjal Prakash: computer vision projects, ML systems, FastAPI work, technical writing, and immersive Realms field notes."
-  tags={["machine learning portfolio", "computer vision", "ML systems", "Pranjal Prakash", "AI portfolio"]}
+  title="Pranjal Prakash | Realms"
+  description="Realms by Pranjal Prakash: a living archive for Vedic sciences, symbolic systems, personal notes, projects, and exploratory writing."
+  tags={["Realms", "Vedic sciences", "symbolic systems", "ancient sciences", "Pranjal Prakash"]}
 >
   <Nav />
   <main>
@@ -72,11 +72,11 @@ const realms = [
         <div class="home-hero-copy">
           <h1>Pranjal Prakash</h1>
           <p>
-            Machine learning, symbolic systems, and field notes from a curious life.
+            Vedic sciences, symbolic systems, projects, and field notes from a curious life.
           </p>
           <div class="home-actions">
-            <a href={base + "blog/"}>Enter Library</a>
-            <a href={base + "projects/"}>View Work</a>
+            <a href={base + "blog/"}>Enter Kosh</a>
+            <a href={base + "projects/"}>View Projects</a>
           </div>
         </div>
 
@@ -87,11 +87,11 @@ const realms = [
           </div>
           <div>
             <span>Focus</span>
-            <strong>ML + CV systems</strong>
+            <strong>Vedic sciences + symbolic systems</strong>
           </div>
           <div>
             <span>Archive</span>
-            <strong>Technical and esoteric notes</strong>
+            <strong>Kosh: notes, references, and fragments</strong>
           </div>
           <PerformanceToggle client:load />
         </div>
@@ -104,8 +104,8 @@ const realms = [
           <p>Realms</p>
           <h2>A map of the site</h2>
           <span>
-            The homepage is now a gateway: professional proof, private library,
-            spiritual mist, and selected projects each have a clear door.
+            The homepage is a gateway into Kosh, technical work on ancient sciences,
+            speculative notes, and projects that will grow over time.
           </span>
         </div>
 
@@ -127,9 +127,9 @@ const realms = [
     <Section
       id="contact"
       class="relative overflow-hidden"
-      eyebrow="Impact"
-      title="Ready for new collaborations"
-      subtitle="Let us connect the model story to the product story."
+      eyebrow="Contact"
+      title="Get in touch"
+      subtitle="For conversations, collaborations, suggestions, or shared curiosities."
       expanded
     >
       <SceneGate client:load kind="section" variant="calm" sectionId="contact" />
@@ -153,7 +153,7 @@ const realms = [
             Open to thoughtful conversations, collaborations, and new ideas.
           </p>
           <p class="mt-6 text-sm text-mist/60">
-            Based in Bengaluru · Open to global remote roles
+            Based in Bengaluru
           </p>
         </div>
 

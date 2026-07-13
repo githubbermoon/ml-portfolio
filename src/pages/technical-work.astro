@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+const isRealmsMode = import.meta.env.SITE_MODE === "realms";
+if (!isRealmsMode) return Astro.redirect("/ml-portfolio/");
+---
+
+<BaseLayout
+  title="Technical Work | Realms"
+  description="Technical work on Vedic sciences, ancient knowledge systems, symbolic systems, and computational explorations."
+  tags={["Vedic sciences", "ancient sciences", "symbolic systems", "technical work", "Realms"]}
+>
+  <Nav />
+  <main class="section-shell py-20">
+    <section class="max-w-4xl">
+      <p class="text-xs uppercase tracking-[0.35em] text-mist">Technical Work</p>
+      <h1 class="mt-5 text-5xl md:text-7xl">Vedic sciences, systems, and experiments</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
+        This space will hold structured notes and technical explorations around ancient sciences,
+        symbolic systems, computation, and research artifacts.
+      </p>
+    </section>
+
+    <section class="mt-14 grid gap-6 md:grid-cols-2">
+      <article class="glass-panel p-6">
+        <p class="text-sm uppercase tracking-[0.22em] text-mist">Coming next</p>
+        <h2 class="mt-3 text-2xl text-glass">Vedic sciences notebook</h2>
+        <p class="mt-3 text-mist">
+          A clean index for future essays, diagrams, experiments, references, and implementation notes.
+        </p>
+      </article>
+      <article class="glass-panel p-6">
+        <p class="text-sm uppercase tracking-[0.22em] text-mist">Direction</p>
+        <h2 class="mt-3 text-2xl text-glass">Ancient knowledge × modern systems</h2>
+        <p class="mt-3 text-mist">
+          The goal is to build readable bridges between Sanskritic frameworks, reasoning systems,
+          visual models, and practical software artifacts.
+        </p>
+      </article>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
