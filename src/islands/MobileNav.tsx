@@ -47,7 +47,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ links, base, simple = false }) =>
         type="button"
         onClick={() => setIsOpen(true)}
         className={simple
-          ? "fixed left-32 top-8 z-[100] bg-transparent text-sm uppercase tracking-[0.2em] text-slate-600 transition hover:text-slate-950 dark:text-white/60 dark:hover:text-white"
+          ? "fixed left-32 top-8 z-[100] bg-transparent text-sm uppercase tracking-[0.2em] text-slate-700 transition hover:text-slate-950"
           : "relative z-50 rounded-full border border-mist/30 bg-white/70 px-4 py-2 text-sm font-medium tracking-wide text-glass shadow-sm backdrop-blur-md transition hover:border-glass/50 md:hidden"}
       >
         Menu
