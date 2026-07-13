@@ -4,6 +4,7 @@ import MobileNav from "../islands/MobileNav";
 
 const base = import.meta.env.BASE_URL;
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
+const isRealmsInnerPage = isRealmsMode && Astro.url.pathname !== "/";
 
 const links = isRealmsMode
   ? [
@@ -33,9 +34,11 @@ const links = isRealmsMode
 		data-[scrolled=true]:flex-col data-[scrolled=true]:w-auto data-[scrolled=true]:h-auto data-[scrolled=true]:gap-6 data-[scrolled=true]:items-start data-[scrolled=true]:mx-0"
   >
     <!-- Mobile Menu Trigger (Visible only on mobile) -->
-    <MobileNav client:load links={links} base={base} />
+    {isRealmsInnerPage && <div class="w-8" aria-hidden="true"></div>}
+    <MobileNav client:load links={links} base={base} simple={isRealmsInnerPage} />
 
     <!-- Links Group -->
+    {!isRealmsInnerPage && (
     <div
       id="nav-links"
       class="hidden items-center gap-6 rounded-full border border-transparent px-4 py-3 text-sm font-medium tracking-wide md:flex transition-all duration-500
@@ -54,8 +57,10 @@ const links = isRealmsMode
         ))
       }
     </div>
+    )}
 
     <!-- CTA Button (Only visible in top state) -->
+    {!isRealmsMode && (
     <div
       class="hidden md:block transition-all duration-500 opacity-100 overflow-hidden w-auto
             data-[scrolled=true]:opacity-0 data-[scrolled=true]:w-0 data-[scrolled=true]:h-0 data-[scrolled=true]:m-0 data-[scrolled=true]:p-0"
@@ -65,9 +70,10 @@ const links = isRealmsMode
         href={base + "#contact"}
         className="rounded-full border border-mist/40 px-4 py-2 text-sm text-glass transition hover:border-glass/50 whitespace-nowrap"
       >
-        {isRealmsMode ? "Enter Kosh" : "Contact"}
+        Contact
       </MagneticButton>
     </div>
+    )}
   </div>
 </nav>
 

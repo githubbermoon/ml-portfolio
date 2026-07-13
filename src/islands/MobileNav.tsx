@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import MagneticButton from "./MagneticButton";
 
 interface Link {
   href: string;
@@ -10,10 +9,30 @@ interface Link {
 interface MobileNavProps {
   links: Link[];
   base: string;
+  simple?: boolean;
 }
 
-const MobileNav: React.FC<MobileNavProps> = ({ links, base }) => {
+const MobileNav: React.FC<MobileNavProps> = ({ links, base, simple = false }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const menuLinks = simple
+    ? [
+        { href: base, label: "Home" },
+        { href: base + "blog/", label: "Realms" },
+      ]
+    : links;
+
+  const setTheme = (theme: "auto" | "dark" | "bright") => {
+    if (theme === "auto") {
+      localStorage.removeItem("clawd-theme");
+      const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+      document.documentElement.dataset.theme = prefersLight ? "bright" : "dark";
+      window.dispatchEvent(new CustomEvent("theme-change", { detail: { theme: prefersLight ? "bright" : "dark" } }));
+      return;
+    }
+    localStorage.setItem("clawd-theme", theme);
+    document.documentElement.dataset.theme = theme;
+    window.dispatchEvent(new CustomEvent("theme-change", { detail: { theme } }));
+  };
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -27,7 +46,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ links, base }) => {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="relative z-50 rounded-full border border-mist/30 bg-white/60 px-4 py-2 text-sm font-medium tracking-wide text-glass shadow-sm backdrop-blur-md transition hover:border-glass/50 md:hidden"
+        className={`relative z-50 rounded-full border border-mist/30 bg-white/70 px-4 py-2 text-sm font-medium tracking-wide text-glass shadow-sm backdrop-blur-md transition hover:border-glass/50 ${simple ? "" : "md:hidden"}`}
       >
         Menu
       </button>
@@ -39,7 +58,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ links, base }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[60] flex flex-col bg-white/96 px-7 py-7 text-slate-950 backdrop-blur-xl dark:bg-black/95 dark:text-white"
+            className="fixed inset-0 z-[120] flex flex-col bg-[#fdfcfb]/96 px-7 py-7 text-slate-950 backdrop-blur-xl dark:bg-black/95 dark:text-white"
           >
             <div className="flex items-center justify-between">
               <p className="text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-white/45">
@@ -48,14 +67,14 @@ const MobileNav: React.FC<MobileNavProps> = ({ links, base }) => {
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="rounded-full border border-slate-300 px-4 py-2 text-sm text-slate-700 transition hover:border-slate-900 hover:text-slate-950 dark:border-white/20 dark:text-white/60 dark:hover:text-white"
+                className="text-sm text-slate-700 transition hover:text-slate-950 dark:text-white/60 dark:hover:text-white"
               >
                 Close
               </button>
             </div>
 
             <nav className="mt-20 flex flex-col items-start gap-7">
-              {links.map((link, i) => (
+              {menuLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
                   href={link.href}
@@ -69,22 +88,18 @@ const MobileNav: React.FC<MobileNavProps> = ({ links, base }) => {
                   {link.label}
                 </motion.a>
               ))}
-
-              <motion.div
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 8 }}
-                transition={{ delay: 0.06 + links.length * 0.06, duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-8"
-              >
-                <MagneticButton
-                  href={base + "#contact"}
-                  className="rounded-full border border-slate-400 px-6 py-3 text-base text-slate-950 transition hover:border-slate-950 dark:border-white/25 dark:text-white dark:hover:bg-white/10"
-                >
-                  Contact
-                </MagneticButton>
-              </motion.div>
             </nav>
+
+            {simple && (
+              <div className="mt-auto border-t border-slate-200 pt-6 dark:border-white/10">
+                <p className="mb-3 text-[10px] uppercase tracking-[0.28em] text-slate-500 dark:text-white/45">Theme</p>
+                <div className="flex gap-3 text-sm text-slate-700 dark:text-white/70">
+                  <button type="button" onClick={() => setTheme("auto")} className="hover:text-slate-950 dark:hover:text-white">Auto</button>
+                  <button type="button" onClick={() => setTheme("dark")} className="hover:text-slate-950 dark:hover:text-white">Dark</button>
+                  <button type="button" onClick={() => setTheme("bright")} className="hover:text-slate-950 dark:hover:text-white">Bright</button>
+                </div>
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
