@@ -25,7 +25,10 @@ const links = isRealmsMode
 <!-- Swerving Nav Container -->
 <nav
   id="main-nav"
-  class="fixed top-0 left-0 z-40 w-full transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)]"
+  class:list={[
+    "fixed top-0 left-0 w-full transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)]",
+    isRealmsInnerPage ? "z-[130] pointer-events-none" : "z-40",
+  ]}
   data-scrolled="false"
 >
   <div

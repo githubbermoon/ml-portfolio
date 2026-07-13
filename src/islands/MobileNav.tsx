@@ -47,7 +47,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ links, base, simple = false }) =>
         type="button"
         onClick={() => setIsOpen(true)}
         className={simple
-          ? "fixed left-32 top-8 z-[100] bg-transparent text-sm uppercase tracking-[0.2em] text-slate-700 transition hover:text-slate-950"
+          ? "fixed left-32 top-8 z-[140] pointer-events-auto bg-transparent text-sm uppercase tracking-[0.2em] text-slate-700 transition hover:text-slate-950"
           : "relative z-50 rounded-full border border-mist/30 bg-white/70 px-4 py-2 text-sm font-medium tracking-wide text-glass shadow-sm backdrop-blur-md transition hover:border-glass/50 md:hidden"}
       >
         Menu
@@ -60,7 +60,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ links, base, simple = false }) =>
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[120] flex flex-col bg-[#fdfcfb]/96 px-7 py-7 text-slate-950 backdrop-blur-xl dark:bg-black/95 dark:text-white"
+            className="fixed inset-0 z-[150] flex flex-col bg-[#fdfcfb]/96 px-7 py-7 text-slate-950 backdrop-blur-xl dark:bg-black/95 dark:text-white"
           >
             <div className="flex items-center justify-between">
               <p className="text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-white/45">
