@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+
+const isRealms = import.meta.env.SITE_MODE === 'realms';
+const home = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title={isRealms ? 'Not Found | Realms' : 'Not Found | Pranjal Prakash'}
+  description="The requested page was not found."
+  noindex={true}
+>
+  <Nav />
+  <main class="section-shell py-24">
+    <p class="text-xs uppercase tracking-[0.35em] text-mist">404</p>
+    <h1 class="mt-5 max-w-3xl text-5xl md:text-7xl">Page not found</h1>
+    <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
+      This page is not part of this site.
+    </p>
+    <a class="mt-8 inline-block rounded-full border border-mist/40 px-5 py-3 text-sm text-glass transition hover:border-glass/70" href={home}>
+      Return home
+    </a>
+  </main>
+</BaseLayout>
