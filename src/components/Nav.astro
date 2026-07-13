@@ -24,7 +24,7 @@ const links = isRealmsMode
 <!-- Swerving Nav Container -->
 <nav
   id="main-nav"
-  class="fixed top-0 left-0 z-50 w-full transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)]"
+  class="fixed top-0 left-0 z-40 w-full transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)]"
   data-scrolled="false"
 >
   <div
@@ -39,8 +39,8 @@ const links = isRealmsMode
     <div
       id="nav-links"
       class="hidden items-center gap-6 rounded-full border border-transparent px-4 py-3 text-sm font-medium tracking-wide md:flex transition-all duration-500
-			data-[scrolled=true]:flex-col data-[scrolled=true]:gap-4 data-[scrolled=true]:items-start data-[scrolled=true]:rounded-2xl data-[scrolled=true]:border-white/10 data-[scrolled=true]:bg-black/75 data-[scrolled=true]:p-4 data-[scrolled=true]:shadow-xl data-[scrolled=true]:backdrop-blur-xl
-            text-mist data-[scrolled=true]:text-white data-[scrolled=true]:font-semibold"
+			data-[scrolled=true]:flex-col data-[scrolled=true]:gap-4 data-[scrolled=true]:items-start data-[scrolled=true]:rounded-2xl data-[scrolled=true]:border-slate-300/70 data-[scrolled=true]:bg-white/80 data-[scrolled=true]:p-4 data-[scrolled=true]:shadow-xl data-[scrolled=true]:backdrop-blur-xl dark:data-[scrolled=true]:border-white/10 dark:data-[scrolled=true]:bg-black/75
+            text-mist data-[scrolled=true]:text-slate-950 dark:data-[scrolled=true]:text-white data-[scrolled=true]:font-semibold"
     >
       {
         links.map((link) => (

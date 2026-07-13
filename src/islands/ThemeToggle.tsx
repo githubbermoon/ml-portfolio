@@ -57,9 +57,9 @@ export default function ThemeToggle() {
 	};
 
 	return (
-		<div className="flex items-center text-xs text-mist">
+		<div className="relative z-[101] flex items-center text-xs text-mist pointer-events-auto">
 			<span className="sr-only">Theme</span>
-			<div className="flex items-center gap-0.5 rounded-full border border-mist/40 bg-ink/20 p-1 backdrop-blur-xl">
+			<div className="flex items-center gap-0.5 rounded-full border border-mist/40 bg-white/75 p-1 shadow-sm backdrop-blur-xl dark:bg-ink/20">
 				<button
 					type="button"
 					onClick={() => handleSelect('auto')}
