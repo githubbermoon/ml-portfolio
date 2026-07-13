@@ -96,22 +96,17 @@ const realms = [
                 ))}
             </div>
 		</section>
-        
-        <footer class="border-t border-gray-200 pt-16 flex flex-col md:flex-row justify-between gap-8">
-            <div>
-                <h2 class="text-2xl font-serif mb-4">Get in touch</h2>
-                <p class="text-gray-600 mb-6 max-w-sm">For shared curiosities, conversations, or collaborations.</p>
-            </div>
-            <div class="text-right text-gray-500 text-sm mt-auto">
-                <p>© 2026 Pranjal Prakash</p>
-                <p>Based in Bengaluru</p>
-            </div>
-        </footer>
+
 	</main>
 	<Footer />
 </BaseLayout>
 
 <style>
+	:global(body) {
+		background: #fdfcfb;
+		color: #1a1a1a;
+	}
+
 	:global([data-theme="dark"]) body {
 		background: #fdfcfb;
 		color: #1a1a1a;

@@ -17,6 +17,7 @@ const {
 } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
+const isRealmsInnerPage = isRealmsMode && Astro.url.pathname !== "/";
 const goatCounterCode = import.meta.env.PUBLIC_GOATCOUNTER_CODE;
 const siteOrigin = (Astro.site ?? new URL(isRealmsMode ? "https://realms-58q.pages.dev" : "https://githubbermoon.github.io")).toString();
 const normalizedBase = base.endsWith("/") ? base : `${base}/`;
@@ -183,6 +184,15 @@ const isBlogRoute =
     <title>{title}</title>
   </head>
   <body class:list={[bodyClass, isBlogRoute && "blog-locked"]}>
+    {isRealmsInnerPage && (
+      <a
+        href={base}
+        aria-label="Back to Realms home"
+        class="fixed left-6 top-6 z-[100] inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-300/70 bg-[#fdfcfb]/80 text-lg leading-none text-slate-900 shadow-sm backdrop-blur-md transition hover:border-slate-950 hover:bg-white"
+      >
+        ←
+      </a>
+    )}
     <div class="fixed top-6 right-6 z-[100] pointer-events-auto">
       <ThemeToggle client:load />
     </div>
