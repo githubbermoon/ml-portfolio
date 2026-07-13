@@ -4,17 +4,19 @@ import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 
-const siteBase = process.env.SITE_BASE ?? (process.env.CF_PAGES ? '/' : '/ml-portfolio/');
-const siteUrl = process.env.PUBLIC_SITE_URL ?? process.env.SITE_URL ?? 'https://realms-58q.pages.dev';
+const isRealms = process.env.SITE_MODE === 'realms';
 
-// https://astro.build/config
 export default defineConfig({
-	site: siteUrl,
-	integrations: [react(), mdx(), tailwind()],
-	base: siteBase,
-	vite: {
-		resolve: {
-			dedupe: ['react', 'react-dom'],
-		},
-	},
+  site: isRealms ? 'https://realms-58q.pages.dev' : 'https://githubbermoon.github.io',
+  base: isRealms ? '/' : '/ml-portfolio/',
+  integrations: [react(), mdx(), tailwind()],
+  // We use the include/exclude pattern for directories
+  build: {
+    format: 'directory',
+  },
+  vite: {
+    resolve: {
+      dedupe: ['react', 'react-dom'],
+    },
+  },
 });

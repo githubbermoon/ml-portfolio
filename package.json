@@ -4,9 +4,11 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
-    "build:cloudflare": "SITE_BASE=/ SITE_MODE=realms astro build",
-    "build:github": "SITE_BASE=/ml-portfolio/ astro build",
+    "prepare:professional": "SITE_MODE=professional node scripts/prepare-pages.mjs",
+    "prepare:realms": "SITE_MODE=realms node scripts/prepare-pages.mjs",
+    "build": "pnpm build:github",
+    "build:cloudflare": "pnpm prepare:realms && SITE_MODE=realms astro build && rm -rf dist/blog/uhi-bengaluru dist/blog/glass-fidelity dist/projects/terrain-safety dist/projects/python-api",
+    "build:github": "pnpm prepare:professional && SITE_MODE=professional astro build",
     "deploy:cloudflare": "pnpm build:cloudflare && npx wrangler pages deploy ./dist --project-name=realms --branch=master",
     "preview": "astro preview",
     "astro": "astro"

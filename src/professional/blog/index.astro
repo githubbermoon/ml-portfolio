@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+const posts = (await getCollection('blog')).filter((post) => post.slug === 'glass-fidelity');
+---
+
+<BaseLayout
+  title="Technical Blog | Pranjal Prakash ML Portfolio"
+  description="Professional technical writing by Pranjal Prakash: machine learning, research, systems, and case-study articles."
+  tags={["technical blog", "machine learning", "research", "urban heat island", "Pranjal Prakash"]}
+>
+  <Nav />
+  <main class="section-shell py-20">
+    <section>
+      <p class="text-xs uppercase tracking-[0.35em] text-mist">Technical Blog</p>
+      <h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">Research and technical notes</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
+        Professional technical writing, reproducible research, and ML/system case studies.
+      </p>
+    </section>
+
+    <section class="mt-14 grid gap-6">
+      <article class="glass-panel p-6">
+        <p class="text-sm text-mist">Technical Research</p>
+        <h2 class="mt-3 text-2xl text-glass">Urban Heat Island (UHI) Modeling for Bengaluru</h2>
+        <p class="mt-3 text-mist">
+          Reproducible spatiotemporal modeling using Earth observation features, XGBoost,
+          spatial validation, MODIS checks, and SHAP interpretability.
+        </p>
+        <a class="mt-4 inline-block text-sm text-glow" href={base + 'blog/uhi-bengaluru/'}>Read UHI article</a>
+      </article>
+
+      {posts.map((post) => (
+        <article class="glass-panel p-6">
+          <p class="text-sm text-mist">{post.data.tags.join(' / ')}</p>
+          <h2 class="mt-3 text-2xl text-glass">{post.data.title}</h2>
+          <p class="mt-3 text-mist">{post.data.summary}</p>
+          <a class="mt-4 inline-block text-sm text-glow" href={base + 'blog/' + post.slug + '/'}>Read note</a>
+        </article>
+      ))}
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

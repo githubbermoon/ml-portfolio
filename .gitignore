@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # local references
 attached/
+
+# generated per-target Astro pages; source lives in src/professional, src/realms, src/shared-pages
+src/pages/
