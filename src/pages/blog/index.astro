@@ -97,34 +97,53 @@ const realms = [
 			))}
 		</div>
 
-		<section class="mt-16">
-			<div class="flex flex-col justify-between gap-4 border-t border-white/10 pt-8 md:flex-row md:items-end">
-				<div>
-					<p class="text-xs uppercase tracking-[0.24em] text-mist">Archive status</p>
-					<h2 class="mt-3 text-3xl text-glass">Kosh is being organized</h2>
-				</div>
-				<p class="max-w-md text-sm leading-6 text-mist">
-					The archive will grow into a searchable library. Professional portfolio posts are kept outside this Realms surface.
-				</p>
-			</div>
-		</section>
+    <section class="mt-16">
+      <div class="flex flex-col justify-between gap-4 border-t border-white/10 pt-8 md:flex-row md:items-end">
+        <div>
+          <p class="text-xs uppercase tracking-[0.24em] text-mist">Professional Work</p>
+          <h2 class="mt-3 text-3xl text-glass">Technical Research</h2>
+        </div>
+      </div>
+      <div class="mt-8 grid gap-6 md:grid-cols-2">
+        <article class="glass-panel p-6">
+          <p class="text-sm text-mist">Technical Research</p>
+          <h2 class="mt-3 text-2xl text-glass">Urban Heat Island (UHI) Modeling</h2>
+          <p class="mt-3 text-mist">
+            Reproducible spatiotemporal modeling for Bengaluru using Earth observation and machine learning.
+          </p>
+          <a class="mt-4 inline-block text-sm text-glow" href={base + 'blog/uhi-bengaluru/'}>Read article</a>
+        </article>
+      </div>
+    </section>
 
-		<div class="mt-8 grid gap-6 md:grid-cols-2">
-			<article class="glass-panel p-6">
-				<p class="text-sm text-mist">कोश / Library</p>
-				<h2 class="mt-3 text-2xl text-glass">Treasury of fragments</h2>
-				<p class="mt-3 text-mist">
-					Notes, references, essays, recipes, symbolic studies, and reading trails will collect here over time.
-				</p>
-			</article>
-			<article class="glass-panel p-6">
-				<p class="text-sm text-mist">Direction</p>
-				<h2 class="mt-3 text-2xl text-glass">Ancient sciences and inner-world research</h2>
-				<p class="mt-3 text-mist">
-					This space is for non-professional Realms material, separate from the GitHub Pages portfolio.
-				</p>
-			</article>
-		</div>
+    <section class="mt-16">
+      <div class="flex flex-col justify-between gap-4 border-t border-white/10 pt-8 md:flex-row md:items-end">
+        <div>
+          <p class="text-xs uppercase tracking-[0.24em] text-mist">Archive status</p>
+          <h2 class="mt-3 text-3xl text-glass">Kosh is being organized</h2>
+        </div>
+        <p class="max-w-md text-sm leading-6 text-mist">
+          The archive will grow into a searchable library. Professional portfolio posts are kept outside this Realms surface.
+        </p>
+      </div>
+    </section>
+
+    <div class="mt-8 grid gap-6 md:grid-cols-2">
+      <article class="glass-panel p-6">
+        <p class="text-sm text-mist">कोश / Library</p>
+        <h2 class="mt-3 text-2xl text-glass">Treasury of fragments</h2>
+        <p class="mt-3 text-mist">
+          Notes, references, essays, recipes, symbolic studies, and reading trails will collect here over time.
+        </p>
+      </article>
+      <article class="glass-panel p-6">
+        <p class="text-sm text-mist">Direction</p>
+        <h2 class="mt-3 text-2xl text-glass">Ancient sciences and inner-world research</h2>
+        <p class="mt-3 text-mist">
+          This space is for non-professional Realms material, separate from the GitHub Pages portfolio.
+        </p>
+      </article>
+    </div>
 	</main>
 	<Footer />
 </BaseLayout>

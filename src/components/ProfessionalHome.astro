@@ -73,6 +73,15 @@ const technicalPosts = (await getCollection("blog")).filter((post) =>
         <a class="text-sm text-glow" href={base + "blog/technical/"}>Technical archive →</a>
       </div>
       <div class="mt-8 grid gap-6">
+        <article class="glass-panel p-6">
+          <p class="text-sm text-mist">Technical Research</p>
+          <h3 class="mt-3 text-2xl text-glass">Urban Heat Island (UHI) Modeling for Bengaluru</h3>
+          <p class="mt-3 text-mist">
+            Reproducible spatiotemporal modeling using Earth observation features, XGBoost,
+            spatial validation, MODIS checks, and SHAP interpretability.
+          </p>
+          <a class="mt-4 inline-block text-sm text-glow" href={base + "blog/uhi-bengaluru/"}>Read UHI article</a>
+        </article>
         {technicalPosts.map((post) => (
           <article class="glass-panel p-6">
             <p class="text-sm text-mist">{post.data.tags.join(" / ")}</p>
