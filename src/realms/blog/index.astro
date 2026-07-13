@@ -56,172 +56,61 @@ const realms = [
 	tags={["Kosh", "Realms", "Vedic sciences", "symbolic systems", "archive"]}
 >
 	<Nav />
-	<main class="section-shell">
-		<section class="library-hero library-hero-atmosphere">
-			<div class="library-hero-copy">
-				<p class="text-xs uppercase tracking-[0.35em] text-mist">Kosh · कोश</p>
-				<h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">A treasury of notes, references, and fragments</h1>
-				<p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
-					Kosh means treasury or library. This is the living archive for essays, reading notes,
-					spiritual field notes, astrology fragments, cooking experiments, and future Vedic sciences work.
+	<main class="mx-auto max-w-6xl px-8 pb-24 pt-20">
+		<header class="mb-24 flex flex-col md:flex-row gap-12 border-b border-gray-200 pb-20">
+			<div class="flex-1">
+				<h1 class="text-6xl font-bold tracking-tight mb-8">Kosh (कोश)</h1>
+				<p class="text-2xl italic text-gray-700 leading-relaxed max-w-xl">
+					A treasury of notes, references, essays, fragments, and field notes.
 				</p>
 			</div>
-			<figure class="library-atmosphere-frame" aria-label="Orange ritual water scene">
-				<img
-					class="library-atmosphere-bleed"
-					src={base + "images/atmosphere/ritual-water.webp"}
-					alt=""
-					loading="eager"
-					decoding="async"
-					aria-hidden="true"
-				/>
-				<img
-					class="library-atmosphere-image"
-					src={base + "images/atmosphere/ritual-water.webp"}
-					alt="People standing in orange-lit water and mist."
-					loading="eager"
-					decoding="async"
-				/>
-			</figure>
-		</section>
+			<div class="border-l border-gray-200 pl-12 flex flex-col justify-end text-sm text-gray-500 gap-4 font-mono">
+				<div>
+					<p class="uppercase text-[10px] tracking-[0.2em] font-semibold text-gray-400">Context</p>
+					<p>Living Archive</p>
+				</div>
+				<div>
+					<p class="uppercase text-[10px] tracking-[0.2em] font-semibold text-gray-400">Archive Status</p>
+					<p>Phase 01 / Organizing</p>
+				</div>
+			</div>
+		</header>
 
-		<div class="library-realm-grid mt-12">
-			{realms.map((realm) => (
-				<a class="library-realm-card" href={base + realm.href}>
-					<span class="library-realm-symbol">{realm.symbol}</span>
-					<span class="text-xs uppercase tracking-[0.24em] text-mist">{realm.label}</span>
-					<h2 class="mt-4 text-3xl text-glass">{realm.name}</h2>
-					<p class="mt-4 text-sm leading-6 text-mist">{realm.description}</p>
-					<span class="mt-6 inline-flex text-sm text-glow">Enter realm →</span>
-				</a>
-			))}
+		<div class="grid md:grid-cols-3 gap-16">
+			<div class="md:col-span-2">
+				<div class="grid md:grid-cols-2 gap-12">
+					{realms.map((realm) => (
+						<a class="group cursor-pointer block" href={base + realm.href}>
+							<p class="font-mono text-[10px] uppercase tracking-widest text-gray-400 mb-2">{realm.label}</p>
+							<h2 class="text-2xl font-bold mb-2 group-hover:underline">{realm.name}</h2>
+							<p class="text-gray-600 text-sm leading-6">{realm.description}</p>
+						</a>
+					))}
+				</div>
+			</div>
+			<div class="border-l border-gray-200 pl-12">
+				<div class="mb-12">
+					<p class="font-mono text-[10px] uppercase tracking-widest text-gray-400 mb-2">Direction</p>
+					<h3 class="text-lg font-bold mb-2">Ancient sciences and inner-world research</h3>
+					<p class="text-gray-600 text-sm leading-6">This space is for non-professional Realms material, separate from the GitHub Pages portfolio.</p>
+				</div>
+			</div>
 		</div>
-
-
-    <section class="mt-16">
-      <div class="flex flex-col justify-between gap-4 border-t border-white/10 pt-8 md:flex-row md:items-end">
-        <div>
-          <p class="text-xs uppercase tracking-[0.24em] text-mist">Archive status</p>
-          <h2 class="mt-3 text-3xl text-glass">Kosh is being organized</h2>
-        </div>
-        <p class="max-w-md text-sm leading-6 text-mist">
-          The archive will grow into a searchable library. Professional portfolio posts are kept outside this Realms surface.
-        </p>
-      </div>
-    </section>
-
-    <div class="mt-8 grid gap-6 md:grid-cols-2">
-      <article class="glass-panel p-6">
-        <p class="text-sm text-mist">कोश / Library</p>
-        <h2 class="mt-3 text-2xl text-glass">Treasury of fragments</h2>
-        <p class="mt-3 text-mist">
-          Notes, references, essays, recipes, symbolic studies, and reading trails will collect here over time.
-        </p>
-      </article>
-      <article class="glass-panel p-6">
-        <p class="text-sm text-mist">Direction</p>
-        <h2 class="mt-3 text-2xl text-glass">Ancient sciences and inner-world research</h2>
-        <p class="mt-3 text-mist">
-          This space is for non-professional Realms material, separate from the GitHub Pages portfolio.
-        </p>
-      </article>
-    </div>
 	</main>
 	<Footer />
 </BaseLayout>
 
 <style>
-	.library-hero-atmosphere {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(280px, 0.52fr);
-		align-items: end;
-		gap: clamp(2rem, 5vw, 4.5rem);
+	:global([data-theme="dark"]) body {
+		background: #fdfcfb;
+		color: #1a1a1a;
 	}
 
-	.library-hero-copy {
-		min-width: 0;
-	}
-
-	.library-atmosphere-frame {
-		position: relative;
-		overflow: visible;
-		height: clamp(18rem, 33vw, 28rem);
-		margin: 0;
-		border-radius: 2rem;
-		isolation: isolate;
-	}
-
-	.library-atmosphere-frame::after {
-		content: "";
-		position: absolute;
-		inset: 0;
-		z-index: 2;
-		border-radius: inherit;
-		background:
-			linear-gradient(to top, rgb(var(--color-ink) / 0.18), transparent 48%),
-			radial-gradient(circle at 74% 18%, rgb(251 191 36 / 0.2), transparent 42%);
-		pointer-events: none;
-	}
-
-	.library-atmosphere-image {
-		position: absolute;
-		inset: 0;
-		z-index: 1;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		object-position: 58% 50%;
-		display: block;
-		border: 1px solid rgb(var(--color-glass) / 0.12);
-		border-radius: inherit;
-		box-shadow: 0 28px 80px rgb(0 0 0 / 0.26);
-		filter: saturate(1.08) contrast(1.04);
-	}
-
-	.library-atmosphere-bleed {
-		position: absolute;
-		top: -18%;
-		left: -34%;
-		z-index: -1;
-		width: 168%;
-		max-width: none;
-		height: 138%;
-		object-fit: cover;
-		object-position: 58% 50%;
-		border-radius: 3rem;
-		opacity: 0.2;
-		filter: blur(26px) saturate(1.2) contrast(1.08);
-		mask-image: radial-gradient(ellipse at 58% 48%, black 0 34%, rgb(0 0 0 / 0.72) 48%, transparent 72%);
-	}
-
-	[data-theme="bright"] .library-atmosphere-frame {
-		filter: none;
-	}
-
-	[data-theme="bright"] .library-atmosphere-image {
-		box-shadow: 0 22px 54px rgb(15 23 42 / 0.12);
-	}
-
-	[data-theme="bright"] .library-atmosphere-bleed {
-		opacity: 0.16;
-		mix-blend-mode: multiply;
-	}
-
-	@media (max-width: 860px) {
-		.library-hero-atmosphere {
-			grid-template-columns: 1fr;
-			align-items: start;
-		}
-
-		.library-atmosphere-frame {
-			height: 18rem;
-			border-radius: 1.5rem;
-		}
-
-		.library-atmosphere-bleed {
-			left: -10%;
-			width: 120%;
-			opacity: 0.18;
-		}
+	:global([data-theme="dark"]) .text-gray-700,
+	:global([data-theme="dark"]) .text-gray-600,
+	:global([data-theme="dark"]) .text-gray-500,
+	:global([data-theme="dark"]) .text-gray-400 {
+		color: inherit;
+		opacity: 0.72;
 	}
 </style>
