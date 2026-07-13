@@ -36,8 +36,8 @@ const ogImageAlt = isRealmsMode
 const blogPassword = import.meta.env.PUBLIC_BLOG_PASSWORD ?? "open";
 const blogPrefix = `${normalizedBase}blog`;
 const devBlogPrefix = "/blog";
-const publicBlogPrefix = `${blogPrefix}/uhi-bengaluru`;
-const publicDevBlogPrefix = `${devBlogPrefix}/uhi-bengaluru`;
+const publicBlogPrefix = isRealmsMode ? "__professional_public_blog__" : `${blogPrefix}/uhi-bengaluru`;
+const publicDevBlogPrefix = isRealmsMode ? "__professional_public_blog_dev__" : `${devBlogPrefix}/uhi-bengaluru`;
 const isPublicBlogRoute =
   Astro.url.pathname.startsWith(publicBlogPrefix) ||
   Astro.url.pathname.startsWith(publicDevBlogPrefix);
