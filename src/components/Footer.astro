@@ -1,5 +1,4 @@
 ---
-import FooterLinks from "../islands/FooterLinks";
 import FloraGate from "../islands/FloraGate";
 const base = import.meta.env.BASE_URL;
 const { showStudio = false } = Astro.props;
@@ -11,7 +10,7 @@ const isRealmsMode = import.meta.env.SITE_MODE === "realms";
     <p>© 2026 Pranjal Prakash</p>
   </footer>
 ) : (
-  <footer class="relative mt-20 min-h-[50vh] flex items-end overflow-hidden">
+  <footer class="relative mt-20 min-h-[30vh] flex items-end overflow-hidden">
     {
       !showStudio && (
         <div class="footer-still-scene absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
@@ -42,9 +41,7 @@ const isRealmsMode = import.meta.env.SITE_MODE === "realms";
           <p class="text-sm uppercase tracking-[0.2em] text-mist">
             ML + CV portfolio
           </p>
-          <div class="pt-4">
-            <FooterLinks base={base} client:visible />
-          </div>
+          <div></div>
           <div class="pt-2">
             <a
               class="text-xs uppercase tracking-[0.25em] text-mist/70 transition hover:text-white"
@@ -62,7 +59,7 @@ const isRealmsMode = import.meta.env.SITE_MODE === "realms";
           <span>Bengaluru, India</span>
         </div>
       </div>
-      <div class="relative mt-16 pt-8 border-t border-white/5">
+      <div class="relative mt-12 pt-6 border-t border-white/5">
         <div
           class="absolute inset-0 -z-10 bg-gradient-to-t from-black via-black/80 to-transparent blur-xl scale-125 transform-gpu opacity-80 pointer-events-none"
         >

@@ -3,14 +3,22 @@ import MagneticButton from "../islands/MagneticButton";
 import MobileNav from "../islands/MobileNav";
 
 const base = import.meta.env.BASE_URL;
+const isRealmsMode = import.meta.env.SITE_MODE === "realms";
 
-const links = [
-  { href: `${base}#hero`, label: "Home" },
-  { href: `${base}#capabilities`, label: "Realms" },
-  { href: `${base}#work`, label: "Work" },
-  { href: `${base}blog/`, label: "Blog" },
-  { href: `${base}#contact`, label: "Contact" },
-];
+const links = isRealmsMode
+  ? [
+      { href: `${base}#hero`, label: "Home" },
+      { href: `${base}#capabilities`, label: "Realms" },
+      { href: `${base}projects/`, label: "Projects" },
+      { href: `${base}blog/`, label: "Kosh" },
+      { href: `${base}#contact`, label: "Contact" },
+    ]
+  : [
+      { href: `${base}#hero`, label: "Home" },
+      { href: `${base}projects/`, label: "Projects" },
+      { href: `${base}blog/`, label: "Blog" },
+      { href: `${base}#contact`, label: "Contact" },
+    ];
 ---
 
 <!-- Swerving Nav Container -->
@@ -57,7 +65,7 @@ const links = [
         href={base + "#contact"}
         className="rounded-full border border-mist/40 px-4 py-2 text-sm text-glass transition hover:border-glass/50 whitespace-nowrap"
       >
-        Start a project
+        {isRealmsMode ? "Enter Kosh" : "Contact"}
       </MagneticButton>
     </div>
   </div>
@@ -78,21 +86,9 @@ const links = [
       nav.setAttribute("data-scrolled", scrolled.toString());
       container.setAttribute("data-scrolled", scrolled.toString());
       linkContainer.setAttribute("data-scrolled", scrolled.toString());
-
-      if (scrolled) {
-        // Move to left vertical position
-        nav.classList.remove("top-0", "left-0", "w-full");
-        nav.classList.add("top-1/2", "left-8", "-translate-y-1/2", "w-auto");
-      } else {
-        // Reset to top bar
-        nav.classList.add("top-0", "left-0", "w-full");
-        nav.classList.remove("top-1/2", "left-8", "-translate-y-1/2", "w-auto");
-      }
     }
   }
 
   window.addEventListener("scroll", updateNav, { passive: true });
-  window.addEventListener("resize", updateNav, { passive: true });
-  // Initial check
   updateNav();
 </script>
