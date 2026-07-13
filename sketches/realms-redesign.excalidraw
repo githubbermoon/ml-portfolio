@@ -1,0 +1,117 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "hermes-agent",
+  "elements": [
+    {
+      "type": "rectangle",
+      "id": "bg",
+      "x": 50,
+      "y": 50,
+      "width": 800,
+      "height": 500,
+      "backgroundColor": "#fff9db",
+      "fillStyle": "solid",
+      "strokeColor": "#e67700",
+      "roundness": { "type": 3 }
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "x": 100,
+      "y": 90,
+      "text": "Realms Redesign Concept",
+      "fontSize": 36,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "originalText": "Realms Redesign Concept",
+      "autoResize": true
+    },
+    {
+      "type": "rectangle",
+      "id": "hero",
+      "x": 100,
+      "y": 170,
+      "width": 420,
+      "height": 280,
+      "backgroundColor": "#ffffff",
+      "fillStyle": "solid",
+      "strokeColor": "#495057",
+      "roundness": { "type": 3 },
+      "boundElements": [{ "id": "t_hero", "type": "text" }]
+    },
+    {
+      "type": "text",
+      "id": "t_hero",
+      "x": 120,
+      "y": 200,
+      "width": 380,
+      "height": 80,
+      "text": "Large editorial hero\nPranjal Prakash\nKosh / कोश",
+      "fontSize": 24,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "hero",
+      "originalText": "Large editorial hero\nPranjal Prakash\nKosh / कोश",
+      "autoResize": true
+    },
+    {
+      "type": "rectangle",
+      "id": "side",
+      "x": 570,
+      "y": 170,
+      "width": 220,
+      "height": 280,
+      "backgroundColor": "#e7f5ff",
+      "fillStyle": "solid",
+      "strokeColor": "#1971c2",
+      "roundness": { "type": 3 },
+      "boundElements": [{ "id": "t_side", "type": "text" }]
+    },
+    {
+      "type": "text",
+      "id": "t_side",
+      "x": 590,
+      "y": 210,
+      "width": 180,
+      "height": 80,
+      "text": "Metadata rail\nLocation\nFocus\nArchive status",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "strokeColor": "#1e1e1e",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "side",
+      "originalText": "Metadata rail\nLocation\nFocus\nArchive status",
+      "autoResize": true
+    },
+    {
+      "type": "arrow",
+      "id": "arrow1",
+      "x": 510,
+      "y": 310,
+      "width": 60,
+      "height": 0,
+      "points": [[0, 0], [60, 0]],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "x": 120,
+      "y": 480,
+      "text": "Design stance: less portfolio, more manuscript / archive. Use light backgrounds, black text, thin dividers, and symbolic accents.",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "strokeColor": "#495057",
+      "originalText": "Design stance: less portfolio, more manuscript / archive. Use light backgrounds, black text, thin dividers, and symbolic accents.",
+      "autoResize": true
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff"
+  }
+}
