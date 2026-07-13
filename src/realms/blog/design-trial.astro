@@ -1,0 +1,69 @@
+---
+title: "Design Trial | Kosh"
+layout: "../../layouts/BaseLayout.astro"
+---
+
+<div class="kosh-page">
+  <div class="kosh-content">
+    <header>
+      <div style="color: var(--copper); font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase;">|| डिजाइन परीक्षण ||</div>
+      <h1>Design Trial</h1>
+      <p class="subtitle">Testing the manuscript aesthetic with ornaments.</p>
+    </header>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">Test Card 01</div>
+        <p class="card-desc">Visual test to see if ornaments load.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stamp stamp-left">
+    <div class="stamp-title">संग्रह</div>
+    <div class="stamp-number">TEST 01</div>
+  </div>
+</div>
+
+<style>
+  :root {
+    --paper: #f6f2eb;
+    --ink: #1e2638;
+    --muted: #667085;
+    --copper: #b67b57;
+    --line: rgba(182, 123, 87, 0.20);
+  }
+
+  .kosh-page {
+    position: relative;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  /* Inline the SVG directly as a data-URI to bypass path issues */
+  .kosh-page::before {
+    content: "";
+    position: fixed;
+    left: -80px;
+    top: 240px;
+    width: 260px;
+    height: 460px;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 400 C80 300, 90 180, 150 60' stroke='%23b67b57' stroke-width='2' fill='none'/%3E%3Cpath d='M70 310 C30 300, 10 280, 0 250 M82 270 C42 260, 18 230, 8 198 M95 230 C55 210, 28 180, 20 145 M112 190 C72 160, 55 130, 55 95 M128 150 C96 118, 88 86, 96 54 M72 310 C112 296, 150 268, 180 232 M84 270 C124 252, 160 218, 190 176 M98 230 C138 206, 166 168, 190 120 M115 190 C150 162, 168 122, 176 76' stroke='%23b67b57' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") no-repeat center / contain;
+    opacity: 0.3; /* Increased opacity for testing */
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .kosh-page::after {
+    content: "";
+    position: fixed;
+    right: -90px;
+    top: 120px;
+    width: 420px;
+    height: 420px;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='150' cy='150' r='110' fill='none' stroke='%23b67b57' stroke-width='1.5'/%3E%3Ccircle cx='150' cy='150' r='76' fill='none' stroke='%23b67b57' stroke-width='1.5'/%3E%3Cpath d='M150 40 L250 220 H50 Z' fill='none' stroke='%23b67b57' stroke-width='1.5'/%3E%3Cpath d='M150 260 L250 80 H50 Z' fill='none' stroke='%23b67b57' stroke-width='1.5'/%3E%3Crect x='70' y='70' width='160' height='160' fill='none' stroke='%23b67b57' stroke-width='1.5'/%3E%3Ccircle cx='150' cy='150' r='8' fill='none' stroke='%23b67b57' stroke-width='2'/%3E%3C/svg%3E") no-repeat center / contain;
+    opacity: 0.3; /* Increased opacity for testing */
+    pointer-events: none;
+    z-index: 0;
+  }
+</style>
