@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
-import Footer from "../components/Footer.astro";
 import Section from "../components/Section.astro";
 import SceneGate from "../islands/SceneGate";
 import PerformanceToggle from "../islands/PerformanceToggle";
@@ -43,32 +42,7 @@ const realms = [
   },
 ];
 
-const artifacts = [
-  {
-    kind: "ML case study",
-    title: "Terrain safety pipeline",
-    href: base + "projects/terrain-safety/",
-    body: "SegFormer, Depth Anything V2, and A* path planning shaped into a practical CV workflow.",
-  },
-  {
-    kind: "Technical writing",
-    title: "Attribution-style technical blog",
-    href: base + "blog/technical/",
-    body: "Low-power graph fabric, SVG figures, pipeline traces, and benchmark surfaces for ML notes.",
-  },
-  {
-    kind: "Library realm",
-    title: "Machines, myths, stars, kitchens",
-    href: base + "blog/",
-    body: "A mixed archive that can hold engineering work and symbolic personal research without splitting identity.",
-  },
-];
 
-const practices = [
-  ["Building", "CV demos, APIs, and readable ML artifacts"],
-  ["Studying", "Mechanistic interpretability, symbolic systems, and Sanskritic thought"],
-  ["Writing", "Technical notes, Ananta Nīhāra fragments, and future recipe logs"],
-];
 ---
 
 <BaseLayout
@@ -150,45 +124,6 @@ const practices = [
       </div>
     </section>
 
-    <section id="work" class="home-section home-artifacts" data-section>
-      <div class="section-shell">
-        <div class="home-section-heading">
-          <p>Selected artifacts</p>
-          <h2>Proof without clutter</h2>
-          <span>
-            A few strong entrances replace the earlier pile of panels. Each one
-            points to something concrete.
-          </span>
-        </div>
-
-        <div class="artifact-list">
-          {
-            artifacts.map((artifact, index) => (
-              <a class="artifact-row" href={artifact.href}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <p>{artifact.kind}</p>
-                  <h3>{artifact.title}</h3>
-                </div>
-                <p>{artifact.body}</p>
-              </a>
-            ))
-          }
-        </div>
-
-        <div class="practice-strip">
-          {
-            practices.map(([label, value]) => (
-              <div>
-                <span>{label}</span>
-                <p>{value}</p>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
     <Section
       id="contact"
       class="relative overflow-hidden"
@@ -215,7 +150,7 @@ const practices = [
           <p
             class="mt-4 text-3xl font-light leading-tight text-glass md:text-4xl"
           >
-            Open for ML internships, CV research, and backend work.
+            Open to thoughtful conversations, collaborations, and new ideas.
           </p>
           <p class="mt-6 text-sm text-mist/60">
             Based in Bengaluru · Open to global remote roles
@@ -241,7 +176,9 @@ const practices = [
     </Section>
 
   </main>
-  <Footer />
+  <div class="section-shell py-10 text-center text-[10px] uppercase tracking-[0.28em] text-mist/35">
+    <p>© 2026 Pranjal Prakash</p>
+  </div>
 </BaseLayout>
 
 <style>
