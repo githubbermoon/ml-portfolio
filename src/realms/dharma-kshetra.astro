@@ -1,11 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
 
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
 if (!isRealmsMode) return Astro.redirect("/ml-portfolio/");
 ---
 
 <BaseLayout title="Dharma-Kshetra: The Arrow of Duty">
+  <Nav />
   <div class="relative bg-[#050505] text-[#e3dcd2] overflow-x-hidden">
     
     <!-- Fixed Background Ambiance -->

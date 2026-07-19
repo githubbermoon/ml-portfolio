@@ -30,6 +30,8 @@ const MobileNav: React.FC<MobileNavProps> = ({ links, base, simple = false }) =>
     setLang(next);
     localStorage.setItem('realms-lang', next);
     applyLanguage(next);
+    // Force re-render to update translations for labels in current page
+    window.dispatchEvent(new CustomEvent('realms-language-change', { detail: { lang: next } }));
   };
   const menuLinks = simple
     ? [

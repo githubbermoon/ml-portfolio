@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
 import LivingGridScene from "../components/LivingGrid";
 
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
@@ -7,6 +8,7 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/");
 ---
 
 <BaseLayout title="Living Identities Manifesto | POC">
+  <Nav />
   <main
     class="w-[calc(100%-2rem)] h-[calc(100vh-2rem)] overflow-hidden bg-black relative m-4 rounded-[2.5rem]"
   >
