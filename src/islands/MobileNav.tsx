@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { applyLanguage } from "./LanguageToggle";
 
 interface Link {
   href: string;
   label: string;
+  key?: string;
 }
+
+const hiLabels: Record<string, string> = {
+  "nav.home": "होम",
+  "nav.realms": "रियलम्स",
+  "nav.projects": "प्रोजेक्ट्स",
+  "nav.kosh": "कोश",
+  "nav.blog": "ब्लॉग",
+  "nav.contact": "संपर्क",
+};
 
 interface MobileNavProps {
   links: Link[];
@@ -14,10 +25,16 @@ interface MobileNavProps {
 
 const MobileNav: React.FC<MobileNavProps> = ({ links, base, simple = false }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [lang, setLang] = useState<'en' | 'hi'>('en');
+  const setLanguage = (next: 'en' | 'hi') => {
+    setLang(next);
+    localStorage.setItem('realms-lang', next);
+    applyLanguage(next);
+  };
   const menuLinks = simple
     ? [
-        { href: base, label: "Home" },
-        { href: base + "blog/", label: "Realms" },
+        { href: base, label: "Home", key: "nav.home" },
+        { href: base + "blog/", label: "Realms", key: "nav.realms" },
       ]
     : links;
 
@@ -35,6 +52,17 @@ const MobileNav: React.FC<MobileNavProps> = ({ links, base, simple = false }) =>
   };
 
   useEffect(() => {
+    const saved = localStorage.getItem('realms-lang');
+    setLang(saved === 'hi' ? 'hi' : 'en');
+    const handler = (event: Event) => {
+      const next = (event as CustomEvent).detail?.lang;
+      setLang(next === 'hi' ? 'hi' : 'en');
+    };
+    window.addEventListener('realms-language-change', handler);
+    return () => window.removeEventListener('realms-language-change', handler);
+  }, []);
+
+  useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -50,7 +78,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ links, base, simple = false }) =>
           ? "fixed left-32 top-8 z-[140] pointer-events-auto bg-transparent text-sm uppercase tracking-[0.2em] text-slate-700 transition hover:text-slate-950"
           : "relative z-50 rounded-full border border-mist/30 bg-white/70 px-4 py-2 text-sm font-medium tracking-wide text-glass shadow-sm backdrop-blur-md transition hover:border-glass/50 md:hidden"}
       >
-        Menu
+        <span data-i18n="nav.menu">{lang === 'hi' ? 'मेनू' : 'Menu'}</span>
       </button>
 
       <AnimatePresence>
@@ -64,18 +92,24 @@ const MobileNav: React.FC<MobileNavProps> = ({ links, base, simple = false }) =>
           >
             <div className="flex items-center justify-between">
               <p className="text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-white/45">
-                Navigation
+                <span data-i18n="nav.navigation">{lang === 'hi' ? 'नेविगेशन' : 'Navigation'}</span>
               </p>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
                 className="text-sm text-slate-700 transition hover:text-slate-950 dark:text-white/60 dark:hover:text-white"
               >
-                Close
+                <span data-i18n="nav.close">{lang === 'hi' ? 'बंद करें' : 'Close'}</span>
               </button>
             </div>
 
-            <nav className="mt-20 flex flex-col items-start gap-7">
+            <div className="mt-12 flex items-center gap-2 rounded-full border border-slate-200 px-3 py-2 text-xs uppercase tracking-[0.18em] text-slate-600 dark:border-white/10 dark:text-white/60">
+              <button type="button" onClick={() => setLanguage('en')} className={lang === 'en' ? 'text-slate-950 dark:text-white' : 'hover:text-slate-950 dark:hover:text-white'}>EN</button>
+              <span className="text-slate-300 dark:text-white/20">/</span>
+              <button type="button" onClick={() => setLanguage('hi')} className={lang === 'hi' ? 'text-slate-950 dark:text-white' : 'hover:text-slate-950 dark:hover:text-white'}>हिंदी</button>
+            </div>
+
+            <nav className="mt-12 flex flex-col items-start gap-7">
               {menuLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
@@ -87,7 +121,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ links, base, simple = false }) =>
                   transition={{ delay: 0.06 + i * 0.06, duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
                   className="text-4xl font-light text-slate-950 transition-colors hover:text-sky-600 dark:text-white dark:hover:text-blue-300"
                 >
-                  {link.label}
+                  {lang === 'hi' && link.key ? (hiLabels[link.key] || link.label) : link.label}
                 </motion.a>
               ))}
             </nav>

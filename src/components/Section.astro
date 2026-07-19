@@ -6,6 +6,9 @@ const {
   subtitle,
   class: className,
   expanded = false,
+  eyebrowKey,
+  titleKey,
+  subtitleKey,
 } = Astro.props;
 ---
 
@@ -28,21 +31,21 @@ const {
   >
     {
       eyebrow && (
-        <p class="text-xs uppercase tracking-[0.2em] text-mist" data-animate>
+        <p class="text-xs uppercase tracking-[0.2em] text-mist" data-animate data-i18n={eyebrowKey}>
           {eyebrow}
         </p>
       )
     }
     {
       title && (
-        <h2 class="mt-4 text-4xl md:text-5xl" data-animate>
+        <h2 class="mt-4 text-4xl md:text-5xl" data-animate data-i18n={titleKey}>
           {title}
         </h2>
       )
     }
     {
       subtitle && (
-        <p class="mt-4 max-w-2xl text-base text-mist md:text-lg" data-animate>
+        <p class="mt-4 max-w-2xl text-base text-mist md:text-lg" data-animate data-i18n={subtitleKey}>
           {subtitle}
         </p>
       )

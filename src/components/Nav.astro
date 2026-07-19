@@ -1,6 +1,7 @@
 ---
 import MagneticButton from "../islands/MagneticButton";
 import MobileNav from "../islands/MobileNav";
+import LanguageToggle from "../islands/LanguageToggle";
 
 const base = import.meta.env.BASE_URL;
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
@@ -8,17 +9,17 @@ const isRealmsInnerPage = isRealmsMode && Astro.url.pathname !== "/";
 
 const links = isRealmsMode
   ? [
-      { href: `${base}#hero`, label: "Home" },
-      { href: `${base}#capabilities`, label: "Realms" },
-      { href: `${base}projects/`, label: "Projects" },
-      { href: `${base}blog/`, label: "Kosh" },
-      { href: `${base}#contact`, label: "Contact" },
+      { href: `${base}#hero`, label: "Home", key: "nav.home" },
+      { href: `${base}#capabilities`, label: "Realms", key: "nav.realms" },
+      { href: `${base}projects/`, label: "Projects", key: "nav.projects" },
+      { href: `${base}blog/`, label: "Kosh", key: "nav.kosh" },
+      { href: `${base}#contact`, label: "Contact", key: "nav.contact" },
     ]
   : [
-      { href: `${base}#hero`, label: "Home" },
-      { href: `${base}projects/`, label: "Projects" },
-      { href: `${base}blog/`, label: "Blog" },
-      { href: `${base}#contact`, label: "Contact" },
+      { href: `${base}#hero`, label: "Home", key: "nav.home" },
+      { href: `${base}projects/`, label: "Projects", key: "nav.projects" },
+      { href: `${base}blog/`, label: "Blog", key: "nav.blog" },
+      { href: `${base}#contact`, label: "Contact", key: "nav.contact" },
     ];
 ---
 
@@ -53,12 +54,19 @@ const links = isRealmsMode
             class="transition hover:text-white relative group"
             href={link.href}
             data-nav-link
+            data-i18n={link.key}
           >
             {link.label}
           </a>
         ))
       }
     </div>
+    )}
+
+    {isRealmsMode && (
+      <div class="hidden md:block">
+        <LanguageToggle client:load />
+      </div>
     )}
 
     <!-- CTA Button (Only visible in top state) -->

@@ -10,35 +10,47 @@ const base = import.meta.env.BASE_URL;
 const realms = [
   {
     label: "Technical Work",
+    labelKey: "realm.technical.label",
     title: "Vedic Sciences",
+    titleKey: "realm.technical.title",
     href: base + "technical-work/",
     mark: "01",
     description:
       "Structured notes and research experiments around Vedic sciences, symbolic systems, and computation.",
+    descriptionKey: "realm.technical.desc",
   },
   {
     label: "Kosh",
+    labelKey: "realm.kosh.label",
     title: "कोश",
+    titleKey: "realm.kosh.title",
     href: base + "blog/",
     mark: "⌁",
     description:
       "Kosh means a treasury or library — a living archive of notes, references, essays, and fragments.",
+    descriptionKey: "realm.kosh.desc",
   },
   {
     label: "Mist",
+    labelKey: "realm.mist.label",
     title: "Ananta Nīhāra",
+    titleKey: "realm.mist.title",
     href: base + "blog/ananta-nihara/",
     mark: "∞",
     description:
       "A speculative inner-world room for perception, mythic language, intelligence, and visual essays.",
+    descriptionKey: "realm.mist.desc",
   },
   {
     label: "Projects",
+    labelKey: "realm.projects.label",
     title: "Ancient Sciences Builds",
+    titleKey: "realm.projects.title",
     href: base + "projects/",
     mark: "△",
     description:
       "Projects and prototypes inspired by ancient sciences, knowledge systems, and practical tools.",
+    descriptionKey: "realm.projects.desc",
   },
 ];
 
@@ -70,24 +82,24 @@ const realms = [
       </div>
       <div class="section-shell home-hero-inner">
         <div class="home-hero-copy">
-          <h1>Pranjal Prakash</h1>
-          <p>
+          <h1 data-i18n="home.hero.name">Pranjal Prakash</h1>
+          <p data-i18n="home.hero.subtitle">
             Vedic sciences, symbolic systems, projects, and field notes from a curious life.
           </p>
         </div>
 
         <div class="home-hero-panel" aria-label="Current coordinates">
           <div>
-            <span>Location</span>
-            <strong>Bengaluru, India</strong>
+            <span data-i18n="home.panel.location">Location</span>
+            <strong data-i18n="home.panel.locationValue">Bengaluru, India</strong>
           </div>
           <div>
-            <span>Focus</span>
-            <strong>Vedic sciences + symbolic systems</strong>
+            <span data-i18n="home.panel.focus">Focus</span>
+            <strong data-i18n="home.panel.focusValue">Vedic sciences + symbolic systems</strong>
           </div>
           <div>
-            <span>Archive</span>
-            <strong>Kosh: notes, references, and fragments</strong>
+            <span data-i18n="home.panel.archive">Archive</span>
+            <strong data-i18n="home.panel.archiveValue">Kosh: notes, references, and fragments</strong>
           </div>
           <PerformanceToggle client:load />
         </div>
@@ -97,9 +109,9 @@ const realms = [
     <section id="capabilities" class="home-section home-realms" data-section>
       <div class="section-shell">
         <div class="home-section-heading">
-          <p>Realms</p>
-          <h2>A map of the site</h2>
-          <span>
+          <p data-i18n="home.realms.eyebrow">Realms</p>
+          <h2 data-i18n="home.realms.title">A map of the site</h2>
+          <span data-i18n="home.realms.subtitle">
             The homepage is a gateway into Kosh, technical work on ancient sciences,
             speculative notes, and projects that will grow over time.
           </span>
@@ -110,9 +122,9 @@ const realms = [
             realms.map((realm) => (
               <a class="realm-card" href={realm.href}>
                 <span class="realm-mark">{realm.mark}</span>
-                <span class="realm-label">{realm.label}</span>
-                <h3>{realm.title}</h3>
-                <p>{realm.description}</p>
+                <span class="realm-label" data-i18n={realm.labelKey}>{realm.label}</span>
+                <h3 data-i18n={realm.titleKey}>{realm.title}</h3>
+                <p data-i18n={realm.descriptionKey}>{realm.description}</p>
               </a>
             ))
           }
@@ -126,6 +138,9 @@ const realms = [
       eyebrow="Contact"
       title="Get in touch"
       subtitle="For conversations, collaborations, suggestions, or shared curiosities."
+      eyebrowKey="contact.eyebrow"
+      titleKey="contact.title"
+      subtitleKey="contact.subtitle"
       expanded
     >
       <SceneGate client:load kind="section" variant="calm" sectionId="contact" />
@@ -140,15 +155,16 @@ const realms = [
         </div>
 
         <div class="p-6 md:p-8">
-          <p class="text-sm uppercase tracking-[0.2em] text-mist/60">
+          <p class="text-sm uppercase tracking-[0.2em] text-mist/60" data-i18n="contact.availability">
             Availability
           </p>
           <p
             class="mt-4 text-3xl font-light leading-tight text-glass md:text-4xl"
+            data-i18n="contact.availabilityText"
           >
             Open to thoughtful conversations, collaborations, and new ideas.
           </p>
-          <p class="mt-6 text-sm text-mist/60">
+          <p class="mt-6 text-sm text-mist/60" data-i18n="contact.location">
             Based in Bengaluru
           </p>
         </div>
@@ -156,14 +172,15 @@ const realms = [
         <form class="flex flex-col gap-4 p-6 md:p-8">
           <input
             class="w-full border-b border-white/10 bg-transparent py-3 text-sm text-glass placeholder:text-mist/30 focus:border-white/30 focus:outline-none transition-colors"
-            placeholder="Your email"
+            placeholder="Your email" data-i18n-placeholder="contact.email"
           />
           <input
             class="w-full border-b border-white/10 bg-transparent py-3 text-sm text-glass placeholder:text-mist/30 focus:border-white/30 focus:outline-none transition-colors"
-            placeholder="Project idea"
+            placeholder="Project idea" data-i18n-placeholder="contact.idea"
           />
           <button
             class="mt-4 self-start text-sm uppercase tracking-widest text-mist hover:text-white transition-colors"
+            data-i18n="contact.send"
           >
             Send Message →
           </button>
