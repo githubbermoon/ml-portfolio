@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const reels = [
+  { label: 'Reel 1', href: 'https://www.instagram.com/reel/C6ii8K0r4xF/' },
+  { label: 'Reel 2', href: 'https://www.instagram.com/reel/C_PfOcTyxUH/' },
+  { label: 'Reel 3', href: 'https://www.instagram.com/reel/C_QeuTRSuyO/' },
+  { label: 'Reel 4', href: 'https://www.instagram.com/reel/DCoeKGINDdd/' },
+];
+---
+
+<BaseLayout
+  title="Ishputra | Realms Archive"
+  description="A small Realms archive page collecting Ishputra Instagram reels."
+  tags={["Ishputra", "Realms", "Instagram reels", "archive"]}
+>
+  <Nav />
+  <main class="min-h-screen bg-[#fdfcfb] text-[#1a1a1a] px-6 py-20 md:px-20">
+    <section class="mx-auto max-w-4xl border border-[#1a1a1a]/15 bg-white/70 p-8 md:p-12 shadow-sm">
+      <p class="mb-4 font-mono text-xs uppercase tracking-[0.28em] text-[#6f6658]">Realms / Linked Archive</p>
+      <h1 class="mb-6 font-serif text-5xl md:text-7xl tracking-tight">Ishputra</h1>
+      <p class="mb-12 max-w-2xl text-lg leading-relaxed text-[#4f473d]">
+        Collected Instagram reels preserved here as reference links.
+      </p>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        {reels.map((reel) => (
+          <a
+            href={reel.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group border border-[#1a1a1a]/15 bg-[#f8f1e7] p-6 transition hover:-translate-y-0.5 hover:border-[#1a1a1a]/40 hover:bg-[#f1e6d5]"
+          >
+            <span class="block font-mono text-xs uppercase tracking-[0.2em] text-[#8b7355]">Instagram</span>
+            <span class="mt-4 block font-serif text-3xl">{reel.label}</span>
+            <span class="mt-6 block break-all text-sm text-[#5d5348] group-hover:underline">{reel.href}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kosh (कोश)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@0;1&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=IBM+Plex+Mono:wght@300;400&family=Inter:wght@300;400&family=Noto+Serif+Devanagari:wght@300;400;600&display=swap');
+
+        :root {
+            --paper: #f6f2eb;
+            --ink: #1e2638;
+            --muted: #667085;
+            --copper: #b67b57;
+            --line: rgba(182, 123, 87, 0.20);
+        }
+
+        body, .kosh-page {
+            position: relative;
+            background: var(--paper);
+            color: var(--ink);
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            background-image:
+                radial-gradient(rgba(0,0,0,0.02) 0.6px, transparent 0.6px),
+                linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(0,0,0,0.01));
+            background-size: 12px 12px, 100% 100%;
+        }
+
+        /* fern on left */
+        .kosh-page::before {
+            content: "";
+            position: fixed;
+            left: -80px;
+            top: 240px;
+            width: 260px;
+            height: 460px;
+            background: url("https://raw.githubusercontent.com/githubbermoon/ml-portfolio/master/public/ornaments/fern.svg") no-repeat center / contain;
+            opacity: 0.11;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* mandala on right */
+        .kosh-page::after {
+            content: "";
+            position: fixed;
+            right: -90px;
+            top: 120px;
+            width: 420px;
+            height: 420px;
+            background: url("https://raw.githubusercontent.com/githubbermoon/ml-portfolio/master/public/ornaments/mandala.svg") no-repeat center / contain;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .kosh-content {
+            position: relative;
+            z-index: 1;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 80px 32px 140px;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        h1 {
+            font-family: 'EB Garamond', serif;
+            font-size: 4rem;
+            margin: 1rem 0;
+            font-weight: 400;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--muted);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--copper);
+            font-family: 'EB Garamond', serif;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .stamp {
+            position: fixed;
+            bottom: 28px;
+            width: 96px;
+            min-height: 88px;
+            border: 1px solid rgba(120, 110, 100, 0.25);
+            border-radius: 6px;
+            padding: 12px 10px;
+            background: rgba(255, 255, 255, 0.18);
+            color: rgba(90, 80, 70, 0.62);
+            text-align: center;
+            z-index: 1;
+        }
+
+        .stamp-left { left: 28px; }
+        .stamp-right { right: 28px; }
+
+        .stamp-title {
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-family: "Noto Serif Devanagari", serif;
+        }
+
+        .stamp-number {
+            font-size: 16px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            font-family: "Cormorant Garamond", serif;
+        }
+    </style>
+</head>
+<body class="kosh-page">
+    <div class="kosh-content">
+        <header>
+            <div style="color: var(--copper); font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase;">|| ज्ञानं संग्रहयते ||</div>
+            <h1>Kosh (कोश)</h1>
+            <p class="subtitle">A treasury of notes, references, essays, fragments, and field notes.</p>
+        </header>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-title">☀️ Vedic Sciences</div>
+                <p class="card-desc">Structured notes and experiments around ancient sciences, symbolic systems, and computation.</p>
+            </div>
+            <div class="card">
+                <div class="card-title">🍲 Rasam</div>
+                <p class="card-desc">Recipes, kitchen systems, taste experiments, food memory, and process notes.</p>
+            </div>
+            <div class="card">
+                <div class="card-title">👁️ Ananta Nīhāra</div>
+                <p class="card-desc">Perception, intelligence, inner experience, mythic language, and visual essays.</p>
+            </div>
+            <div class="card">
+                <div class="card-title">✎ Field Notes</div>
+                <p class="card-desc">Personal essays, observations, reading notes, and unfinished thoughts.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="stamp stamp-left">
+        <div class="stamp-title">संग्रह</div>
+        <div class="stamp-number">KOSH 01</div>
+    </div>
+    <div class="stamp stamp-right">
+        <div class="stamp-title">हिमवत्</div>
+        <div class="stamp-number">REALMS</div>
+    </div>
+</body>
+</html>
