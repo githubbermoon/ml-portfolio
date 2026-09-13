@@ -2,6 +2,7 @@
   "name": "ml-portfolio",
   "type": "module",
   "version": "0.0.1",
+  "packageManager": "pnpm@10.28.1",
   "scripts": {
     "dev": "astro dev",
     "prepare:professional": "SITE_MODE=professional node scripts/prepare-pages.mjs",
