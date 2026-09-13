@@ -1,167 +1,376 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 
 const base = import.meta.env.BASE_URL;
-const foodCover = base + "images/atmosphere/food-cover.webp";
+const palateCover = base + "images/palate/street-food.webp";
+const pizzaImage = base + "images/palate/pizza-kitchen.webp";
 
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
 if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
 ---
 
-<BaseLayout title="Rasam | Clawd ML Portfolio">
-  <Nav />
-  <main class="section-shell">
-    <section class="library-hero cooking-hero">
+<BaseLayout
+  title="Palate | Kosh"
+  description="Recipes, kitchen systems, taste experiments, food memory, and process notes from Pranjal Prakash Pandey."
+  image={palateCover}
+  bodyClass="palate-page"
+>
+  <main>
+    <section class="palate-cover" aria-labelledby="palate-title">
       <img
-        class="cooking-hero-image"
-        src={foodCover}
-        alt=""
+        class="palate-cover-image"
+        src={palateCover}
+        alt="A warmly lit New York street-food cart at night"
         loading="eager"
         decoding="async"
+        fetchpriority="high"
       />
-      <div class="cooking-hero-copy">
-        <a class="text-xs uppercase tracking-[0.28em] text-mist" href={base + "blog/"}>Back to library</a>
-        <p class="mt-10 text-xs uppercase tracking-[0.35em] text-mist">Cooking</p>
-        <h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">Rasam</h1>
-        <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
-          Recipes, process notes, taste experiments, food memory, and kitchen systems. This section can become both a
-          practical cookbook and a sensory notebook.
-        </p>
+      <div class="palate-shade" aria-hidden="true"></div>
+      <div class="palate-signature" data-no-translate>
+        <a href={base}>Kosh</a>
+        <span>Palate · 01</span>
       </div>
+      <div class="palate-title-wrap">
+        <p>Food · memory · experiment</p>
+        <h1 id="palate-title" style="view-transition-name: palate-title">Palate</h1>
+      </div>
+      <a class="palate-scroll" href="#recipes">
+        <span>Enter the kitchen</span>
+        <span aria-hidden="true">↓</span>
+      </a>
     </section>
-    <section class="mt-12 grid gap-6 md:grid-cols-3">
-      <article class="glass-panel p-6">
-        <p class="text-xs uppercase tracking-[0.24em] text-mist">Template</p>
-        <h2 class="mt-4 text-2xl text-glass">Recipe cards</h2>
-        <p class="mt-3 text-sm leading-6 text-mist">Ingredients, timing, method, variations, and failure notes.</p>
-      </article>
-      <article class="glass-panel p-6">
-        <p class="text-xs uppercase tracking-[0.24em] text-mist">Template</p>
-        <h2 class="mt-4 text-2xl text-glass">Technique notes</h2>
-        <p class="mt-3 text-sm leading-6 text-mist">Grinding, tempering, fermentation, heat control, and texture.</p>
-      </article>
-      <article class="glass-panel p-6">
-        <p class="text-xs uppercase tracking-[0.24em] text-mist">Template</p>
-        <h2 class="mt-4 text-2xl text-glass">Taste logs</h2>
-        <p class="mt-3 text-sm leading-6 text-mist">Small experiments with spice balance, acidity, fat, and aroma.</p>
-      </article>
+
+    <section id="recipes" class="recipe-index">
+      <header class="recipe-heading editorial-reveal">
+        <div>
+          <p>Palate · Recipes</p>
+          <h2>Recipe cards</h2>
+        </div>
+        <p class="recipe-intro">
+          Food notes kept through images, process, memory, and the small decisions that change a dish.
+        </p>
+      </header>
+
+      <div class="recipe-grid">
+        <a class="recipe-card pizza-card editorial-reveal" href={base + "blog/cooking/pizza/"} data-cursor="VIEW">
+          <div class="recipe-image-wrap">
+            <img src={pizzaImage} alt="Pranjal preparing homemade pizzas in his kitchen" loading="lazy" decoding="async" style="view-transition-name: pizza-visual" />
+            <span class="open-mark" aria-hidden="true">↗</span>
+          </div>
+          <div class="recipe-card-copy">
+            <p>Recipe 01 · Homemade</p>
+            <h3 style="view-transition-name: pizza-title">Pizza</h3>
+            <span>A study in dough, heat, sauce, and making it by hand.</span>
+          </div>
+        </a>
+
+        <article class="recipe-note editorial-reveal">
+          <p>Kitchen notebook</p>
+          <h3>Technique notes</h3>
+          <span>Grinding, tempering, fermentation, heat control, and texture.</span>
+        </article>
+
+        <article class="recipe-note editorial-reveal">
+          <p>Sensory notebook</p>
+          <h3>Taste logs</h3>
+          <span>Small experiments with spice balance, acidity, fat, and aroma.</span>
+        </article>
+      </div>
     </section>
   </main>
   <Footer />
 </BaseLayout>
 
 <style>
-  :global(html),
-  :global(body) {
+  :global(html) {
+    scroll-behavior: smooth;
+    background: #080706;
+  }
+
+  :global(body.palate-page) {
+    --recipe-bg: #17120e;
+    --recipe-card: #211a14;
+    --recipe-text: #f1e2c9;
+    --recipe-muted: #bca98d;
+    --recipe-accent: #c55b3f;
+    --recipe-rule: rgb(217 187 145 / 0.24);
     overflow-x: clip;
+    color: #f8f1e7;
+    background: #080706;
   }
 
-  .cooking-hero {
-    width: 100dvw;
-    max-width: 100dvw;
-    min-height: clamp(28rem, 72vh, 46rem);
-    margin-left: calc(50% - 50dvw);
-    padding:
-      clamp(7rem, 14vw, 10rem)
-      max(1.5rem, calc((100dvw - 72rem) / 2 + 2.5rem))
-      clamp(4rem, 8vw, 6rem);
+  :global(html[data-theme="bright"] body.palate-page) {
+    --recipe-bg: #fdfcfb;
+    --recipe-card: #ffffff;
+    --recipe-text: #2a211a;
+    --recipe-muted: #715f4f;
+    --recipe-accent: #9f3d29;
+    --recipe-rule: rgb(75 52 35 / 0.28);
+  }
+
+  :global(body.palate-page .realm-nav) {
+    color: #fff8ed;
+  }
+
+  :global(body.palate-page .realm-nav-inner) {
+    border-color: rgb(255 248 237 / 0.36);
+  }
+
+  :global(body.palate-page .realm-nav[data-scrolled="true"]) {
+    color: #2a1d15;
+    background: transparent;
+  }
+
+  :global(html:not([data-theme="bright"]) body.palate-page .realm-nav[data-scrolled="true"]) {
+    color: #f1e2c9;
+    background: transparent;
+  }
+
+  .palate-cover {
+    position: relative;
+    display: grid;
+    min-height: 100svh;
+    place-items: center;
     isolation: isolate;
-    border-bottom: 1px solid rgb(var(--color-glass) / 0.12);
+    overflow: hidden;
+    background: #080706;
   }
 
-  .cooking-hero::before,
-  .cooking-hero::after {
-    content: "";
+  .palate-cover-image,
+  .palate-shade {
     position: absolute;
     inset: 0;
-    width: auto;
-    height: auto;
-    aspect-ratio: auto;
-    border: 0;
-    border-radius: 0;
-    transform: none;
-    opacity: 1;
-    pointer-events: none;
-  }
-
-  .cooking-hero::before {
-    z-index: 1;
-    background:
-      linear-gradient(90deg, rgb(5 9 14 / 0.86) 0%, rgb(5 9 14 / 0.58) 42%, rgb(5 9 14 / 0.12) 78%, transparent 100%),
-      linear-gradient(to top, rgb(5 9 14 / 0.5) 0%, transparent 50%),
-      radial-gradient(circle at 20% 42%, rgb(245 158 11 / 0.2), transparent 38%);
-  }
-
-  .cooking-hero::after {
-    z-index: -1;
-    background: rgb(var(--color-ink));
-  }
-
-  .cooking-hero-image {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    display: block;
     width: 100%;
     height: 100%;
+  }
+
+  .palate-cover-image {
+    z-index: -2;
     object-fit: cover;
-    object-position: center;
-    filter: saturate(1.08) contrast(1.05);
+    object-position: center 52%;
+    filter: saturate(0.9) contrast(1.06);
+    animation: cover-arrival 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
-  .cooking-hero-copy {
-    position: relative;
-    z-index: 2;
-    max-width: 72rem;
-  }
-
-  .cooking-hero-copy h1,
-  .cooking-hero-copy p,
-  .cooking-hero-copy a {
-    color: rgb(248 250 252);
-    text-shadow: 0 2px 28px rgb(0 0 0 / 0.68);
-  }
-
-  .cooking-hero-copy :global(.text-mist) {
-    color: rgb(226 232 240 / 0.86);
-  }
-
-  [data-theme="bright"] .cooking-hero::before {
+  .palate-shade {
+    z-index: -1;
     background:
-      linear-gradient(90deg, rgb(5 9 14 / 0.82) 0%, rgb(5 9 14 / 0.52) 42%, rgb(5 9 14 / 0.1) 78%, transparent 100%),
-      linear-gradient(to top, rgb(5 9 14 / 0.34) 0%, transparent 50%),
-      radial-gradient(circle at 20% 42%, rgb(245 158 11 / 0.16), transparent 38%);
+      linear-gradient(to bottom, rgb(4 3 2 / 0.5), transparent 34%, transparent 64%, rgb(4 3 2 / 0.68)),
+      linear-gradient(90deg, rgb(4 3 2 / 0.18), transparent 55%, rgb(4 3 2 / 0.22));
   }
 
-  [data-theme="bright"] .cooking-hero-copy h1,
-  [data-theme="bright"] .cooking-hero-copy p,
-  [data-theme="bright"] .cooking-hero-copy a {
-    text-shadow: 0 2px 24px rgb(244 247 251 / 0.9);
+  .palate-signature {
+    position: absolute;
+    top: clamp(1.5rem, 4vh, 3rem);
+    left: clamp(1.5rem, 4vw, 4rem);
+    display: flex;
+    gap: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
   }
 
-  @media (max-width: 720px) {
-    .cooking-hero {
-      min-height: clamp(28rem, 78vh, 38rem);
-      padding:
-        clamp(6rem, 24vw, 8rem)
-        1.5rem
-        clamp(3rem, 13vw, 4.5rem);
+  .palate-signature span:last-child {
+    padding-left: 1rem;
+    border-left: 1px solid rgb(255 255 255 / 0.45);
+    color: rgb(255 255 255 / 0.68);
+  }
+
+  .palate-title-wrap {
+    padding-inline: 1.5rem;
+    text-align: center;
+    text-shadow: 0 3px 34px rgb(0 0 0 / 0.72);
+  }
+
+  .palate-title-wrap p {
+    margin-bottom: 1rem;
+    font-family: var(--font-mono);
+    font-size: clamp(0.55rem, 0.8vw, 0.7rem);
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+  }
+
+  .palate-title-wrap h1 {
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 14vw, 13rem);
+    font-weight: 500;
+    letter-spacing: -0.07em;
+    line-height: 0.8;
+  }
+
+  .palate-scroll {
+    position: absolute;
+    right: clamp(1.5rem, 4vw, 4rem);
+    bottom: clamp(1.5rem, 4vw, 3.5rem);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .palate-scroll span:last-child {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid rgb(255 255 255 / 0.6);
+    border-radius: 50%;
+    place-items: center;
+  }
+
+  .recipe-index {
+    padding: clamp(6rem, 11vw, 10rem) max(1.5rem, calc((100vw - 76rem) / 2));
+    color: var(--recipe-text);
+    background: var(--recipe-bg);
+  }
+
+  .recipe-heading {
+    display: grid;
+    grid-template-columns: 1fr minmax(16rem, 26rem);
+    gap: 4rem;
+    align-items: end;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--recipe-rule);
+  }
+
+  .recipe-heading > div > p,
+  .recipe-card-copy p,
+  .recipe-note > p {
+    color: var(--recipe-accent);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .recipe-heading h2 {
+    margin-top: 0.9rem;
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 450;
+    letter-spacing: -0.055em;
+    line-height: 0.9;
+  }
+
+  .recipe-intro {
+    color: var(--recipe-muted);
+    font-family: var(--font-body);
+    line-height: 1.7;
+  }
+
+  .recipe-grid {
+    display: grid;
+    grid-template-columns: 1.45fr 0.78fr 0.78fr;
+    gap: 1px;
+    margin-top: 3rem;
+    background: var(--recipe-rule);
+    border: 1px solid var(--recipe-rule);
+  }
+
+  .recipe-card,
+  .recipe-note {
+    min-width: 0;
+    background: var(--recipe-card);
+  }
+
+  .recipe-card {
+    display: block;
+  }
+
+  .recipe-image-wrap {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #070707;
+  }
+
+  .recipe-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .recipe-card:hover .recipe-image-wrap img {
+    transform: scale(1.035);
+  }
+
+  .open-mark {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: grid;
+    width: 2.7rem;
+    height: 2.7rem;
+    border-radius: 50%;
+    color: var(--recipe-bg);
+    background: var(--recipe-text);
+    place-items: center;
+  }
+
+  .recipe-card-copy,
+  .recipe-note {
+    padding: 1.8rem;
+  }
+
+  .recipe-card-copy h3,
+  .recipe-note h3 {
+    margin-top: 0.7rem;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 480;
+  }
+
+  .recipe-card-copy > span,
+  .recipe-note > span {
+    display: block;
+    margin-top: 0.8rem;
+    color: var(--recipe-muted);
+    font-size: 0.87rem;
+    line-height: 1.65;
+  }
+
+  .recipe-note {
+    min-height: 16rem;
+  }
+
+  @keyframes cover-arrival {
+    from { opacity: 0; transform: scale(1.025); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @media (max-width: 820px) {
+    .palate-cover-image {
+      object-position: 58% center;
     }
 
-    .cooking-hero::before {
-      background:
-        linear-gradient(to bottom, rgb(5 9 14 / 0.76) 0%, rgb(5 9 14 / 0.48) 42%, rgb(5 9 14 / 0.7) 100%),
-        linear-gradient(90deg, rgb(5 9 14 / 0.7), rgb(5 9 14 / 0.12)),
-        radial-gradient(circle at 28% 34%, rgb(245 158 11 / 0.18), transparent 42%);
+    .palate-title-wrap h1 {
+      font-size: clamp(4.5rem, 24vw, 8rem);
     }
 
-    [data-theme="bright"] .cooking-hero::before {
-      background:
-        linear-gradient(to bottom, rgb(5 9 14 / 0.76) 0%, rgb(5 9 14 / 0.48) 42%, rgb(5 9 14 / 0.7) 100%),
-        linear-gradient(90deg, rgb(5 9 14 / 0.7), rgb(5 9 14 / 0.12)),
-        radial-gradient(circle at 28% 34%, rgb(245 158 11 / 0.16), transparent 42%);
+    .recipe-heading {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .recipe-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .recipe-note {
+      min-height: 12rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .palate-cover-image {
+      animation: none;
     }
   }
 </style>

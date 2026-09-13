@@ -33,7 +33,7 @@ export default function HeroContent() {
           className="text-7xl md:text-9xl font-black text-glow-cinematic"
           style={{ filter: 'url(#liquid-hero-filter)' }}
         >
-          Pranjal Prakash
+          Pranjal Prakash Pandey
         </h1>
       </motion.div>
 

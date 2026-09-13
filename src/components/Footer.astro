@@ -6,8 +6,11 @@ const isRealmsMode = import.meta.env.SITE_MODE === "realms";
 ---
 
 {isRealmsMode ? (
-  <footer class="bg-[#fdfcfb] py-10 text-center text-[10px] uppercase tracking-[0.28em] text-slate-400">
-    <p>@himavat</p>
+  <footer class="realms-rights-footer">
+    <div>
+      <p>© 2026 Himavat — Pranjal Prakash Pandey. All rights reserved.</p>
+      <a href={base + "rights/"}>Usage &amp; Rights</a>
+    </div>
   </footer>
 ) : (
   <footer class="relative mt-20 min-h-[30vh] flex items-end overflow-hidden">
@@ -36,7 +39,7 @@ const isRealmsMode = import.meta.env.SITE_MODE === "realms";
       <div class="grid gap-10 md:grid-cols-[2fr_1fr] items-end">
         <div class="space-y-4">
           <p class="text-2xl font-semibold text-glass md:text-3xl">
-            Pranjal Prakash
+            Pranjal Prakash Pandey
           </p>
           <p class="text-sm uppercase tracking-[0.2em] text-mist">
             ML + CV portfolio
@@ -68,7 +71,7 @@ const isRealmsMode = import.meta.env.SITE_MODE === "realms";
         <div
           class="flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-[0.25em] text-mist/40 font-medium"
         >
-          <p>© 2026 Pranjal Prakash</p>
+          <p>© 2026 Pranjal Prakash Pandey</p>
           <div class="flex items-center gap-6">
             <span>V 2.0.1</span>
           </div>
@@ -77,3 +80,52 @@ const isRealmsMode = import.meta.env.SITE_MODE === "realms";
     </div>
   </footer>
 )}
+
+<style>
+  .realms-rights-footer {
+    border-top: 1px solid rgb(217 187 145 / 0.2);
+    color: #a99478;
+    background: #17120e;
+  }
+
+  :global(html[data-theme="bright"]) .realms-rights-footer {
+    border-color: rgb(42 29 21 / 0.12);
+    color: #74685e;
+    background: #fdfcfb;
+  }
+
+  .realms-rights-footer > div {
+    display: flex;
+    width: min(100% - 3rem, 1240px);
+    margin-inline: auto;
+    padding-block: 1.6rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .realms-rights-footer a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.25rem;
+    transition: color 160ms ease, text-decoration-color 160ms ease;
+  }
+
+  .realms-rights-footer a:hover {
+    color: #b64c34;
+    text-decoration-color: currentColor;
+  }
+
+  @media (max-width: 640px) {
+    .realms-rights-footer > div {
+      align-items: flex-start;
+      flex-direction: column;
+      line-height: 1.7;
+    }
+  }
+</style>

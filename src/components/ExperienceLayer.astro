@@ -1,0 +1,103 @@
+---
+const isRealmsMode = import.meta.env.SITE_MODE === "realms";
+---
+
+{isRealmsMode && (
+  <>
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <div class="context-cursor" aria-hidden="true"><span>OPEN</span></div>
+    <script is:inline>
+      (() => {
+        const initExperience = () => {
+          const root = document.documentElement;
+          const cursor = document.querySelector('.context-cursor');
+          const cursorText = cursor?.querySelector('span');
+          const progress = document.querySelector('.reading-progress span');
+          const finePointer = matchMedia('(pointer:fine)').matches;
+          const reduced = matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+          if (finePointer && cursor && !reduced) {
+            let x = -80, y = -80, tx = x, ty = y;
+            const draw = () => {
+              x += (tx - x) * .18;
+              y += (ty - y) * .18;
+              cursor.style.transform = `translate3d(${x}px,${y}px,0)`;
+              requestAnimationFrame(draw);
+            };
+            addEventListener('pointermove', (event) => { tx = event.clientX + 14; ty = event.clientY + 14; }, { passive: true });
+            document.querySelectorAll('[data-cursor]').forEach((element) => {
+              element.addEventListener('pointerenter', () => {
+                if (cursorText) cursorText.textContent = element.dataset.cursor || 'OPEN';
+                cursor.classList.add('is-visible');
+              });
+              element.addEventListener('pointerleave', () => cursor.classList.remove('is-visible'));
+            });
+            draw();
+          }
+
+          const updateProgress = () => {
+            if (!progress) return;
+            const available = document.documentElement.scrollHeight - innerHeight;
+            progress.style.transform = `scaleX(${available > 0 ? Math.min(1, scrollY / available) : 0})`;
+          };
+          addEventListener('scroll', updateProgress, { passive: true });
+          updateProgress();
+
+          document.querySelectorAll('[data-preview-card]').forEach((card) => {
+            card.addEventListener('pointermove', (event) => {
+              card.style.setProperty('--preview-x', `${Math.min(innerWidth - 260, event.clientX + 26)}px`);
+              card.style.setProperty('--preview-y', `${Math.min(innerHeight - 220, event.clientY + 20)}px`);
+            });
+          });
+          root.classList.add('experience-ready');
+        };
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initExperience, { once: true });
+        else initExperience();
+      })();
+    </script>
+  </>
+)}
+
+<style>
+  .reading-progress {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 220;
+    height: 1px;
+    pointer-events: none;
+  }
+  .reading-progress span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #b34a32;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  .context-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 260;
+    display: grid;
+    width: 2.8rem;
+    height: 2.8rem;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, currentColor 44%, transparent);
+    border-radius: 50%;
+    color: var(--inner-ink, #2a211a);
+    background: color-mix(in srgb, var(--inner-paper, #fdfcfb) 84%, transparent);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms ease, scale 220ms cubic-bezier(.22,1,.36,1);
+    scale: .72;
+    backdrop-filter: blur(8px);
+  }
+  .context-cursor.is-visible { opacity: 1; scale: 1; }
+  .context-cursor span { font: 500 .48rem/1 var(--font-mono); letter-spacing: .12em; }
+  @media (pointer: coarse), (prefers-reduced-motion: reduce) {
+    .context-cursor { display: none; }
+  }
+</style>

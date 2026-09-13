@@ -1,12 +1,14 @@
 ---
 import "../styles/global.css";
+import "../styles/realms-inner.css";
 import Spotlight from "../islands/Spotlight";
 import ThemeToggle from "../islands/ThemeToggle";
 import AnalyticsHotkey from "../islands/AnalyticsHotkey";
+import ExperienceLayer from "../components/ExperienceLayer.astro";
 
 const {
-  title = "Pranjal Prakash | ML Portfolio & Realms",
-  description = "Machine learning portfolio and Realms archive by Pranjal Prakash: computer vision projects, ML systems, technical writing, and immersive field notes.",
+  title = "Pranjal Prakash Pandey | ML Portfolio & Realms",
+  description = "Machine learning portfolio and Realms archive by Pranjal Prakash Pandey: computer vision projects, ML systems, technical writing, and immersive field notes.",
   bodyClass,
   image = "/ananta-nihara-hero.png",
   type = "website",
@@ -21,6 +23,15 @@ const isRealmsInnerPage = isRealmsMode && Astro.url.pathname !== "/";
 const goatCounterCode = import.meta.env.PUBLIC_GOATCOUNTER_CODE;
 const siteOrigin = (Astro.site ?? new URL(isRealmsMode ? "https://realms-58q.pages.dev" : "https://githubbermoon.github.io")).toString();
 const normalizedBase = base.endsWith("/") ? base : `${base}/`;
+const normalizedPath = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const isKoshIndex = isRealmsMode && normalizedPath === `${normalizedBase}blog/`;
+const isImmersiveRealmsPage = isRealmsMode && normalizedPath.startsWith(`${normalizedBase}blog/cooking/`);
+const isRealmsManuscriptInner = isRealmsInnerPage && !isKoshIndex && !isImmersiveRealmsPage;
+const realmsBackHref = normalizedPath.startsWith(`${normalizedBase}blog/cooking/pizza/`)
+  ? `${normalizedBase}blog/cooking/`
+  : normalizedPath.startsWith(`${normalizedBase}blog/`) && normalizedPath !== `${normalizedBase}blog/`
+    ? `${normalizedBase}blog/`
+    : normalizedBase;
 const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 const imagePath = image.startsWith("http")
   ? image
@@ -30,10 +41,11 @@ const imagePath = image.startsWith("http")
       ? `${normalizedBase}${image.slice(1)}`
       : `${normalizedBase}${image}`;
 const imageUrl = new URL(imagePath, siteOrigin).toString();
-const siteName = isRealmsMode ? "Realms by Pranjal Prakash" : "Pranjal Prakash | Machine Learning Portfolio";
+const siteName = isRealmsMode ? "Realms by Pranjal Prakash Pandey" : "Pranjal Prakash Pandey | Machine Learning Portfolio";
+const rightsUrl = new URL(`${normalizedBase}rights/`, siteOrigin).toString();
 const ogImageAlt = isRealmsMode
-  ? "Realms: cinematic writing archive by Pranjal Prakash"
-  : "Pranjal Prakash machine learning portfolio and technical writing";
+  ? "Realms: cinematic writing archive by Pranjal Prakash Pandey"
+  : "Pranjal Prakash Pandey machine learning portfolio and technical writing";
 const blogPassword = import.meta.env.PUBLIC_BLOG_PASSWORD ?? "open";
 const blogPrefix = `${normalizedBase}blog`;
 const devBlogPrefix = "/blog";
@@ -52,13 +64,24 @@ const jsonLd = {
   image: imageUrl,
   author: {
     "@type": "Person",
-    name: "Pranjal Prakash",
+    name: "Pranjal Prakash Pandey",
     url: siteOrigin,
-    sameAs: [
-      "https://github.com/githubbermoon",
-      "https://linkedin.com/in/pranjal-prakash",
-    ],
+    ...(!isRealmsMode && {
+      sameAs: [
+        "https://github.com/githubbermoon",
+        "https://linkedin.com/in/pranjal-prakash",
+      ],
+    }),
   },
+  ...(isRealmsMode && {
+    copyrightHolder: {
+      "@type": "Person",
+      name: "Pranjal Prakash Pandey",
+      alternateName: "Himavat",
+    },
+    copyrightYear: 2026,
+    license: rightsUrl,
+  }),
   ...(publishedDate ? { datePublished: publishedDate } : {}),
   ...(modifiedDate ? { dateModified: modifiedDate } : {}),
   ...(tags.length ? { keywords: tags.join(", ") } : {}),
@@ -82,7 +105,9 @@ const isBlogRoute =
     <link rel="sitemap" type="application/xml" href={base + "sitemap.xml"} />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#050505" />
-    <meta name="author" content="Pranjal Prakash" />
+    <meta name="author" content="Pranjal Prakash Pandey" />
+    {isRealmsMode && <meta name="copyright" content="© 2026 Himavat — Pranjal Prakash Pandey. All rights reserved." />}
+    {isRealmsMode && <meta name="dcterms.rights" content={rightsUrl} />}
     <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -94,7 +119,7 @@ const isBlogRoute =
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
-    <meta name="twitter:creator" content="@githubbermoon" />
+    {!isRealmsMode && <meta name="twitter:creator" content="@githubbermoon" />}
     {publishedDate && <meta property="article:published_time" content={publishedDate} />}
     {modifiedDate && <meta property="article:modified_time" content={modifiedDate} />}
     {tags.map((tag: string) => <meta property="article:tag" content={tag} />)}
@@ -183,28 +208,21 @@ const isBlogRoute =
     )}
     <title>{title}</title>
   </head>
-  <body class:list={[bodyClass, isBlogRoute && "blog-locked"]}>
-    {isRealmsInnerPage && (
-      <a
-        href={base}
-        aria-label="Back to Realms home"
-        class="fixed left-8 top-8 z-[100] text-sm uppercase tracking-[0.2em] text-slate-700 transition hover:text-slate-950"
-      >
-        ← Index
-      </a>
-    )}
-    
-    {isRealmsInnerPage && (
-      <div class="fixed top-8 right-8 z-[100] text-right font-mono text-[10px] uppercase tracking-[0.2em] text-slate-600">
-        <p>31°52'08.33"N 77°46'53.81"E</p>
-      </div>
-    )}
-    {!isRealmsInnerPage && (
+  <body class:list={[bodyClass, isBlogRoute && "blog-locked", isRealmsManuscriptInner && "realms-manuscript-inner"]}>
+    {!isRealmsMode && !isRealmsInnerPage && (
       <div class="fixed top-6 right-6 z-[100] pointer-events-auto">
         <ThemeToggle client:load />
       </div>
     )}
     <Spotlight client:load />
+    <ExperienceLayer />
+    {isRealmsInnerPage && (
+      <a class="realms-back-link" href={realmsBackHref} aria-label="Back to previous section" data-cursor="BACK">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 6 9 12l6 6" />
+        </svg>
+      </a>
+    )}
     <slot />
     {!isRealmsMode && <AnalyticsHotkey client:load goatCounterCode={goatCounterCode} />}
     {isRealmsMode && (
@@ -290,5 +308,35 @@ const isBlogRoute =
   }
   :global(.blog-gate-card) {
     width: min(90vw, 420px);
+  }
+  :global(.realms-back-link) {
+    position: fixed;
+    top: 1.3rem;
+    left: max(1rem, calc((100vw - 1240px) / 2));
+    z-index: 145;
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    color: #3f3127;
+    opacity: 0.72;
+    transition: color 160ms ease, opacity 160ms ease, transform 160ms ease;
+  }
+  :global(html:not([data-theme="bright"]) .realms-back-link) {
+    color: #ead9be;
+  }
+  :global(.realms-back-link:hover) {
+    color: #a1442f;
+    opacity: 1;
+    transform: translateX(-2px);
+  }
+  :global(.realms-back-link svg) {
+    width: 0.9rem;
+    height: 0.9rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 </style>

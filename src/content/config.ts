@@ -24,4 +24,19 @@ const blog = defineCollection({
 	}),
 });
 
-export const collections = { projects, blog };
+const realms = defineCollection({
+	type: 'content',
+	schema: z.object({
+		title: z.string(),
+		summary: z.string(),
+		date: z.date(),
+		updated: z.date().optional(),
+		category: z.enum(['texts-systems', 'origins-implementations', 'field-notes', 'essay']),
+		kind: z.enum(['study', 'essay', 'research-note', 'experiment', 'implementation', 'field-note']),
+		status: z.enum(['draft', 'ongoing', 'published', 'archived']).default('draft'),
+		cover: z.string().optional(),
+		tags: z.array(z.string()).default([]),
+	}),
+});
+
+export const collections = { projects, blog, realms };

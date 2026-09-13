@@ -1,39 +1,63 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 
 const base = import.meta.env.BASE_URL;
+const entries = (await getCollection("realms"))
+  .filter((entry) => entry.data.category === "origins-implementations" && entry.data.status !== "archived" && (!import.meta.env.PROD || entry.data.status !== "draft"))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<BaseLayout
-  title="Projects | Ancient Sciences Builds"
-  description="Future Realms projects inspired by ancient sciences, symbolic systems, and practical tools."
-  tags={["ancient sciences", "Vedic sciences", "projects", "Realms"]}
->
+<BaseLayout title="Origins & Implementations | Kosh" description="Functional builds and empirical tools." bodyClass="implementations-page">
   <Nav />
-  <main class="section-shell">
-    <h1 class="text-4xl md:text-5xl">Ancient Sciences Projects</h1>
-    <p class="mt-4 max-w-2xl text-mist">
-      This page will hold projects and prototypes built around Vedic sciences,
-      symbolic systems, traditional knowledge, and practical tools.
-    </p>
-    <div class="mt-10 grid gap-6 md:grid-cols-2">
-      <article class="glass-panel p-6">
-        <p class="text-sm text-mist">Coming soon</p>
-        <h2 class="mt-3 text-2xl text-glass">Vedic sciences tools</h2>
-        <p class="mt-3 text-mist">
-          Future calculators, visualizations, diagrams, and research interfaces will live here.
-        </p>
-      </article>
-      <article class="glass-panel p-6">
-        <p class="text-sm text-mist">Direction</p>
-        <h2 class="mt-3 text-2xl text-glass">Ancient knowledge × software</h2>
-        <p class="mt-3 text-mist">
-          A separate project surface for Realms, not the professional GitHub Pages portfolio.
-        </p>
-      </article>
-    </div>
+  <main class="workshop-page">
+    <header class="workshop-hero">
+      <p class="folio">Workshop · OI</p><h1>Origins <i>&amp;</i><br />Implementations</h1>
+      <p>Functional builds and empirical tools.</p>
+    </header>
+    <section class="dossiers" aria-label="Implementation dossiers">
+      {entries.map((entry, index) => (
+        <a class="dossier editorial-reveal" href={`${base}archive/${entry.slug}/`} data-cursor="OPEN">
+          <div class="dossier-number">{String(index + 1).padStart(2, "0")}</div>
+          <div class="dossier-title"><p>{entry.data.kind.replace("-", " ")} · {entry.data.status}</p><h2>{entry.data.title}</h2></div>
+          <p class="dossier-summary">{entry.data.summary}</p>
+          <dl><div><dt>Question</dt><dd>What can be tested?</dd></div><div><dt>Method</dt><dd>Build · observe · revise</dd></div><div><dt>State</dt><dd>{entry.data.status}</dd></div></dl>
+          <span class="open">Open dossier ↗</span>
+        </a>
+      ))}
+    </section>
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  :global(body.implementations-page) { background: var(--inner-paper); color: var(--inner-ink); }
+  .workshop-page { width: min(100% - 3rem, 1240px); margin: auto; padding: clamp(8rem, 14vw, 12rem) 0 7rem; }
+  .workshop-hero { display: grid; grid-template-columns: 1fr 3fr; column-gap: 3rem; align-items: end; }
+  .folio, .dossier-title > p, dt, .open { font-family: var(--font-mono); font-size: .57rem; letter-spacing: .18em; text-transform: uppercase; }
+  .folio { align-self: start; color: var(--inner-accent); }
+  h1 { font-family: var(--font-display); font-size: clamp(4rem, 8.5vw, 8rem); font-weight: 400; line-height: .82; letter-spacing: -.055em; }
+  h1 i { color: var(--inner-accent); font-weight: 300; }
+  .workshop-hero > p:last-child { grid-column: 2; max-width: 30rem; margin-top: 2rem; color: var(--inner-muted); font-family: var(--font-display); font-size: 1.45rem; }
+  .dossiers { margin-top: clamp(6rem, 11vw, 10rem); border-top: 1px solid var(--inner-rule); }
+  .dossier { position: relative; display: grid; grid-template-columns: .4fr 1.5fr 1.2fr; gap: clamp(1.5rem, 4vw, 4rem); padding: clamp(2rem, 5vw, 4rem) 0; border-bottom: 1px solid var(--inner-rule); color: inherit; }
+  .dossier-number { color: var(--inner-accent); font-family: var(--font-display); font-size: 2.8rem; font-style: italic; }
+  .dossier-title > p { color: var(--inner-muted); }
+  h2 { margin-top: 1rem; font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 400; line-height: .95; }
+  .dossier-summary { color: var(--inner-muted); font-size: .95rem; line-height: 1.75; }
+  dl { grid-column: 2 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 1rem; background: var(--inner-rule); }
+  dl div { padding: 1rem; background: var(--inner-paper); }
+  dt { color: var(--inner-accent); }
+  dd { margin-top: .65rem; color: var(--inner-muted); font-size: .78rem; }
+  .open { position: absolute; right: 0; bottom: 1.2rem; color: var(--inner-accent); opacity: 0; transform: translateX(-8px); transition: .2s ease; }
+  .dossier:hover .open { opacity: 1; transform: none; }
+  @media (max-width: 760px) {
+    .workshop-page { width: min(100% - 2rem, 1240px); padding-top: 7rem; }
+    .workshop-hero, .dossier { grid-template-columns: 1fr; }
+    .workshop-hero > p:last-child, dl { grid-column: 1; }
+    dl { grid-template-columns: 1fr; }
+    .open { position: static; opacity: 1; transform: none; }
+  }
+</style>

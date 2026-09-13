@@ -1,0 +1,603 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const base = import.meta.env.BASE_URL;
+const pizzaImage = base + "images/palate/pizza-kitchen.webp";
+
+const isRealmsMode = import.meta.env.SITE_MODE === "realms";
+if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
+---
+
+<BaseLayout
+  title="Pizza | Palate · Kosh"
+  description="A homemade pizza study from Palate by Pranjal Prakash Pandey."
+  image={pizzaImage}
+  bodyClass="pizza-page"
+>
+  <main class="pizza-stage">
+    <div class="frame-rules" aria-hidden="true">
+      <span></span><span></span>
+    </div>
+    <p class="pizza-kicker">Palate · Recipe 01</p>
+    <h1 style="view-transition-name: pizza-title">Pizza</h1>
+    <img
+      src={pizzaImage}
+      alt="Pranjal preparing homemade pizzas in his kitchen"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+      style="view-transition-name: pizza-visual"
+    />
+    <a class="pizza-back" href={base + "blog/cooking/#recipes"}>← Back to Palate</a>
+    <p class="pizza-note">Dough · sauce · heat · hand</p>
+    <aside class="archive-strip" aria-label="Palate, process, memory, 2026">
+      <p>Palate <i>/</i> Process <i>/</i> Memory <i>/</i> 2026</p>
+    </aside>
+  </main>
+
+  <section class="pizza-process" aria-labelledby="method-title">
+    <header class="process-header editorial-reveal">
+      <p>Palate · Working recipe · 2026</p>
+      <h2 id="method-title">A simple home pizza</h2>
+      <span>This is a flexible starting point—adjust the timing and heat to your own kitchen.</span>
+    </header>
+
+    <div class="recipe-layout">
+      <aside class="ingredients editorial-reveal" aria-labelledby="ingredients-title">
+        <p class="section-number">01 / Ingredients</p>
+        <h3 id="ingredients-title">What you need</h3>
+        <ul>
+          <li class="ingredient-item" tabindex="0" data-caption="Flour · structure">
+            <span>Flour</span><small>300 g</small>
+            <img src={base + "images/palate/ingredients/flour.webp"} alt="Flour and dough on the kitchen counter" loading="lazy" />
+          </li>
+          <li class="ingredient-item" tabindex="0" data-caption="Water + yeast · fermentation">
+            <span>Warm water + yeast</span><small>200 ml + 1 tsp</small>
+            <img src={base + "images/palate/ingredients/olive-oil.webp"} alt="Bottles and dough-making ingredients" loading="lazy" />
+          </li>
+          <li class="ingredient-item" tabindex="0" data-caption="Tomato · acidity">
+            <span>Tomato sauce</span><small>½ cup</small>
+            <img src={base + "images/palate/ingredients/sauce.webp"} alt="Tomato sauce prepared in the kitchen" loading="lazy" />
+          </li>
+          <li class="ingredient-item" tabindex="0" data-caption="Mozzarella · melt">
+            <span>Mozzarella</span><small>150 g</small>
+            <img src={base + "images/palate/ingredients/mozzarella.webp"} alt="Cheese and pizza ingredients on the counter" loading="lazy" />
+          </li>
+          <li class="ingredient-item" tabindex="0" data-caption="Vegetables · texture">
+            <span>Vegetable toppings</span><small>As desired</small>
+            <img src={base + "images/palate/ingredients/toppings.webp"} alt="Freshly sliced pizza toppings" loading="lazy" />
+          </li>
+          <li class="ingredient-item" tabindex="0" data-caption="Oil + salt · finish">
+            <span>Olive oil + salt</span><small>To finish</small>
+            <img src={base + "images/palate/ingredients/olive-oil.webp"} alt="Olive oil among the kitchen ingredients" loading="lazy" />
+          </li>
+        </ul>
+        <p class="hover-note">Hover or focus an ingredient to reveal its kitchen study.</p>
+      </aside>
+
+      <div class="method editorial-reveal" aria-labelledby="steps-title">
+        <p class="section-number">02 / Process</p>
+        <h3 id="steps-title">Method</h3>
+        <ol>
+          <li>
+            <span>01</span>
+            <div><h4>Wake the dough</h4><p>Mix warm water and yeast. Add flour and salt, then knead until smooth and elastic.</p></div>
+            <small>10 min</small>
+          </li>
+          <li>
+            <span>02</span>
+            <div><h4>Let it rise</h4><p>Cover the dough and leave it somewhere warm until doubled in size.</p></div>
+            <small>60–90 min</small>
+          </li>
+          <li>
+            <span>03</span>
+            <div><h4>Build the base</h4><p>Heat the oven as high as it goes. Stretch the dough gently, keeping a little air in the rim.</p></div>
+            <small>8 min</small>
+          </li>
+          <li>
+            <span>04</span>
+            <div><h4>Top with restraint</h4><p>Add a thin layer of sauce, torn mozzarella, vegetables, and a small drizzle of olive oil.</p></div>
+            <small>5 min</small>
+          </li>
+          <li>
+            <span>05</span>
+            <div><h4>Bake and rest</h4><p>Bake until the crust is deeply golden. Rest briefly before slicing so the centre settles.</p></div>
+            <small>8–12 min</small>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <footer class="process-footer">
+      <a href={base + "blog/cooking/#recipes"}>← Return to Palate</a>
+      <p>Make · observe · adjust · repeat</p>
+    </footer>
+  </section>
+</BaseLayout>
+
+<style>
+  :global(html) {
+    background: #050505;
+  }
+
+  :global(body.pizza-page) {
+    --process-bg: #17120e;
+    --process-text: #f1e2c9;
+    --process-muted: #bca98d;
+    --process-accent: #c55b3f;
+    --process-rule: rgb(217 187 145 / 0.24);
+    --process-preview: #211a14;
+    overflow-x: clip;
+    color: #fff8ed;
+    background: #050505;
+  }
+
+  :global(html[data-theme="bright"] body.pizza-page) {
+    --process-bg: #eee8dc;
+    --process-text: #29231e;
+    --process-muted: #6e6257;
+    --process-accent: #9b462e;
+    --process-rule: rgb(41 35 30 / 0.25);
+    --process-preview: #e7ded0;
+  }
+
+  .pizza-stage {
+    --archive-strip: 4.75rem;
+    position: relative;
+    display: grid;
+    width: 100%;
+    min-height: 100svh;
+    place-items: center;
+    isolation: isolate;
+    overflow: hidden;
+    background: #050505;
+  }
+
+  .pizza-stage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      linear-gradient(to bottom, rgb(0 0 0 / 0.22), transparent 24%, transparent 76%, rgb(0 0 0 / 0.5)),
+      radial-gradient(circle at 61% 16%, rgb(197 169 137 / 0.1), transparent 30%);
+  }
+
+  .frame-rules {
+    position: absolute;
+    inset: 0 var(--archive-strip) 0 0;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .frame-rules span {
+    position: absolute;
+    display: block;
+    background: rgb(235 231 221 / 0.16);
+  }
+
+  .frame-rules span:nth-child(1) {
+    top: clamp(7rem, 16vh, 10rem);
+    right: 0;
+    left: 0;
+    height: 1px;
+  }
+
+  .frame-rules span:nth-child(2) {
+    right: 0;
+    bottom: clamp(4rem, 8vh, 5.5rem);
+    left: 0;
+    height: 1px;
+  }
+
+  .pizza-stage img {
+    position: absolute;
+    top: 0;
+    right: -10vw;
+    bottom: -22vh;
+    left: -10vw;
+    z-index: 1;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center bottom;
+    filter: none;
+    animation: pizza-arrival 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .pizza-stage h1 {
+    position: absolute;
+    top: 47%;
+    left: calc((100% - var(--archive-strip)) / 2 + 11vw);
+    z-index: 0;
+    margin: 0;
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: clamp(8rem, 21vw, 20rem);
+    font-weight: 520;
+    letter-spacing: -0.07em;
+    line-height: 0.8;
+    transform: translate(-50%, -50%);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .pizza-kicker,
+  .pizza-back,
+  .pizza-note {
+    position: absolute;
+    z-index: 4;
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .pizza-kicker {
+    top: clamp(1.5rem, 4vh, 3rem);
+    left: clamp(1.5rem, 4vw, 4rem);
+  }
+
+  .pizza-back {
+    bottom: clamp(1.5rem, 4vw, 3.5rem);
+    left: clamp(1.5rem, 4vw, 4rem);
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgb(255 255 255 / 0.5);
+  }
+
+  .pizza-note {
+    right: calc(var(--archive-strip) + clamp(1.5rem, 3vw, 3rem));
+    bottom: clamp(1.5rem, 4vw, 3.5rem);
+    color: rgb(255 248 237 / 0.7);
+  }
+
+  .archive-strip {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    display: grid;
+    width: var(--archive-strip);
+    border-left: 0;
+    background: transparent;
+    place-items: center;
+  }
+
+  .archive-strip p {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: rgb(235 231 221 / 0.72);
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    font-style: normal;
+    letter-spacing: 0.23em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  .archive-strip i {
+    color: #b85d3a;
+    font-style: normal;
+  }
+
+  .pizza-process {
+    position: relative;
+    z-index: 6;
+    padding: clamp(5rem, 9vw, 8rem) max(1.5rem, calc((100vw - 78rem) / 2));
+    color: var(--process-text);
+    background: var(--process-bg);
+  }
+
+  .process-header {
+    display: grid;
+    grid-template-columns: 0.7fr 1.6fr 0.9fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: end;
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+    border-bottom: 1px solid var(--process-rule);
+  }
+
+  .process-header > p,
+  .section-number,
+  .hover-note,
+  .process-footer {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .process-header > p,
+  .section-number {
+    color: var(--process-accent);
+  }
+
+  .process-header h2 {
+    max-width: 11ch;
+    font-family: var(--font-display);
+    font-size: clamp(3.4rem, 7vw, 6.8rem);
+    font-weight: 450;
+    letter-spacing: -0.06em;
+    line-height: 0.88;
+  }
+
+  .process-header > span {
+    color: var(--process-muted);
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+
+  .recipe-layout {
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.75fr) minmax(0, 1.25fr);
+    gap: clamp(4rem, 9vw, 9rem);
+    padding-block: clamp(5rem, 9vw, 8rem);
+  }
+
+  .ingredients h3,
+  .method > h3 {
+    margin-top: 0.9rem;
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.6rem);
+    font-weight: 460;
+    letter-spacing: -0.04em;
+  }
+
+  .ingredients ul,
+  .method ol {
+    margin-top: 2.2rem;
+    border-top: 1px solid var(--process-rule);
+  }
+
+  .ingredients ul { counter-reset: ingredient; }
+
+  .ingredient-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.05rem 0;
+    border-bottom: 1px solid var(--process-rule);
+    outline: none;
+    cursor: crosshair;
+    counter-increment: ingredient;
+  }
+
+  .ingredient-item::before {
+    content: counter(ingredient, decimal-leading-zero);
+    position: absolute;
+    left: -2rem;
+    color: var(--process-accent);
+    font-family: var(--font-mono);
+    font-size: .48rem;
+    letter-spacing: .1em;
+  }
+
+  .ingredient-item::after {
+    content: attr(data-caption);
+    position: absolute;
+    top: calc(50% + clamp(5.5rem, 8.5vw, 7.5rem));
+    left: calc(100% + 1.85rem);
+    z-index: 9;
+    width: clamp(10rem, 16vw, 14rem);
+    color: var(--process-muted);
+    font-family: var(--font-mono);
+    font-size: .48rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+  }
+
+  .ingredient-item > span {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    transition: color 180ms ease, transform 180ms ease;
+  }
+
+  .ingredient-item > small {
+    color: var(--process-muted);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ingredient-item > img {
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 1.5rem);
+    z-index: 8;
+    width: clamp(11rem, 17vw, 15rem);
+    aspect-ratio: 4 / 3;
+    border: 1px solid var(--process-rule);
+    padding: 0.35rem;
+    object-fit: cover;
+    background: var(--process-preview);
+    box-shadow: 0 1.2rem 3rem rgb(41 35 30 / 0.2);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(0.8rem, -50%) rotate(1.5deg);
+    transition: opacity 180ms ease, transform 220ms ease;
+  }
+
+  .ingredient-item:nth-child(even) > img {
+    transform: translate(0.8rem, -50%) rotate(-1.5deg);
+  }
+
+  .ingredient-item:hover > span,
+  .ingredient-item:focus-visible > span {
+    color: var(--process-accent);
+    transform: translateX(0.35rem);
+  }
+
+  .ingredient-item:hover > img,
+  .ingredient-item:focus-visible > img {
+    opacity: 1;
+    transform: translate(0, -50%) rotate(0);
+  }
+
+  .ingredient-item:hover::after,
+  .ingredient-item:focus-visible::after { opacity: 1; }
+
+  .hover-note {
+    margin-top: 1.4rem;
+    color: var(--process-muted);
+    letter-spacing: 0.12em;
+    line-height: 1.6;
+  }
+
+  .method ol > li {
+    display: grid;
+    grid-template-columns: 2rem 1fr auto;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--process-rule);
+  }
+
+  .method li > span,
+  .method li > small {
+    padding-top: 0.3rem;
+    color: var(--process-accent);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+  }
+
+  .method li > small {
+    color: var(--process-muted);
+    white-space: nowrap;
+  }
+
+  .method h4 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 480;
+  }
+
+  .method li p {
+    max-width: 38rem;
+    margin-top: 0.5rem;
+    color: var(--process-muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .process-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--process-rule);
+    color: var(--process-muted);
+  }
+
+  .process-footer a {
+    color: var(--process-text);
+  }
+
+  @keyframes pizza-arrival {
+    from { opacity: 0; transform: translateY(2rem) scale(0.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @media (max-width: 720px) {
+    .pizza-stage {
+      --archive-strip: 2.4rem;
+    }
+
+    .pizza-stage img {
+      top: 0;
+      right: auto;
+      bottom: auto;
+      left: 50%;
+      width: auto;
+      max-width: none;
+      height: 110svh;
+      object-position: initial;
+      translate: -66% 0;
+    }
+
+    .pizza-stage h1 {
+      top: 41%;
+      left: calc((100% - var(--archive-strip)) / 2);
+      z-index: 4;
+      font-size: clamp(5.8rem, 26vw, 7.5rem);
+    }
+
+    .pizza-note {
+      display: none;
+    }
+
+    .archive-strip p {
+      gap: 0.65rem;
+      font-size: 0.46rem;
+      letter-spacing: 0.18em;
+    }
+
+    .frame-rules span:nth-child(1) {
+      top: 9.2rem;
+    }
+
+    .frame-rules span:nth-child(2) {
+      bottom: 4rem;
+    }
+
+    .process-header,
+    .recipe-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .process-header {
+      gap: 1.5rem;
+    }
+
+    .recipe-layout {
+      gap: 5rem;
+    }
+
+    .ingredient-item > img {
+      top: auto;
+      right: 0;
+      bottom: calc(100% + 0.3rem);
+      left: auto;
+      width: min(13rem, 72vw);
+      transform: translateY(0.7rem) rotate(1deg);
+    }
+
+    .ingredient-item:nth-child(even) > img {
+      transform: translateY(0.7rem) rotate(-1deg);
+    }
+
+    .ingredient-item:hover > img,
+    .ingredient-item:focus-visible > img {
+      transform: translateY(0) rotate(0);
+    }
+
+    .method ol > li {
+      grid-template-columns: 1.5rem 1fr;
+    }
+
+    .method li > small {
+      grid-column: 2;
+    }
+
+    .process-footer {
+      flex-direction: column;
+      line-height: 1.7;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pizza-stage img {
+      animation: none;
+    }
+  }
+</style>

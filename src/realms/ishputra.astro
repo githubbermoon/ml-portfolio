@@ -15,13 +15,14 @@ const reels = [
   title="Ishputra | Realms Archive"
   description="A small Realms archive page collecting Ishputra Instagram reels."
   tags={["Ishputra", "Realms", "Instagram reels", "archive"]}
+  bodyClass="ishputra-page"
 >
   <Nav />
-  <main class="min-h-screen bg-[#fdfcfb] text-[#1a1a1a] px-6 py-20 md:px-20">
-    <section class="mx-auto max-w-4xl border border-[#1a1a1a]/15 bg-white/70 p-8 md:p-12 shadow-sm">
-      <p class="mb-4 font-mono text-xs uppercase tracking-[0.28em] text-[#6f6658]">Realms / Linked Archive</p>
+  <main class="ishputra-main min-h-screen px-6 py-20 md:px-20">
+    <section class="ishputra-sheet mx-auto max-w-4xl p-8 md:p-12">
+      <p class="ishputra-eyebrow mb-4 font-mono text-xs uppercase tracking-[0.28em]">Realms / Linked Archive</p>
       <h1 class="mb-6 font-serif text-5xl md:text-7xl tracking-tight">Ishputra</h1>
-      <p class="mb-12 max-w-2xl text-lg leading-relaxed text-[#4f473d]">
+      <p class="ishputra-intro mb-12 max-w-2xl text-lg leading-relaxed">
         Collected Instagram reels preserved here as reference links.
       </p>
 
@@ -31,11 +32,11 @@ const reels = [
             href={reel.href}
             target="_blank"
             rel="noopener noreferrer"
-            class="group border border-[#1a1a1a]/15 bg-[#f8f1e7] p-6 transition hover:-translate-y-0.5 hover:border-[#1a1a1a]/40 hover:bg-[#f1e6d5]"
+            class="ishputra-card group border p-6 transition hover:-translate-y-0.5"
           >
-            <span class="block font-mono text-xs uppercase tracking-[0.2em] text-[#8b7355]">Instagram</span>
+            <span class="ishputra-card-label block font-mono text-xs uppercase tracking-[0.2em]">Instagram</span>
             <span class="mt-4 block font-serif text-3xl">{reel.label}</span>
-            <span class="mt-6 block break-all text-sm text-[#5d5348] group-hover:underline">{reel.href}</span>
+            <span class="ishputra-url mt-6 block break-all text-sm group-hover:underline">{reel.href}</span>
           </a>
         ))}
       </div>
@@ -43,3 +44,36 @@ const reels = [
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  :global(body.ishputra-page) {
+    --ish-bg: #17120e;
+    --ish-sheet: #211a14;
+    --ish-card: #292018;
+    --ish-card-hover: #33271d;
+    --ish-text: #f1e2c9;
+    --ish-muted: #bca98d;
+    --ish-accent: #c58a62;
+    --ish-rule: rgb(217 187 145 / 0.24);
+    background: var(--ish-bg);
+    color: var(--ish-text);
+  }
+
+  :global(html[data-theme="bright"] body.ishputra-page) {
+    --ish-bg: #fdfcfb;
+    --ish-sheet: #ffffff;
+    --ish-card: #ffffff;
+    --ish-card-hover: #f7f4ef;
+    --ish-text: #1a1a1a;
+    --ish-muted: #5d5348;
+    --ish-accent: #8b5d3c;
+    --ish-rule: rgb(26 26 26 / 0.15);
+  }
+
+  .ishputra-main { color: var(--ish-text); background: var(--ish-bg); }
+  .ishputra-sheet { background: transparent; }
+  .ishputra-eyebrow, .ishputra-card-label { color: var(--ish-accent); }
+  .ishputra-intro, .ishputra-url { color: var(--ish-muted); }
+  .ishputra-card { border-color: var(--ish-rule); background: var(--ish-card); }
+  .ishputra-card:hover { border-color: var(--ish-accent); background: var(--ish-card-hover); }
+</style>

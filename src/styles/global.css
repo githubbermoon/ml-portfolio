@@ -45,6 +45,37 @@
   --haze-b: 251 191 36;
 }
 
+html[data-theme="bright"] body {
+  background-color: #fdfcfb;
+  background-image: none;
+}
+
+.theme-toggle-shell {
+  border: 1px solid rgb(var(--color-mist) / 0.42);
+  color: rgb(var(--color-mist));
+  background: rgb(var(--color-ink) / 0.82);
+  box-shadow: 0 5px 18px rgb(0 0 0 / 0.16);
+}
+
+.theme-toggle-option {
+  color: rgb(var(--color-mist));
+}
+
+.theme-toggle-option:hover,
+.theme-toggle-option[data-active="true"] {
+  color: rgb(var(--color-glass));
+  background: rgb(var(--color-glass) / 0.12);
+}
+
+[data-theme="bright"] .theme-toggle-shell {
+  background: rgb(255 255 255 / 0.84);
+  box-shadow: 0 5px 18px rgb(15 23 42 / 0.1);
+}
+
+[data-theme="bright"] .theme-toggle-option[data-active="true"] {
+  background: rgb(var(--color-glass) / 0.09);
+}
+
 [data-theme="bright"] .prose-invert {
   --tw-prose-body: rgb(15 23 42);
   --tw-prose-headings: rgb(15 23 42);
@@ -84,6 +115,113 @@ body {
     );
   background-attachment: scroll;
   transition: opacity 1.5s ease;
+}
+
+/* Progressive cross-page motion: browsers without support keep normal navigation. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: kosh-page-out 180ms ease both;
+}
+
+::view-transition-new(root) {
+  animation: kosh-page-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+::view-transition-group(palate-title),
+::view-transition-group(astrology-title),
+::view-transition-group(pizza-visual),
+::view-transition-group(pizza-title) {
+  animation-duration: 680ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.theme-transitioning::view-transition-old(root) { animation: none; }
+html.theme-transitioning::view-transition-new(root) {
+  animation: theme-illumination 650ms cubic-bezier(.22,1,.36,1) both;
+}
+
+@keyframes theme-illumination {
+  from { clip-path: circle(0 at calc(100% - 2.8rem) 2.8rem); }
+  to { clip-path: circle(150% at calc(100% - 2.8rem) 2.8rem); }
+}
+
+@keyframes kosh-page-out {
+  to { opacity: 0.35; }
+}
+
+@keyframes kosh-page-in {
+  from { opacity: 0; }
+}
+
+@supports (animation-timeline: view()) {
+  .editorial-reveal {
+    animation: editorial-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 4% cover 26%;
+  }
+
+  .editorial-curtain {
+    animation: editorial-curtain linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 34%;
+  }
+
+  @keyframes editorial-curtain {
+    from { clip-path: inset(0 100% 0 0); filter: saturate(.75); }
+    to { clip-path: inset(0); filter: saturate(1); }
+  }
+
+  @keyframes editorial-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-group(*) {
+    animation-duration: 1ms !important;
+  }
+
+  .editorial-reveal {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .editorial-curtain { animation: none !important; clip-path: none !important; }
+}
+
+.realms-back-link { view-transition-name: back-control; }
+
+/* Quiet, page-specific atmosphere. */
+body.ananta-page-shell .ananta-background { animation: ananta-breathe 16s ease-in-out infinite alternate; }
+body.palate-page .palate-cover-image { animation-duration: 1.8s; }
+body.realms-manuscript-inner .storm-light-image { animation: field-light 12s ease-in-out infinite alternate; }
+body.realms-manuscript-inner .astrology-hero img { animation: celestial-drift 22s ease-in-out infinite alternate; }
+
+@keyframes ananta-breathe { from { transform: scale(1); } to { transform: scale(1.025); } }
+@keyframes field-light { from { filter: saturate(.9) brightness(.96); } to { filter: saturate(1.04) brightness(1.04); } }
+@keyframes celestial-drift { from { object-position: 49% center; } to { object-position: 51% center; } }
+
+@media (prefers-reduced-motion: reduce) {
+  body.ananta-page-shell .ananta-background,
+  body.realms-manuscript-inner .storm-light-image,
+  body.realms-manuscript-inner .astrology-hero img { animation: none !important; }
+}
+
+img {
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 body.warp-active > *:not(canvas) {

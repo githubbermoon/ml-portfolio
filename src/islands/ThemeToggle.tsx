@@ -57,15 +57,14 @@ export default function ThemeToggle() {
 	};
 
 	return (
-		<div className="relative z-[101] flex items-center text-xs text-mist pointer-events-auto">
+		<div className="theme-toggle relative z-[101] flex items-center text-xs pointer-events-auto">
 			<span className="sr-only">Theme</span>
-			<div className="flex items-center gap-0.5 rounded-full border border-mist/40 bg-white/75 p-1 shadow-sm backdrop-blur-xl dark:bg-ink/20">
+			<div className="theme-toggle-shell flex items-center gap-0.5 rounded-full p-1 backdrop-blur-xl">
 				<button
 					type="button"
 					onClick={() => handleSelect('auto')}
-					className={`rounded-full px-2 py-1 text-[10px] transition ${
-						mode === 'auto' ? 'bg-glass/10 text-glass' : 'text-mist'
-					}`}
+					className="theme-toggle-option rounded-full px-2 py-1 text-[10px] transition"
+					data-active={mode === 'auto'}
 					aria-pressed={mode === 'auto'}
 					title="Auto theme"
 				>
@@ -74,9 +73,8 @@ export default function ThemeToggle() {
 				<button
 					type="button"
 					onClick={() => handleSelect('dark')}
-					className={`rounded-full p-2 transition ${
-						mode === 'dark' ? 'bg-glass/10 text-glass' : 'text-mist'
-					}`}
+					className="theme-toggle-option rounded-full p-2 transition"
+					data-active={mode === 'dark'}
 					aria-pressed={mode === 'dark'}
 					title="Dark"
 				>
@@ -86,9 +84,8 @@ export default function ThemeToggle() {
 				<button
 					type="button"
 					onClick={() => handleSelect('bright')}
-					className={`rounded-full p-2 transition ${
-						mode === 'bright' ? 'bg-glass/10 text-glass' : 'text-mist'
-					}`}
+					className="theme-toggle-option rounded-full p-2 transition"
+					data-active={mode === 'bright'}
 					aria-pressed={mode === 'bright'}
 					title="Bright"
 				>

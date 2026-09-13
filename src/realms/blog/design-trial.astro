@@ -24,20 +24,25 @@ layout: "../../layouts/BaseLayout.astro"
 </div>
 
 <style>
-  :root {
-    --paper: #f6f2eb;
-    --ink: #1e2638;
-    --muted: #667085;
-    --copper: #b67b57;
-    --line: rgba(182, 123, 87, 0.20);
-  }
-
   .kosh-page {
+    --paper: #17120e;
+    --ink: #f1e2c9;
+    --muted: #bca98d;
+    --copper: #c58a62;
+    --line: rgb(217 187 145 / 0.24);
     position: relative;
     background: var(--paper);
     color: var(--ink);
     min-height: 100vh;
     padding: 2rem;
+  }
+
+  :global(html[data-theme="bright"]) .kosh-page {
+    --paper: #fdfcfb;
+    --ink: #1e2638;
+    --muted: #667085;
+    --copper: #b67b57;
+    --line: rgba(182, 123, 87, 0.20);
   }
 
   /* Inline the SVG directly as a data-URI to bypass path issues */

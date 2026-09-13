@@ -1,11 +1,9 @@
 ---
 import MagneticButton from "../islands/MagneticButton";
 import MobileNav from "../islands/MobileNav";
-import LanguageToggle from "../islands/LanguageToggle";
 
 const base = import.meta.env.BASE_URL;
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
-const isRealmsInnerPage = isRealmsMode && Astro.url.pathname !== "/";
 
 const links = isRealmsMode
   ? [
@@ -23,88 +21,104 @@ const links = isRealmsMode
     ];
 ---
 
-<!-- Swerving Nav Container -->
-<nav
-  id="main-nav"
-  class:list={[
-    "fixed top-0 left-0 w-full transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)]",
-    isRealmsInnerPage ? "z-[130]" : "z-40",
-  ]}
-  data-scrolled="false"
->
-  <div
-    id="nav-container"
-    class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 md:px-10 transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)]
-		data-[scrolled=true]:flex-col data-[scrolled=true]:w-auto data-[scrolled=true]:h-auto data-[scrolled=true]:gap-6 data-[scrolled=true]:items-start data-[scrolled=true]:mx-0"
-  >
-    <!-- Mobile Menu Trigger (Visible only on mobile) -->
-    <MobileNav client:load links={links} base={base} simple={isRealmsInnerPage} />
-
-    <!-- Links Group -->
-    {!isRealmsInnerPage && (
-    <div
-      id="nav-links"
-      class="hidden items-center gap-6 rounded-full border border-transparent px-4 py-3 text-sm font-medium tracking-wide md:flex transition-all duration-500
-			data-[scrolled=true]:flex-col data-[scrolled=true]:gap-4 data-[scrolled=true]:items-start data-[scrolled=true]:rounded-2xl data-[scrolled=true]:border-slate-300/70 data-[scrolled=true]:bg-white/90 data-[scrolled=true]:p-4 data-[scrolled=true]:shadow-xl data-[scrolled=true]:backdrop-blur-xl dark:data-[scrolled=true]:border-white/10 dark:data-[scrolled=true]:bg-black/75
-            text-mist data-[scrolled=true]:text-slate-950 dark:data-[scrolled=true]:text-white data-[scrolled=true]:font-semibold"
-    >
-      {
-        links.map((link) => (
-          <a
-            class="transition hover:text-white relative group"
-            href={link.href}
-            data-nav-link
-            data-i18n={link.key}
-          >
-            {link.label}
-          </a>
-        ))
-      }
-    </div>
-    )}
-
-    {isRealmsMode && (
-      <div class="hidden md:block">
-        <LanguageToggle client:load />
+{
+  isRealmsMode ? (
+    <nav id="main-nav" class="realm-nav" data-scrolled="false" aria-label="Primary navigation">
+      <div id="nav-container" class="realm-nav-inner">
+        <MobileNav client:load links={links} base={base} manuscript />
       </div>
-    )}
-
-    <!-- CTA Button (Only visible in top state) -->
-    {!isRealmsMode && (
-    <div
-      class="hidden md:block transition-all duration-500 opacity-100 overflow-hidden w-auto
-            data-[scrolled=true]:opacity-0 data-[scrolled=true]:w-0 data-[scrolled=true]:h-0 data-[scrolled=true]:m-0 data-[scrolled=true]:p-0"
+    </nav>
+  ) : (
+    <nav
+      id="main-nav"
+      class="fixed left-0 top-0 z-40 w-full transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)]"
+      data-scrolled="false"
     >
-      <MagneticButton
-        client:load
-        href={base + "#contact"}
-        className="rounded-full border border-mist/40 px-4 py-2 text-sm text-glass transition hover:border-glass/50 whitespace-nowrap"
+      <div
+        id="nav-container"
+        class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] md:px-10 data-[scrolled=true]:mx-0 data-[scrolled=true]:h-auto data-[scrolled=true]:w-auto data-[scrolled=true]:flex-col data-[scrolled=true]:items-start data-[scrolled=true]:gap-6"
       >
-        Contact
-      </MagneticButton>
-    </div>
-    )}
-  </div>
-</nav>
+        <MobileNav client:load links={links} base={base} />
+        <div
+          id="nav-links"
+          class="hidden items-center gap-6 rounded-full border border-transparent px-4 py-3 text-sm font-medium tracking-wide text-mist transition-all duration-500 md:flex data-[scrolled=true]:items-start data-[scrolled=true]:gap-4 data-[scrolled=true]:rounded-2xl data-[scrolled=true]:border-slate-300/70 data-[scrolled=true]:bg-white/90 data-[scrolled=true]:p-4 data-[scrolled=true]:font-semibold data-[scrolled=true]:text-slate-950 data-[scrolled=true]:shadow-xl data-[scrolled=true]:backdrop-blur-xl dark:data-[scrolled=true]:border-white/10 dark:data-[scrolled=true]:bg-black/75 dark:data-[scrolled=true]:text-white"
+        >
+          {links.map((link) => (
+            <a class="group relative transition hover:text-white" href={link.href} data-nav-link data-i18n={link.key}>
+              {link.label}
+            </a>
+          ))}
+        </div>
+        <div class="hidden md:block transition-all duration-500 opacity-100 overflow-hidden w-auto data-[scrolled=true]:opacity-0 data-[scrolled=true]:w-0 data-[scrolled=true]:h-0 data-[scrolled=true]:m-0 data-[scrolled=true]:p-0">
+          <MagneticButton
+            client:load
+            href={base + "#contact"}
+            className="rounded-full border border-mist/40 px-4 py-2 text-sm text-glass transition hover:border-glass/50 whitespace-nowrap"
+          >
+            Contact
+          </MagneticButton>
+        </div>
+      </div>
+    </nav>
+  )
+}
 
 <script>
   const nav = document.getElementById("main-nav");
   const container = document.getElementById("nav-container");
   const linkContainer = document.getElementById("nav-links");
-  const cta = document.querySelector(".MagneticButton");
 
   function updateNav() {
-    // Swerve early (standard scroll feel)
-    const scrolled = window.scrollY > 100;
-
-    if (nav && container && linkContainer) {
-      // Apply data attributes for styling
-      nav.setAttribute("data-scrolled", scrolled.toString());
-      container.setAttribute("data-scrolled", scrolled.toString());
-      linkContainer.setAttribute("data-scrolled", scrolled.toString());
-    }
+    const scrolled = window.scrollY > 72;
+    nav?.setAttribute("data-scrolled", scrolled.toString());
+    container?.setAttribute("data-scrolled", scrolled.toString());
+    linkContainer?.setAttribute("data-scrolled", scrolled.toString());
   }
 
   window.addEventListener("scroll", updateNav, { passive: true });
   updateNav();
 </script>
+
+<style>
+  .realm-nav {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 140;
+    color: #2a1d15;
+    transition: background 240ms ease, box-shadow 240ms ease;
+  }
+
+  :global(html:not([data-theme="bright"])) .realm-nav {
+    color: #f1e2c9;
+  }
+
+  .realm-nav[data-scrolled="true"] {
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  :global(html:not([data-theme="bright"])) .realm-nav[data-scrolled="true"] {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .realm-nav-inner {
+    display: grid;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+    width: min(100% - 3rem, 1240px);
+    min-height: 5rem;
+    margin-inline: auto;
+  }
+
+  @media (max-width: 860px) {
+    .realm-nav-inner {
+      width: min(100% - 2rem, 1240px);
+      min-height: 4.5rem;
+    }
+
+  }
+</style>

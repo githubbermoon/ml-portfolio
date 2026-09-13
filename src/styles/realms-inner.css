@@ -1,0 +1,171 @@
+body.realms-manuscript-inner {
+  --color-ink: 23 18 14;
+  --color-fog: 241 226 201;
+  --color-glass: 241 226 201;
+  --color-mist: 188 169 141;
+  --color-glow: 159 61 41;
+  --color-amber: 183 136 82;
+  --inner-paper: #17120e;
+  --inner-paper-raised: #211a14;
+  --inner-ink: #f1e2c9;
+  --inner-muted: #bca98d;
+  --inner-rule: rgb(217 187 145 / 0.24);
+  --inner-accent: #c55b3f;
+  color: var(--inner-ink);
+  background: var(--inner-paper);
+  background-image: none;
+}
+
+html[data-theme="bright"] body.realms-manuscript-inner {
+  --color-ink: 239 231 216;
+  --color-fog: 36 26 19;
+  --color-glass: 36 26 19;
+  --color-mist: 113 95 79;
+  --color-glow: 159 61 41;
+  --color-amber: 148 99 54;
+  --inner-paper: #fdfcfb;
+  --inner-paper-raised: #ffffff;
+  --inner-ink: #241a13;
+  --inner-muted: #715f4f;
+  --inner-rule: rgb(75 52 35 / 0.22);
+  --inner-accent: #9f3d29;
+  color: var(--inner-ink);
+  background: var(--inner-paper);
+}
+
+body.realms-manuscript-inner::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.15;
+  background-image:
+    repeating-linear-gradient(7deg, transparent 0 4px, rgb(255 255 255 / 0.018) 5px),
+    radial-gradient(circle at 20% 30%, rgb(135 83 47 / 0.16) 0 0.7px, transparent 0.9px);
+  background-size: auto, 7px 7px;
+  mix-blend-mode: soft-light;
+}
+
+body.realms-manuscript-inner > main {
+  border-bottom: 1px solid var(--inner-rule);
+}
+
+body.realms-manuscript-inner > main.section-shell,
+body.realms-manuscript-inner > .section-shell,
+body.realms-manuscript-inner main > .section-shell {
+  width: min(100% - 3rem, 1240px);
+  max-width: 1240px;
+  padding-top: clamp(8rem, 14vw, 10rem);
+  padding-bottom: clamp(6rem, 10vw, 9rem);
+}
+
+body.realms-manuscript-inner h1,
+body.realms-manuscript-inner h2,
+body.realms-manuscript-inner h3,
+body.realms-manuscript-inner h4 {
+  color: var(--inner-ink);
+  font-weight: 420;
+}
+
+body.realms-manuscript-inner h1 {
+  letter-spacing: -0.045em;
+}
+
+body.realms-manuscript-inner .text-mist,
+body.realms-manuscript-inner .text-mist\/60,
+body.realms-manuscript-inner .text-mist\/70,
+body.realms-manuscript-inner .text-mist\/80 {
+  color: var(--inner-muted) !important;
+}
+
+body.realms-manuscript-inner .text-glass {
+  color: var(--inner-ink) !important;
+}
+
+body.realms-manuscript-inner .glass-panel {
+  border: 1px solid var(--inner-rule);
+  border-radius: 0;
+  color: var(--inner-ink);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--inner-accent) 5%, transparent), transparent 48%),
+    var(--inner-paper-raised);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+body.realms-manuscript-inner .glass-panel:hover {
+  border-color: color-mix(in srgb, var(--inner-accent) 70%, var(--inner-rule));
+}
+
+body.realms-manuscript-inner .glass-panel p:first-child {
+  color: var(--inner-accent) !important;
+}
+
+body.realms-manuscript-inner .storm-light-frame,
+body.realms-manuscript-inner .storm-light-image,
+body.realms-manuscript-inner .reading-notes-card,
+body.realms-manuscript-inner .cooking-hero {
+  border-radius: 0 !important;
+}
+
+body.realms-manuscript-inner .reading-note-cover {
+  border-bottom: 1px solid var(--inner-rule);
+}
+
+body.realms-manuscript-inner .reading-note-body {
+  position: relative;
+  max-width: 52rem;
+  margin-top: 0;
+  padding: clamp(6rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4.5rem);
+  background: var(--inner-paper-raised);
+}
+
+body.realms-manuscript-inner .reading-note-body::before {
+  content: "KOSH · READING FOLIO";
+  display: block;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--inner-rule);
+  padding-bottom: 0.75rem;
+  color: var(--inner-accent);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+body.realms-manuscript-inner .reading-note-body .note-section + .note-section {
+  border-color: var(--inner-rule);
+}
+
+body.realms-manuscript-inner .sanskrit-block {
+  border-color: var(--inner-accent);
+  background: color-mix(in srgb, var(--inner-accent) 5%, transparent);
+  padding: 1.2rem 1.5rem;
+}
+
+body.realms-manuscript-inner footer {
+  border-top: 1px solid var(--inner-rule);
+  color: var(--inner-muted) !important;
+  background: var(--inner-paper) !important;
+}
+
+body.realms-manuscript-inner .blog-gate,
+body.realms-manuscript-inner + .blog-gate {
+  background: var(--inner-paper);
+}
+
+@media (max-width: 720px) {
+  body.realms-manuscript-inner > main.section-shell,
+  body.realms-manuscript-inner > .section-shell,
+  body.realms-manuscript-inner main > .section-shell {
+    width: min(100% - 2rem, 1240px);
+    padding-top: 7rem;
+  }
+
+  body.realms-manuscript-inner .reading-note-body {
+    border-right: 0;
+    border-left: 0;
+    padding: 4rem 1.2rem;
+  }
+}

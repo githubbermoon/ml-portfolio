@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RealmsTldrawCanvas from '../islands/RealmsTldrawCanvas';
+---
+
+<BaseLayout
+  title="Living Yantra Canvas | Realms"
+  description="A local Realms/tldraw infinite canvas prototype for arranging yantra components, archive cards, and knowledge nodes."
+  tags={["Realms", "Kosh", "tldraw", "infinite canvas", "yantra"]}
+>
+  <RealmsTldrawCanvas client:only="react" />
+</BaseLayout>

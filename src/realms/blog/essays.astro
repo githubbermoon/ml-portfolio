@@ -2,11 +2,15 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
+import { getCollection } from "astro:content";
 
 const base = import.meta.env.BASE_URL;
 
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
 if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
+const authoredEntries = (await getCollection("realms"))
+  .filter((entry) => ["field-notes", "essay"].includes(entry.data.category) && entry.data.status !== "archived" && (!import.meta.env.PROD || entry.data.status !== "draft"))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <BaseLayout title="Field Notes | Clawd ML Portfolio">
@@ -14,15 +18,14 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
   <main class="section-shell field-notes-shell">
     <section class="field-notes-hero">
       <div class="field-notes-copy">
-        <a class="text-xs uppercase tracking-[0.28em] text-mist" href={base + "blog/"}>Back to library</a>
-        <p class="mt-10 text-xs uppercase tracking-[0.35em] text-mist">Essays</p>
+        <p class="text-xs uppercase tracking-[0.35em] text-mist">Essays</p>
         <h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">Field Notes</h1>
         <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
           Personal essays, reading notes, observations, and unfinished thoughts. This realm is for slower writing that
           does not need to fit into a technical or ritual category.
         </p>
       </div>
-      <figure class="storm-light-frame" aria-label="Mountain storm with light beams">
+      <figure class="storm-light-frame editorial-curtain" aria-label="Mountain storm with light beams" data-cursor="VIEW">
         <img
           class="storm-light-bleed"
           src={base + "images/atmosphere/storm-light.webp"}
@@ -41,12 +44,12 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
       </figure>
     </section>
     <section class="mt-12 grid gap-6 md:grid-cols-3">
-      <article class="glass-panel p-6">
+      <article class="glass-panel p-6 editorial-reveal">
         <p class="text-xs uppercase tracking-[0.24em] text-mist">Format</p>
         <h2 class="mt-4 text-2xl text-glass">Long essays</h2>
         <p class="mt-3 text-sm leading-6 text-mist">Polished arguments with references and durable URLs.</p>
       </article>
-      <a class="glass-panel reading-notes-card md:col-span-3" href={base + "blog/reading-notes/fear/"}>
+      <a class="glass-panel reading-notes-card md:col-span-3 editorial-reveal" href={base + "blog/reading-notes/fear/"} data-cursor="READ">
         <img
           class="reading-notes-cover"
           src={base + "images/atmosphere/reading-notes-cover-hq.webp"}
@@ -62,12 +65,24 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
           <p class="mt-6 text-xs uppercase tracking-[0.24em] text-glass">Open note: Fear</p>
         </div>
       </a>
-      <article class="glass-panel p-6">
+      <article class="glass-panel p-6 editorial-reveal">
         <p class="text-xs uppercase tracking-[0.24em] text-mist">Format</p>
         <h2 class="mt-4 text-2xl text-glass">Fragments</h2>
         <p class="mt-3 text-sm leading-6 text-mist">Half-formed ideas worth keeping visible for later synthesis.</p>
       </article>
     </section>
+    {authoredEntries.length > 0 && (
+      <section class="authored-ledger" aria-label="Published field notes and essays">
+        <p class="authored-label">Recent writing</p>
+        {authoredEntries.map((entry, index) => (
+          <a href={`${base}archive/${entry.slug}/`} data-cursor="READ">
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <div><h2>{entry.data.title}</h2><p>{entry.data.summary}</p></div>
+            <small>{entry.data.kind.replace("-", " ")} · {entry.data.status}</small>
+          </a>
+        ))}
+      </section>
+    )}
   </main>
   <Footer />
 </BaseLayout>
@@ -188,6 +203,13 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
     z-index: 2;
     max-width: 30rem;
   }
+
+  .authored-ledger { margin-top: 6rem; border-top: 1px solid var(--inner-rule); }
+  .authored-label { padding: 1rem 0 2rem; color: var(--inner-accent); font-family: var(--font-mono); font-size: .58rem; letter-spacing: .18em; text-transform: uppercase; }
+  .authored-ledger > a { display: grid; grid-template-columns: 3rem 1fr auto; gap: 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--inner-rule); color: inherit; }
+  .authored-ledger > a > span, .authored-ledger small { color: var(--inner-muted); font-family: var(--font-mono); font-size: .55rem; letter-spacing: .14em; text-transform: uppercase; }
+  .authored-ledger h2 { font-family: var(--font-display); font-size: 1.65rem; font-weight: 400; }
+  .authored-ledger h2 + p { margin-top: .45rem; color: var(--inner-muted); font-size: .85rem; }
 
   .reading-notes-copy h2,
   .reading-notes-copy p {

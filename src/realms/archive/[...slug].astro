@@ -1,0 +1,76 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("realms", ({ data }) => data.status !== "archived" && (!import.meta.env.PROD || data.status !== "draft"));
+  return entries.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props as { entry: CollectionEntry<"realms"> };
+const { Content, headings } = await render(entry);
+const base = import.meta.env.BASE_URL;
+const sectionNames = {
+  "texts-systems": "Texts & Systems",
+  "origins-implementations": "Origins & Implementations",
+  "field-notes": "Field Notes",
+  essay: "Essays",
+};
+const sectionLinks = {
+  "texts-systems": `${base}technical-work/`,
+  "origins-implementations": `${base}projects/`,
+  "field-notes": `${base}blog/essays/`,
+  essay: `${base}blog/essays/`,
+};
+const date = entry.data.date.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
+---
+
+<BaseLayout title={`${entry.data.title} | Kosh`} description={entry.data.summary} image={entry.data.cover ?? "/ananta-nihara-hero.png"} type="article" publishedDate={entry.data.date.toISOString()} bodyClass="archive-entry-page">
+  <Nav />
+  <main class="entry-page">
+    <header class="entry-header">
+      <a href={sectionLinks[entry.data.category]}>{sectionNames[entry.data.category]}</a>
+      <p>{entry.data.kind.replace("-", " ")} · {entry.data.status}</p>
+      <h1>{entry.data.title}</h1>
+      <p class="summary">{entry.data.summary}</p>
+      <div class="entry-meta"><time datetime={entry.data.date.toISOString()}>{date}</time><span>Pranjal Prakash Pandey</span></div>
+    </header>
+    {entry.data.cover && <img class="entry-cover editorial-curtain" src={entry.data.cover} alt="" />}
+    <div class:list={["entry-body", { "has-contents": headings.length > 2 }]}>
+      {headings.length > 2 && <aside><p>Contents</p>{headings.filter((heading) => heading.depth === 2).map((heading) => <a href={`#${heading.slug}`}>{heading.text}</a>)}</aside>}
+      <article class="prose"><Content /></article>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  :global(body.archive-entry-page) { background: var(--inner-paper); color: var(--inner-ink); }
+  .entry-page { width: min(100% - 3rem, 1120px); margin: auto; padding: clamp(8rem, 14vw, 12rem) 0 7rem; }
+  .entry-header { max-width: 52rem; margin-left: clamp(0rem, 10vw, 10rem); }
+  .entry-header > a, .entry-header > p, .entry-meta, .entry-body aside { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .16em; text-transform: uppercase; }
+  .entry-header > a { color: var(--inner-accent); }
+  .entry-header > p { margin-top: 1rem; color: var(--inner-muted); }
+  h1 { margin-top: 2rem; font-family: var(--font-display); font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 400; line-height: .9; letter-spacing: -.055em; }
+  .summary { margin-top: 2rem !important; color: var(--inner-muted) !important; font-family: var(--font-display) !important; font-size: clamp(1.2rem, 2vw, 1.6rem) !important; letter-spacing: 0 !important; line-height: 1.55; text-transform: none !important; }
+  .entry-meta { display: flex; gap: 2rem; margin-top: 2.5rem; color: var(--inner-muted); }
+  .entry-cover { width: 100%; max-height: 72vh; margin-top: 5rem; object-fit: cover; }
+  .entry-body { display: grid; grid-template-columns: 12rem minmax(0, 42rem); gap: clamp(2rem, 7vw, 7rem); margin-top: 6rem; }
+  .entry-body:not(.has-contents) { display: block; max-width: 42rem; margin-left: clamp(0rem, 10vw, 10rem); }
+  .entry-body aside { position: sticky; top: 6rem; align-self: start; display: grid; gap: .85rem; color: var(--inner-muted); }
+  .entry-body aside p { color: var(--inner-accent); }
+  .prose { font-family: var(--font-display); font-size: 1.15rem; line-height: 1.85; }
+  .prose :global(h2) { margin: 3.5rem 0 1.25rem; font-size: 2.25rem; font-weight: 400; line-height: 1.1; }
+  .prose :global(h2:first-child) { margin-top: 0; }
+  .prose :global(p + p), .prose :global(ul), .prose :global(ol), .prose :global(blockquote) { margin-top: 1.25rem; }
+  .prose :global(a) { color: var(--inner-accent); text-decoration: underline; text-underline-offset: .2em; }
+  .prose :global(blockquote) { padding-left: 1.5rem; border-left: 1px solid var(--inner-accent); font-size: 1.35rem; font-style: italic; }
+  @media (max-width: 720px) {
+    .entry-page { width: min(100% - 2rem, 1120px); padding-top: 7rem; }
+    .entry-header { margin-left: 0; }
+    .entry-body { grid-template-columns: 1fr; }
+    .entry-body aside { position: static; }
+  }
+</style>

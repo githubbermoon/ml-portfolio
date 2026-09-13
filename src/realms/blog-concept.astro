@@ -5,8 +5,8 @@ const isRealmsMode = import.meta.env.SITE_MODE === "realms";
 if (!isRealmsMode) return Astro.redirect("/ml-portfolio/");
 ---
 
-<BaseLayout title="Concept: Jiva-Niharika">
-  <div class="fixed inset-0 flex flex-col items-center justify-center bg-[#050505] text-[#e3dcd2] selection:bg-[#e3dcd2] selection:text-black">
+<BaseLayout title="Concept: Jiva-Niharika" bodyClass="concept-page-shell">
+  <div class="concept-stage fixed inset-0 flex flex-col items-center justify-center selection:bg-[#e3dcd2] selection:text-black">
     
     <!-- The Container -->
     <div class="relative flex flex-col items-center gap-12 z-10">
@@ -40,12 +40,12 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/");
 
       <!-- Typography -->
       <div class="text-center space-y-4 opacity-0 animate-fade-up">
-        <h1 class="text-4xl md:text-6xl font-serif tracking-[0.15em] font-light text-transparent bg-clip-text bg-gradient-to-b from-[#e3dcd2] to-[#8c8881]">
+        <h1 class="concept-title text-4xl md:text-6xl font-serif tracking-[0.15em] font-light text-transparent bg-clip-text">
           JIVA NIHARIKA
         </h1>
         <div class="flex items-center justify-center gap-4">
           <span class="h-[1px] w-12 bg-white/20"></span>
-          <p class="text-xs md:text-sm text-[#8c8881] tracking-[0.4em] uppercase font-sans">
+          <p class="concept-subtitle text-xs md:text-sm tracking-[0.4em] uppercase font-sans">
             The Nebula of Life
           </p>
           <span class="h-[1px] w-12 bg-white/20"></span>
@@ -61,6 +61,16 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/");
 </BaseLayout>
 
 <style>
+  :global(body.concept-page-shell), .concept-stage { color: #e3dcd2; background: #050505; }
+  .concept-title { background-image: linear-gradient(to bottom, #e3dcd2, #8c8881); }
+  .concept-subtitle { color: #a8a29e; }
+  :global(html[data-theme="bright"] body.concept-page-shell),
+  :global(html[data-theme="bright"]) .concept-stage { color: #2b2119; background: #fdfcfb; }
+  :global(html[data-theme="bright"]) .concept-title {
+    background-image: linear-gradient(to bottom, #2b2119, #756251);
+  }
+  :global(html[data-theme="bright"]) .concept-subtitle { color: #6d5e50; }
+
   /* SVG Path Animation */
   .path-draw {
     stroke-dasharray: 1000;

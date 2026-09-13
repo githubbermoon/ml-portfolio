@@ -1,0 +1,77 @@
+media:
+  input: public/images/uploads
+  output: /images/uploads
+
+content:
+  - name: realms
+    label: Kosh Writing
+    type: collection
+    path: src/content/realms
+    filename: "{primary}.mdx"
+    view:
+      fields: [title, category, kind, status, date]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: summary
+        label: Summary
+        type: text
+        required: true
+        options:
+          minlength: 20
+          maxlength: 320
+      - name: date
+        label: Publication date
+        type: date
+        required: true
+      - name: updated
+        label: Last updated
+        type: date
+      - name: category
+        label: Section
+        type: select
+        required: true
+        options:
+          values:
+            - value: texts-systems
+              label: Texts & Systems
+            - value: origins-implementations
+              label: Origins & Implementations
+            - value: field-notes
+              label: Field Notes
+            - value: essay
+              label: Essays
+      - name: kind
+        label: Form
+        type: select
+        required: true
+        options:
+          values: [study, essay, research-note, experiment, implementation, field-note]
+      - name: status
+        label: Status
+        type: select
+        required: true
+        default: draft
+        options:
+          values: [draft, ongoing, published, archived]
+      - name: cover
+        label: Cover image
+        type: image
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: body
+        label: Writing
+        type: rich-text
+        options:
+          format: markdown
+          rename: true
+          switcher: true

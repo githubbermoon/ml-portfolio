@@ -6,32 +6,42 @@ import Footer from '../../components/Footer.astro';
 const base = import.meta.env.BASE_URL;
 const realms = [
 	{
-		name: "Vedic Sciences",
+		name: "Texts & Systems",
 		label: "Technical Work",
 		href: "technical-work/",
 		description: "Structured notes and experiments around ancient sciences, symbolic systems, and computation.",
 		symbol: "01",
+		date: "2026 · Systems",
+		preview: base + "images/atmosphere/ritual-water.webp",
 	},
 	{
-		name: "Ananta Nīhāra",
+		name: "Ananta N",
 		label: "Spiritual / speculative",
 		href: "blog/ananta-nihara/",
 		description: "Perception, intelligence, inner experience, mythic language, and visual essays.",
 		symbol: "∞",
+		date: "2026 · Ongoing",
+		preview: base + "images/atmosphere/storm-light.webp",
 	},
 	{
-		name: "Jyotiṣa",
+		name: "Calendrics & Celestial Symbolism",
 		label: "Astrology",
 		href: "blog/astrology/",
 		description: "Planetary notes, symbolic systems, timing, archetypes, and chart reflections.",
 		symbol: "☉",
+		date: "2026 · Observations",
+		preview: base + "images/atmosphere/cosmic-horizon.webp",
+		transitionClass: "astrology-transition",
 	},
 	{
-		name: "Rasam",
+		name: "Palate",
 		label: "Cooking",
 		href: "blog/cooking/",
 		description: "Recipes, kitchen systems, taste experiments, food memory, and process notes.",
 		symbol: "♨",
+		date: "2026 · Kitchen",
+		preview: base + "images/palate/street-food.webp",
+		transitionClass: "palate-transition",
 	},
 	{
 		name: "Field Notes",
@@ -39,6 +49,8 @@ const realms = [
 		href: "blog/essays/",
 		description: "Personal essays, observations, reading notes, and unfinished thoughts worth preserving.",
 		symbol: "✦",
+		date: "2026 · Essays",
+		preview: base + "images/atmosphere/storm-light.webp",
 	},
 	{
 		name: "Index",
@@ -46,6 +58,8 @@ const realms = [
 		href: "blog/notes/",
 		description: "Short notes, glossary entries, links, fragments, and reusable knowledge blocks.",
 		symbol: "⌁",
+		date: "2026 · Index",
+		preview: base + "images/atmosphere/reading-notes-cover.webp",
 	},
 ];
 ---
@@ -54,9 +68,10 @@ const realms = [
 	title="Kosh (कोश) | Realms Archive"
 	description="Kosh means a treasury or library. This Realms archive holds notes, references, essays, fragments, and future work on Vedic sciences and symbolic systems."
 	tags={["Kosh", "Realms", "Vedic sciences", "symbolic systems", "archive"]}
+	bodyClass="kosh-index-page"
 >
 	<Nav />
-	<main class="mx-auto max-w-6xl px-8 md:px-20 py-20 bg-[#fdfcfb] text-[#1a1a1a]">
+	<main class="kosh-index-main mx-auto max-w-6xl px-8 md:px-20 py-20">
 		<header class="mb-24 flex flex-col md:flex-row gap-12 border-b border-gray-200 pb-20">
 			<div class="flex-1">
 				<h1 class="text-6xl font-serif tracking-tight mb-8">Kosh (कोश)</h1>
@@ -78,20 +93,24 @@ const realms = [
 		<section class="grid md:grid-cols-2 gap-24 mb-24">
             <div class="space-y-12">
                 {realms.slice(0, 3).map((realm) => (
-                    <a class="group cursor-pointer block" href={base + realm.href}>
+                    <a class:list={["group cursor-pointer block editorial-reveal realm-preview-link", realm.transitionClass]} href={base + realm.href} data-preview-card data-cursor="OPEN">
                         <p class="font-mono text-[10px] uppercase tracking-widest text-gray-400 mb-2">{realm.label}</p>
                         <h2 class="text-2xl font-bold mb-2 group-hover:underline">{realm.name}</h2>
                         <p class="text-gray-600 text-sm leading-6">{realm.description}</p>
+                        <span class="realm-date">{realm.date}</span>
+                        <img class="realm-floating-preview" src={realm.preview} alt="" aria-hidden="true" loading="lazy" />
                     </a>
                 ))}
             </div>
 
             <div class="border-l border-gray-200 pl-12 space-y-12">
                 {realms.slice(3).map((realm) => (
-                    <a class="group cursor-pointer block" href={base + realm.href}>
+                    <a class:list={["group cursor-pointer block editorial-reveal realm-preview-link", realm.transitionClass]} href={base + realm.href} data-preview-card data-cursor="OPEN">
                         <p class="font-mono text-[10px] uppercase tracking-widest text-gray-400 mb-2">{realm.label}</p>
                         <h2 class="text-2xl font-bold mb-2 group-hover:underline">{realm.name}</h2>
                         <p class="text-gray-600 text-sm leading-6">{realm.description}</p>
+                        <span class="realm-date">{realm.date}</span>
+                        <img class="realm-floating-preview" src={realm.preview} alt="" aria-hidden="true" loading="lazy" />
                     </a>
                 ))}
             </div>
@@ -102,21 +121,72 @@ const realms = [
 </BaseLayout>
 
 <style>
-	:global(body) {
-		background: #fdfcfb;
-		color: #1a1a1a;
+	:global(body.kosh-index-page) {
+		--kosh-page: #17120e;
+		--kosh-text: #f1e2c9;
+		--kosh-muted: #bca98d;
+		--kosh-rule: rgb(217 187 145 / 0.24);
+		background: var(--kosh-page);
+		color: var(--kosh-text);
 	}
 
-	:global([data-theme="dark"]) body {
-		background: #fdfcfb;
-		color: #1a1a1a;
+	:global(html[data-theme="bright"] body.kosh-index-page) {
+		--kosh-page: #fdfcfb;
+		--kosh-text: #1a1a1a;
+		--kosh-muted: #655c52;
+		--kosh-rule: rgb(26 26 26 / 0.14);
 	}
 
-	:global([data-theme="dark"]) .text-gray-700,
-	:global([data-theme="dark"]) .text-gray-600,
-	:global([data-theme="dark"]) .text-gray-500,
-	:global([data-theme="dark"]) .text-gray-400 {
-		color: inherit;
-		opacity: 0.72;
+	.kosh-index-main {
+		color: var(--kosh-text);
+		background: var(--kosh-page);
 	}
+
+	.kosh-index-main :global(.text-gray-600),
+	.kosh-index-main :global(.text-gray-500),
+	.kosh-index-main :global(.text-gray-400) {
+		color: var(--kosh-muted);
+	}
+
+	.kosh-index-main :global(.border-gray-200) {
+		border-color: var(--kosh-rule);
+	}
+
+	.astrology-transition h2 { view-transition-name: astrology-title; }
+	.palate-transition h2 { view-transition-name: palate-title; }
+
+	.realm-preview-link { position: relative; }
+	.realm-date {
+		display: inline-block;
+		max-height: 0;
+		margin-top: 0;
+		overflow: hidden;
+		color: var(--kosh-muted);
+		font-family: var(--font-mono);
+		font-size: .55rem;
+		letter-spacing: .16em;
+		text-transform: uppercase;
+		opacity: 0;
+		transition: max-height 240ms ease, margin 240ms ease, opacity 240ms ease;
+	}
+	.realm-preview-link:hover .realm-date,
+	.realm-preview-link:focus-visible .realm-date { max-height: 1.5rem; margin-top: .8rem; opacity: 1; }
+	.realm-floating-preview {
+		position: fixed;
+		top: clamp(2rem, var(--preview-y, 35vh), calc(100vh - 14rem));
+		left: clamp(2rem, var(--preview-x, 65vw), calc(100vw - 17rem));
+		z-index: 120;
+		width: min(15rem, 28vw);
+		aspect-ratio: 4 / 3;
+		object-fit: cover;
+		opacity: 0;
+		pointer-events: none;
+		transform: translateY(8px) rotate(-1.2deg) scale(.97);
+		transition: opacity 180ms ease, transform 320ms cubic-bezier(.22,1,.36,1);
+		box-shadow: 0 18px 55px rgb(20 12 8 / .2);
+	}
+	.realm-preview-link:nth-child(even) .realm-floating-preview { transform: translateY(8px) rotate(1.2deg) scale(.97); }
+	.realm-preview-link:hover .realm-floating-preview,
+	.realm-preview-link:focus-visible .realm-floating-preview { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
+	@media (pointer: coarse) { .realm-floating-preview { display: none; } }
 </style>

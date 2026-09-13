@@ -1,0 +1,177 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="Usage & Rights | Himavat"
+  description="Copyright, permissions, attribution, and automated-use policy for original work published by Himavat and Pranjal Prakash Pandey."
+  noindex={false}
+>
+  <Nav />
+  <main class="rights-page">
+    <header class="rights-hero">
+      <p class="rights-kicker">Usage &amp; Rights · 2026</p>
+      <h1>Made to be read.<br />Not to be taken.</h1>
+      <p class="rights-lede">
+        This archive welcomes attentive reading, thoughtful citation, and conversation.
+        It does not grant permission for wholesale reproduction or machine-training use.
+      </p>
+    </header>
+
+    <div class="rights-ledger">
+      <aside>
+        <p>Rights holder</p>
+        <strong>Himavat</strong>
+        <span>Pranjal Prakash Pandey</span>
+        <p class="rights-date">Effective 13 September 2026</p>
+      </aside>
+
+      <div class="rights-sections">
+        <section>
+          <span>01</span>
+          <div>
+            <h2>Ownership</h2>
+            <p>Unless otherwise noted, all original writing, visual compositions, photographs, diagrams, code-based artworks, and archival materials on this site are the intellectual property of Himavat — Pranjal Prakash Pandey.</p>
+          </div>
+        </section>
+
+        <section>
+          <span>02</span>
+          <div>
+            <h2>Thoughtful quotation</h2>
+            <p>Brief excerpts may be quoted for commentary, criticism, research, or review when accompanied by clear attribution and a link to the original page. This does not permit republication of a complete work or a substantial portion of it.</p>
+          </div>
+        </section>
+
+        <section>
+          <span>03</span>
+          <div>
+            <h2>Permission required</h2>
+            <p>Prior written permission is required for redistribution, commercial use, translations, adaptations, image reuse, bulk reproduction, inclusion in paid products, or removal of authorship and provenance information.</p>
+          </div>
+        </section>
+
+        <section>
+          <span>04</span>
+          <div>
+            <h2>Automated and AI use</h2>
+            <p>No automated scraping, corpus creation, dataset inclusion, model training, fine-tuning, evaluation, retrieval augmentation, or other machine-learning use of original content is permitted without explicit written consent. Ordinary search indexing is permitted.</p>
+          </div>
+        </section>
+
+        <section>
+          <span>05</span>
+          <div>
+            <h2>Third-party material</h2>
+            <p>Quoted, licensed, stock, public-domain, and externally sourced material remains subject to its respective owner’s terms. Attribution on this site does not imply ownership of third-party work.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <section class="rights-contact">
+      <p>Permissions &amp; licensing</p>
+      <a href="mailto:prakashpranjal001@gmail.com">prakashpranjal001@gmail.com <span>↗</span></a>
+      <small>© 2026 Himavat — Pranjal Prakash Pandey. All rights reserved.</small>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .rights-page {
+    --rights-paper: #17120e;
+    --rights-raised: #211a14;
+    --rights-ink: #f1e2c9;
+    --rights-muted: #ad9a80;
+    --rights-rule: rgb(217 187 145 / 0.22);
+    --rights-accent: #c55b3f;
+    min-height: 100vh;
+    padding: clamp(8rem, 13vw, 11rem) max(1.5rem, calc((100vw - 1240px) / 2)) 6rem;
+    color: var(--rights-ink);
+    background: var(--rights-paper);
+  }
+
+  :global(html[data-theme="bright"]) .rights-page {
+    --rights-paper: #fdfcfb;
+    --rights-raised: #fff;
+    --rights-ink: #241a13;
+    --rights-muted: #716256;
+    --rights-rule: rgb(42 29 21 / 0.15);
+    --rights-accent: #9f3d29;
+  }
+
+  .rights-hero {
+    display: grid;
+    grid-template-columns: minmax(9rem, 0.6fr) 2fr;
+    border-block: 1px solid var(--rights-rule);
+    padding-block: clamp(2rem, 5vw, 4rem);
+  }
+
+  .rights-kicker, .rights-ledger aside p, .rights-contact > p {
+    color: var(--rights-accent);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .rights-hero h1 {
+    max-width: 14ch;
+    color: var(--rights-ink);
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 6.6rem);
+    font-weight: 350;
+    letter-spacing: -0.055em;
+    line-height: 0.91;
+  }
+
+  .rights-lede {
+    grid-column: 2;
+    max-width: 42rem;
+    margin-top: 2.5rem;
+    color: var(--rights-muted);
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    line-height: 1.75;
+  }
+
+  .rights-ledger {
+    display: grid;
+    grid-template-columns: minmax(12rem, 0.6fr) 2fr;
+    gap: clamp(2rem, 6vw, 7rem);
+    padding-top: clamp(3rem, 7vw, 6rem);
+  }
+
+  .rights-ledger aside { position: sticky; top: 7rem; align-self: start; }
+  .rights-ledger aside strong { display: block; margin-top: 1rem; font-family: var(--font-display); font-size: 1.65rem; font-weight: 400; }
+  .rights-ledger aside span { display: block; margin-top: .25rem; color: var(--rights-muted); font-size: .82rem; }
+  .rights-ledger aside .rights-date { margin-top: 2.5rem; color: var(--rights-muted); letter-spacing: .1em; line-height: 1.7; }
+
+  .rights-sections section {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 1.5rem;
+    border-top: 1px solid var(--rights-rule);
+    padding-block: 2rem;
+  }
+  .rights-sections section:last-child { border-bottom: 1px solid var(--rights-rule); }
+  .rights-sections section > span { color: var(--rights-accent); font-family: var(--font-mono); font-size: .58rem; letter-spacing: .12em; }
+  .rights-sections h2 { color: var(--rights-ink); font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.25rem); font-weight: 400; }
+  .rights-sections p { max-width: 48rem; margin-top: .8rem; color: var(--rights-muted); line-height: 1.8; }
+
+  .rights-contact { margin-top: clamp(5rem, 10vw, 9rem); border-left: 1px solid var(--rights-accent); padding-left: 1.4rem; }
+  .rights-contact a { display: inline-flex; gap: .8rem; margin-top: 1rem; color: var(--rights-ink); font-family: var(--font-display); font-size: clamp(1.3rem, 3vw, 2rem); }
+  .rights-contact a span { color: var(--rights-accent); font-family: var(--font-ui); }
+  .rights-contact small { display: block; margin-top: 2.5rem; color: var(--rights-muted); font-family: var(--font-mono); font-size: .55rem; letter-spacing: .1em; text-transform: uppercase; }
+
+  @media (max-width: 720px) {
+    .rights-hero, .rights-ledger { grid-template-columns: 1fr; }
+    .rights-hero { gap: 1.75rem; }
+    .rights-lede { grid-column: 1; margin-top: 0; }
+    .rights-ledger aside { position: static; }
+  }
+</style>

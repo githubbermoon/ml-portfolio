@@ -6,12 +6,12 @@ const isRealmsMode = import.meta.env.SITE_MODE === "realms";
 if (!isRealmsMode) return Astro.redirect("/ml-portfolio/");
 ---
 
-<BaseLayout title="Dharma-Kshetra: The Arrow of Duty">
+<BaseLayout title="Dharma-Kshetra: The Arrow of Duty" bodyClass="dharma-page-shell">
   <Nav />
-  <div class="relative bg-[#050505] text-[#e3dcd2] overflow-x-hidden">
+  <div class="dharma-page relative overflow-x-hidden">
     
     <!-- Fixed Background Ambiance -->
-    <div class="fixed inset-0 bg-[radial-gradient(circle_at_center,_#2a1b0a_0%,_#000000_100%)] opacity-40 pointer-events-none z-0"></div>
+    <div class="dharma-ambience fixed inset-0 opacity-40 pointer-events-none z-0"></div>
     
     <!-- Fireflies (Fixed) -->
     <div id="fireflies" class="fixed inset-0 pointer-events-none z-10"></div>
@@ -108,6 +108,22 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/");
 </BaseLayout>
 
 <style>
+  :global(body.dharma-page-shell) { background: #050505; }
+  .dharma-page { color: #e3dcd2; background: #050505; }
+  .dharma-ambience { background: radial-gradient(circle at center, #2a1b0a 0%, #000 100%); }
+
+  :global(html[data-theme="bright"] body.dharma-page-shell) { background: #fdfcfb; }
+  :global(html[data-theme="bright"]) .dharma-page { color: #2b2119; background: #fdfcfb; }
+  :global(html[data-theme="bright"]) .dharma-ambience {
+    background: radial-gradient(circle at center, #ffffff 0%, #fdfcfb 100%);
+    opacity: 0.72;
+  }
+  :global(html[data-theme="bright"]) .dharma-page .glass-panel {
+    border-color: rgb(75 52 35 / 0.2);
+    background: rgb(255 252 247 / 0.72);
+  }
+  :global(html[data-theme="bright"]) .dharma-page .text-mist { color: #594b3f !important; }
+
   /* Reuse animations from before */
   .draw-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 2s ease-out forwards; }
   .draw-fade { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
