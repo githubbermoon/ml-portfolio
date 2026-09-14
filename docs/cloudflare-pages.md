@@ -10,6 +10,8 @@ Use this when deploying the realms site to Cloudflare Pages.
 - Root directory: repository root
 - Node version: `22`
 
+The `realms` project is connected to this GitHub repository and starts a production build when `master` is pushed. `pnpm deploy:cloudflare` is the direct-upload alternative.
+
 ## Why This Differs From GitHub Pages
 
 GitHub Pages currently serves the site under `/ml-portfolio/`, so the default build keeps that base path.

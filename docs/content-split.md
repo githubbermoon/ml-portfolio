@@ -40,10 +40,10 @@ The generator copies only the selected target into `src/pages/`, then writes the
 
 ```json
 "build:github": "pnpm prepare:professional && SITE_MODE=professional astro build",
-"build:cloudflare": "pnpm prepare:realms && SITE_MODE=realms astro build && rm -rf dist/blog/uhi-bengaluru dist/blog/glass-fidelity dist/projects/terrain-safety dist/projects/python-api"
+"build:cloudflare": "pnpm editorial:build && pnpm prepare:realms && SITE_MODE=realms astro build && rm -rf dist/blog/uhi-bengaluru dist/blog/glass-fidelity dist/projects/terrain-safety dist/projects/python-api"
 ```
 
-The Cloudflare build also deletes any professional artifacts from `dist/` as a safety belt.
+The repository is a pnpm workspace containing the Astro root and `sidecars/*`. A root `pnpm install` therefore installs the Eleventy/Nunjucks/Rollup sidecar as well as Astro. The Cloudflare build first generates the editorial sidecar, then builds Realms and deletes any professional artifacts from `dist/` as a safety belt.
 
 ## Current content map
 
@@ -85,13 +85,13 @@ pnpm build:cloudflare
 test ! -e dist/blog/uhi-bengaluru && echo "Cloudflare output has no UHI"
 ```
 
-7. Deploy Cloudflare manually if needed:
+7. Cloudflare's Git integration deploys `master` automatically. A direct deployment can still be run when needed:
 
 ```bash
 pnpm deploy:cloudflare
 ```
 
-8. GitHub Pages deploys automatically on push to `master` via `.github/workflows/deploy.yml`.
+8. GitHub Pages also deploys automatically on push to `master` via `.github/workflows/deploy.yml`.
 
 ## Last verified behavior
 

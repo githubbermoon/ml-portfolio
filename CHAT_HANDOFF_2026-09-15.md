@@ -8,6 +8,7 @@ Use this document to continue the website work in a new Codex chat without recon
 - Local checkout: `/Users/pranjal/Projects/gitLocal/ml-portfolio`
 - Active branch: `master`
 - Framework: Astro 5 with separate Professional and Realms source trees
+- Package layout: one pnpm workspace covering the Astro root and `sidecars/*`; use only the root `pnpm-lock.yaml`
 - Realms hosting target: Cloudflare Pages project `realms`
 - Professional hosting target: GitHub Pages
 - Local Realms command: `pnpm dev:realms`
@@ -49,6 +50,7 @@ The experimental full Henry-style architecture lives in `sidecars/a-measure-of-d
 - Source: `sidecars/a-measure-of-days/src/`
 - Generated output: `public/experiments/a-measure-of-days/`
 - Generated output is ignored by Git and must be rebuilt from source.
+- Its dependencies are installed by the root `pnpm install`; do not restore a separate Bun lock or Bun-only build path.
 - Astro comparison page: `/essays/a-measure-of-days/`
 - Full sidecar comparison: `/experiments/a-measure-of-days/`
 - Kosh Garden experiment: `/experiments/kosh-garden/`
@@ -102,7 +104,7 @@ Authorization: Bearer <ANALYTICS_ADMIN_TOKEN>
 
 The `POST /api/analytics` endpoint accepts events only when the same-origin request contains `kosh_consent=accepted` plus visitor and session cookies. The export currently returns JSON; there is no visual private dashboard yet. A sensible next feature is an authenticated visitor-lab dashboard that groups test devices by cookie ID, fingerprint, IP, country, and session.
 
-Pushing `master` triggers the Professional GitHub Pages workflow only. It does not run the manual Cloudflare Realms deployment command.
+Pushing `master` triggers both the Professional GitHub Pages workflow and Cloudflare's Git-connected Realms build. `pnpm deploy:cloudflare` remains the authenticated direct-upload alternative.
 
 ## Latest UI change
 

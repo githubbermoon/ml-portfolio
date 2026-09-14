@@ -22,14 +22,16 @@ routes read those documents so Astro's local server preserves the clean URLs.
 From the repository root:
 
 ```sh
-bun run dev:realms
+pnpm dev:realms
 ```
 
 To rebuild only this edition:
 
 ```sh
-bun run editorial:build
+pnpm editorial:build
 ```
+
+The repository is a pnpm workspace. Install dependencies once from the repository root with `pnpm install`; this sidecar is included in the shared lockfile and does not maintain a separate package-manager lock.
 
 ## Typography
 

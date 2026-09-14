@@ -8,7 +8,7 @@
     "styles": "sass --no-source-map src/scss:../../public/experiments/a-measure-of-days/css --style compressed",
     "scripts": "rollup --config",
     "content": "eleventy",
-    "build": "bun run clean && bun run styles && bun run scripts && bun run content",
+    "build": "pnpm clean && pnpm styles && pnpm scripts && pnpm content",
     "start": "concurrently -k -n sass,rollup,eleventy 'sass --no-source-map --watch src/scss:../../public/experiments/a-measure-of-days/css --style compressed' 'rollup --config --watch' 'eleventy --serve --quiet'"
   },
   "dependencies": {
