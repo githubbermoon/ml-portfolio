@@ -1,5 +1,5 @@
 @import "./fonts.css";
-@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Barlow+Condensed:wght@700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap");
 
 $paper:#f1f0ec;
 $ink:#27231f;
@@ -18,7 +18,7 @@ body.editorial-remix {
   overflow-x:hidden;
   background:$paper;
   color:$ink;
-  font-family:"Archivo",Arial,sans-serif;
+  font-family:"Neue Montreal Trial",Arial,sans-serif;
 }
 body.editorial-remix::before { display:none; }
 body.editorial-remix > main { border:0; }
@@ -31,8 +31,8 @@ body.editorial-remix ::selection { background:$rust; color:$paper; }
 
 .editorial-marquee { overflow:hidden; border-block:1px solid rgba($cream,.45); padding:.72rem 0; background:$night; color:$cream; white-space:nowrap; }
 .editorial-marquee>div { display:flex; width:max-content; align-items:center; gap:2rem; animation:editorial-run 24s linear infinite; }
-.editorial-marquee span { font:500 .58rem "JetBrains Mono",monospace; letter-spacing:.12em; text-transform:uppercase; }
-.editorial-marquee i { font:italic 1rem "Cormorant Garamond",serif; }
+.editorial-marquee span { font:500 .58rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; }
+.editorial-marquee i { font:italic 1rem "Louize Trial",Georgia,serif; }
 .editorial-marquee--light { border-color:$ink; background:$paper; color:$ink; }
 .editorial-marquee--night { background:#080b12; }
 @keyframes editorial-run { to { transform:translateX(-50%); } }
@@ -41,88 +41,82 @@ body.editorial-remix ::selection { background:$rust; color:$paper; }
 body.fear-remix { background:$night; }
 .fear-page { background:$paper; color:$ink; }
 .fear-hero { position:relative; min-height:100svh; overflow:hidden; background:#050505; color:$cream; }
-.fear-hero::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.05) 52%,rgba(0,0,0,.42)),linear-gradient(0deg,#050505 0 17%,rgba(5,5,5,.82) 26%,transparent 59%); pointer-events:none; }
-.fear-hero figure { position:absolute; inset:-5%; }
-.fear-hero figure img { width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.35) brightness(.72); }
-.fear-hero__meta { position:absolute; z-index:2; top:7rem; right:3vw; left:3vw; display:flex; justify-content:space-between; border-top:1px solid rgba($cream,.6); padding-top:.65rem; font:500 .56rem "JetBrains Mono",monospace; letter-spacing:.11em; text-transform:uppercase; }
-.fear-hero h1 { position:absolute; z-index:2; inset:18% 2vw auto; min-height:60vh; color:$cream!important; font-weight:400; letter-spacing:-.06em; text-shadow:0 2px 28px rgba(0,0,0,.48); text-transform:uppercase; }
-.fear-hero h1 span { position:absolute; display:block; font:900 clamp(8rem,19vw,22rem)/.72 "Barlow Condensed",sans-serif; }
-.fear-hero h1 span:first-child { top:0; left:0; }
-.fear-hero h1 span:last-child { right:0; bottom:0; }
-.fear-hero h1 em { position:absolute; z-index:2; top:42%; left:35%; color:#d5a692; font:italic 400 clamp(4.5rem,8vw,9rem)/1 "Cormorant Garamond",serif; text-transform:none; }
-.fear-hero__dek { position:absolute; z-index:2; bottom:2.2rem; left:3vw; width:min(30rem,60vw); font:500 clamp(1.1rem,1.6vw,1.45rem)/1.4 "Cormorant Garamond",serif; }
-.fear-hero__enter { position:absolute; z-index:2; right:3vw; bottom:2.4rem; font:500 .57rem "JetBrains Mono",monospace; letter-spacing:.1em; text-transform:uppercase; text-underline-offset:.3em; }
+.fear-hero figure { position:absolute; inset:0; }
+.fear-hero figure::after { content:""; position:absolute; inset:auto 0 0; height:35%; background:linear-gradient(0deg,rgba(0,0,0,.72),transparent); pointer-events:none; }
+.fear-hero figure img { width:100%; height:100%; object-fit:cover; filter:none; }
+.fear-hero figure blockquote { position:absolute; z-index:2; right:2rem; bottom:2.6rem; left:2rem; margin:0; color:#f4eee3; font:400 clamp(1.8rem,3.4vw,3.8rem)/1.03 "EB Garamond",serif; letter-spacing:-.025em; text-align:center; text-wrap:balance; text-shadow:0 2px 18px rgba(0,0,0,.8); }
+.fear-hero h1 { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 .fear-reading { display:grid; grid-template-columns:15rem minmax(0,58rem); gap:clamp(2rem,7vw,8rem); width:min(100% - 3rem,1240px); margin:auto; padding:8rem 0 10rem; }
-.fear-reading__rail { position:sticky; top:7rem; align-self:start; display:grid; gap:.75rem; min-height:72vh; border-top:1px solid $ink; padding-top:1rem; font:500 .57rem "JetBrains Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }
+.fear-reading__rail { position:sticky; top:7rem; align-self:start; display:grid; gap:.75rem; min-height:72vh; border-top:1px solid $ink; padding-top:1rem; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; }
 .fear-reading__rail>p:first-child { margin-bottom:1rem; color:$rust; }
 .fear-reading__rail a { display:grid; grid-template-columns:2rem 1fr; text-decoration:none; }
 .fear-reading__vertical { position:absolute; bottom:0; left:0; color:#8c8781; writing-mode:vertical-rl; transform:rotate(180deg); }
 .fear-reading__opening { margin-bottom:10rem; }
-.fear-reading__opening>p,.fear-chapter header>p,.fear-chapter header>span,.fear-translation>p,.fear-verse-label { font:500 .58rem "JetBrains Mono",monospace; letter-spacing:.11em; text-transform:uppercase; }
+.fear-reading__opening>p,.fear-chapter header>p,.fear-chapter header>span,.fear-translation>p,.fear-verse-label { font:500 .58rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.11em; text-transform:uppercase; }
 .fear-reading__opening>p { color:$rust; }
-.fear-reading__opening blockquote { margin-top:1.4rem; font:500 clamp(3rem,5.5vw,6rem)/.94 "Cormorant Garamond",serif; letter-spacing:-.035em; }
+.fear-reading__opening blockquote { margin-top:1.4rem; font:500 clamp(3rem,5.5vw,6rem)/.94 "Louize Trial",Georgia,serif; letter-spacing:-.035em; }
 .fear-chapter { position:relative; padding-top:2rem; border-top:1px solid $ink; scroll-margin-top:6rem; }
 .fear-chapter+.fear-chapter { margin-top:11rem; }
-.fear-chapter__number { position:absolute; right:0; top:-.45em; color:rgba($ink,.07); font:900 clamp(9rem,18vw,18rem)/1 "Barlow Condensed",sans-serif; }
+.fear-chapter__number { position:absolute; right:0; top:-.45em; color:rgba($ink,.07); font:900 clamp(9rem,18vw,18rem)/1 "DaVinci Trial",Georgia,serif; }
 .fear-chapter header { position:relative; z-index:1; margin-bottom:4rem; }
 .fear-chapter header>p { color:$rust; }
-.fear-chapter h2 { margin-top:1.1rem; font:500 clamp(3.4rem,6vw,6.5rem)/.84 "Cormorant Garamond",serif; letter-spacing:-.045em; }
+.fear-chapter h2 { margin-top:1.1rem; font:500 clamp(3.4rem,6vw,6.5rem)/.84 "Louize Trial",Georgia,serif; letter-spacing:-.045em; }
 .fear-chapter h2 em { color:$rust; font-size:.42em; font-weight:400; }
 .fear-chapter header>span { display:block; margin-top:1rem; color:#77716b; }
-.fear-verse { position:relative; padding:3rem; border:1px solid $ink; background:#e6e2da; font:500 clamp(1.5rem,2.2vw,2rem)/1.9 "Noto Serif Devanagari","Cormorant Garamond",serif; }
-.fear-verse::before { content:"§"; position:absolute; top:-1.1rem; left:50%; padding:0 .7rem; background:$paper; font:italic 2rem "Cormorant Garamond",serif; transform:translateX(-50%); }
+.fear-verse { position:relative; padding:3rem; border:1px solid $ink; background:#e6e2da; font:500 clamp(1.5rem,2.2vw,2rem)/1.9 "Noto Serif Devanagari","Louize Trial",Georgia,serif; }
+.fear-verse::before { content:"§"; position:absolute; top:-1.1rem; left:50%; padding:0 .7rem; background:$paper; font:italic 2rem "Louize Trial",Georgia,serif; transform:translateX(-50%); }
 .fear-verse-label { margin-bottom:.8rem; color:$rust; }
 .fear-translation { display:grid; grid-template-columns:10rem 1fr; gap:2rem; margin-top:2rem; border-top:1px solid rgba($ink,.3); padding-top:1rem; }
 .fear-translation>p { color:#716b64; }
-.fear-translation>div { font:500 1.25rem/1.65 "Cormorant Garamond",serif; }
+.fear-translation>div { font:500 1.25rem/1.65 "Louize Trial",Georgia,serif; }
 .fear-translation--meaning>div { font-size:1.45rem; }
 .fear-interlude { width:calc(100% + 14rem); margin:11rem 0 11rem -7rem; }
-.fear-interlude img { width:100%; max-height:78vh; object-fit:cover; filter:grayscale(1) contrast(1.15); }
-.fear-interlude figcaption { display:grid; grid-template-columns:10rem 1fr; gap:2rem; padding:.8rem 0; border-bottom:1px solid $ink; font:500 .72rem/1.5 "Archivo",sans-serif; }
+.fear-interlude img { width:100%; max-height:78vh; object-fit:cover; filter:none; }
+.fear-interlude figcaption { display:grid; grid-template-columns:10rem 1fr; gap:2rem; padding:.8rem 0; border-bottom:1px solid $ink; font:500 .72rem/1.5 "Neue Montreal Trial",Arial,sans-serif; }
 .fear-interlude figcaption span { text-transform:uppercase; }
 .fear-colophon { display:grid; justify-items:center; margin-top:10rem; border-block:1px solid $ink; padding:4rem 2rem; text-align:center; }
-.fear-colophon>span { font:italic 4rem "Cormorant Garamond",serif; }
-.fear-colophon p { max-width:34rem; font:500 1.4rem/1.5 "Cormorant Garamond",serif; }
-.fear-colophon a { margin-top:2rem; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.fear-colophon>span { font:italic 4rem "Louize Trial",Georgia,serif; }
+.fear-colophon p { max-width:34rem; font:500 1.4rem/1.5 "Louize Trial",Georgia,serif; }
+.fear-colophon a { margin-top:2rem; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 
 /* Notes — graphic index */
 .notes-page { background:$paper; color:$ink; }
 .notes-hero { min-height:92svh; display:grid; grid-template-rows:auto 1fr auto; padding:7rem 1rem 1.5rem; }
-.notes-hero__meta { display:flex; justify-content:space-between; border-block:2px solid $ink; padding:.6rem 0; font:500 .57rem "JetBrains Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }
+.notes-hero__meta { display:flex; justify-content:space-between; border-block:2px solid $ink; padding:.6rem 0; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; }
 .notes-hero h1 { position:relative; align-self:center; height:45vw; max-height:36rem; min-height:20rem; letter-spacing:-.06em; text-transform:uppercase; }
-.notes-hero h1 span { position:absolute; font:900 clamp(8rem,21vw,24rem)/.7 "Barlow Condensed",sans-serif; }
+.notes-hero h1 span { position:absolute; font:900 clamp(8rem,21vw,24rem)/.7 "DaVinci Trial",Georgia,serif; }
 .notes-hero h1 span:first-child { top:0; left:0; }
 .notes-hero h1 span:last-child { right:0; bottom:0; }
-.notes-hero h1 em { position:absolute; z-index:2; top:39%; left:47%; font:italic 400 clamp(4rem,8vw,9rem)/1 "Cormorant Garamond",serif; text-transform:none; transform:translate(-50%,-50%); }
+.notes-hero h1 em { position:absolute; z-index:2; top:39%; left:47%; font:italic 400 clamp(4rem,8vw,9rem)/1 "Louize Trial",Georgia,serif; text-transform:none; transform:translate(-50%,-50%); }
 .notes-hero__foot { display:grid; grid-template-columns:1fr auto; align-items:end; gap:4rem; border-top:2px solid $ink; padding-top:1rem; }
-.notes-hero__foot p { max-width:37rem; font:500 1.2rem/1.45 "Cormorant Garamond",serif; }
-.notes-hero__foot a { font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.notes-hero__foot p { max-width:37rem; font:500 1.2rem/1.45 "Louize Trial",Georgia,serif; }
+.notes-hero__foot a { font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .notes-manuscript { display:grid; grid-template-columns:1.4fr 1fr; min-height:80vh; background:$night; color:$cream; }
 .notes-manuscript figure { overflow:hidden; }
-.notes-manuscript img { width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.55) brightness(.78); }
-.notes-manuscript>p { align-self:center; padding:8vw; font:500 clamp(2.6rem,5vw,5.5rem)/.95 "Cormorant Garamond",serif; letter-spacing:-.03em; }
-.notes-manuscript>p span { display:block; margin-bottom:2rem; font:500 .58rem "JetBrains Mono",monospace; letter-spacing:.1em; text-transform:uppercase; }
+.notes-manuscript img { width:100%; height:100%; object-fit:cover; filter:none; }
+.notes-manuscript>p { align-self:center; padding:8vw; font:500 clamp(2.6rem,5vw,5.5rem)/.95 "Louize Trial",Georgia,serif; letter-spacing:-.03em; }
+.notes-manuscript>p span { display:block; margin-bottom:2rem; font:500 .58rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.1em; text-transform:uppercase; }
 .notes-shelves { padding:7rem 1rem 10rem; }
 .notes-shelves>header,.projects-dossiers>header { display:grid; grid-template-columns:1fr auto; grid-template-rows:auto auto; align-items:center; }
 .notes-shelves>header>i,.projects-dossiers>header>i { width:100%; height:2rem; background:$ink; }
-.notes-shelves>header h2,.projects-dossiers>header h2 { font:900 clamp(7rem,15vw,17rem)/.7 "Barlow Condensed",sans-serif; letter-spacing:-.045em; text-transform:uppercase; }
-.notes-shelves>header p,.projects-dossiers>header p { grid-column:1/-1; border-top:1px solid $ink; padding:.6rem 0; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.notes-shelves>header h2,.projects-dossiers>header h2 { font:900 clamp(7rem,15vw,17rem)/.7 "DaVinci Trial",Georgia,serif; letter-spacing:-.045em; text-transform:uppercase; }
+.notes-shelves>header p,.projects-dossiers>header p { grid-column:1/-1; border-top:1px solid $ink; padding:.6rem 0; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .notes-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
 .notes-card { min-height:24rem; }
 .notes-card>a { display:grid; grid-template-rows:auto 1fr auto auto; height:100%; padding:2rem; border:1px solid rgba($ink,.2); border-radius:12px; text-decoration:none; transition:border-color .2s,transform .2s; }
 .notes-card>a:hover { border-color:$ink; transform:translateY(-4px); }
-.notes-card__meta { display:flex; justify-content:space-between; gap:1rem; font:500 .55rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.notes-card__meta { display:flex; justify-content:space-between; gap:1rem; font:500 .55rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .notes-card__meta p { text-align:right; }.notes-card__meta small { display:block; color:#817b74; font-size:inherit; }
-.notes-card h3 { align-self:start; margin-top:2rem; font:500 clamp(2.5rem,4vw,4.2rem)/.9 "Cormorant Garamond",serif; letter-spacing:-.035em; }
+.notes-card h3 { align-self:start; margin-top:2rem; font:500 clamp(2.5rem,4vw,4.2rem)/.9 "Louize Trial",Georgia,serif; letter-spacing:-.035em; }
 .notes-card__summary { margin-bottom:2rem; color:#69635d; font-size:.78rem; line-height:1.6; }
 .notes-card strong { justify-self:end; font-size:.58rem; text-transform:uppercase; }
 .notes-method { padding:8rem 1rem; background:#dedbd3; }
-.notes-method>p { border-bottom:1px solid $ink; padding-bottom:.7rem; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.notes-method>p { border-bottom:1px solid $ink; padding-bottom:.7rem; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .notes-method>div { display:grid; grid-template-columns:repeat(3,1fr); }
 .notes-method article { min-height:22rem; padding:2rem; border-right:1px solid $ink; }
 .notes-method article:first-child { border-left:1px solid $ink; }
-.notes-method article>span { font:500 .58rem "JetBrains Mono",monospace; }
-.notes-method h2 { margin-top:5rem; font:500 clamp(2.8rem,4vw,4.5rem)/1 "Cormorant Garamond",serif; }
+.notes-method article>span { font:500 .58rem "Neue Montreal Trial",Arial,sans-serif; }
+.notes-method h2 { margin-top:5rem; font:500 clamp(2.8rem,4vw,4.5rem)/1 "Louize Trial",Georgia,serif; }
 .notes-method article p { max-width:18rem; margin-top:1rem; font-size:.82rem; line-height:1.6; }
 
 /* Astrology — nocturnal atlas */
@@ -132,71 +126,71 @@ body.astrology-remix { background:#080b12; }
 .astrology-hero { position:relative; min-height:100svh; overflow:hidden; }
 .astrology-hero::after { content:""; position:absolute; inset:0; background:linear-gradient(0deg,#080b12 0,transparent 50%),linear-gradient(90deg,rgba(3,5,9,.55),transparent); }
 .astrology-hero figure { position:absolute; inset:-6%; }
-.astrology-hero img { width:100%; height:100%; object-fit:cover; filter:saturate(.55) contrast(1.25) brightness(.72); }
-.astrology-hero__meta { position:absolute; z-index:2; top:7rem; right:2vw; left:2vw; display:flex; justify-content:space-between; border-top:1px solid rgba(232,228,220,.65); padding-top:.6rem; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.astrology-hero img { width:100%; height:100%; object-fit:cover; filter:none; }
+.astrology-hero__meta { position:absolute; z-index:2; top:7rem; right:2vw; left:2vw; display:flex; justify-content:space-between; border-top:1px solid rgba(232,228,220,.65); padding-top:.6rem; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .astrology-hero h1 { position:absolute; z-index:2; inset:17% 2vw auto; min-height:56vh; color:#eee9df!important; letter-spacing:-.055em; text-shadow:0 2px 32px rgba(0,0,0,.5); text-transform:uppercase; }
-.astrology-hero h1 span { position:absolute; display:block; font:900 clamp(7rem,17vw,20rem)/.74 "Barlow Condensed",sans-serif; }
+.astrology-hero h1 span { position:absolute; display:block; font:900 clamp(7rem,17vw,20rem)/.74 "DaVinci Trial",Georgia,serif; }
 .astrology-hero h1 span:first-child { top:0; left:0; }.astrology-hero h1 span:last-child { right:0; bottom:0; }
-.astrology-hero h1 em { position:absolute; top:42%; left:50%; color:#d79875; font:italic 400 clamp(5rem,10vw,11rem)/1 "Cormorant Garamond",serif; text-transform:none; transform:translate(-50%,-50%); }
-.astrology-hero>p { position:absolute; z-index:2; bottom:2rem; left:2vw; width:min(34rem,64vw); font:500 clamp(1.2rem,1.8vw,1.6rem)/1.35 "Cormorant Garamond",serif; }
-.astrology-hero>a { position:absolute; z-index:2; right:2vw; bottom:2rem; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.astrology-hero h1 em { position:absolute; top:42%; left:50%; color:#d79875; font:italic 400 clamp(5rem,10vw,11rem)/1 "Louize Trial",Georgia,serif; text-transform:none; transform:translate(-50%,-50%); }
+.astrology-hero>p { position:absolute; z-index:2; bottom:2rem; left:2vw; width:min(34rem,64vw); font:500 clamp(1.2rem,1.8vw,1.6rem)/1.35 "Louize Trial",Georgia,serif; }
+.astrology-hero>a { position:absolute; z-index:2; right:2vw; bottom:2rem; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .astrology-preface { display:grid; grid-template-columns:.7fr 2fr .8fr .8fr; gap:4vw; padding:9rem 3vw; border-bottom:1px solid rgba(232,228,220,.3); }
-.astrology-preface>p,.astrology-preface div span { font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.astrology-preface>p,.astrology-preface div span { font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .astrology-preface>p { color:#cf735c; }
-.astrology-preface blockquote { font:500 clamp(2.6rem,4.5vw,5rem)/.96 "Cormorant Garamond",serif; letter-spacing:-.035em; }
+.astrology-preface blockquote { font:500 clamp(2.6rem,4.5vw,5rem)/.96 "Louize Trial",Georgia,serif; letter-spacing:-.035em; }
 .astrology-preface div { border-top:1px solid rgba(232,228,220,.4); padding-top:.8rem; font-size:.72rem; }
 .astrology-preface div span { display:block; margin-bottom:.8rem; color:#8f8b85; }
 .astrology-atlas { padding:8rem 3vw 11rem; }
 .astrology-atlas>header { display:grid; grid-template-columns:.6fr 2fr; gap:4vw; }
-.astrology-atlas>header>p { color:#cf735c; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
-.astrology-atlas>header h2 { font:500 clamp(4.5rem,8vw,9rem)/.8 "Cormorant Garamond",serif; letter-spacing:-.05em; }
+.astrology-atlas>header>p { color:#cf735c; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.astrology-atlas>header h2 { font:500 clamp(4.5rem,8vw,9rem)/.8 "Louize Trial",Georgia,serif; letter-spacing:-.05em; }
 .astrology-atlas>header h2 em { font-weight:400; }
 .astrology-atlas__grid { display:grid; grid-template-columns:repeat(3,1fr); margin-top:7rem; border-top:1px solid rgba(232,228,220,.5); }
 .astrology-atlas__grid article { position:relative; min-height:25rem; padding:2rem; border-right:1px solid rgba(232,228,220,.35); }
 .astrology-atlas__grid article:first-child { border-left:1px solid rgba(232,228,220,.35); }
-.astrology-atlas__grid article>span { font:italic 2rem "Cormorant Garamond",serif; color:#cf735c; }
-.astrology-atlas__grid h3 { margin-top:5rem; font:500 clamp(2.7rem,4vw,4.7rem)/.9 "Cormorant Garamond",serif; }
+.astrology-atlas__grid article>span { font:italic 2rem "Louize Trial",Georgia,serif; color:#cf735c; }
+.astrology-atlas__grid h3 { margin-top:5rem; font:500 clamp(2.7rem,4vw,4.7rem)/.9 "Louize Trial",Georgia,serif; }
 .astrology-atlas__grid p { margin-top:1.2rem; color:#a6a19a; font-size:.8rem; line-height:1.7; }
-.astrology-atlas__grid i { position:absolute; bottom:2rem; left:2rem; font:500 .55rem "JetBrains Mono",monospace; font-style:normal; text-transform:uppercase; }
+.astrology-atlas__grid i { position:absolute; bottom:2rem; left:2rem; font:500 .55rem "Neue Montreal Trial",Arial,sans-serif; font-style:normal; text-transform:uppercase; }
 .astrology-plates { display:grid; grid-template-columns:1.5fr .75fr; grid-template-rows:1fr 1fr; min-height:130vh; background:$paper; color:$ink; }
 .astrology-plate { position:relative; overflow:hidden; border:1px solid $ink; }
 .astrology-plate--wide { grid-row:1/3; }
-.astrology-plate img { width:100%; height:100%; object-fit:cover; filter:grayscale(.75) contrast(1.15); }
+.astrology-plate img { width:100%; height:100%; object-fit:cover; filter:none; }
 .astrology-plate figcaption { position:absolute; right:1rem; bottom:1rem; left:1rem; display:flex; justify-content:space-between; padding:.7rem; background:rgba($paper,.92); font-size:.66rem; }
 .astrology-plate figcaption span { text-transform:uppercase; }
 .astrology-coda { display:grid; justify-items:center; padding:11rem 2rem; text-align:center; }
-.astrology-coda>p { color:#cf735c; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
-.astrology-coda h2 { max-width:62rem; margin-top:2rem; font:500 clamp(3.2rem,6vw,7rem)/.92 "Cormorant Garamond",serif; letter-spacing:-.04em; }
-.astrology-coda a { margin-top:3rem; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.astrology-coda>p { color:#cf735c; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.astrology-coda h2 { max-width:62rem; margin-top:2rem; font:500 clamp(3.2rem,6vw,7rem)/.92 "Louize Trial",Georgia,serif; letter-spacing:-.04em; }
+.astrology-coda a { margin-top:3rem; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 
 /* Projects — workshop dossiers */
 .projects-page { background:$paper; color:$ink; }
 .projects-hero { min-height:96svh; display:grid; grid-template-rows:auto 1fr auto; padding:7rem 1rem 1.5rem; }
-.projects-hero__meta { display:flex; justify-content:space-between; border-block:2px solid $ink; padding:.6rem 0; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.projects-hero__meta { display:flex; justify-content:space-between; border-block:2px solid $ink; padding:.6rem 0; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .projects-hero h1 { position:relative; align-self:center; height:46vw; max-height:39rem; min-height:24rem; letter-spacing:-.055em; text-transform:uppercase; }
-.projects-hero h1 span { position:absolute; display:block; font:900 clamp(7rem,15vw,17rem)/.72 "Barlow Condensed",sans-serif; }
+.projects-hero h1 span { position:absolute; display:block; font:900 clamp(7rem,15vw,17rem)/.72 "DaVinci Trial",Georgia,serif; }
 .projects-hero h1 span:last-child { font-size:clamp(7rem,14vw,16rem); }
 .projects-hero h1 span:first-child { top:0; left:0; }.projects-hero h1 span:last-child { right:0; bottom:0; }
-.projects-hero h1 em { position:absolute; z-index:2; top:42%; left:36%; font:italic 400 clamp(5rem,9vw,10rem)/1 "Cormorant Garamond",serif; text-transform:none; }
+.projects-hero h1 em { position:absolute; z-index:2; top:42%; left:36%; font:italic 400 clamp(5rem,9vw,10rem)/1 "Louize Trial",Georgia,serif; text-transform:none; }
 .projects-hero__foot { display:grid; grid-template-columns:1fr auto; align-items:end; gap:4rem; border-top:2px solid $ink; padding-top:1rem; }
-.projects-hero__foot p { max-width:40rem; font:500 1.25rem/1.4 "Cormorant Garamond",serif; }
-.projects-hero__foot a { font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.projects-hero__foot p { max-width:40rem; font:500 1.25rem/1.4 "Louize Trial",Georgia,serif; }
+.projects-hero__foot a { font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .projects-image-band { display:grid; grid-template-columns:1.2fr .8fr 1fr; min-height:70vh; background:$night; color:$cream; }
 .projects-image-band figure { overflow:hidden; }
-.projects-image-band img { width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(2.5); }
+.projects-image-band img { width:100%; height:100%; object-fit:cover; filter:none; }
 .projects-image-band>div { align-self:center; padding:4vw; }
-.projects-image-band>div p { font:500 clamp(2.5rem,4.5vw,5rem)/.95 "Cormorant Garamond",serif; }
+.projects-image-band>div p { font:500 clamp(2.5rem,4.5vw,5rem)/.95 "Louize Trial",Georgia,serif; }
 .projects-image-band>div span { display:block; margin-top:2rem; color:#9d9890; font-size:.72rem; }
 .projects-method { padding:9rem 3vw; }
 .projects-method>header { display:grid; grid-template-columns:.7fr 2fr; gap:4vw; }
-.projects-method>header p { color:$rust; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
-.projects-method>header h2 { font:500 clamp(4.5rem,8vw,9rem)/.8 "Cormorant Garamond",serif; letter-spacing:-.05em; }
+.projects-method>header p { color:$rust; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.projects-method>header h2 { font:500 clamp(4.5rem,8vw,9rem)/.8 "Louize Trial",Georgia,serif; letter-spacing:-.05em; }
 .projects-method>header h2 em { font-weight:400; }
 .projects-method>div { display:grid; grid-template-columns:repeat(3,1fr); margin-top:7rem; border-top:1px solid $ink; }
 .projects-method article { min-height:19rem; padding:2rem; border-right:1px solid $ink; }
 .projects-method article:first-child { border-left:1px solid $ink; }
-.projects-method article span { font:500 .57rem "JetBrains Mono",monospace; }
-.projects-method h3 { margin-top:4rem; font:500 clamp(2.7rem,4vw,4.5rem)/.9 "Cormorant Garamond",serif; }
+.projects-method article span { font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; }
+.projects-method h3 { margin-top:4rem; font:500 clamp(2.7rem,4vw,4.5rem)/.9 "Louize Trial",Georgia,serif; }
 .projects-method article p { max-width:20rem; margin-top:1rem; font-size:.78rem; line-height:1.6; }
 .projects-dossiers { padding:6rem 1rem 10rem; background:$night; color:$cream; }
 .projects-dossiers :where(h2,h3) { color:$cream!important; }
@@ -204,10 +198,10 @@ body.astrology-remix { background:#080b12; }
 .projects-dossiers>header p { border-color:$cream; }
 .projects-dossiers__list { border-top:1px solid rgba($cream,.5); }
 .project-dossier { position:relative; display:grid; grid-template-columns:4rem 1.2fr 1fr; gap:2rem 4vw; padding:4rem 0; border-bottom:1px solid rgba($cream,.45); text-decoration:none; }
-.project-dossier__number { color:#cf735c; font:italic 2.5rem "Cormorant Garamond",serif; }
-.project-dossier__title p,.project-dossier dt,.project-dossier strong { font:500 .56rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.project-dossier__number { color:#cf735c; font:italic 2.5rem "Louize Trial",Georgia,serif; }
+.project-dossier__title p,.project-dossier dt,.project-dossier strong { font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .project-dossier__title p { color:#9d9890; }
-.project-dossier__title h3 { margin-top:1rem; font:500 clamp(3rem,5.5vw,6rem)/.86 "Cormorant Garamond",serif; }
+.project-dossier__title h3 { margin-top:1rem; font:500 clamp(3rem,5.5vw,6rem)/.86 "Louize Trial",Georgia,serif; }
 .project-dossier__summary { color:#aaa49c; font-size:.86rem; line-height:1.7; }
 .project-dossier dl { grid-column:2/-1; display:grid; grid-template-columns:repeat(3,1fr); border:1px solid rgba($cream,.3); }
 .project-dossier dl div { padding:1rem; border-right:1px solid rgba($cream,.3); }
@@ -215,53 +209,169 @@ body.astrology-remix { background:#080b12; }
 .project-dossier dt { color:#cf735c; }.project-dossier dd { margin-top:.6rem; color:#aaa49c; font-size:.72rem; }
 .project-dossier strong { position:absolute; right:0; bottom:1rem; }
 .projects-coda { display:grid; justify-items:center; padding:10rem 2rem; text-align:center; }
-.projects-coda>p { color:$rust; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
-.projects-coda h2 { max-width:66rem; margin-top:2rem; font:500 clamp(3.5rem,6vw,7rem)/.9 "Cormorant Garamond",serif; letter-spacing:-.04em; }
-.projects-coda a { margin-top:3rem; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.projects-coda>p { color:$rust; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.projects-coda h2 { max-width:66rem; margin-top:2rem; font:500 clamp(3.5rem,6vw,7rem)/.9 "Louize Trial",Georgia,serif; letter-spacing:-.04em; }
+.projects-coda a { margin-top:3rem; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 
 /* Calendrical Systems — art-directed archive entry */
 body.calendrical-remix { background:$paper; }
 body.calendrical-remix .calendar-page { width:100%; max-width:none; margin:0; padding:0; background:$paper; color:$ink; }
 body.calendrical-remix .calendar-hero { position:relative; max-width:none; min-height:94svh; margin:0; padding:7rem 1rem 2rem; border-bottom:2px solid $ink; }
-body.calendrical-remix .calendar-hero>a,body.calendrical-remix .calendar-hero>p { position:absolute; top:7rem; font:500 .57rem "JetBrains Mono",monospace; letter-spacing:.1em; text-transform:uppercase; }
+body.calendrical-remix .calendar-hero>a,body.calendrical-remix .calendar-hero>p { position:absolute; top:7rem; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.1em; text-transform:uppercase; }
 body.calendrical-remix .calendar-hero>a { left:1rem; color:$rust; }
 body.calendrical-remix .calendar-hero>p { right:1rem; margin:0; color:#6e6861; }
 body.calendrical-remix .calendar-hero h1 { position:relative; height:55vw; max-height:45rem; min-height:31rem; margin:3rem 0 0; text-transform:uppercase; }
-body.calendrical-remix .calendar-hero h1 span { position:absolute; top:0; left:0; font:900 clamp(7rem,18vw,21rem)/.72 "Barlow Condensed",sans-serif; letter-spacing:-.055em; }
-body.calendrical-remix .calendar-hero h1 em { position:absolute; right:0; bottom:0; font:500 clamp(7rem,16vw,18rem)/.72 "Cormorant Garamond",serif; letter-spacing:-.055em; }
-body.calendrical-remix .calendar-hero .summary { position:absolute; top:auto; right:auto; bottom:2rem; left:1rem; max-width:33rem; margin:0!important; color:#625d57!important; font:500 1.15rem/1.45 "Cormorant Garamond",serif!important; text-transform:none; }
-body.calendrical-remix .calendar-hero .entry-meta { position:absolute; right:1rem; bottom:2rem; display:flex; gap:2rem; margin:0; color:#6e6861; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+body.calendrical-remix .calendar-hero h1 span { position:absolute; top:0; left:0; font:900 clamp(7rem,18vw,21rem)/.72 "DaVinci Trial",Georgia,serif; letter-spacing:-.055em; }
+body.calendrical-remix .calendar-hero h1 em { position:absolute; right:0; bottom:0; font:500 clamp(7rem,16vw,18rem)/.72 "Louize Trial",Georgia,serif; letter-spacing:-.055em; }
+body.calendrical-remix .calendar-hero .summary { position:absolute; top:auto; right:auto; bottom:2rem; left:1rem; max-width:33rem; margin:0!important; color:#625d57!important; font:500 1.15rem/1.45 "Louize Trial",Georgia,serif!important; text-transform:none; }
+body.calendrical-remix .calendar-hero .entry-meta { position:absolute; right:1rem; bottom:2rem; display:flex; gap:2rem; margin:0; color:#6e6861; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 body.calendrical-remix .calendar-cover { position:relative; width:calc(100% - 2rem); max-height:none; min-height:90vh; margin:1rem; overflow:hidden; }
-body.calendrical-remix .calendar-cover img { width:100%; height:90vh; object-fit:cover; filter:grayscale(1) contrast(2.7); }
+body.calendrical-remix .calendar-cover img { width:100%; height:90vh; object-fit:cover; filter:none; }
 body.calendrical-remix .calendar-cover figcaption { position:absolute; right:1rem; bottom:1rem; display:flex; gap:3rem; padding:.7rem; background:rgba($paper,.94); font-size:.66rem; }
 body.calendrical-remix .calendar-cover figcaption span { text-transform:uppercase; }
 .calendar-marquee { margin-top:0; border-color:$ink; background:$paper; color:$ink; }
 .calendar-preface { display:grid; grid-template-columns:.6fr 1.5fr 1fr; gap:5vw; padding:10rem 4vw; }
-.calendar-preface>p { color:$rust; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
-.calendar-preface blockquote { font:500 clamp(2.7rem,4.5vw,5rem)/.96 "Cormorant Garamond",serif; letter-spacing:-.035em; }
-.calendar-preface figure img { width:100%; aspect-ratio:4/3; object-fit:cover; filter:grayscale(1) contrast(1.25); }
-.calendar-preface figcaption { margin-top:.6rem; font:500 .56rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.calendar-preface>p { color:$rust; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.calendar-preface blockquote { font:500 clamp(2.7rem,4.5vw,5rem)/.96 "Louize Trial",Georgia,serif; letter-spacing:-.035em; }
+.calendar-preface figure img { width:100%; aspect-ratio:4/3; object-fit:cover; filter:none; }
+.calendar-preface figcaption { margin-top:.6rem; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 body.calendrical-remix .entry-body { display:grid; grid-template-columns:14rem minmax(0,48rem); gap:clamp(2rem,8vw,9rem); width:min(100% - 3rem,1180px); margin:0 auto; padding:2rem 0 10rem; border-top:1px solid $ink; }
 body.calendrical-remix .entry-body:not(.has-contents) { max-width:none; margin:0 auto; }
-body.calendrical-remix .entry-body::before { content:"Research notebook · active folio"; padding-top:1rem; color:$rust; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
-body.calendrical-remix .entry-body .prose { grid-column:2; font:500 1.35rem/1.65 "Cormorant Garamond",serif; }
-body.calendrical-remix .entry-body .prose h2 { position:relative; margin:7rem 0 2rem; font:500 clamp(3.5rem,6vw,6rem)/.88 "Cormorant Garamond",serif; letter-spacing:-.04em; }
+body.calendrical-remix .entry-body::before { content:"Research notebook · active folio"; padding-top:1rem; color:$rust; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+body.calendrical-remix .entry-body .prose { grid-column:2; font:500 1.35rem/1.65 "Louize Trial",Georgia,serif; }
+body.calendrical-remix .entry-body .prose h2 { position:relative; margin:7rem 0 2rem; font:500 clamp(3.5rem,6vw,6rem)/.88 "Louize Trial",Georgia,serif; letter-spacing:-.04em; }
 body.calendrical-remix .entry-body .prose h2 { scroll-margin-top:6rem; }
 body.calendrical-remix .entry-body .prose h2:first-child { margin-top:1rem; }
 body.calendrical-remix .entry-body .prose h2::before { content:"§"; position:absolute; left:-3rem; color:$rust; font-style:italic; }
 .calendar-coda { display:grid; justify-items:center; margin:0 1rem 1rem; padding:8rem 2rem; border:1px solid $ink; text-align:center; }
-.calendar-coda span { font:italic 4rem "Cormorant Garamond",serif; }
-.calendar-coda p { max-width:44rem; font:500 clamp(1.8rem,3vw,3rem)/1.2 "Cormorant Garamond",serif; }
-.calendar-coda a { margin-top:2.5rem; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.calendar-coda span { font:italic 4rem "Louize Trial",Georgia,serif; }
+.calendar-coda p { max-width:44rem; font:500 clamp(1.8rem,3vw,3rem)/1.2 "Louize Trial",Georgia,serif; }
+.calendar-coda a { margin-top:2.5rem; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+
+/* Texts & Systems — the research room */
+.texts-page { background:$paper; color:$ink; }
+.texts-hero { position:relative; min-height:100svh; overflow:hidden; padding:7rem 1rem 2rem; }
+.texts-hero__meta { display:flex; justify-content:space-between; border-top:1px solid $ink; padding-top:.65rem; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.1em; text-transform:uppercase; }
+.texts-hero__part { position:absolute; z-index:3; top:45%; left:2vw; font:500 clamp(1.5rem,3vw,3.3rem)/1 "Louize Trial",Georgia,serif; }
+.texts-hero h1 { position:absolute; z-index:2; inset:21% 2vw auto; height:48vh; pointer-events:none; }
+.texts-hero h1 span { position:absolute; display:block; font:500 clamp(7rem,17vw,19rem)/.72 "Louize Trial",Georgia,serif; letter-spacing:-.065em; }
+.texts-hero h1 span:first-child { top:0; left:15%; }
+.texts-hero h1 span:last-child { right:0; bottom:0; }
+.texts-hero h1 em { position:absolute; z-index:3; top:38%; left:48%; color:$rust; font:italic 400 clamp(5rem,9vw,10rem)/1 "Louize Trial",Georgia,serif; transform:translate(-50%,-50%); }
+.texts-hero__image { position:absolute; top:22%; left:40%; width:min(42vw,46rem); height:46vh; margin:0; background:#15130f; }
+.texts-hero__image img { width:100%; height:100%; padding:1.1rem; object-fit:cover; filter:none; }
+.texts-hero__image figcaption { position:absolute; top:-1.8rem; right:0; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.texts-hero__image figcaption span { margin-right:1rem; color:$rust; }
+.texts-hero__intro { position:absolute; right:4vw; bottom:2.5rem; width:min(30rem,42vw); font:500 clamp(1.25rem,1.8vw,1.7rem)/1.38 "Louize Trial",Georgia,serif; }
+.texts-preface { display:grid; grid-template-columns:.5fr 1fr 1fr; gap:7vw; padding:10rem 5vw 13rem; }
+.texts-preface>p,.texts-register header>p,.texts-method>div>p { color:$rust; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; }
+.texts-preface div { font:500 clamp(1.5rem,2.5vw,2.6rem)/1.18 "Louize Trial",Georgia,serif; }
+.texts-preface div:last-child { margin-top:10rem; }
+.texts-register { padding:8rem 1rem 11rem; background:$night; color:$cream; }
+.texts-register :where(h2,h3) { color:$cream!important; }
+.texts-register>header { display:grid; grid-template-columns:.55fr 1.5fr; gap:5vw; padding-bottom:7rem; }
+.texts-register header h2 { font:500 clamp(4.8rem,9vw,10rem)/.76 "Louize Trial",Georgia,serif; letter-spacing:-.055em; }
+.texts-register header h2 em { color:#d39a7d; font-weight:400; }
+.texts-register__list { border-top:1px solid rgba($cream,.55); }
+.texts-study { display:grid; grid-template-columns:4rem 1.3fr 1fr auto; gap:3vw; align-items:start; padding:3.5rem 0; border-bottom:1px solid rgba($cream,.4); text-decoration:none; }
+.texts-study__number { color:#d39a7d; font:italic 2.5rem "Louize Trial",Georgia,serif; }
+.texts-study>div>p,.texts-study time { color:#99948d; font:500 .55rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.texts-study h3 { margin-top:1rem; font:500 clamp(2.8rem,4.7vw,5.5rem)/.88 "Louize Trial",Georgia,serif; letter-spacing:-.035em; }
+.texts-study__summary { max-width:28rem; color:#b4aea5; font-size:.84rem; line-height:1.7; }
+.texts-study:hover h3 { color:#d39a7d!important; }
+.texts-method { display:grid; grid-template-columns:1.15fr .85fr; min-height:95vh; }
+.texts-method figure { position:relative; min-height:65vh; margin:0; overflow:hidden; }
+.texts-method figure img { width:100%; height:100%; object-fit:cover; filter:none; }
+.texts-method figcaption { position:absolute; bottom:1rem; left:1rem; padding:.6rem .8rem; background:rgba($paper,.9); font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.texts-method>div { align-self:center; padding:6vw; }
+.texts-method blockquote { margin-top:2rem; font:500 clamp(2.6rem,4.4vw,5rem)/.95 "Louize Trial",Georgia,serif; letter-spacing:-.035em; }
+.texts-method a { display:inline-block; margin-top:3rem; border-bottom:1px solid $ink; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+
+/* Text & Computation — spatial study */
+body.text-computation-remix .entry-page { width:100%; max-width:none; margin:0; padding:0; background:$paper; }
+body.text-computation-remix .computation-hero { position:relative; max-width:none; min-height:92svh; margin:0; padding:7rem 1rem 2rem; }
+body.text-computation-remix .computation-hero>a,body.text-computation-remix .computation-hero>p { position:absolute; top:7rem; z-index:2; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.09em; text-transform:uppercase; }
+body.text-computation-remix .computation-hero>a { left:1rem; color:$rust; }
+body.text-computation-remix .computation-hero>p { right:1rem; margin:0; color:#6d6760; }
+body.text-computation-remix .computation-hero h1 { position:relative; height:56vw; max-height:43rem; min-height:30rem; margin:2.5rem 0 0; }
+body.text-computation-remix .computation-hero h1 span { position:absolute; display:block; font:500 clamp(7rem,17vw,20rem)/.72 "Louize Trial",Georgia,serif; letter-spacing:-.065em; }
+body.text-computation-remix .computation-hero h1 span:first-child { top:0; left:8%; }
+body.text-computation-remix .computation-hero h1 span:last-child { right:0; bottom:6rem; }
+body.text-computation-remix .computation-hero h1 em { position:absolute; z-index:2; top:43%; left:48%; color:$rust; font:italic 400 clamp(5rem,9vw,10rem)/1 "Louize Trial",Georgia,serif; }
+body.text-computation-remix .computation-hero .summary { position:absolute; top:auto; right:auto; bottom:2rem; left:1rem; max-width:32rem; margin:0!important; color:#615c56!important; font:500 1.2rem/1.45 "Louize Trial",Georgia,serif!important; letter-spacing:0; text-transform:none; }
+body.text-computation-remix .computation-hero .entry-meta { position:absolute; right:1rem; bottom:2rem; margin:0; color:#706a63; }
+body.text-computation-remix .computation-cover { position:relative; width:min(58rem,70vw); max-height:none; margin:0 auto 8rem; padding:1rem; background:$night; }
+body.text-computation-remix .computation-cover img { display:block; width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; filter:none; }
+body.text-computation-remix .computation-cover figcaption { position:absolute; top:-2rem; right:0; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+body.text-computation-remix .computation-cover figcaption span { margin-right:1rem; color:$rust; }
+.computation-preface { display:grid; grid-template-columns:.55fr 1.5fr .7fr; gap:5vw; padding:10rem 4vw 14rem; }
+.computation-preface>p,.computation-preface span { color:$rust; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.computation-preface blockquote { font:500 clamp(3rem,5vw,5.8rem)/.92 "Louize Trial",Georgia,serif; letter-spacing:-.04em; }
+.computation-preface>div { align-self:end; padding-top:1rem; border-top:1px solid $ink; font-size:.78rem; line-height:1.65; }
+.computation-preface>div p { margin-top:1rem; }
+body.text-computation-remix .computation-reading { display:grid; grid-template-columns:12rem minmax(0,1fr); gap:4vw; width:min(100% - 3rem,1360px); max-width:none; margin:0 auto; padding:2rem 0 12rem; border-top:1px solid $ink; }
+body.text-computation-remix .computation-reading aside { position:sticky; top:6rem; }
+body.text-computation-remix .computation-reading .prose { display:grid; grid-template-columns:repeat(12,1fr); column-gap:2vw; font:500 clamp(1.1rem,1.45vw,1.35rem)/1.55 "Louize Trial",Georgia,serif; }
+body.text-computation-remix .computation-reading .prose :where(h2,p,ol) { grid-column:2/7; }
+body.text-computation-remix .computation-reading .prose h2 { grid-column:1/-1; margin:12rem 0 5rem; text-align:center; font:italic 500 clamp(3.2rem,5.5vw,6rem)/1 "Louize Trial",Georgia,serif; letter-spacing:-.03em; }
+body.text-computation-remix .computation-reading .prose h2:first-child { margin-top:6rem; }
+body.text-computation-remix .computation-reading .prose p:nth-of-type(3n+2) { grid-column:6/11; margin-top:7rem; }
+body.text-computation-remix .computation-reading .prose p:nth-of-type(3n) { grid-column:8/13; margin-top:3rem; }
+body.text-computation-remix .computation-reading .prose ol { margin-top:2rem; padding-left:1.2rem; }
+body.text-computation-remix .computation-reading .prose li+li { margin-top:.8rem; }
+.computation-coda { display:grid; justify-items:center; margin:0 1rem 1rem; padding:10rem 2rem; border:1px solid $ink; text-align:center; }
+.computation-coda span { color:$rust; font:italic 4rem "Louize Trial",Georgia,serif; }
+.computation-coda p { max-width:54rem; font:500 clamp(2.5rem,4.8vw,5.5rem)/.95 "Louize Trial",Georgia,serif; letter-spacing:-.035em; }
+.computation-coda a { margin-top:3rem; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+
+/* Essays — a light-filled reading room */
+.essays-room { background:$paper; color:$ink; }
+.essays-hero { position:relative; min-height:110svh; overflow:hidden; padding:7rem 1rem 2rem; }
+.essays-hero__meta { display:flex; justify-content:space-between; border-top:1px solid $ink; padding-top:.65rem; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.1em; text-transform:uppercase; }
+.essays-hero>p { position:absolute; z-index:3; top:42%; left:2vw; font:500 clamp(1.4rem,2.5vw,2.8rem)/1 "Louize Trial",Georgia,serif; }
+.essays-hero h1 { position:absolute; z-index:2; inset:19% 2vw auto; height:44vh; pointer-events:none; }
+.essays-hero h1 span { position:absolute; left:3%; font:500 clamp(9rem,21vw,24rem)/.72 "Louize Trial",Georgia,serif; letter-spacing:-.075em; }
+.essays-hero h1 em { position:absolute; right:0; bottom:-15%; color:$rust; font:italic 400 clamp(3.8rem,7vw,8rem)/1 "Louize Trial",Georgia,serif; }
+.essays-hero figure { position:absolute; top:20%; right:9%; width:min(45vw,47rem); height:50vh; margin:0; }
+.essays-hero figure img { width:100%; height:100%; object-fit:cover; filter:none; }
+.essays-hero figure figcaption { position:absolute; top:-1.8rem; right:0; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.essays-hero__note { position:absolute; right:3vw; bottom:2.5rem; display:grid; grid-template-columns:minmax(14rem,30rem) auto; gap:5vw; align-items:end; }
+.essays-hero__note p { font:500 clamp(1.3rem,2vw,1.8rem)/1.4 "Louize Trial",Georgia,serif; }
+.essays-hero__note a { border-bottom:1px solid $ink; font:500 .55rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.essays-statement { display:grid; grid-template-columns:.5fr 1.5fr .65fr; gap:5vw; padding:11rem 4vw 14rem; }
+.essays-statement>p:first-child { color:$rust; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.essays-statement blockquote { font:500 clamp(3rem,5vw,5.8rem)/.93 "Louize Trial",Georgia,serif; letter-spacing:-.04em; }
+.essays-statement>p:last-child { align-self:end; font-size:.8rem; line-height:1.7; }
+.essays-list { padding:10rem 1rem 12rem; }
+.essays-list>header { display:grid; grid-template-columns:.55fr 1.5fr; gap:5vw; padding-bottom:9rem; }
+.essays-list>header>p { color:$rust; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.essays-list>header h2 { font:500 clamp(4.8rem,8.5vw,9.5rem)/.78 "Louize Trial",Georgia,serif; letter-spacing:-.055em; }
+.essays-list>header h2 em { color:$rust; font-weight:400; }
+.essay-row { display:grid; grid-template-columns:.8fr 1.2fr; gap:7vw; align-items:center; min-height:80vh; padding:8rem 5vw; border-top:1px solid $ink; text-decoration:none; }
+.essay-row--reverse .essay-row__copy { order:2; }
+.essay-row__copy>span { color:$rust; font:italic 2.5rem "Louize Trial",Georgia,serif; }
+.essay-row__copy>p,.essay-row__copy>strong { display:block; margin-top:1rem; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.essay-row__copy h3 { margin-top:4rem; font:500 clamp(4rem,7vw,8rem)/.82 "Louize Trial",Georgia,serif; letter-spacing:-.05em; }
+.essay-row__copy>div { max-width:25rem; margin-top:2rem; color:#6c665f; font:500 1.15rem/1.5 "Louize Trial",Georgia,serif; }
+.essay-row__copy>strong { margin-top:3rem; }
+.essay-row figure { position:relative; height:65vh; margin:0; overflow:hidden; }
+.essay-row figure img { width:100%; height:100%; object-fit:cover; filter:none; transition:transform 700ms cubic-bezier(.2,.7,.2,1); }
+.essay-row:hover figure img { transform:scale(1.025); }
+.essay-row figcaption { position:absolute; right:1rem; bottom:1rem; padding:.55rem .7rem; background:rgba($paper,.9); font:500 .55rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.essays-coda { display:grid; justify-items:center; padding:11rem 2rem; background:$night; color:$cream; text-align:center; }
+.essays-coda span { color:#d39a7d; font:italic 4rem "Louize Trial",Georgia,serif; }
+.essays-coda p { max-width:58rem; font:500 clamp(3rem,5vw,6rem)/.94 "Louize Trial",Georgia,serif; letter-spacing:-.04em; }
+.essays-coda a { margin-top:3rem; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 
 @media (max-width:800px) {
   body.editorial-remix .realms-rights-footer>div { width:calc(100% - 2rem); }
-  .fear-hero__meta,.astrology-hero__meta { top:5.5rem; }
-  .fear-hero h1,.astrology-hero h1 { inset:19% 1rem auto; min-height:48vh; }
-  .fear-hero h1 span,.astrology-hero h1 span { font-size:28vw; }
-  .fear-hero h1 em,.astrology-hero h1 em { left:50%; font-size:16vw; }
-  .fear-hero__dek,.astrology-hero>p { left:1rem; bottom:1.2rem; width:72vw; }
-  .fear-hero__enter,.astrology-hero>a { right:1rem; bottom:1.35rem; font-size:.5rem; }
+  .astrology-hero__meta { top:5.5rem; }
+  .astrology-hero h1 { inset:19% 1rem auto; min-height:48vh; }
+  .astrology-hero h1 span { font-size:28vw; }
+  .astrology-hero h1 em { left:50%; font-size:16vw; }
+  .astrology-hero>p { left:1rem; bottom:1.2rem; width:72vw; }
+  .astrology-hero>a { right:1rem; bottom:1.35rem; font-size:.5rem; }
+  .fear-hero figure blockquote { right:1.25rem; bottom:1.75rem; left:1.25rem; font-size:clamp(1.65rem,7vw,3rem); }
   .fear-reading { grid-template-columns:1fr; width:calc(100% - 2rem); padding:5rem 0 7rem; }
   .fear-reading__rail { position:static; min-height:auto; grid-template-columns:auto 1fr 1fr; }
   .fear-reading__vertical { display:none; }
@@ -317,15 +427,52 @@ body.calendrical-remix .entry-body .prose h2::before { content:"§"; position:ab
   body.calendrical-remix .entry-body { grid-template-columns:1fr; width:calc(100% - 2rem); }
   body.calendrical-remix .entry-body .prose { grid-column:1; }
   body.calendrical-remix .entry-body .prose h2::before { position:static; margin-right:.6rem; }
+  .texts-hero,.essays-hero { min-height:92svh; padding-top:5.5rem; }
+  .texts-hero__meta span:last-child,.essays-hero__meta span:last-child { display:none; }
+  .texts-hero h1,.essays-hero h1 { top:20%; height:36vh; }
+  .texts-hero h1 span { font-size:23vw; }
+  .texts-hero h1 span:first-child { left:0; }
+  .texts-hero h1 em { font-size:17vw; }
+  .texts-hero__image,.essays-hero figure { top:27%; right:1rem; left:auto; width:70vw; height:38vh; }
+  .texts-hero__part,.essays-hero>p { top:48%; }
+  .texts-hero__intro { right:1rem; bottom:1.5rem; width:70vw; }
+  .texts-preface,.essays-statement { grid-template-columns:1fr; padding:7rem 1rem 9rem; }
+  .texts-preface div:last-child { margin-top:3rem; }
+  .texts-register,.essays-list { padding:7rem 1rem 9rem; }
+  .texts-register>header,.essays-list>header { grid-template-columns:1fr; padding-bottom:5rem; }
+  .texts-register header h2,.essays-list>header h2 { margin-top:2rem; font-size:18vw; }
+  .texts-study { grid-template-columns:2.5rem 1fr; }
+  .texts-study__summary,.texts-study time { grid-column:2; }
+  .texts-method { grid-template-columns:1fr; }
+  .texts-method figure { height:65vh; }
+  body.text-computation-remix .computation-hero { min-height:82svh; padding-top:5.5rem; }
+  body.text-computation-remix .computation-hero>a,body.text-computation-remix .computation-hero>p { top:5.5rem; }
+  body.text-computation-remix .computation-hero h1 { min-height:24rem; height:58vw; margin-top:4rem; }
+  body.text-computation-remix .computation-hero h1 span { font-size:22vw; }
+  body.text-computation-remix .computation-hero h1 em { font-size:18vw; }
+  body.text-computation-remix .computation-hero .summary { bottom:4rem; max-width:82vw; }
+  body.text-computation-remix .computation-hero .entry-meta { right:auto; bottom:1rem; left:1rem; }
+  body.text-computation-remix .computation-cover { width:calc(100% - 2rem); }
+  .computation-preface { grid-template-columns:1fr; padding:7rem 1rem 9rem; }
+  .computation-preface>div { margin-top:2rem; }
+  body.text-computation-remix .computation-reading { grid-template-columns:1fr; width:calc(100% - 2rem); }
+  body.text-computation-remix .computation-reading aside { position:static; }
+  body.text-computation-remix .computation-reading .prose :where(h2,p,ol),body.text-computation-remix .computation-reading .prose p:nth-of-type(3n+2),body.text-computation-remix .computation-reading .prose p:nth-of-type(3n) { grid-column:1/-1; margin-top:1.4rem; }
+  body.text-computation-remix .computation-reading .prose h2 { margin:8rem 0 3rem; font-size:12vw; }
+  .essays-hero h1 span { font-size:25vw; }
+  .essays-hero h1 em { bottom:-35%; font-size:11vw; }
+  .essays-hero__note { right:1rem; bottom:1.5rem; grid-template-columns:1fr; width:75vw; }
+  .essay-row,.essay-row--reverse { grid-template-columns:1fr; min-height:auto; padding:6rem 0; }
+  .essay-row--reverse .essay-row__copy { order:0; }
+  .essay-row figure { height:58vh; }
 }
 
 @media (max-width:520px) {
-  .fear-hero h1,.astrology-hero h1 { min-height:42vh; }
-  .fear-hero h1 span { font-size:31vw; }
+  .astrology-hero h1 { min-height:42vh; }
   .astrology-hero h1 span { font-size:22vw; }
-  .fear-hero__meta span:last-child,.astrology-hero__meta span:last-child { display:none; }
-  .fear-hero__enter,.astrology-hero>a { display:none; }
-  .fear-hero__dek,.astrology-hero>p { width:calc(100% - 2rem); }
+  .astrology-hero__meta span:last-child { display:none; }
+  .astrology-hero>a { display:none; }
+  .astrology-hero>p { width:calc(100% - 2rem); }
   .fear-reading__opening blockquote { font-size:12vw; }
   .fear-chapter h2 { font-size:13vw; }
   .fear-interlude figcaption { grid-template-columns:1fr; gap:.3rem; }
@@ -338,6 +485,17 @@ body.calendrical-remix .entry-body .prose h2::before { content:"§"; position:ab
   body.calendrical-remix .calendar-hero h1 span { font-size:19vw; }
   body.calendrical-remix .calendar-hero h1 em { font-size:24vw; }
   .calendar-preface blockquote { font-size:11vw; }
+  .texts-hero__image,.essays-hero figure { width:78vw; }
+  .texts-hero h1 span { font-size:25vw; }
+  .texts-study { gap:1rem; }
+  .texts-study h3 { font-size:12vw; }
+  .texts-method blockquote { font-size:11vw; }
+  body.text-computation-remix .computation-hero h1 span { font-size:20vw; }
+  body.text-computation-remix .computation-hero h1 em { font-size:20vw; }
+  .computation-preface blockquote { font-size:12vw; }
+  .essay-row__copy h3 { font-size:16vw; }
+  .essay-row figure { height:50vh; }
+  .essays-coda p { font-size:12vw; }
 }
 
 @media (prefers-reduced-motion:reduce) {

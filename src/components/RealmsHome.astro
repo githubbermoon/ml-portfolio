@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 
 const base = import.meta.env.BASE_URL;
+const heroImage = base + "images/atmosphere/storm-light.webp";
 
 const realms = [
   {
@@ -61,32 +62,43 @@ const realms = [
   <main class="kosh-home">
     <section id="hero" class="manuscript-hero" data-section data-hero>
       <div class="paper-grain" aria-hidden="true"></div>
-      <div class="hero-coordinate hero-coordinate-north" aria-hidden="true">उत्तर · 13°N</div>
-      <div class="hero-coordinate hero-coordinate-east" aria-hidden="true">पूर्व · 77°E</div>
+      <div class="home-hero-meta" aria-hidden="true">
+        <span>Archive of living systems</span>
+        <span>13°N 77°E · Bengaluru</span>
+        <span>Ver. Monsoon 26</span>
+      </div>
 
-      <div class="manuscript-shell hero-layout">
-        <div class="hero-copy">
-          <div class="folio-line">
-            <span data-i18n="home.hero.eyebrow">A living treasury</span>
-            <span data-i18n="home.hero.folio">Folio 01</span>
+      <div class="home-hero-stage manuscript-shell">
+        <h1 class="home-cross-title" aria-label="A living treasury">
+          <span>A</span> <em>living</em> <span>treasury.</span>
+        </h1>
+
+        <figure class="home-hero-plate">
+          <div class="home-hero-print">
+            <img src={heroImage} alt="Rain falling through sunlight over a mountain landscape" loading="eager" fetchpriority="high" />
           </div>
+          <p class="home-cross-title home-cross-title--reverse" aria-hidden="true">
+            <span>A</span> <em>living</em> <span>treasury.</span>
+          </p>
+          <figcaption><span>Plate 01</span> Light, weather, and the field of attention</figcaption>
+        </figure>
 
-          <h1 aria-label="Kosh, कोश">
-            <span class="hero-latin" data-i18n="home.hero.title">Kosh</span>
-            <span class="hero-devanagari" data-no-translate>कोश</span>
-          </h1>
+        <p class="home-stage-note home-stage-note--left">Empirical sciences,<br />symbolic systems,<br />material experiments.</p>
+        <p class="home-stage-note home-stage-note--right">Notes and essays<br />for the <em>world within.</em></p>
+        <span class="hero-devanagari" data-no-translate>कोश</span>
+      </div>
 
+      <div class="home-hero-coda manuscript-shell">
+        <div>
           <p class="hero-definition" data-i18n="home.hero.subtitle">
             A living treasury of empirical sciences, symbolic systems, material
             experiments, and field notes.
           </p>
-
           <p class="hero-curator">
             <span data-i18n="home.hero.curated">Curated by</span>
             <strong data-i18n="home.hero.name">Pranjal Prakash Pandey</strong>
             <span class="hero-place" data-i18n="home.hero.place">Bengaluru · India</span>
           </p>
-
           <div class="hero-actions">
             <a class="primary-action" href={base + "blog/"}>
               <span data-i18n="home.hero.enter">Enter the Kosh</span>
@@ -98,12 +110,12 @@ const realms = [
             </a>
           </div>
         </div>
-
+        <p class="home-hero-invitation">Enter through any field. Every room is another way of observing, preserving, and making sense of the world.</p>
       </div>
 
       <div class="hero-foot manuscript-shell" aria-hidden="true">
         <span data-no-translate>ज्ञानेन प्रकाशते कोशः</span>
-        <span data-i18n="home.hero.scroll">Scroll to unfold</span>
+        <span data-i18n="home.hero.scroll">Scroll with care · the archive is alive</span>
       </div>
     </section>
 
@@ -184,15 +196,18 @@ const realms = [
     --rule-strong: rgb(217 187 145 / 0.38);
     --vermillion: #c55b3f;
     --copper: #b78852;
+    --home-display: "DaVinci Trial", Georgia, serif;
+    --home-reading: "Louize Trial", Georgia, serif;
+    --home-interface: "Neue Montreal Trial", Arial, sans-serif;
     color: var(--manuscript-ink);
     background: var(--paper);
   }
 
   :global(html[data-theme="bright"]) .kosh-home,
   :global(html[data-theme="bright"]) .manuscript-footer {
-    --paper: #fdfcfb;
-    --paper-raised: #ffffff;
-    --paper-deep: #f4f0e9;
+    --paper: #ebe8df;
+    --paper-raised: #f3f0e8;
+    --paper-deep: #ded9cf;
     --manuscript-ink: #241a13;
     --manuscript-muted: #715f4f;
     --rule: rgb(75 52 35 / 0.18);
@@ -231,13 +246,10 @@ const realms = [
 
   .manuscript-hero {
     position: relative;
-    min-height: 100svh;
+    min-height: 108svh;
     overflow: hidden;
     border-bottom: 1px solid var(--rule-strong);
-    background:
-      radial-gradient(circle at 78% 42%, color-mix(in srgb, var(--vermillion) 8%, transparent), transparent 28%),
-      linear-gradient(90deg, transparent 49.93%, var(--rule) 50%, transparent 50.07%),
-      var(--paper);
+    background: var(--paper);
   }
 
   .paper-grain {
@@ -252,93 +264,168 @@ const realms = [
     mix-blend-mode: soft-light;
   }
 
-  .hero-coordinate {
+  .home-hero-meta {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 1rem;
+    border-top: 1px solid var(--rule-strong);
+    padding-top: .6rem;
+    color: var(--manuscript-muted);
+    font: 500 .56rem/1 var(--home-interface);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    transform: translateY(6.5rem);
+  }
+
+  .home-hero-stage {
+    --title-y: 46%;
+    z-index: 4;
+    height: min(80svh, 52rem);
+    min-height: 43rem;
+    margin-top: 8rem;
+  }
+
+  .home-cross-title {
+    position: absolute;
+    z-index: 1;
+    top: var(--title-y);
+    left: 50%;
+    width: 100vw;
+    margin: 0;
+    color: var(--manuscript-ink);
+    font: 400 clamp(5rem, 12.3vw, 13.5rem)/.92 var(--home-reading);
+    letter-spacing: -.065em;
+    text-align: center;
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
+  }
+
+  .home-cross-title em { font-style: italic; }
+
+  .home-hero-plate {
     position: absolute;
     z-index: 2;
-    color: var(--manuscript-muted);
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    writing-mode: vertical-rl;
-    opacity: 0.62;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: min(43vw, 45rem);
+    margin: 0;
+    overflow: hidden;
+    padding: clamp(3.2rem, 5vw, 5.2rem) clamp(1.4rem, 2.5vw, 2.6rem) clamp(3rem, 4.5vw, 4.5rem);
+    color: #25221d;
+    background: #f2efe6;
+    box-shadow: 0 .4rem 1.1rem rgb(49 38 27 / .1), 0 2rem 5rem rgb(49 38 27 / .08);
+    transform: translateX(-50%) rotate(-.35deg);
   }
 
-  .hero-coordinate-north { left: 1rem; top: 42%; }
-  .hero-coordinate-east { right: 1rem; top: 22%; }
-
-  .hero-layout {
-    display: flex;
-    align-items: center;
-    min-height: calc(100svh - 5rem);
-    padding-top: clamp(8.5rem, 17vh, 11rem);
-    padding-bottom: 6.5rem;
-  }
-
-  .hero-copy { width: min(100%, 760px); }
-
-  .folio-line {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    width: min(100%, 620px);
-    color: var(--vermillion);
-    font-family: var(--font-mono);
-    font-size: 0.66rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-  }
-
-  .folio-line::after {
+  .home-hero-plate::before,
+  .home-hero-plate::after {
     content: "";
-    order: 2;
-    flex: 1;
-    height: 1px;
-    background: var(--rule-strong);
+    position: absolute;
+    z-index: 5;
+    top: .8rem;
+    width: 4.4rem;
+    height: 1.25rem;
+    background: rgb(205 186 139 / .48);
+    box-shadow: inset 0 0 .2rem rgb(116 92 49 / .15);
+    mix-blend-mode: multiply;
   }
 
-  .folio-line span:last-child { order: 3; color: var(--manuscript-muted); }
+  .home-hero-plate::before { left: .8rem; transform: rotate(-7deg); }
+  .home-hero-plate::after { right: .8rem; transform: rotate(6deg); }
 
-  .hero-copy h1 {
+  .home-hero-print {
+    position: absolute;
+    inset: clamp(3.2rem, 5vw, 5.2rem) clamp(1.4rem, 2.5vw, 2.6rem) clamp(3rem, 4.5vw, 4.5rem);
+    overflow: hidden;
+    background: #34291f;
+  }
+
+  .home-hero-print::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgb(37 34 29 / .16);
+  }
+
+  .home-hero-print img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: none;
+  }
+
+  .home-cross-title--reverse {
+    z-index: 4;
+    top: var(--title-y);
+    color: #fffdf6;
+    pointer-events: none;
+  }
+
+  .home-hero-plate figcaption {
+    position: absolute;
+    right: 1.1rem;
+    bottom: 1rem;
+    left: 1.1rem;
+    z-index: 5;
     display: flex;
-    align-items: baseline;
-    gap: 0.14em;
-    margin-top: 1.4rem;
+    justify-content: space-between;
+    font: 500 .48rem/1.2 var(--home-interface);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .home-stage-note {
+    position: absolute;
+    z-index: 3;
+    bottom: 14%;
+    margin: 0;
     color: var(--manuscript-ink);
-    font-size: clamp(7.2rem, 14.5vw, 13.2rem);
-    line-height: 0.72;
+    font: 500 clamp(1rem, 1.5vw, 1.35rem)/1.35 var(--home-reading);
   }
 
-  .hero-latin {
-    font-family: "Cormorant Garamond", var(--font-display);
-    font-weight: 500;
-    letter-spacing: -0.078em;
-    font-feature-settings: "liga" 1, "kern" 1;
-  }
+  .home-stage-note--left { left: 2%; text-align: right; }
+  .home-stage-note--right { right: 1%; }
+  .home-stage-note em { font-style: italic; }
 
-  .hero-devanagari {
+  .home-hero-stage > .hero-devanagari {
+    position: absolute;
+    z-index: 5;
+    top: 12%;
+    right: 2%;
     color: var(--vermillion);
-    font-family: "Noto Serif Devanagari", Georgia, serif;
-    font-size: 0.32em;
-    font-weight: 500;
-    letter-spacing: -0.025em;
+    font: 500 clamp(1.7rem, 2.8vw, 3rem)/1 "Noto Serif Devanagari", Georgia, serif;
   }
 
-  :global(html[data-lang="hi"]) .hero-latin {
-    display: none;
+  .home-hero-coda {
+    z-index: 5;
+    display: grid;
+    grid-template-columns: minmax(18rem, .85fr) minmax(20rem, .65fr);
+    justify-content: space-between;
+    gap: clamp(3rem, 10vw, 10rem);
+    align-items: end;
+    padding-block: 5rem 6rem;
+    border-top: 1px solid var(--rule-strong);
+  }
+
+  .home-hero-invitation {
+    max-width: 27rem;
+    justify-self: end;
+    color: var(--manuscript-muted);
+    font: 400 clamp(1.2rem, 1.7vw, 1.55rem)/1.4 var(--home-reading);
   }
 
   .hero-definition {
-    max-width: 680px;
-    margin-top: 2.4rem;
+    max-width: 30rem;
+    margin: 0;
     color: var(--manuscript-muted);
-    font-family: "Cormorant Garamond", var(--font-display);
-    font-size: clamp(1.5rem, 2.7vw, 2.25rem);
-    font-style: italic;
-    font-weight: 400;
-    line-height: 1.3;
-    letter-spacing: -0.012em;
+    font: 400 clamp(1.35rem, 2.2vw, 2rem)/1.35 var(--home-reading);
+    letter-spacing: -.015em;
   }
+
 
   .hero-curator {
     display: grid;
@@ -349,7 +436,7 @@ const realms = [
     padding-left: 1rem;
     border-left: 2px solid var(--vermillion);
     color: var(--manuscript-muted);
-    font-family: var(--font-mono);
+    font-family: var(--home-interface);
     font-size: 0.64rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -373,7 +460,7 @@ const realms = [
     justify-content: space-between;
     gap: 2rem;
     min-height: 3.25rem;
-    font-family: var(--font-mono);
+    font-family: var(--home-interface);
     font-size: 0.68rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -400,10 +487,10 @@ const realms = [
   .hero-foot {
     display: flex;
     justify-content: space-between;
-    margin-top: -4.3rem;
+    margin-top: -3.1rem;
     padding-bottom: 2rem;
     color: var(--manuscript-muted);
-    font-family: var(--font-mono);
+    font-family: var(--home-interface);
     font-size: 0.58rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -615,7 +702,9 @@ const realms = [
   }
 
   @media (max-width: 980px) {
-    .hero-layout { padding-top: 9rem; }
+    .home-hero-stage { min-height: 39rem; }
+    .home-hero-plate { width: min(49vw, 39rem); }
+    .home-cross-title { font-size: clamp(4rem, 11.4vw, 7.5rem); }
     .section-intro { grid-template-columns: 4rem 1fr; }
     .section-summary { grid-column: 2; }
 
@@ -626,27 +715,26 @@ const realms = [
 
   @media (max-width: 720px) {
     .manuscript-shell { width: min(100% - 2rem, 1240px); }
-    .manuscript-hero { min-height: auto; }
-
-    .hero-layout {
-      min-height: 92svh;
-      padding-top: 8rem;
-      padding-bottom: 5rem;
+    .manuscript-hero { min-height: auto; padding-bottom: 1rem; }
+    .home-hero-meta { transform: translateY(5.5rem); }
+    .home-hero-meta span:nth-child(2) { display: none; }
+    .home-hero-stage { --title-y: 45%; height: 74svh; min-height: 37rem; margin-top: 7rem; }
+    .home-hero-plate {
+      width: 76vw;
+      padding: 3.2rem 1.2rem 3.2rem;
+      transform: translateX(-50%) rotate(-.55deg);
     }
-
-    .hero-copy h1 { display: block; font-size: clamp(5.7rem, 27vw, 8.5rem); }
-
-    .hero-devanagari {
-      display: block;
-      margin-top: 0.25em;
-      font-size: 0.42em;
-      letter-spacing: 0;
-    }
+    .home-hero-print { inset: 3.2rem 1.2rem; }
+    .home-cross-title { font-size: 10.8vw; letter-spacing: -.055em; }
+    .home-stage-note { display: none; }
+    .home-hero-stage > .hero-devanagari { top: 8%; right: 0; font-size: 7vw; }
+    .home-hero-coda { grid-template-columns: 1fr; gap: 3rem; padding-block: 4rem; }
+    .home-hero-invitation { justify-self: start; }
 
     .hero-definition { max-width: 88%; font-size: 1.3rem; }
     .hero-curator { grid-template-columns: 1fr; }
     .hero-place { grid-column: 1; }
-    .hero-foot { margin-top: -3.5rem; }
+    .hero-foot { margin-top: 0; }
     .hero-foot span:last-child { display: none; }
 
     .section-intro,

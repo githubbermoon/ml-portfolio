@@ -28,3 +28,12 @@ attached/
 
 # generated per-target Astro pages; source lives in src/professional, src/realms, src/shared-pages
 src/pages/
+
+# generated sidecar output; source lives in sidecars/a-measure-of-days
+public/experiments/a-measure-of-days/
+
+# local browser captures and design-analysis scratch files
+.playwright-cli/
+analysis_assets/
+design_analysis/
+output/

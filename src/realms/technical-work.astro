@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import "../styles/editorial-remix.scss";
 
 const base = import.meta.env.BASE_URL;
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
@@ -13,57 +14,49 @@ const entries = (await getCollection("realms"))
 const formatDate = (date: Date) => date.toLocaleDateString("en-GB", { year: "numeric", month: "short" });
 ---
 
-<BaseLayout title="Texts & Systems | Kosh" description="Structured studies of texts, symbolic frameworks, calendrical systems, and computational interpretations." bodyClass="texts-systems-page">
+<BaseLayout title="Texts & Systems | Kosh" description="Structured studies of texts, symbolic frameworks, calendrical systems, and computational interpretations." bodyClass="editorial-remix texts-systems-remix">
   <Nav />
-  <main class="research-page">
-    <header class="research-hero">
-      <div><p class="folio">Archive · TS</p><h1>Texts <i>&amp;</i><br />Systems</h1></div>
-      <p class="research-intro">Structured studies of texts, symbolic frameworks, calendrical systems, and computational interpretations.</p>
+  <main class="texts-page">
+    <header class="texts-hero">
+      <div class="texts-hero__meta"><span>Kosh research archive</span><span>Texts · Systems · Computation</span></div>
+      <p class="texts-hero__part">folio one.</p>
+      <h1><span>Texts</span><em>&amp;</em><span>Systems</span></h1>
+      <figure class="texts-hero__image editorial-curtain" data-cursor="VIEW">
+        <img src={base + "essays/a-measure-of-days/manuscript.jpeg"} alt="An open historical manuscript bearing handwritten records" />
+        <figcaption><span>Plate 01</span> Before a text becomes data, it remains an encounter.</figcaption>
+      </figure>
+      <p class="texts-hero__intro">A research room for reading old structures with new instruments—while keeping the grain, ambiguity, and original life of the source visible.</p>
     </header>
-    <section class="research-register" aria-labelledby="register-title">
-      <div class="register-head"><p id="register-title">Research register</p><p>{String(entries.length).padStart(2, "0")} working entries</p></div>
-      <div class="register-columns" aria-hidden="true"><span>Ref.</span><span>Study</span><span>Form</span><span>Status</span><span>Date</span></div>
-      {entries.map((entry, index) => (
-        <a class="register-entry editorial-reveal" href={`${base}archive/${entry.slug}/`} data-cursor="READ">
-          <span class="ref">TS–{String(index + 1).padStart(2, "0")}</span>
-          <span class="study"><strong>{entry.data.title}</strong><small>{entry.data.summary}</small></span>
-          <span>{entry.data.kind.replace("-", " ")}</span><span class="status">{entry.data.status}</span>
-          <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
-        </a>
-      ))}
+
+    <div class="editorial-marquee editorial-marquee--light" aria-hidden="true"><div><span>Source before synthesis</span><i>§</i><span>Models are provisional</span><i>§</i><span>Context is part of the record</span><i>§</i><span>Source before synthesis</span><i>§</i><span>Models are provisional</span><i>§</i><span>Context is part of the record</span><i>§</i></div></div>
+
+    <section class="texts-preface" aria-label="Research premise">
+      <p>Research premise · 00</p>
+      <div><p>Texts are not inert containers. Their sequence, material, marginalia, omissions, and histories participate in what they mean.</p></div>
+      <div><p>Computation can reveal patterns across a corpus, but the model is a lens—not a replacement for looking.</p></div>
     </section>
-    <aside class="research-note"><p>Method</p><span>Sources remain distinct from interpretation. Uncertainty and revision are part of every record.</span></aside>
+
+    <section class="texts-register" aria-labelledby="register-title">
+      <header>
+        <p>Working studies · {String(entries.length).padStart(2, "0")}</p>
+        <h2 id="register-title">The active<br /><em>register</em></h2>
+      </header>
+      <div class="texts-register__list">
+        {entries.map((entry, index) => (
+          <a class="texts-study editorial-reveal" href={`${base}archive/${entry.slug}/`} data-cursor="READ">
+            <span class="texts-study__number">{String(index + 1).padStart(2, "0")}</span>
+            <div><p>{entry.data.kind.replace("-", " ")} · {entry.data.status}</p><h3>{entry.data.title}</h3></div>
+            <p class="texts-study__summary">{entry.data.summary}</p>
+            <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="texts-method">
+      <figure><img src={base + "essays/a-measure-of-days/projected-calendar.jpeg"} alt="A hand meeting the center of a projected circular diagram" loading="lazy" /><figcaption>Plate 02 · Representation as an instrument of attention.</figcaption></figure>
+      <div><p>Method · open notebook</p><blockquote>The useful model does not conceal its seams. It shows what entered, what changed, and what could not be carried through.</blockquote><a href={base + "archive/text-and-computation/"}>Enter Text and Computation →</a></div>
+    </section>
   </main>
   <Footer />
 </BaseLayout>
-
-<style>
-  :global(body.texts-systems-page) { background: var(--inner-paper); color: var(--inner-ink); }
-  .research-page { width: min(100% - 3rem, 1240px); margin: auto; padding: clamp(8rem, 14vw, 12rem) 0 7rem; }
-  .research-hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 4rem; align-items: end; }
-  .folio, .register-head, .register-columns, .register-entry > span:not(.study), .register-entry time, .research-note p { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .18em; text-transform: uppercase; }
-  .folio { color: var(--inner-accent); }
-  h1 { margin-top: 1rem; font-family: var(--font-display); font-size: clamp(4.4rem, 9vw, 8.5rem); font-weight: 400; line-height: .76; letter-spacing: -.06em; }
-  h1 i { color: var(--inner-accent); font-weight: 300; }
-  .research-intro { max-width: 31rem; color: var(--inner-muted); font-family: var(--font-display); font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1.55; }
-  .research-register { margin-top: clamp(6rem, 11vw, 10rem); border-top: 1px solid var(--inner-rule); }
-  .register-head { display: flex; justify-content: space-between; padding: 1.2rem 0 3rem; color: var(--inner-muted); }
-  .register-columns, .register-entry { display: grid; grid-template-columns: .55fr 2.8fr 1fr 1fr .7fr; gap: 1.5rem; align-items: start; }
-  .register-columns { padding: .8rem 0; border-bottom: 1px solid var(--inner-rule); color: var(--inner-muted); }
-  .register-entry { padding: 1.5rem 0; border-bottom: 1px solid var(--inner-rule); color: inherit; transition: color 180ms ease; }
-  .register-entry:hover { color: var(--inner-accent); }
-  .study strong { display: block; font-family: var(--font-display); font-size: 1.45rem; font-weight: 400; }
-  .study small { display: block; max-width: 36rem; margin-top: .55rem; color: var(--inner-muted); font-size: .82rem; line-height: 1.6; }
-  .register-entry > span:not(.study), .register-entry time { padding-top: .4rem; color: var(--inner-muted); }
-  .status { color: var(--inner-accent) !important; }
-  .research-note { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; width: min(100%, 42rem); margin: 5rem 0 0 auto; padding-top: 1rem; border-top: 1px solid var(--inner-rule); color: var(--inner-muted); }
-  .research-note span { line-height: 1.7; }
-  @media (max-width: 760px) {
-    .research-page { width: min(100% - 2rem, 1240px); padding-top: 7rem; }
-    .research-hero { grid-template-columns: 1fr; gap: 2rem; }
-    .register-columns { display: none; }
-    .register-entry { grid-template-columns: 3rem 1fr; }
-    .register-entry > span:not(.study), .register-entry time { grid-column: 2; padding-top: 0; }
-    .research-note { grid-template-columns: 1fr; }
-  }
-</style>

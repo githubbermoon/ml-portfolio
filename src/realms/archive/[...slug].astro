@@ -27,28 +27,36 @@ const sectionLinks = {
 };
 const date = entry.data.date.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
 const isCalendrical = entry.slug === "calendrical-systems";
-const cover = isCalendrical ? `${base}essays/a-measure-of-days/projected-calendar.jpeg` : entry.data.cover;
-const bodyClass = `archive-entry-page${isCalendrical ? " editorial-remix calendrical-remix" : ""}`;
+const isTextComputation = entry.slug === "text-and-computation";
+const cover = isCalendrical
+  ? `${base}essays/a-measure-of-days/projected-calendar.jpeg`
+  : isTextComputation
+    ? `${base}essays/a-measure-of-days/manuscript.jpeg`
+    : entry.data.cover;
+const bodyClass = `archive-entry-page${isCalendrical ? " editorial-remix calendrical-remix" : ""}${isTextComputation ? " editorial-remix text-computation-remix" : ""}`;
 ---
 
 <BaseLayout title={`${entry.data.title} | Kosh`} description={entry.data.summary} image={cover ?? "/ananta-nihara-hero.png"} type="article" publishedDate={entry.data.date.toISOString()} bodyClass={bodyClass}>
   <Nav />
   <main class:list={["entry-page", isCalendrical && "calendar-page"]}>
-    <header class:list={["entry-header", isCalendrical && "calendar-hero"]}>
+    <header class:list={["entry-header", isCalendrical && "calendar-hero", isTextComputation && "computation-hero"]}>
       <a href={sectionLinks[entry.data.category]}>{sectionNames[entry.data.category]}</a>
       <p>{entry.data.kind.replace("-", " ")} · {entry.data.status}</p>
-      {isCalendrical ? <h1><span>Calendrical</span><em>Systems</em></h1> : <h1>{entry.data.title}</h1>}
+      {isCalendrical ? <h1><span>Calendrical</span><em>Systems</em></h1> : isTextComputation ? <h1><span>Text</span><em>&amp;</em><span>Computation</span></h1> : <h1>{entry.data.title}</h1>}
       <p class="summary">{entry.data.summary}</p>
       <div class="entry-meta"><time datetime={entry.data.date.toISOString()}>{date}</time><span>Pranjal Prakash Pandey</span></div>
     </header>
-    {cover && <figure class:list={["entry-cover", "editorial-curtain", isCalendrical && "calendar-cover"]}><img src={cover} alt={isCalendrical ? "A hand touching the center of a projected circular calendrical diagram" : ""} />{isCalendrical && <figcaption><span>Plate 01</span>The circle is useful only when its assumptions remain visible.</figcaption>}</figure>}
+    {cover && <figure class:list={["entry-cover", "editorial-curtain", isCalendrical && "calendar-cover", isTextComputation && "computation-cover"]}><img src={cover} alt={isCalendrical ? "A hand touching the center of a projected circular calendrical diagram" : isTextComputation ? "An open historical manuscript bearing handwritten text and traces of use" : ""} />{isCalendrical && <figcaption><span>Plate 01</span>The circle is useful only when its assumptions remain visible.</figcaption>}{isTextComputation && <figcaption><span>Plate 01</span> The source has a body before the model gives it a structure.</figcaption>}</figure>}
     {isCalendrical && <div class="editorial-marquee calendar-marquee" aria-hidden="true"><div><span>Cycle · observation · correspondence</span><i>§</i><span>Source before synthesis</span><i>§</i><span>Cycle · observation · correspondence</span><i>§</i><span>Source before synthesis</span><i>§</i></div></div>}
     {isCalendrical && <section class="calendar-preface"><p>Research premise · 00</p><blockquote>A calendar is never only a count of days. It is an agreement between observation, social life, ritual, memory, and the instruments available to a culture.</blockquote><figure><img src={base + "essays/a-measure-of-days/manuscript.jpeg"} alt="An open manuscript bearing handwritten records" loading="lazy" /><figcaption>Record before equivalence.</figcaption></figure></section>}
-    <div class:list={["entry-body", { "has-contents": headings.length > 2 }]}> 
+    {isTextComputation && <div class="editorial-marquee editorial-marquee--light" aria-hidden="true"><div><span>Encode · compare · return</span><i>§</i><span>The model is not the source</span><i>§</i><span>Encode · compare · return</span><i>§</i><span>The model is not the source</span><i>§</i></div></div>}
+    {isTextComputation && <section class="computation-preface"><p>Study premise · 00</p><blockquote>What becomes newly visible when a text is made computable—and what disappears at exactly the same moment?</blockquote><div><span>Working position</span><p>Every transformation is an interpretation. The responsible system keeps a path back to the page.</p></div></section>}
+    <div class:list={["entry-body", { "has-contents": headings.length > 2 }, isTextComputation && "computation-reading"]}>
       {headings.length > 2 && <aside><p>Contents</p>{headings.filter((heading) => heading.depth === 2).map((heading) => <a href={`#${heading.slug}`}>{heading.text}</a>)}</aside>}
       <article class="prose"><Content /></article>
     </div>
     {isCalendrical && <footer class="calendar-coda"><span>§</span><p>This notebook remains open. Definitions, diagrams, sources, and computational sketches will be added without collapsing distinct traditions into one system.</p><a href={base + "experiments/a-measure-of-days/"}>Read A Measure of Days →</a></footer>}
+    {isTextComputation && <footer class="computation-coda"><span>§</span><p>A computational reading is useful when it sends us back to the text with a better question.</p><a href={base + "technical-work/"}>Return to Texts &amp; Systems →</a></footer>}
   </main>
   <Footer />
 </BaseLayout>

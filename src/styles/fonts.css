@@ -2,3 +2,105 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+Devanagari:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* Licensed trial faces: local evaluation only. See docs/TRIAL_FONT_CHANGELOG.md. */
+@font-face {
+  font-family: "DaVinci Trial";
+  src: url("/fonts/trial/davinci-regular-trial.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DaVinci Trial";
+  src: url("/fonts/trial/davinci-italic-trial.otf") format("opentype");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DaVinci Trial";
+  src: url("/fonts/trial/davinci-medium-trial.otf") format("opentype");
+  font-style: normal;
+  font-weight: 500 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DaVinci Trial";
+  src: url("/fonts/trial/davinci-medium-italic-trial.otf") format("opentype");
+  font-style: italic;
+  font-weight: 500 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DaVinci Trial";
+  src: url("/fonts/trial/davinci-bold-trial.otf") format("opentype");
+  font-style: normal;
+  font-weight: 700 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DaVinci Trial";
+  src: url("/fonts/trial/davinci-heavy-trial.otf") format("opentype");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Louize Trial";
+  src: url("/fonts/trial/louize-regular-trial.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Louize Trial";
+  src: url("/fonts/trial/louize-italic-trial.otf") format("opentype");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Louize Trial";
+  src: url("/fonts/trial/louize-medium-trial.otf") format("opentype");
+  font-style: normal;
+  font-weight: 500 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Louize Trial";
+  src: url("/fonts/trial/louize-medium-italic-trial.otf") format("opentype");
+  font-style: italic;
+  font-weight: 500 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Louize Trial";
+  src: url("/fonts/trial/louize-bold-trial.otf") format("opentype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neue Montreal Trial";
+  src: url("/fonts/trial/neue-montreal-regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal Trial";
+  src: url("/fonts/trial/neue-montreal-italic.otf") format("opentype");
+  font-style: italic;
+  font-weight: 400 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal Trial";
+  src: url("/fonts/trial/neue-montreal-semibold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
+}

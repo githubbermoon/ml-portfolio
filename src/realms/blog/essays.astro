@@ -2,255 +2,49 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
-import { getCollection } from "astro:content";
+import "../../styles/editorial-remix.scss";
 
 const base = import.meta.env.BASE_URL;
-
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
 if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
-const authoredEntries = (await getCollection("realms"))
-  .filter((entry) => ["field-notes", "essay"].includes(entry.data.category) && entry.data.status !== "archived" && (!import.meta.env.PROD || entry.data.status !== "draft"))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const essays = [
+  { number: "०१", eyebrow: "हिन्दी निबन्ध · मन", title: "जल के नीचे दौड़ते घोड़े", summary: "मन, स्मृति, प्रेम और भीतर के उन अश्वों पर जो मौन में भी अपनी गति नहीं खोते।", href: "essays/jal-ke-neeche-ghode/", image: "essays/jal-ke-neeche-ghode/horse-underwater.webp" },
+  { number: "02", eyebrow: "Immersive essay · Time", title: "A Measure of Days", summary: "On the instruments, stories, and agreements through which a day becomes legible.", href: "essays/a-measure-of-days/", image: "essays/a-measure-of-days/hero-garden.jpeg" },
+  { number: "03", eyebrow: "Reading notes · Philosophy", title: "Fear", summary: "Notes on fear as signal, story, inheritance, and the threshold before action.", href: "blog/reading-notes/fear/", image: "images/atmosphere/reading-notes-cover-hq.webp" },
+  { number: "04", eyebrow: "Living archive · Cosmology", title: "Astrology", summary: "A nocturnal atlas of symbols, observation, interpretation, and celestial imagination.", href: "blog/astrology/", image: "essays/a-measure-of-days/nebula.jpeg" },
+];
 ---
 
-<BaseLayout title="Field Notes | Clawd ML Portfolio">
+<BaseLayout title="Essays | Kosh" description="Long-form essays, reading notes, and exploratory writing by Pranjal Prakash Pandey." bodyClass="editorial-remix essays-room-remix">
   <Nav />
-  <main class="section-shell field-notes-shell">
-    <section class="field-notes-hero">
-      <div class="field-notes-copy">
-        <p class="text-xs uppercase tracking-[0.35em] text-mist">Essays</p>
-        <h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">Field Notes</h1>
-        <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
-          Personal essays, reading notes, observations, and unfinished thoughts. This realm is for slower writing that
-          does not need to fit into a technical or ritual category.
-        </p>
-      </div>
-      <figure class="storm-light-frame editorial-curtain" aria-label="Mountain storm with light beams" data-cursor="VIEW">
-        <img
-          class="storm-light-bleed"
-          src={base + "images/atmosphere/storm-light.webp"}
-          alt=""
-          loading="eager"
-          decoding="async"
-          aria-hidden="true"
-        />
-        <img
-          class="storm-light-image"
-          src={base + "images/atmosphere/storm-light.webp"}
-          alt="Golden storm clouds sending shafts of light over a mountain valley."
-          loading="eager"
-          decoding="async"
-        />
-      </figure>
+  <main class="essays-room">
+    <header class="essays-hero">
+      <div class="essays-hero__meta"><span>Field notes · long forms</span><span>Kosh, MMXXVI</span></div>
+      <p>room three.</p>
+      <h1><span>Essays</span><em>for slower attention</em></h1>
+      <figure class="editorial-curtain"><img src={base + "images/atmosphere/storm-light.webp"} alt="Golden light falling through storm clouds across a mountain valley" /><figcaption>Weather teaches the eye to wait.</figcaption></figure>
+      <div class="essays-hero__note"><p>Writing that is allowed to wander, return, contradict itself, and find its form by staying with the question.</p><a href="#reading-room">Enter the reading room ↓</a></div>
+    </header>
+
+    <section class="essays-statement">
+      <p>Editorial note · 00</p>
+      <blockquote>Not every thought arrives as an argument. Some begin as atmosphere, a sentence in the margin, or an image that refuses to leave.</blockquote>
+      <p>These essays preserve that slower movement from impression to inquiry. References remain visible; uncertainty is permitted to remain.</p>
     </section>
-    <section class="mt-12 grid gap-6 md:grid-cols-3">
-      <article class="glass-panel p-6 editorial-reveal">
-        <p class="text-xs uppercase tracking-[0.24em] text-mist">Format</p>
-        <h2 class="mt-4 text-2xl text-glass">Long essays</h2>
-        <p class="mt-3 text-sm leading-6 text-mist">Polished arguments with references and durable URLs.</p>
-      </article>
-      <a class="glass-panel reading-notes-card md:col-span-3 editorial-reveal" href={base + "blog/reading-notes/fear/"} data-cursor="READ">
-        <img
-          class="reading-notes-cover"
-          src={base + "images/atmosphere/reading-notes-cover-hq.webp"}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          aria-hidden="true"
-        />
-        <div class="reading-notes-copy p-6">
-          <p class="text-xs uppercase tracking-[0.24em] text-mist">Format</p>
-          <h2 class="mt-4 text-2xl text-glass">Reading notes</h2>
-          <p class="mt-3 text-sm leading-6 text-mist">Short summaries, quotes, links, and personal annotations.</p>
-          <p class="mt-6 text-xs uppercase tracking-[0.24em] text-glass">Open note: Fear</p>
-        </div>
-      </a>
-      <article class="glass-panel p-6 editorial-reveal">
-        <p class="text-xs uppercase tracking-[0.24em] text-mist">Format</p>
-        <h2 class="mt-4 text-2xl text-glass">Fragments</h2>
-        <p class="mt-3 text-sm leading-6 text-mist">Half-formed ideas worth keeping visible for later synthesis.</p>
-      </article>
+
+    <div class="editorial-marquee" aria-hidden="true"><div><span>Essays · reading notes · fragments</span><i>§</i><span>Attention before conclusion</span><i>§</i><span>Essays · reading notes · fragments</span><i>§</i><span>Attention before conclusion</span><i>§</i></div></div>
+
+    <section class="essays-list" id="reading-room" aria-label="Essay collection">
+      <header><p>Selected writing · {String(essays.length).padStart(2, "0")}</p><h2>A small library<br /><em>of open questions</em></h2></header>
+      {essays.map((essay, index) => (
+        <a class:list={["essay-row", index % 2 && "essay-row--reverse"]} href={base + essay.href} data-cursor="READ">
+          <div class="essay-row__copy"><span>{essay.number}</span><p>{essay.eyebrow}</p><h3>{essay.title}</h3><div>{essay.summary}</div><strong>Read essay →</strong></div>
+          <figure class="editorial-curtain"><img src={base + essay.image} alt="" loading="lazy" /><figcaption>Folio {essay.number}</figcaption></figure>
+        </a>
+      ))}
     </section>
-    {authoredEntries.length > 0 && (
-      <section class="authored-ledger" aria-label="Published field notes and essays">
-        <p class="authored-label">Recent writing</p>
-        {authoredEntries.map((entry, index) => (
-          <a href={`${base}archive/${entry.slug}/`} data-cursor="READ">
-            <span>{String(index + 1).padStart(2, "0")}</span>
-            <div><h2>{entry.data.title}</h2><p>{entry.data.summary}</p></div>
-            <small>{entry.data.kind.replace("-", " ")} · {entry.data.status}</small>
-          </a>
-        ))}
-      </section>
-    )}
+
+    <footer class="essays-coda"><span>§</span><p>Read slowly. Keep what glows. Return when the ground has shifted.</p><a href={base + "blog/notes/"}>Continue to Notes →</a></footer>
   </main>
   <Footer />
 </BaseLayout>
-
-<style>
-  .field-notes-shell {
-    overflow: hidden;
-  }
-
-  .field-notes-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 0.92fr) minmax(280px, 0.72fr);
-    align-items: center;
-    gap: clamp(2rem, 5vw, 5rem);
-  }
-
-  .field-notes-copy {
-    position: relative;
-    z-index: 2;
-    min-width: 0;
-  }
-
-  .storm-light-frame {
-    position: relative;
-    overflow: visible;
-    height: clamp(20rem, 38vw, 34rem);
-    margin: 0;
-    border-radius: 1.75rem;
-    isolation: isolate;
-  }
-
-  .storm-light-frame::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    border-radius: inherit;
-    background:
-      linear-gradient(to top, rgb(var(--color-ink) / 0.42), transparent 45%),
-      radial-gradient(circle at 58% 24%, rgb(245 158 11 / 0.16), transparent 38%);
-    pointer-events: none;
-  }
-
-  .storm-light-image {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 52% 45%;
-    border: 1px solid rgb(var(--color-glass) / 0.12);
-    border-radius: inherit;
-    box-shadow: 0 28px 80px rgb(0 0 0 / 0.26);
-    filter: saturate(1.03) contrast(1.05);
-  }
-
-  .storm-light-bleed {
-    position: absolute;
-    top: -16%;
-    left: -28%;
-    z-index: -1;
-    width: 158%;
-    max-width: none;
-    height: 134%;
-    object-fit: cover;
-    object-position: 52% 45%;
-    border-radius: 3rem;
-    opacity: 0.17;
-    filter: blur(28px) saturate(1.04) contrast(1.08);
-    mask-image: radial-gradient(ellipse at 58% 46%, black 0 34%, rgb(0 0 0 / 0.7) 48%, transparent 72%);
-  }
-
-  .reading-notes-card {
-    position: relative;
-    display: block;
-    min-height: clamp(18rem, 30vw, 28rem);
-    overflow: hidden;
-    isolation: isolate;
-    text-decoration: none;
-    transition:
-      border-color 180ms ease,
-      transform 180ms ease;
-  }
-
-  .reading-notes-card:hover {
-    border-color: rgb(var(--color-glass) / 0.26);
-    transform: translateY(-2px);
-  }
-
-  .reading-notes-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background:
-      linear-gradient(90deg, rgb(8 12 18 / 0.84) 0%, rgb(8 12 18 / 0.52) 42%, rgb(8 12 18 / 0.12) 100%),
-      linear-gradient(to top, rgb(8 12 18 / 0.72), transparent 58%);
-    pointer-events: none;
-  }
-
-  .reading-notes-cover {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    display: block;
-    width: 100%;
-    max-width: none;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 48%;
-    filter: saturate(1.04) contrast(1.06);
-  }
-
-  .reading-notes-copy {
-    position: relative;
-    z-index: 2;
-    max-width: 30rem;
-  }
-
-  .authored-ledger { margin-top: 6rem; border-top: 1px solid var(--inner-rule); }
-  .authored-label { padding: 1rem 0 2rem; color: var(--inner-accent); font-family: var(--font-mono); font-size: .58rem; letter-spacing: .18em; text-transform: uppercase; }
-  .authored-ledger > a { display: grid; grid-template-columns: 3rem 1fr auto; gap: 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--inner-rule); color: inherit; }
-  .authored-ledger > a > span, .authored-ledger small { color: var(--inner-muted); font-family: var(--font-mono); font-size: .55rem; letter-spacing: .14em; text-transform: uppercase; }
-  .authored-ledger h2 { font-family: var(--font-display); font-size: 1.65rem; font-weight: 400; }
-  .authored-ledger h2 + p { margin-top: .45rem; color: var(--inner-muted); font-size: .85rem; }
-
-  .reading-notes-copy h2,
-  .reading-notes-copy p {
-    color: rgb(248 250 252);
-    text-shadow: 0 2px 22px rgb(0 0 0 / 0.72);
-  }
-
-  [data-theme="bright"] .storm-light-frame {
-    filter: none;
-  }
-
-  [data-theme="bright"] .storm-light-image {
-    box-shadow: 0 22px 54px rgb(15 23 42 / 0.12);
-  }
-
-  [data-theme="bright"] .storm-light-bleed {
-    opacity: 0.14;
-    mix-blend-mode: multiply;
-  }
-
-  [data-theme="bright"] .reading-notes-card::after {
-    background:
-      linear-gradient(90deg, rgb(15 23 42 / 0.78) 0%, rgb(15 23 42 / 0.48) 42%, rgb(15 23 42 / 0.1) 100%),
-      linear-gradient(to top, rgb(15 23 42 / 0.52), transparent 58%);
-  }
-
-  @media (max-width: 860px) {
-    .field-notes-hero {
-      grid-template-columns: 1fr;
-      align-items: start;
-    }
-
-    .storm-light-frame {
-      height: 20rem;
-      border-radius: 1.35rem;
-    }
-
-    .storm-light-bleed {
-      left: -10%;
-      width: 120%;
-      opacity: 0.16;
-    }
-  }
-</style>

@@ -5,8 +5,10 @@ import Spotlight from "../islands/Spotlight";
 import ThemeToggle from "../islands/ThemeToggle";
 import AnalyticsHotkey from "../islands/AnalyticsHotkey";
 import ExperienceLayer from "../components/ExperienceLayer.astro";
+import VisitorMeasurement from "../components/VisitorMeasurement.astro";
 
 const {
+  lang = "en",
   title = "Pranjal Prakash Pandey | ML Portfolio & Realms",
   description = "Machine learning portfolio and Realms archive by Pranjal Prakash Pandey: computer vision projects, ML systems, technical writing, and immersive field notes.",
   bodyClass,
@@ -94,7 +96,7 @@ const isBlogRoute =
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -224,6 +226,7 @@ const isBlogRoute =
       </a>
     )}
     <slot />
+    {isRealmsMode && <VisitorMeasurement />}
     {!isRealmsMode && <AnalyticsHotkey client:load goatCounterCode={goatCounterCode} />}
     {isRealmsMode && (
       <div

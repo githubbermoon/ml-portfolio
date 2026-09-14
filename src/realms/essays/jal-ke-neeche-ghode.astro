@@ -1,0 +1,158 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import "../../styles/editorial-remix.scss";
+import "../../styles/jal-ke-neeche-ghode.scss";
+
+const base = import.meta.env.BASE_URL;
+const asset = (name: string) => `${base}essays/jal-ke-neeche-ghode/${name}`;
+---
+
+<BaseLayout
+  lang="hi"
+  title="जल के नीचे दौड़ते घोड़े | कोश"
+  description="मन, स्मृति, प्रेम और भीतर के उन अश्वों पर एक हिन्दी निबन्ध जो मौन में भी अपनी गति नहीं खोते।"
+  image={asset("horse-underwater.webp")}
+  type="article"
+  publishedDate="2026-09-14"
+  bodyClass="editorial-remix hindi-essay-page"
+>
+  <Nav />
+  <main class="hindi-essay">
+    <header class="hindi-hero">
+      <div class="hindi-hero__meta"><span>कोश · हिन्दी निबन्ध</span><span>१४ सितम्बर २०२६</span></div>
+      <p class="hindi-hero__folio">प्रथम तरंग.</p>
+      <figure><img src={asset("horse-underwater.webp")} alt="जल की सतह के नीचे तैरता हुआ एक काला घोड़ा" /></figure>
+      <h1><span>जल के नीचे</span><em>दौड़ते</em><span>घोड़े</span></h1>
+      <p class="hindi-hero__dek">मन की गति दिखाई नहीं देती, फिर भी वह हमें दूर तक ले जाती है—कभी उजाले की ओर, कभी अपनी ही अथाह गहराई में।</p>
+      <a href="#pravesh">निबन्ध में प्रवेश करें ↓</a>
+    </header>
+
+    <div class="hindi-marquee" aria-hidden="true"><div><span>मन · स्मृति · प्रेम · पराक्रम</span><i>॥</i><span>जो डूबता है वही गहराई जानता है</span><i>॥</i><span>मन · स्मृति · प्रेम · पराक्रम</span><i>॥</i><span>जो डूबता है वही गहराई जानता है</span><i>॥</i></div></div>
+
+    <section class="hindi-opening" id="pravesh">
+      <p>प्रवेश · ००</p>
+      <blockquote>हमारे भीतर कुछ घोड़े ऐसे हैं जिन्हें भूमि की आवश्यकता नहीं होती। वे जल में भी दौड़ते हैं, स्वप्न में भी, और उस मौन में भी जहाँ भाषा हमारा साथ छोड़ देती है।</blockquote>
+      <div><span>पाठ-विधि</span><p>यह किसी निष्कर्ष तक पहुँचने का निबन्ध नहीं है। यह भीतर उठती छवियों के साथ कुछ दूर चलने का निमंत्रण है।</p></div>
+    </section>
+
+    <section class="hindi-chapter hindi-chapter--water">
+      <header><span>०१</span><p>जल और गति</p><h2>जो भीतर<br />चलता रहता है</h2></header>
+      <div class="hindi-spread">
+        <p>घोड़े को हम पृथ्वी की गति मानते हैं—खुर, धूल, दौड़ और क्षितिज। पर जल के नीचे वही शरीर एक दूसरी भाषा सीखता है। भार हल्का होता है, दिशा धुँधली, और हर गति अपने पीछे एक लहर छोड़ जाती है।</p>
+        <p>मन भी ऐसा ही है। बाहर से स्थिर दिखाई देने पर भी उसके भीतर स्मृतियाँ तैरती रहती हैं। कोई पुराना भय अचानक सतह छू लेता है; कोई भूला हुआ स्नेह अँधेरे में चमकता है। हम जिस शान्ति का अभिनय करते हैं, उसके नीचे पूरा एक जीवित संसार गतिमान है।</p>
+      </div>
+    </section>
+
+    <figure class="hindi-plate hindi-plate--letter">
+      <img src={asset("letter-quote.webp")} alt="प्रेम को जीवित रखने के लिए पत्र और फूल भेजने की अंग्रेज़ी पंक्ति" loading="lazy" />
+      <figcaption><span>अन्तराल · पत्र</span><p>उसे एक पत्र लिखो, एक फूल भेजो; प्रेम तभी बूढ़ा होता है जब हम उसे होने देते हैं।</p></figcaption>
+    </figure>
+
+    <section class="hindi-chapter hindi-chapter--love">
+      <header><span>०२</span><p>प्रेम का अभ्यास</p><h2>स्नेह केवल<br />भावना नहीं</h2></header>
+      <div class="hindi-spread hindi-spread--offset">
+        <p>प्रेम को अमर कह देना आसान है; उसे प्रतिदिन जीवित रखना कठिन। एक पत्र, एक फूल, समय पर पूछा गया छोटा-सा प्रश्न—ये मामूली कर्म उस पुल की मरम्मत करते हैं जिस पर दो लोग एक-दूसरे तक पहुँचते हैं।</p>
+        <p>उपेक्षा धीरे काम करती है। वह किसी बड़े विस्फोट की तरह सम्बन्ध नहीं तोड़ती; वह बस रास्ते पर घास उगा देती है। फिर एक दिन हमें लगता है कि दूसरी ओर जाना असम्भव है। प्रेम का अभ्यास उस घास में बार-बार पगडंडी बनाना है।</p>
+      </div>
+    </section>
+
+    <figure class="hindi-plate hindi-plate--soul">
+      <img src={asset("schlegel-quote.webp")} alt="आत्मा, संवेदना और मानसिक संयम पर फ़्रीडरिक श्लेगल का अंग्रेज़ी उद्धरण" loading="lazy" />
+      <figcaption><span>अन्तराल · आत्मा</span><p>संयम और आनन्द—दोनों के बीच आत्मा अपनी शक्ति का संतुलन खोजती है।</p></figcaption>
+    </figure>
+
+    <section class="hindi-chapter hindi-chapter--mind">
+      <header><span>०३</span><p>मन की शक्ति</p><h2>टूटा हुआ नहीं,<br />अत्यन्त संवेदनशील</h2></header>
+      <div class="hindi-spread">
+        <p>जो मन हर बात से प्रभावित होता है, उसे अक्सर दुर्बल समझ लिया जाता है। किन्तु संवेदनशीलता दुर्बलता नहीं; वह संसार को अधिक सूक्ष्मता से ग्रहण करने की क्षमता है। समस्या अनुभव की तीव्रता नहीं, उसके लिए पात्र का न होना है।</p>
+        <p>आत्मा को केवल अनुशासन नहीं चाहिए। उसे बौद्धिक आनन्द, खेल, सौन्दर्य और विश्राम भी चाहिए—वही रस जो दैनिक संघर्ष के लिए शक्ति लौटाता है। निरन्तर रोक और निरन्तर भोग, दोनों मन को क्षीण कर सकते हैं। लय इनके बीच जन्मती है।</p>
+      </div>
+    </section>
+
+    <section class="hindi-manuscript">
+      <figure><img src={asset("krsasva-page.webp")} alt="कृशाश्व, विश्वामित्र और रूप बदलने वाले दिव्य अस्त्रों का वर्णन करती पुस्तक का पृष्ठ" loading="lazy" /></figure>
+      <div><p>पाण्डुलिपि · ०४</p><h2>रूप बदलते<br />अस्त्र</h2><p>पुरानी कथाओं में शक्ति प्रायः किसी निर्जीव वस्तु की तरह नहीं आती। उसका वंश है, स्वभाव है, स्मृति है; वह अनेक रूप धारण कर सकती है। अस्त्र पहले मन में जन्मता है—निर्णय, ध्यान और उद्देश्य के रूप में—फिर संसार में प्रकट होता है।</p><p>इसीलिए भीतर के अश्वों को दिशा देना आवश्यक है। गति अपने आप में विजय नहीं। गति को धर्म, विवेक और करुणा की लगाम चाहिए।</p></div>
+    </section>
+
+    <section class="hindi-forest">
+      <figure><img src={asset("black-wolves.webp")} alt="वन के जल में खड़े दो काले भेड़िये" loading="lazy" /></figure>
+      <div><span>०५</span><p>वन की छाया</p><h2>भय भी<br />हमारा रक्षक है</h2><p>भीतर का अँधेरा हमेशा शत्रु नहीं होता। कभी वह सीमा पर खड़ा प्रहरी है—सुनता हुआ, सूँघता हुआ, उस संकट को पहचानता हुआ जिसे तर्क ने अभी नाम नहीं दिया। उसे न पूजा जाना चाहिए, न निर्वासित। उसे समझना चाहिए।</p></div>
+    </section>
+
+    <section class="hindi-horses">
+      <div><p>उपसंहार · ०६</p><h2>फिर आते हैं<br />उजले अश्व</h2><blockquote>जब मन की गहराई, प्रेम का अभ्यास और भय की बुद्धि एक ही दिशा में आते हैं, तब गति केवल पलायन नहीं रहती—वह यात्रा बन जाती है।</blockquote></div>
+      <figure><img src={asset("white-horses.webp")} alt="लाल और स्वर्ण आभूषणों से सजे दो उजले अश्व" loading="lazy" /></figure>
+    </section>
+
+    <footer class="hindi-coda"><span>॥</span><p>अपने भीतर की गति से मत डरो। केवल इतना देखो कि उसकी लगाम किसके हाथ में है।</p><a href={base + "blog/essays/"} data-glimm-exit>अन्य निबन्ध पढ़ें →</a></footer>
+  </main>
+  <canvas class="hindi-glimm" data-glimm-canvas aria-hidden="true"></canvas>
+  <Footer />
+</BaseLayout>
+
+<script>
+  import { createShader, playSweep } from "glimm";
+
+  const exit = document.querySelector<HTMLAnchorElement>("[data-glimm-exit]");
+  const canvas = document.querySelector<HTMLCanvasElement>("[data-glimm-canvas]");
+  let isLeaving = false;
+
+  exit?.addEventListener("click", (event) => {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      isLeaving
+    ) return;
+
+    event.preventDefault();
+    const destination = exit.href;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !canvas) {
+      window.location.assign(destination);
+      return;
+    }
+
+    const shader = createShader({
+      canvas,
+      direction: "rtl",
+      bandTight: 9,
+      waveAmount: 0.42,
+      rippleAmount: 0.8,
+      waveSpeed: 0.72,
+      brightness: 0.82,
+      swellAmount: 0.68,
+    });
+
+    if (!shader) {
+      window.location.assign(destination);
+      return;
+    }
+
+    isLeaving = true;
+    document.body.classList.add("is-glimm-leaving");
+
+    playSweep(shader, {
+      palette: "lagoon",
+      direction: "rtl",
+      easing: "easeInOutCubic",
+      sweepMs: 1450,
+      outroMs: 240,
+      midpoint: 0.64,
+      bandTight: 9,
+      peakAlpha: 0.94,
+      waveAmount: 0.42,
+      rippleAmount: 0.8,
+      waveSpeed: 0.72,
+      brightness: 0.82,
+      swellAmount: 0.68,
+      onMidpoint: () => window.location.assign(destination),
+      onComplete: () => shader.destroy(),
+    });
+  });
+</script>

@@ -1,5 +1,4 @@
 @import "./fonts.css";
-@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Barlow+Condensed:wght@700;800;900&display=swap");
 
 $ink: #27231f;
 $paper: #f4f3f1;
@@ -11,7 +10,7 @@ $chalk: #f6f4f0;
 :root { --garden-ink:#{$ink}; --garden-paper:#{$paper}; --garden-night:#{$night}; }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; background:$paper; }
-body.garden-body { margin:0; overflow-x:hidden; background:$paper; color:$ink; font-family:"Archivo",Arial,sans-serif; font-size:17px; line-height:1.45; }
+body.garden-body { margin:0; overflow-x:hidden; background:$paper; color:$ink; font-family:"Neue Montreal Trial",Arial,sans-serif; font-size:17px; line-height:1.45; }
 body.garden-index-open { overflow:hidden; }
 body.garden-body ::selection { background:$ink; color:$paper; }
 body.garden-body img { display:block; width:100%; }
@@ -23,7 +22,7 @@ body.garden-body a { color:inherit; }
 .garden-progress { position:fixed; z-index:130; inset:0 0 auto; height:3px; background:linear-gradient(90deg,#b6d1ff,#d7bdf0,#f1b9bd,#eadbc2); pointer-events:none; }
 .garden-progress span { display:block; width:100%; height:100%; background:$ink; transform:scaleX(0); transform-origin:left; }
 
-.garden-head { position:fixed; z-index:110; inset:3px 0 auto; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; padding:.85rem 1rem; color:$chalk; font:500 .62rem/1 "JetBrains Mono",monospace; letter-spacing:.08em; text-transform:uppercase; mix-blend-mode:difference; }
+.garden-head { position:fixed; z-index:110; inset:3px 0 auto; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; padding:.85rem 1rem; color:$chalk; font:500 .62rem/1 "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; mix-blend-mode:difference; }
 .garden-head>p { justify-self:center; }
 .garden-wordmark { display:flex; align-items:center; gap:.55rem; text-decoration:none; }
 .garden-wordmark span { font-size:.56rem; }
@@ -33,16 +32,16 @@ body.garden-body a { color:inherit; }
 
 .garden-index { position:fixed; z-index:100; inset:0; display:grid; align-content:center; padding:6rem 7vw 3rem; visibility:hidden; opacity:0; background:rgba($night,.99); color:$paper; transition:opacity .35s,visibility .35s; }
 .garden-index-open .garden-index { visibility:visible; opacity:1; }
-.garden-index__top,.garden-index__foot { display:flex; justify-content:space-between; gap:2rem; font:500 .6rem/1.5 "JetBrains Mono",monospace; letter-spacing:.1em; text-transform:uppercase; }
+.garden-index__top,.garden-index__foot { display:flex; justify-content:space-between; gap:2rem; font:500 .6rem/1.5 "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.1em; text-transform:uppercase; }
 .garden-index ol { margin:2.5rem 0; padding:0; list-style:none; border-top:1px solid rgba($paper,.45); }
 .garden-index li { border-bottom:1px solid rgba($paper,.45); }
-.garden-index li a { display:grid; grid-template-columns:4rem 1fr; align-items:center; padding:.4rem 0; font:900 clamp(2.8rem,6vw,6.8rem)/.86 "Barlow Condensed",sans-serif; letter-spacing:-.035em; text-decoration:none; text-transform:uppercase; transition:padding .25s,color .25s; }
+.garden-index li a { display:grid; grid-template-columns:4rem 1fr; align-items:center; padding:.4rem 0; font:900 clamp(2.8rem,6vw,6.8rem)/.86 "DaVinci Trial",Georgia,serif; letter-spacing:-.035em; text-decoration:none; text-transform:uppercase; transition:padding .25s,color .25s; }
 .garden-index li a:hover,.garden-index li a:focus-visible { padding-left:1rem; color:#d9b9ee; }
-.garden-index li span { font:500 .6rem "JetBrains Mono",monospace; color:#a8a39c; }
+.garden-index li span { font:500 .6rem "Neue Montreal Trial",Arial,sans-serif; color:#a8a39c; }
 .garden-index__foot a { text-underline-offset:.35em; }
 
 .garden-cursor { position:fixed; z-index:125; top:-2rem; left:-2rem; display:grid; place-items:center; width:4rem; height:4rem; border-radius:50%; background:$ink; color:$paper; pointer-events:none; opacity:0; transform:translate(-50%,-50%) scale(.4); transition:opacity .2s,transform .25s; }
-.garden-cursor span { font:500 .55rem "JetBrains Mono",monospace; letter-spacing:.09em; text-transform:uppercase; }
+.garden-cursor span { font:500 .55rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.09em; text-transform:uppercase; }
 .garden-cursor.is-active { opacity:1; transform:translate(-50%,-50%) scale(1); }
 
 /* Poster cover */
@@ -50,12 +49,12 @@ body.garden-body a { color:inherit; }
 .garden-hero__title-wrap { height:51vh; min-height:30rem; overflow:hidden; }
 .garden-hero__title { position:relative; height:100%; letter-spacing:-.055em; }
 .garden-hero__title span { display:block; width:max-content; transform-origin:bottom left; }
-.garden-hero__title span:first-child { position:absolute; inset:0 0 auto; font:900 clamp(8rem,19vw,22rem)/.78 "Barlow Condensed",sans-serif; text-transform:uppercase; white-space:nowrap; transform:scaleX(1.02); }
-.garden-hero__title span:last-child { position:absolute; inset:auto auto -.06em 0; font:400 clamp(6.8rem,14vw,16rem)/.72 "Cormorant Garamond",serif; text-transform:uppercase; white-space:nowrap; }
-.garden-hero__title em { position:absolute; z-index:2; left:5.5vw; bottom:15%; font:italic 400 clamp(4rem,8vw,8.5rem)/1 "Cormorant Garamond",serif; letter-spacing:-.04em; }
+.garden-hero__title span:first-child { position:absolute; inset:0 0 auto; font:900 clamp(8rem,19vw,22rem)/.78 "DaVinci Trial",Georgia,serif; text-transform:uppercase; white-space:nowrap; transform:scaleX(.82); }
+.garden-hero__title span:last-child { position:absolute; inset:auto auto -.06em 0; font:400 clamp(6.8rem,14vw,16rem)/.72 "Louize Trial",Georgia,serif; text-transform:uppercase; white-space:nowrap; }
+.garden-hero__title em { position:absolute; z-index:2; left:5.5vw; bottom:15%; font:italic 400 clamp(4rem,8vw,8.5rem)/1 "Louize Trial",Georgia,serif; letter-spacing:-.04em; }
 .garden-hero__lower { display:grid; grid-template-columns:2.05fr 1fr; min-height:45vh; border-top:2px solid $hairline; }
 .garden-hero__directory { display:grid; grid-template-rows:auto 1fr; padding-right:1rem; }
-.garden-hero__weather { display:flex; align-items:center; gap:.8rem; padding:.55rem 0; border-bottom:2px solid $hairline; color:#605d58; font:500 .62rem "Archivo",sans-serif; text-transform:uppercase; white-space:nowrap; }
+.garden-hero__weather { display:flex; align-items:center; gap:.8rem; padding:.55rem 0; border-bottom:2px solid $hairline; color:#605d58; font:500 .62rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; white-space:nowrap; }
 .garden-hero__weather i { flex:1; height:1px; background:$ink; }
 .garden-hero__links { display:grid; align-content:start; gap:1.3rem; padding:.8rem 0; }
 .garden-hero__links>div { display:grid; gap:.15rem; }
@@ -64,32 +63,32 @@ body.garden-body a { color:inherit; }
 .garden-hero__links small { color:#c8c5c0; font-size:.63rem; }
 .garden-hero__links a:hover small,.garden-hero__links a:focus-visible small { color:$ink; }
 .garden-hero__visual { position:relative; min-height:38vh; overflow:hidden; border:2px solid $ink; border-radius:13px; background:$ink; }
-.garden-hero__visual img { height:calc(100% + 10%); object-fit:cover; filter:grayscale(1) contrast(3.2) brightness(1.18); }
+.garden-hero__visual img { height:calc(100% + 10%); object-fit:cover; filter:none; }
 .garden-hero__visual::after { content:""; position:absolute; inset:0; background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px); mix-blend-mode:screen; pointer-events:none; }
-.garden-hero__visual figcaption { position:absolute; z-index:2; left:-1.8rem; top:50%; color:#6d6963; font:500 .55rem "Archivo",sans-serif; text-transform:uppercase; transform:rotate(90deg) translateX(-50%); transform-origin:left top; }
-.garden-hero__enter { position:absolute; z-index:3; right:1.6rem; bottom:1.5rem; display:flex; align-items:center; gap:.8rem; padding:.45rem; background:$paper; font:600 .58rem "JetBrains Mono",monospace; text-decoration:none; text-transform:uppercase; }
+.garden-hero__visual figcaption { position:absolute; z-index:2; left:-1.8rem; top:50%; color:#6d6963; font:500 .55rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; transform:rotate(90deg) translateX(-50%); transform-origin:left top; }
+.garden-hero__enter { position:absolute; z-index:3; right:1.6rem; bottom:1.5rem; display:flex; align-items:center; gap:.8rem; padding:.45rem; background:$paper; font:600 .58rem "Neue Montreal Trial",Arial,sans-serif; text-decoration:none; text-transform:uppercase; }
 .garden-hero__enter i { font-style:normal; }
 
-.garden-mantra { overflow:hidden; padding:.55rem 0; border-block:2px solid $ink; background:$paper; font:500 .56rem "JetBrains Mono",monospace; letter-spacing:.1em; text-transform:uppercase; white-space:nowrap; }
+.garden-mantra { overflow:hidden; padding:.55rem 0; border-block:2px solid $ink; background:$paper; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.1em; text-transform:uppercase; white-space:nowrap; }
 .garden-mantra div { display:flex; width:max-content; align-items:center; gap:2rem; animation:garden-marquee 22s linear infinite; }
 .garden-mantra b { font-size:.75rem; }
 @keyframes garden-marquee { to { transform:translateX(-50%); } }
 
-.garden-folio { display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:1rem; font:500 .58rem "JetBrains Mono",monospace; letter-spacing:.1em; text-transform:uppercase; }
+.garden-folio { display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:1rem; font:500 .58rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.1em; text-transform:uppercase; }
 .garden-folio i { height:1px; background:$hairline; }
 .garden-folio em { font-style:normal; }
-.garden-label { font:500 .58rem "Archivo",sans-serif; letter-spacing:.03em; text-transform:uppercase; }
+.garden-label { font:500 .58rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.03em; text-transform:uppercase; }
 .js .garden-reveal { opacity:0; }
 
 .garden-directory { padding:5rem 1rem 10rem; }
 .garden-directory__intro { display:grid; grid-template-columns:.8fr 2.2fr 1fr; gap:3vw; align-items:end; margin:7rem 0; }
-.garden-directory__intro>p { align-self:start; font:600 .62rem "Archivo",sans-serif; text-transform:uppercase; }
-.garden-directory__intro h2 { font:500 clamp(4.5rem,8vw,9rem)/.8 "Cormorant Garamond",serif; letter-spacing:-.05em; }
+.garden-directory__intro>p { align-self:start; font:600 .62rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.garden-directory__intro h2 { font:500 clamp(4.5rem,8vw,9rem)/.8 "Louize Trial",Georgia,serif; letter-spacing:-.05em; }
 .garden-directory__intro>span { max-width:21rem; padding-bottom:.7rem; font-size:.86rem; }
 .garden-directory__list { border-top:2px solid $ink; }
 .garden-realm { display:grid; grid-template-columns:3rem 1.3fr 1fr auto; gap:2rem; align-items:center; padding:.75rem 0; border-bottom:1px solid $ink; text-decoration:none; }
-.garden-realm>span { font:500 .57rem "JetBrains Mono",monospace; }
-.garden-realm h3 { font:500 clamp(2.6rem,4.8vw,5.4rem)/.9 "Cormorant Garamond",serif; transition:transform .25s; }
+.garden-realm>span { font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; }
+.garden-realm h3 { font:500 clamp(2.6rem,4.8vw,5.4rem)/.9 "Louize Trial",Georgia,serif; transition:transform .25s; }
 .garden-realm p { max-width:25rem; color:#68645f; font-size:.8rem; }
 .garden-realm i { font-style:normal; }
 .garden-realm:hover h3,.garden-realm:focus-visible h3 { transform:translateX(.7rem); }
@@ -99,11 +98,11 @@ body.garden-body a { color:inherit; }
 .garden-letter__frame { position:relative; display:grid; min-height:88svh; place-items:center; border:1px solid rgba($chalk,.8); padding:5rem 1rem; text-align:center; }
 .garden-letter__frame>.garden-label { position:absolute; top:1.1rem; color:#a9a49e; }
 .garden-letter__copy { width:min(760px,88vw); }
-.garden-letter__copy h2 { margin-bottom:1.7rem; font:500 clamp(1.8rem,2.4vw,2.8rem)/1.1 "Cormorant Garamond",serif; }
+.garden-letter__copy h2 { margin-bottom:1.7rem; font:500 clamp(1.8rem,2.4vw,2.8rem)/1.1 "Louize Trial",Georgia,serif; }
 .garden-letter__copy h2 em { font-weight:400; }
-.garden-letter__body { font:500 clamp(1.6rem,2vw,2.25rem)/1.18 "Cormorant Garamond",serif; }
+.garden-letter__body { font:500 clamp(1.6rem,2vw,2.25rem)/1.18 "Louize Trial",Georgia,serif; }
 .garden-letter__body p+p { margin-top:1.15em; }
-.garden-letter__sign { margin-top:1.5rem; font:500 clamp(1.6rem,2vw,2.2rem)/1.05 "Cormorant Garamond",serif; }
+.garden-letter__sign { margin-top:1.5rem; font:500 clamp(1.6rem,2vw,2.2rem)/1.05 "Louize Trial",Georgia,serif; }
 .garden-letter__sign span { font-style:italic; }
 .garden-letter__frame>.garden-letter__label-bottom { inset:auto auto 1.1rem; transform:rotate(180deg); }
 
@@ -112,36 +111,36 @@ body.garden-body a { color:inherit; }
 .garden-about__title { position:relative; display:flex; align-items:center; min-height:14rem; overflow:hidden; border-block:2px solid $ink; white-space:nowrap; -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%); mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%); }
 .garden-about__track { display:flex; width:max-content; will-change:transform; animation:garden-about-marquee 22s linear infinite; }
 .garden-about__run { display:flex; flex:none; align-items:center; }
-.garden-about__run :is(h2,span) { display:block; flex:none; padding-right:.34em; font:500 clamp(5rem,11vw,13rem)/.8 "Cormorant Garamond",serif; letter-spacing:-.055em; text-transform:uppercase; }
+.garden-about__run :is(h2,span) { display:block; flex:none; padding-right:.34em; font:500 clamp(5rem,11vw,13rem)/.8 "Louize Trial",Georgia,serif; letter-spacing:-.055em; text-transform:uppercase; }
 .garden-about__run span { color:$ink; }
 @keyframes garden-about-marquee { to { transform:translateX(-50%); } }
-.garden-about__ticker { overflow:hidden; padding:.5rem 0; border-bottom:2px solid $ink; font:500 .58rem "Archivo",sans-serif; text-align:center; text-transform:uppercase; white-space:nowrap; }
+.garden-about__ticker { overflow:hidden; padding:.5rem 0; border-bottom:2px solid $ink; font:500 .58rem "Neue Montreal Trial",Arial,sans-serif; text-align:center; text-transform:uppercase; white-space:nowrap; }
 .garden-about__grid { display:grid; grid-template-columns:1fr 1.3fr; gap:4vw 8vw; width:min(1320px,88vw); margin:3rem auto 0; }
-.garden-about__grid h3 { margin-top:.8rem; font:500 clamp(3.8rem,6vw,7rem)/.84 "Cormorant Garamond",serif; letter-spacing:-.045em; }
-.garden-about__copy { font:500 clamp(1.35rem,1.7vw,1.8rem)/1.4 "Cormorant Garamond",serif; }
+.garden-about__grid h3 { margin-top:.8rem; font:500 clamp(3.8rem,6vw,7rem)/.84 "Louize Trial",Georgia,serif; letter-spacing:-.045em; }
+.garden-about__copy { font:500 clamp(1.35rem,1.7vw,1.8rem)/1.4 "Louize Trial",Georgia,serif; }
 .garden-about__copy p+p { margin-top:1em; }
 .garden-about dl { grid-column:2; margin-top:1rem; border-top:1px solid $ink; }
 .garden-about dl div { display:grid; grid-template-columns:1fr 1.7fr; padding:.65rem 0; border-bottom:1px solid $ink; }
-.garden-about dt { font:500 .56rem "Archivo",sans-serif; text-transform:uppercase; }
+.garden-about dt { font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .garden-about dd { font-size:.78rem; }
 .garden-about dd a { text-underline-offset:.3em; }
 
 /* Selected works */
 .garden-works { position:relative; min-height:120vh; overflow:hidden; padding:4rem 1rem 9rem; background:$night; color:$paper; }
 .garden-works>header { position:relative; z-index:3; display:grid; grid-template-columns:1fr 2fr 1fr; align-items:start; padding-bottom:3rem; }
-.garden-works>header h2 { font:900 clamp(5rem,10vw,12rem)/.72 "Barlow Condensed",sans-serif; letter-spacing:-.04em; text-align:center; text-transform:uppercase; }
+.garden-works>header h2 { font:900 clamp(5rem,10vw,12rem)/.72 "DaVinci Trial",Georgia,serif; letter-spacing:-.04em; text-align:center; text-transform:uppercase; }
 .garden-works>header>p:last-child { max-width:20rem; justify-self:end; font-size:.78rem; text-align:right; }
 .garden-works__preview { position:absolute; z-index:0; top:20%; left:50%; width:min(31vw,480px); aspect-ratio:4/5; overflow:hidden; transform:translateX(-50%) rotate(-1deg); pointer-events:none; }
-.garden-works__preview img { position:absolute; inset:0; height:100%; object-fit:cover; opacity:0; filter:grayscale(1) contrast(2.4) brightness(.78); transform:scale(1.04); transition:opacity .4s,transform .7s; }
+.garden-works__preview img { position:absolute; inset:0; height:100%; object-fit:cover; opacity:0; filter:none; transform:scale(1.04); transition:opacity .4s,transform .7s; }
 .garden-works__preview img.is-active { opacity:.55; transform:scale(1); }
 .garden-works ol { position:relative; z-index:2; margin:2rem 0 0; padding:0; list-style:none; border-top:1px solid rgba($paper,.7); }
 .garden-works li { overflow:hidden; border-bottom:1px solid rgba($paper,.7); }
 .garden-works li>a { position:relative; display:grid; grid-template-columns:3rem 1.5fr 1fr auto; gap:2rem; align-items:center; min-height:6.8rem; text-decoration:none; }
-.garden-works li>a>span,.garden-works li>a>em { font:500 .56rem "JetBrains Mono",monospace; font-style:normal; }
-.garden-works li h2 { font:500 clamp(2.8rem,5vw,5.8rem)/.86 "Cormorant Garamond",serif; }
+.garden-works li>a>span,.garden-works li>a>em { font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; font-style:normal; }
+.garden-works li h2 { font:500 clamp(2.8rem,5vw,5.8rem)/.86 "Louize Trial",Georgia,serif; }
 .garden-works li>a>p { font-size:.72rem; }
 .garden-work__marquee { position:absolute; z-index:4; inset:0; display:flex; align-items:center; overflow:hidden; background:$paper; color:$ink; clip-path:inset(0 100% 0 0); transition:clip-path .4s cubic-bezier(.16,1,.3,1); }
-.garden-work__marquee i { display:block; width:max-content; font:italic 500 clamp(3rem,6vw,6.5rem)/1 "Cormorant Garamond",serif; white-space:nowrap; animation:garden-work-run 10s linear infinite; }
+.garden-work__marquee i { display:block; width:max-content; font:italic 500 clamp(3rem,6vw,6.5rem)/1 "Louize Trial",Georgia,serif; white-space:nowrap; animation:garden-work-run 10s linear infinite; }
 .garden-works li>a:hover .garden-work__marquee,.garden-works li>a:focus-visible .garden-work__marquee { clip-path:inset(0); }
 @keyframes garden-work-run { to { transform:translateX(-33.333%); } }
 
@@ -149,26 +148,26 @@ body.garden-body a { color:inherit; }
 .garden-notes { padding:4rem 1rem 8rem; }
 .garden-notes__head { display:grid; grid-template-columns:minmax(8rem,1fr) auto; grid-template-rows:auto auto; align-items:center; margin-bottom:1.5rem; }
 .garden-notes__head>i { width:100%; height:2rem; background:$ink; }
-.garden-notes__head h2 { font:900 clamp(7rem,14vw,16rem)/.7 "Barlow Condensed",sans-serif; letter-spacing:-.045em; text-transform:uppercase; }
-.garden-notes__head p { grid-column:1/-1; padding:.8rem 0; border-top:1px solid $ink; font:500 .58rem "Archivo",sans-serif; text-transform:uppercase; }
+.garden-notes__head h2 { font:900 clamp(7rem,14vw,16rem)/.7 "DaVinci Trial",Georgia,serif; letter-spacing:-.045em; text-transform:uppercase; }
+.garden-notes__head p { grid-column:1/-1; padding:.8rem 0; border-top:1px solid $ink; font:500 .58rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .garden-notes__list { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
 .garden-note { min-height:18rem; }
 .garden-note>a { display:grid; grid-template-rows:auto 1fr auto; height:100%; padding:2rem; border:1px solid $soft-line; border-radius:14px; text-decoration:none; transition:border-color .2s,transform .2s; }
 .garden-note>a:hover,.garden-note>a:focus-visible { border-color:$ink; transform:translateY(-3px); }
-.garden-note>a>p { font:500 .55rem/1.25 "Archivo",sans-serif; text-transform:uppercase; }
+.garden-note>a>p { font:500 .55rem/1.25 "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .garden-note>a>p span,.garden-note>a>p em { display:block; font-style:normal; }
 .garden-note>a>p em { color:#77736e; }
-.garden-note h3 { align-self:start; margin-top:1rem; font:500 clamp(2rem,2.8vw,3.3rem)/.96 "Cormorant Garamond",serif; }
-.garden-note>a>div { display:flex; align-items:end; justify-content:space-between; gap:1rem; font:600 .56rem "Archivo",sans-serif; text-transform:uppercase; }
+.garden-note h3 { align-self:start; margin-top:1rem; font:500 clamp(2rem,2.8vw,3.3rem)/.96 "Louize Trial",Georgia,serif; }
+.garden-note>a>div { display:flex; align-items:end; justify-content:space-between; gap:1rem; font:600 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .garden-note time { color:#77736e; }
 .garden-note strong { font-weight:700; }
-.garden-notes__all { display:block; width:max-content; margin:3rem auto 0; font:500 .6rem "Archivo",sans-serif; text-transform:uppercase; text-underline-offset:.35em; }
+.garden-notes__all { display:block; width:max-content; margin:3rem auto 0; font:500 .6rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; text-underline-offset:.35em; }
 
 /* Pixel landscape footer */
 .garden-footer { background:$paper; }
 .garden-footer__landscape { position:relative; min-height:72vh; overflow:hidden; }
-.garden-footer__landscape>a { position:absolute; z-index:2; top:1rem; left:50%; font:500 .58rem "Archivo",sans-serif; text-transform:uppercase; transform:translateX(-50%); }
-.garden-footer__landscape img { position:absolute; inset:6% 0 -22%; height:116%; object-fit:cover; object-position:center 40%; filter:grayscale(1) contrast(5.5) brightness(1.55); mix-blend-mode:multiply; }
+.garden-footer__landscape>a { position:absolute; z-index:2; top:1rem; left:50%; font:500 .58rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; transform:translateX(-50%); }
+.garden-footer__landscape img { position:absolute; inset:6% 0 -22%; height:116%; object-fit:cover; object-position:center 40%; filter:none; mix-blend-mode:normal; }
 .garden-footer__landscape::after { content:""; position:absolute; inset:0; background:linear-gradient(to bottom,$paper 0 8%,transparent 48%,rgba($night,.18)); pointer-events:none; }
 .garden-footer__grid { display:grid; grid-template-columns:1fr 2fr 1fr 1fr; gap:4vw; min-height:31rem; padding:3rem 1rem 5rem; background:$night; color:$paper; }
 .garden-footer__grid>div { display:flex; align-items:flex-start; flex-direction:column; gap:.35rem; }
@@ -189,7 +188,7 @@ body.garden-body a { color:inherit; }
   .garden-cursor { display:none; }
   .garden-hero { padding:.75rem; }
   .garden-hero__title-wrap { height:43vh; min-height:24rem; }
-  .garden-hero__title span:first-child { top:3.5rem; font-size:21vw; transform:scaleX(.86); }
+  .garden-hero__title span:first-child { top:3.5rem; font-size:21vw; transform:scaleX(.72); }
   .garden-hero__title span:last-child { bottom:.08em; font-size:17vw; transform:scaleX(.9); transform-origin:left bottom; }
   .garden-hero__title em { left:5vw; bottom:17%; font-size:11vw; }
   .garden-hero__lower { grid-template-columns:1fr; }
@@ -240,7 +239,7 @@ body.garden-body a { color:inherit; }
 
 @media (max-width:520px) {
   .garden-hero__title-wrap { height:35vh; min-height:18rem; }
-  .garden-hero__title span:first-child { top:3rem; font-size:22vw; transform:scaleX(.84); }
+  .garden-hero__title span:first-child { top:3rem; font-size:22vw; transform:scaleX(.68); }
   .garden-hero__title span:last-child { font-size:18vw; transform:scaleX(.87); }
   .garden-hero__visual { min-height:42vh; }
   .garden-hero__links { gap:.7rem; }

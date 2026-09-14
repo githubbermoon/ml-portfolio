@@ -19,7 +19,7 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
       <span></span><span></span>
     </div>
     <p class="pizza-kicker">Palate · Recipe 01</p>
-    <h1 style="view-transition-name: pizza-title">Pizza</h1>
+    <h1 style="view-transition-name: pizza-title"><span>Pizza</span></h1>
     <img
       src={pizzaImage}
       alt="Pranjal preparing homemade pizzas in his kitchen"
@@ -41,6 +41,11 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
       <h2 id="method-title">A simple home pizza</h2>
       <span>This is a flexible starting point—adjust the timing and heat to your own kitchen.</span>
     </header>
+
+    <div class="process-thesis editorial-reveal">
+      <p>Flour becomes dough. Dough becomes supper. The recipe is only a record of attention.</p>
+      <span>Five movements · one hot oven</span>
+    </div>
 
     <div class="recipe-layout">
       <aside class="ingredients editorial-reveal" aria-labelledby="ingredients-title">
@@ -121,24 +126,27 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
   }
 
   :global(body.pizza-page) {
-    --process-bg: #17120e;
-    --process-text: #f1e2c9;
-    --process-muted: #bca98d;
-    --process-accent: #c55b3f;
-    --process-rule: rgb(217 187 145 / 0.24);
-    --process-preview: #211a14;
+    --process-bg: #e9e5db;
+    --process-text: #27231e;
+    --process-muted: #6d655b;
+    --process-accent: #a8442f;
+    --process-rule: rgb(39 35 30 / 0.25);
+    --process-preview: #ded7ca;
+    --pizza-display: "DaVinci Trial", Georgia, serif;
+    --pizza-reading: "Louize Trial", Georgia, serif;
+    --pizza-interface: "Neue Montreal Trial", Arial, sans-serif;
     overflow-x: clip;
     color: #fff8ed;
     background: #050505;
   }
 
   :global(html[data-theme="bright"] body.pizza-page) {
-    --process-bg: #eee8dc;
+    --process-bg: #eeeae1;
     --process-text: #29231e;
     --process-muted: #6e6257;
     --process-accent: #9b462e;
     --process-rule: rgb(41 35 30 / 0.25);
-    --process-preview: #e7ded0;
+    --process-preview: #e4ddcf;
   }
 
   .pizza-stage {
@@ -210,14 +218,14 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
     position: absolute;
     top: 47%;
     left: calc((100% - var(--archive-strip)) / 2 + 11vw);
-    z-index: 0;
+    z-index: 2;
     margin: 0;
-    color: #fff;
-    font-family: var(--font-display);
-    font-size: clamp(8rem, 21vw, 20rem);
-    font-weight: 520;
-    letter-spacing: -0.07em;
-    line-height: 0.8;
+    color: #fff6e8;
+    font-family: var(--pizza-display);
+    font-size: clamp(8rem, 22vw, 21rem);
+    font-weight: 900;
+    letter-spacing: -0.065em;
+    line-height: 0.72;
     transform: translate(-50%, -50%);
     text-transform: uppercase;
     white-space: nowrap;
@@ -228,7 +236,7 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
   .pizza-note {
     position: absolute;
     z-index: 4;
-    font-family: var(--font-mono);
+    font-family: var(--pizza-interface);
     font-size: 0.58rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -270,7 +278,7 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
     align-items: center;
     gap: 1rem;
     color: rgb(235 231 221 / 0.72);
-    font-family: var(--font-mono);
+    font-family: var(--pizza-interface);
     font-size: 0.55rem;
     font-style: normal;
     letter-spacing: 0.23em;
@@ -291,12 +299,13 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
     padding: clamp(5rem, 9vw, 8rem) max(1.5rem, calc((100vw - 78rem) / 2));
     color: var(--process-text);
     background: var(--process-bg);
+    font-family: var(--pizza-reading);
   }
 
   .process-header {
     display: grid;
-    grid-template-columns: 0.7fr 1.6fr 0.9fr;
-    gap: clamp(2rem, 5vw, 5rem);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1rem;
     align-items: end;
     padding-bottom: clamp(3rem, 6vw, 5rem);
     border-bottom: 1px solid var(--process-rule);
@@ -306,7 +315,7 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
   .section-number,
   .hover-note,
   .process-footer {
-    font-family: var(--font-mono);
+    font-family: var(--pizza-interface);
     font-size: 0.58rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -318,33 +327,65 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
   }
 
   .process-header h2 {
+    grid-column: 2 / 10;
     max-width: 11ch;
-    font-family: var(--font-display);
-    font-size: clamp(3.4rem, 7vw, 6.8rem);
-    font-weight: 450;
-    letter-spacing: -0.06em;
-    line-height: 0.88;
+    font-family: var(--pizza-display);
+    font-size: clamp(5rem, 10vw, 10rem);
+    font-weight: 700;
+    letter-spacing: -0.065em;
+    line-height: 0.76;
   }
 
+  .process-header > p { grid-column: 1; align-self: start; }
+
   .process-header > span {
+    grid-column: 10 / 13;
     color: var(--process-muted);
-    font-size: 0.9rem;
-    line-height: 1.75;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .process-thesis {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1rem;
+    min-height: clamp(18rem, 35vw, 34rem);
+    align-items: center;
+    border-bottom: 1px solid var(--process-rule);
+  }
+
+  .process-thesis p {
+    grid-column: 3 / 11;
+    max-width: 18ch;
+    margin: 0;
+    font: italic 400 clamp(2.7rem, 5.8vw, 6rem)/1.02 var(--pizza-reading);
+    letter-spacing: -.035em;
+    text-wrap: balance;
+  }
+
+  .process-thesis span {
+    grid-column: 10 / 13;
+    align-self: end;
+    padding-bottom: 1rem;
+    color: var(--process-accent);
+    font: 500 .54rem/1 var(--pizza-interface);
+    letter-spacing: .14em;
+    text-transform: uppercase;
   }
 
   .recipe-layout {
     display: grid;
     grid-template-columns: minmax(18rem, 0.75fr) minmax(0, 1.25fr);
-    gap: clamp(4rem, 9vw, 9rem);
+    gap: clamp(5rem, 11vw, 11rem);
     padding-block: clamp(5rem, 9vw, 8rem);
   }
 
   .ingredients h3,
   .method > h3 {
     margin-top: 0.9rem;
-    font-family: var(--font-display);
-    font-size: clamp(2.2rem, 4vw, 3.6rem);
-    font-weight: 460;
+    font-family: var(--pizza-display);
+    font-size: clamp(2.8rem, 4.8vw, 4.8rem);
+    font-weight: 700;
     letter-spacing: -0.04em;
   }
 
@@ -374,7 +415,7 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
     position: absolute;
     left: -2rem;
     color: var(--process-accent);
-    font-family: var(--font-mono);
+    font-family: var(--pizza-interface);
     font-size: .48rem;
     letter-spacing: .1em;
   }
@@ -387,7 +428,7 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
     z-index: 9;
     width: clamp(10rem, 16vw, 14rem);
     color: var(--process-muted);
-    font-family: var(--font-mono);
+    font-family: var(--pizza-interface);
     font-size: .48rem;
     letter-spacing: .12em;
     text-transform: uppercase;
@@ -397,14 +438,14 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
   }
 
   .ingredient-item > span {
-    font-family: var(--font-display);
-    font-size: 1.25rem;
+    font-family: var(--pizza-reading);
+    font-size: 1.4rem;
     transition: color 180ms ease, transform 180ms ease;
   }
 
   .ingredient-item > small {
     color: var(--process-muted);
-    font-family: var(--font-mono);
+    font-family: var(--pizza-interface);
     font-size: 0.58rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -466,7 +507,7 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
   .method li > small {
     padding-top: 0.3rem;
     color: var(--process-accent);
-    font-family: var(--font-mono);
+    font-family: var(--pizza-interface);
     font-size: 0.58rem;
     letter-spacing: 0.12em;
   }
@@ -477,17 +518,17 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
   }
 
   .method h4 {
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    font-weight: 480;
+    font-family: var(--pizza-reading);
+    font-size: 1.75rem;
+    font-weight: 500;
   }
 
   .method li p {
     max-width: 38rem;
     margin-top: 0.5rem;
     color: var(--process-muted);
-    font-size: 0.9rem;
-    line-height: 1.7;
+    font-size: 1rem;
+    line-height: 1.65;
   }
 
   .process-footer {
@@ -551,6 +592,7 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
     }
 
     .process-header,
+    .process-thesis,
     .recipe-layout {
       grid-template-columns: 1fr;
     }
@@ -558,6 +600,16 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
     .process-header {
       gap: 1.5rem;
     }
+
+    .process-header > p,
+    .process-header h2,
+    .process-header > span,
+    .process-thesis p,
+    .process-thesis span { grid-column: 1; }
+
+    .process-header h2 { font-size: clamp(4.2rem, 20vw, 7rem); }
+    .process-thesis { min-height: 25rem; }
+    .process-thesis p { font-size: clamp(2.5rem, 12vw, 4.5rem); }
 
     .recipe-layout {
       gap: 5rem;

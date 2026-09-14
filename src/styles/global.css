@@ -170,7 +170,7 @@ html.theme-transitioning::view-transition-new(root) {
   }
 
   @keyframes editorial-curtain {
-    from { clip-path: inset(0 100% 0 0); filter: saturate(.75); }
+    from { clip-path: inset(0 100% 0 0); filter: saturate(1); }
     to { clip-path: inset(0); filter: saturate(1); }
   }
 
@@ -210,7 +210,7 @@ body.realms-manuscript-inner .storm-light-image { animation: field-light 12s eas
 body.realms-manuscript-inner .astrology-hero img { animation: celestial-drift 22s ease-in-out infinite alternate; }
 
 @keyframes ananta-breathe { from { transform: scale(1); } to { transform: scale(1.025); } }
-@keyframes field-light { from { filter: saturate(.9) brightness(.96); } to { filter: saturate(1.04) brightness(1.04); } }
+@keyframes field-light { from { filter: saturate(1) brightness(.96); } to { filter: saturate(1.04) brightness(1.04); } }
 @keyframes celestial-drift { from { object-position: 49% center; } to { object-position: 51% center; } }
 
 @media (prefers-reduced-motion: reduce) {

@@ -105,7 +105,7 @@ a { color: inherit; }
 .overture__lede { grid-column: 2/8; font: clamp(2.9rem,5.3vw,6.4rem)/.98 $font-display; letter-spacing: -.035em; }
 .overture__grid .prose { grid-column: 3/7; margin-top: 5rem; }
 .plate--flower { grid-column: 9/12; grid-row: 1/span 2; align-self: center; }
-.plate--flower img { aspect-ratio: 3/4; object-fit: cover; filter: saturate(.55) contrast(.95); }
+.plate--flower img { aspect-ratio: 3/4; object-fit: cover; filter: none; }
 .plate figcaption { display: flex; justify-content: space-between; gap: 1rem; margin-top: .7rem; font: .58rem/1.5 $font-interface; letter-spacing: .06em; text-transform: uppercase; }
 .plate figcaption span:first-child { color: $red; }
 .overture__thesis { width: min(1100px,88vw); margin: 12rem auto 0; padding: 5rem 0; border-block: 1px solid rgba($ink,.35); font: clamp(2.3rem,5vw,5.6rem)/1.05 $font-display; text-align: center; }
@@ -123,7 +123,7 @@ a { color: inherit; }
 
 .sky { padding-bottom: 11rem; overflow: hidden; }
 .sky__visual { position: relative; height: min(90vw,105vh); overflow: hidden; }
-.sky__visual img { width: 100%; height: 115%; object-fit: cover; filter: brightness(.72) saturate(.72); }
+.sky__visual img { width: 100%; height: 115%; object-fit: cover; filter: none; }
 .sky__visual::after { content:""; position:absolute; inset:0; background:radial-gradient(circle at 52% 54%,transparent 0 14%,rgba($night,.2) 44%,rgba($night,.78)); }
 .sky__visual > p { position:absolute; z-index:2; right:1rem; top:50%; writing-mode:vertical-rl; font:.58rem $font-interface; letter-spacing:.15em; text-transform:uppercase; }
 .orbit { position:absolute; z-index:1; top:50%; left:50%; aspect-ratio:1; border:1px solid rgba($paper,.36); border-radius:50%; transform:translate(-50%,-50%); }
@@ -141,14 +141,14 @@ a { color: inherit; }
 .agreement__heading h2 { font:clamp(5rem,11vw,12rem)/.78 $font-display; letter-spacing:-.05em; }
 .agreement__heading h2 span { color:$red; }
 .plate--manuscript { width:58vw; margin:8rem 3vw 0 auto; }
-.plate--manuscript img { filter:saturate(.52) sepia(.12); }
+.plate--manuscript img { filter:none; }
 .agreement__symbol { position:absolute; left:5vw; top:54%; width:min(250px,23vw); }
-.agreement__symbol img { border:1px solid rgba($ink,.35); mix-blend-mode:multiply; }
+.agreement__symbol img { border:1px solid rgba($ink,.35); mix-blend-mode:normal; }
 .agreement__symbol p { margin-top:1rem; font-size:.92rem; line-height:1.5; font-style:italic; }
 .agreement__copy { width:min(620px,48vw); margin:7rem 12vw 0 auto; }
 
 .cosmos { position:relative; height:115vh; min-height:740px; overflow:hidden; background:$night; color:white; }
-.cosmos img { position:absolute; inset:-10%; width:120%; height:130%; object-fit:cover; filter:saturate(.68) brightness(.62); }
+.cosmos img { position:absolute; inset:-10%; width:120%; height:130%; object-fit:cover; filter:none; }
 .cosmos::after { content:""; position:absolute; inset:0; background:radial-gradient(circle,transparent 20%,rgba(4,7,8,.52) 90%); }
 .cosmos__caption { position:absolute; z-index:2; inset:50% 0 auto; transform:translateY(-50%); font:clamp(3rem,7vw,7rem)/.95 $font-display; text-align:center; }
 .cosmos>span { position:absolute; z-index:2; bottom:2rem; left:50%; font:2rem $font-display; }
@@ -158,16 +158,16 @@ a { color: inherit; }
 .ritual__heading h2 { font:clamp(4.2rem,10vw,10rem)/.82 $font-display; letter-spacing:-.04em; }
 .ritual__heading h2 span { margin-left:16vw; color:$red; }
 .ritual__heading>p { margin:2rem 0 0 17vw; font-style:italic; }
-.plate--ritual { width:min(560px,43vw); margin:9rem auto 0 7vw; }.plate--ritual img { filter:saturate(.58) contrast(.95); }
+.plate--ritual { width:min(560px,43vw); margin:9rem auto 0 7vw; }.plate--ritual img { filter:none; }
 .ritual__copy { width:min(590px,43vw); margin:-25rem 8vw 0 auto; }
-.plate--silence { position:absolute; right:13vw; bottom:8rem; width:min(245px,22vw); transform:rotate(2deg); }.plate--silence img { filter:saturate(.48); }
+.plate--silence { position:absolute; right:13vw; bottom:8rem; width:min(245px,22vw); transform:rotate(2deg); }.plate--silence img { filter:none; }
 
 .ledger { position:relative; min-height:1450px; padding:10rem 5vw 12rem; overflow:hidden; background:#aab3a6; }
 .ledger::before { content:""; position:absolute; inset:0; opacity:.14; background-image:linear-gradient(rgba($ink,.25) 1px,transparent 1px),linear-gradient(90deg,rgba($ink,.25) 1px,transparent 1px); background-size:4vw 4vw; }
 .ledger__heading { position:relative; z-index:1; margin-left:5vw; }.ledger__heading h2 { font:clamp(4rem,8vw,8.5rem)/.9 $font-display; letter-spacing:-.04em; }
 .ledger__copy { position:relative; z-index:1; margin:8rem 0 0 11vw; }
-.plate--metal { position:absolute; z-index:1; top:50%; right:7vw; width:min(420px,34vw); }.plate--metal img { mix-blend-mode:multiply; filter:saturate(0); }
-.plate--future { position:absolute; z-index:1; bottom:8rem; left:15vw; width:min(460px,40vw); transform:rotate(-3deg); }.plate--future img { mix-blend-mode:multiply; }
+.plate--metal { position:absolute; z-index:1; top:50%; right:7vw; width:min(420px,34vw); }.plate--metal img { mix-blend-mode:normal; filter:none; }
+.plate--future { position:absolute; z-index:1; bottom:8rem; left:15vw; width:min(460px,40vw); transform:rotate(-3deg); }.plate--future img { mix-blend-mode:normal; }
 .ledger__number { position:absolute; right:-.08em; bottom:-.2em; color:rgba($ink,.09); font:clamp(19rem,48vw,52rem)/.7 $font-display; }
 
 .proposition { display:grid; grid-template-columns:repeat(12,1fr); gap:2vw; padding:14rem 5vw; }
@@ -175,7 +175,7 @@ a { color: inherit; }
 .proposition .prose { grid-column:7/11; margin-top:7rem; }
 
 .rings { min-height:100svh; display:grid; grid-template-columns:1.15fr .85fr; background:#111410; color:$paper; }
-.rings figure { min-height:100svh; overflow:hidden; }.rings figure img { height:100%; object-fit:cover; filter:saturate(.48) brightness(.62); }
+.rings figure { min-height:100svh; overflow:hidden; }.rings figure img { height:100%; object-fit:cover; filter:none; }
 .rings__copy { align-self:center; padding:8vw; }.rings__copy h2 { margin-bottom:3rem; font:clamp(4rem,7vw,7.7rem)/.86 $font-display; letter-spacing:-.04em; }
 .rings__copy>p:not(:first-child) { max-width:33rem; font-size:1.1rem; }.rings__copy>p+p { margin-top:1.3rem; }
 
