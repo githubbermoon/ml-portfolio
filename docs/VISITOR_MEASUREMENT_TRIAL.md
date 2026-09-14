@@ -10,7 +10,7 @@ The Realms build contains a consent-gated visitor measurement trial ending at **
 - A SHA-256 browser fingerprint derived from browser, screen, hardware, timezone, canvas and WebGL properties
 - Page, title, referrer, device summary, reading duration, maximum scroll depth and outbound-link hostname
 
-Events expire from Cloudflare KV after 31 days. Tracking does not begin before the `kosh_consent=accepted` cookie exists. Turning analytics off in **Change preferences** removes the visitor and session cookies.
+Events expire from Cloudflare KV after 31 days. Tracking does not begin before the `kosh_consent=accepted` cookie exists. There is no opening-page prompt or persistent corner control; **Visitor measurement** lives inside the top-right navigation menu. Turning analytics off there removes the visitor and session cookies.
 
 ## Cookies
 

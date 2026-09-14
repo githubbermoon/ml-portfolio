@@ -67,6 +67,8 @@ html:not([data-theme="bright"]) .realms-menu-panel {
 .realms-menu-tools { padding-top: .75rem; }
 .realms-language-switch { display: flex; align-items: center; gap: 0; color: var(--menu-muted); font-family: var(--font-mono); font-size: .72rem; letter-spacing: .06em; }
 .realms-language-switch span[data-active="true"] { color: var(--menu-ink); }
+.realms-analytics-switch { color: var(--menu-muted); font-family: var(--font-mono); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; transition: color 160ms ease; }
+.realms-analytics-switch:hover, .realms-analytics-switch:focus-visible { color: #a1442f; }
 .realms-language-switch i { margin-inline: .2rem; opacity: .4; font-style: normal; }
 
 @media (max-width: 560px) {

@@ -3,14 +3,6 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
 ---
 
 <div class="visitor-measurement" data-visitor-measurement data-trial-ends={trialEndsAt}>
-  <aside class="visitor-consent" data-consent-prompt hidden aria-label="Visitor analytics choice">
-    <p>Help me test how this site is visited.</p>
-    <div class="visitor-consent__actions">
-      <button type="button" data-consent-accept>Accept</button>
-      <button type="button" data-consent-change>Change preferences</button>
-    </div>
-  </aside>
-
   <dialog class="visitor-preferences" data-consent-dialog>
     <form method="dialog" data-consent-form>
       <header>
@@ -28,10 +20,6 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
       <button class="visitor-preferences__save" type="submit">Save changes</button>
     </form>
   </dialog>
-
-  <button class="visitor-preferences-link" type="button" data-consent-reopen hidden>
-    Change preferences
-  </button>
 </div>
 
 <script>
@@ -218,10 +206,8 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
   }
 
   const root = document.querySelector<HTMLElement>("[data-visitor-measurement]");
-  const prompt = root?.querySelector<HTMLElement>("[data-consent-prompt]");
   const dialog = root?.querySelector<HTMLDialogElement>("[data-consent-dialog]");
   const toggle = root?.querySelector<HTMLInputElement>("[data-consent-toggle]");
-  const reopen = root?.querySelector<HTMLButtonElement>("[data-consent-reopen]");
   const trialEnd = Date.parse(root?.dataset.trialEnds ?? "");
   const trialActive = Number.isFinite(trialEnd) && Date.now() < trialEnd;
   let measurementStarted = false;
@@ -238,58 +224,28 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
     beginMeasurement();
   }
 
-  if (root && prompt && reopen && trialActive) {
+  if (root && trialActive) {
     const consent = readCookie(CONSENT_COOKIE);
-    prompt.hidden = consent === "accepted" || consent === "declined";
-    reopen.hidden = false;
     if (consent === "accepted") startOnce();
 
-    root.querySelector("[data-consent-accept]")?.addEventListener("click", () => {
-      writeCookie(CONSENT_COOKIE, "accepted", COOKIE_MAX_AGE);
-      prompt.hidden = true;
-      startOnce();
-    });
-    root.querySelector("[data-consent-change]")?.addEventListener("click", showPreferences);
-    root.querySelector("[data-consent-reopen]")?.addEventListener("click", showPreferences);
+    window.addEventListener("visitor-preferences-open", showPreferences);
     root.querySelector("[data-consent-close]")?.addEventListener("click", () => dialog?.close());
     root.querySelector("[data-consent-form]")?.addEventListener("submit", () => {
       if (toggle?.checked) {
         writeCookie(CONSENT_COOKIE, "accepted", COOKIE_MAX_AGE);
-        prompt.hidden = true;
         startOnce();
       } else {
         writeCookie(CONSENT_COOKIE, "declined", COOKIE_MAX_AGE);
         removeCookie(VISITOR_COOKIE);
         removeCookie(SESSION_COOKIE);
-        prompt.hidden = true;
       }
     });
   }
 </script>
 
 <style>
-  .visitor-consent,
-  .visitor-preferences-link {
-    position: fixed;
-    z-index: 10000;
-    right: 0.9rem;
-    bottom: 0.9rem;
-    color: #efe9de;
-    background: rgba(28, 25, 22, 0.94);
-    border: 1px solid rgba(239, 233, 222, 0.3);
-    box-shadow: 0 0.8rem 2.5rem rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(12px);
-    font: 0.72rem/1.35 "Neue Montreal", system-ui, sans-serif;
-  }
-  .visitor-consent {
-    width: min(21rem, calc(100vw - 1.8rem));
-    padding: 0.75rem;
-  }
-  .visitor-consent p { margin: 0 0 0.65rem; }
-  .visitor-consent__actions { display: flex; gap: 0.45rem; }
-  .visitor-consent button,
   .visitor-preferences button,
-  .visitor-preferences-link {
+  .visitor-preferences__save {
     border: 1px solid currentColor;
     border-radius: 999px;
     padding: 0.42rem 0.72rem;
@@ -297,15 +253,6 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
     background: transparent;
     cursor: pointer;
   }
-  .visitor-consent button:first-child {
-    color: #211d19;
-    background: #efe9de;
-  }
-  .visitor-preferences-link {
-    padding: 0.4rem 0.65rem;
-    opacity: 0.68;
-  }
-  .visitor-preferences-link:hover { opacity: 1; }
   .visitor-preferences {
     width: min(28rem, calc(100vw - 2rem));
     padding: 0;
@@ -345,8 +292,4 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
     border-block: 1px solid rgba(41, 35, 30, 0.25);
   }
   .visitor-preferences__save { color: #eee8dd !important; background: #29231e !important; }
-  [hidden] { display: none !important; }
-  @media (max-width: 520px) {
-    .visitor-consent__actions { align-items: stretch; flex-direction: column; }
-  }
 </style>

@@ -58,6 +58,11 @@ const MobileNav: React.FC<MobileNavProps> = ({ links, base, simple = false, manu
     } else apply();
   };
 
+  const openVisitorPreferences = () => {
+    window.dispatchEvent(new CustomEvent("visitor-preferences-open"));
+    setIsOpen(false);
+  };
+
   useEffect(() => {
     const saved = localStorage.getItem('realms-lang');
     setLang(saved === 'hi' ? 'hi' : 'en');
@@ -145,6 +150,9 @@ const MobileNav: React.FC<MobileNavProps> = ({ links, base, simple = false, manu
               <div className="realms-menu-tools">
                 <button type="button" className="realms-language-switch" onClick={() => setLanguage(lang === 'en' ? 'hi' : 'en')} aria-label={lang === 'en' ? 'Switch to Hindi' : 'Switch to English'}>
                   <span data-active={lang === 'en'}>A</span><i>/</i><span data-active={lang === 'hi'}>अ</span>
+                </button>
+                <button type="button" className="realms-analytics-switch" onClick={openVisitorPreferences}>
+                  Visitor measurement
                 </button>
                 <button type="button" className="realms-theme-switch" onClick={() => setTheme(theme === 'dark' ? 'bright' : 'dark')} aria-label={theme === 'dark' ? 'Use bright theme' : 'Use dark theme'} title={theme === 'dark' ? 'Bright mode' : 'Dark mode'}>
                   {theme === 'dark' ? <Sun size={18} strokeWidth={1.25} /> : <Moon size={18} strokeWidth={1.25} />}
