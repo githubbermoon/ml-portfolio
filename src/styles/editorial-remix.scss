@@ -1,0 +1,345 @@
+@import "./fonts.css";
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Barlow+Condensed:wght@700;800;900&display=swap");
+
+$paper:#f1f0ec;
+$ink:#27231f;
+$night:#171512;
+$cream:#eee7db;
+$rust:#9f3d29;
+$rule:rgba($ink,.85);
+
+body.editorial-remix {
+  --inner-paper:#{$paper};
+  --inner-paper-raised:#f7f6f2;
+  --inner-ink:#{$ink};
+  --inner-muted:#706a63;
+  --inner-rule:rgba(39,35,31,.28);
+  --inner-accent:#{$rust};
+  overflow-x:hidden;
+  background:$paper;
+  color:$ink;
+  font-family:"Archivo",Arial,sans-serif;
+}
+body.editorial-remix::before { display:none; }
+body.editorial-remix > main { border:0; }
+body.editorial-remix .realm-nav { color:#f4f1eb; mix-blend-mode:difference; }
+body.editorial-remix .realms-back-link { border:1px solid currentColor; border-radius:0; color:#f4f1eb; background:transparent; mix-blend-mode:difference; }
+body.editorial-remix .realms-rights-footer { border-color:rgba(241,240,236,.2); background:$night!important; color:#a9a39b!important; }
+body.editorial-remix :where(h1,h2,h3,p,figure,blockquote,dl,dd) { margin-block:0; }
+body.editorial-remix a { color:inherit; }
+body.editorial-remix ::selection { background:$rust; color:$paper; }
+
+.editorial-marquee { overflow:hidden; border-block:1px solid rgba($cream,.45); padding:.72rem 0; background:$night; color:$cream; white-space:nowrap; }
+.editorial-marquee>div { display:flex; width:max-content; align-items:center; gap:2rem; animation:editorial-run 24s linear infinite; }
+.editorial-marquee span { font:500 .58rem "JetBrains Mono",monospace; letter-spacing:.12em; text-transform:uppercase; }
+.editorial-marquee i { font:italic 1rem "Cormorant Garamond",serif; }
+.editorial-marquee--light { border-color:$ink; background:$paper; color:$ink; }
+.editorial-marquee--night { background:#080b12; }
+@keyframes editorial-run { to { transform:translateX(-50%); } }
+
+/* Fear — cinematic reading folio */
+body.fear-remix { background:$night; }
+.fear-page { background:$paper; color:$ink; }
+.fear-hero { position:relative; min-height:100svh; overflow:hidden; background:#050505; color:$cream; }
+.fear-hero::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.05) 52%,rgba(0,0,0,.42)),linear-gradient(0deg,#050505 0 17%,rgba(5,5,5,.82) 26%,transparent 59%); pointer-events:none; }
+.fear-hero figure { position:absolute; inset:-5%; }
+.fear-hero figure img { width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.35) brightness(.72); }
+.fear-hero__meta { position:absolute; z-index:2; top:7rem; right:3vw; left:3vw; display:flex; justify-content:space-between; border-top:1px solid rgba($cream,.6); padding-top:.65rem; font:500 .56rem "JetBrains Mono",monospace; letter-spacing:.11em; text-transform:uppercase; }
+.fear-hero h1 { position:absolute; z-index:2; inset:18% 2vw auto; min-height:60vh; color:$cream!important; font-weight:400; letter-spacing:-.06em; text-shadow:0 2px 28px rgba(0,0,0,.48); text-transform:uppercase; }
+.fear-hero h1 span { position:absolute; display:block; font:900 clamp(8rem,19vw,22rem)/.72 "Barlow Condensed",sans-serif; }
+.fear-hero h1 span:first-child { top:0; left:0; }
+.fear-hero h1 span:last-child { right:0; bottom:0; }
+.fear-hero h1 em { position:absolute; z-index:2; top:42%; left:35%; color:#d5a692; font:italic 400 clamp(4.5rem,8vw,9rem)/1 "Cormorant Garamond",serif; text-transform:none; }
+.fear-hero__dek { position:absolute; z-index:2; bottom:2.2rem; left:3vw; width:min(30rem,60vw); font:500 clamp(1.1rem,1.6vw,1.45rem)/1.4 "Cormorant Garamond",serif; }
+.fear-hero__enter { position:absolute; z-index:2; right:3vw; bottom:2.4rem; font:500 .57rem "JetBrains Mono",monospace; letter-spacing:.1em; text-transform:uppercase; text-underline-offset:.3em; }
+.fear-reading { display:grid; grid-template-columns:15rem minmax(0,58rem); gap:clamp(2rem,7vw,8rem); width:min(100% - 3rem,1240px); margin:auto; padding:8rem 0 10rem; }
+.fear-reading__rail { position:sticky; top:7rem; align-self:start; display:grid; gap:.75rem; min-height:72vh; border-top:1px solid $ink; padding-top:1rem; font:500 .57rem "JetBrains Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }
+.fear-reading__rail>p:first-child { margin-bottom:1rem; color:$rust; }
+.fear-reading__rail a { display:grid; grid-template-columns:2rem 1fr; text-decoration:none; }
+.fear-reading__vertical { position:absolute; bottom:0; left:0; color:#8c8781; writing-mode:vertical-rl; transform:rotate(180deg); }
+.fear-reading__opening { margin-bottom:10rem; }
+.fear-reading__opening>p,.fear-chapter header>p,.fear-chapter header>span,.fear-translation>p,.fear-verse-label { font:500 .58rem "JetBrains Mono",monospace; letter-spacing:.11em; text-transform:uppercase; }
+.fear-reading__opening>p { color:$rust; }
+.fear-reading__opening blockquote { margin-top:1.4rem; font:500 clamp(3rem,5.5vw,6rem)/.94 "Cormorant Garamond",serif; letter-spacing:-.035em; }
+.fear-chapter { position:relative; padding-top:2rem; border-top:1px solid $ink; scroll-margin-top:6rem; }
+.fear-chapter+.fear-chapter { margin-top:11rem; }
+.fear-chapter__number { position:absolute; right:0; top:-.45em; color:rgba($ink,.07); font:900 clamp(9rem,18vw,18rem)/1 "Barlow Condensed",sans-serif; }
+.fear-chapter header { position:relative; z-index:1; margin-bottom:4rem; }
+.fear-chapter header>p { color:$rust; }
+.fear-chapter h2 { margin-top:1.1rem; font:500 clamp(3.4rem,6vw,6.5rem)/.84 "Cormorant Garamond",serif; letter-spacing:-.045em; }
+.fear-chapter h2 em { color:$rust; font-size:.42em; font-weight:400; }
+.fear-chapter header>span { display:block; margin-top:1rem; color:#77716b; }
+.fear-verse { position:relative; padding:3rem; border:1px solid $ink; background:#e6e2da; font:500 clamp(1.5rem,2.2vw,2rem)/1.9 "Noto Serif Devanagari","Cormorant Garamond",serif; }
+.fear-verse::before { content:"§"; position:absolute; top:-1.1rem; left:50%; padding:0 .7rem; background:$paper; font:italic 2rem "Cormorant Garamond",serif; transform:translateX(-50%); }
+.fear-verse-label { margin-bottom:.8rem; color:$rust; }
+.fear-translation { display:grid; grid-template-columns:10rem 1fr; gap:2rem; margin-top:2rem; border-top:1px solid rgba($ink,.3); padding-top:1rem; }
+.fear-translation>p { color:#716b64; }
+.fear-translation>div { font:500 1.25rem/1.65 "Cormorant Garamond",serif; }
+.fear-translation--meaning>div { font-size:1.45rem; }
+.fear-interlude { width:calc(100% + 14rem); margin:11rem 0 11rem -7rem; }
+.fear-interlude img { width:100%; max-height:78vh; object-fit:cover; filter:grayscale(1) contrast(1.15); }
+.fear-interlude figcaption { display:grid; grid-template-columns:10rem 1fr; gap:2rem; padding:.8rem 0; border-bottom:1px solid $ink; font:500 .72rem/1.5 "Archivo",sans-serif; }
+.fear-interlude figcaption span { text-transform:uppercase; }
+.fear-colophon { display:grid; justify-items:center; margin-top:10rem; border-block:1px solid $ink; padding:4rem 2rem; text-align:center; }
+.fear-colophon>span { font:italic 4rem "Cormorant Garamond",serif; }
+.fear-colophon p { max-width:34rem; font:500 1.4rem/1.5 "Cormorant Garamond",serif; }
+.fear-colophon a { margin-top:2rem; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+
+/* Notes — graphic index */
+.notes-page { background:$paper; color:$ink; }
+.notes-hero { min-height:92svh; display:grid; grid-template-rows:auto 1fr auto; padding:7rem 1rem 1.5rem; }
+.notes-hero__meta { display:flex; justify-content:space-between; border-block:2px solid $ink; padding:.6rem 0; font:500 .57rem "JetBrains Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }
+.notes-hero h1 { position:relative; align-self:center; height:45vw; max-height:36rem; min-height:20rem; letter-spacing:-.06em; text-transform:uppercase; }
+.notes-hero h1 span { position:absolute; font:900 clamp(8rem,21vw,24rem)/.7 "Barlow Condensed",sans-serif; }
+.notes-hero h1 span:first-child { top:0; left:0; }
+.notes-hero h1 span:last-child { right:0; bottom:0; }
+.notes-hero h1 em { position:absolute; z-index:2; top:39%; left:47%; font:italic 400 clamp(4rem,8vw,9rem)/1 "Cormorant Garamond",serif; text-transform:none; transform:translate(-50%,-50%); }
+.notes-hero__foot { display:grid; grid-template-columns:1fr auto; align-items:end; gap:4rem; border-top:2px solid $ink; padding-top:1rem; }
+.notes-hero__foot p { max-width:37rem; font:500 1.2rem/1.45 "Cormorant Garamond",serif; }
+.notes-hero__foot a { font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.notes-manuscript { display:grid; grid-template-columns:1.4fr 1fr; min-height:80vh; background:$night; color:$cream; }
+.notes-manuscript figure { overflow:hidden; }
+.notes-manuscript img { width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.55) brightness(.78); }
+.notes-manuscript>p { align-self:center; padding:8vw; font:500 clamp(2.6rem,5vw,5.5rem)/.95 "Cormorant Garamond",serif; letter-spacing:-.03em; }
+.notes-manuscript>p span { display:block; margin-bottom:2rem; font:500 .58rem "JetBrains Mono",monospace; letter-spacing:.1em; text-transform:uppercase; }
+.notes-shelves { padding:7rem 1rem 10rem; }
+.notes-shelves>header,.projects-dossiers>header { display:grid; grid-template-columns:1fr auto; grid-template-rows:auto auto; align-items:center; }
+.notes-shelves>header>i,.projects-dossiers>header>i { width:100%; height:2rem; background:$ink; }
+.notes-shelves>header h2,.projects-dossiers>header h2 { font:900 clamp(7rem,15vw,17rem)/.7 "Barlow Condensed",sans-serif; letter-spacing:-.045em; text-transform:uppercase; }
+.notes-shelves>header p,.projects-dossiers>header p { grid-column:1/-1; border-top:1px solid $ink; padding:.6rem 0; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.notes-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+.notes-card { min-height:24rem; }
+.notes-card>a { display:grid; grid-template-rows:auto 1fr auto auto; height:100%; padding:2rem; border:1px solid rgba($ink,.2); border-radius:12px; text-decoration:none; transition:border-color .2s,transform .2s; }
+.notes-card>a:hover { border-color:$ink; transform:translateY(-4px); }
+.notes-card__meta { display:flex; justify-content:space-between; gap:1rem; font:500 .55rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.notes-card__meta p { text-align:right; }.notes-card__meta small { display:block; color:#817b74; font-size:inherit; }
+.notes-card h3 { align-self:start; margin-top:2rem; font:500 clamp(2.5rem,4vw,4.2rem)/.9 "Cormorant Garamond",serif; letter-spacing:-.035em; }
+.notes-card__summary { margin-bottom:2rem; color:#69635d; font-size:.78rem; line-height:1.6; }
+.notes-card strong { justify-self:end; font-size:.58rem; text-transform:uppercase; }
+.notes-method { padding:8rem 1rem; background:#dedbd3; }
+.notes-method>p { border-bottom:1px solid $ink; padding-bottom:.7rem; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.notes-method>div { display:grid; grid-template-columns:repeat(3,1fr); }
+.notes-method article { min-height:22rem; padding:2rem; border-right:1px solid $ink; }
+.notes-method article:first-child { border-left:1px solid $ink; }
+.notes-method article>span { font:500 .58rem "JetBrains Mono",monospace; }
+.notes-method h2 { margin-top:5rem; font:500 clamp(2.8rem,4vw,4.5rem)/1 "Cormorant Garamond",serif; }
+.notes-method article p { max-width:18rem; margin-top:1rem; font-size:.82rem; line-height:1.6; }
+
+/* Astrology — nocturnal atlas */
+body.astrology-remix { background:#080b12; }
+.astrology-page { background:#080b12; color:#e8e4dc; }
+.astrology-page :where(h1,h2,h3,blockquote) { color:#e8e4dc!important; }
+.astrology-hero { position:relative; min-height:100svh; overflow:hidden; }
+.astrology-hero::after { content:""; position:absolute; inset:0; background:linear-gradient(0deg,#080b12 0,transparent 50%),linear-gradient(90deg,rgba(3,5,9,.55),transparent); }
+.astrology-hero figure { position:absolute; inset:-6%; }
+.astrology-hero img { width:100%; height:100%; object-fit:cover; filter:saturate(.55) contrast(1.25) brightness(.72); }
+.astrology-hero__meta { position:absolute; z-index:2; top:7rem; right:2vw; left:2vw; display:flex; justify-content:space-between; border-top:1px solid rgba(232,228,220,.65); padding-top:.6rem; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.astrology-hero h1 { position:absolute; z-index:2; inset:17% 2vw auto; min-height:56vh; color:#eee9df!important; letter-spacing:-.055em; text-shadow:0 2px 32px rgba(0,0,0,.5); text-transform:uppercase; }
+.astrology-hero h1 span { position:absolute; display:block; font:900 clamp(7rem,17vw,20rem)/.74 "Barlow Condensed",sans-serif; }
+.astrology-hero h1 span:first-child { top:0; left:0; }.astrology-hero h1 span:last-child { right:0; bottom:0; }
+.astrology-hero h1 em { position:absolute; top:42%; left:50%; color:#d79875; font:italic 400 clamp(5rem,10vw,11rem)/1 "Cormorant Garamond",serif; text-transform:none; transform:translate(-50%,-50%); }
+.astrology-hero>p { position:absolute; z-index:2; bottom:2rem; left:2vw; width:min(34rem,64vw); font:500 clamp(1.2rem,1.8vw,1.6rem)/1.35 "Cormorant Garamond",serif; }
+.astrology-hero>a { position:absolute; z-index:2; right:2vw; bottom:2rem; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.astrology-preface { display:grid; grid-template-columns:.7fr 2fr .8fr .8fr; gap:4vw; padding:9rem 3vw; border-bottom:1px solid rgba(232,228,220,.3); }
+.astrology-preface>p,.astrology-preface div span { font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.astrology-preface>p { color:#cf735c; }
+.astrology-preface blockquote { font:500 clamp(2.6rem,4.5vw,5rem)/.96 "Cormorant Garamond",serif; letter-spacing:-.035em; }
+.astrology-preface div { border-top:1px solid rgba(232,228,220,.4); padding-top:.8rem; font-size:.72rem; }
+.astrology-preface div span { display:block; margin-bottom:.8rem; color:#8f8b85; }
+.astrology-atlas { padding:8rem 3vw 11rem; }
+.astrology-atlas>header { display:grid; grid-template-columns:.6fr 2fr; gap:4vw; }
+.astrology-atlas>header>p { color:#cf735c; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.astrology-atlas>header h2 { font:500 clamp(4.5rem,8vw,9rem)/.8 "Cormorant Garamond",serif; letter-spacing:-.05em; }
+.astrology-atlas>header h2 em { font-weight:400; }
+.astrology-atlas__grid { display:grid; grid-template-columns:repeat(3,1fr); margin-top:7rem; border-top:1px solid rgba(232,228,220,.5); }
+.astrology-atlas__grid article { position:relative; min-height:25rem; padding:2rem; border-right:1px solid rgba(232,228,220,.35); }
+.astrology-atlas__grid article:first-child { border-left:1px solid rgba(232,228,220,.35); }
+.astrology-atlas__grid article>span { font:italic 2rem "Cormorant Garamond",serif; color:#cf735c; }
+.astrology-atlas__grid h3 { margin-top:5rem; font:500 clamp(2.7rem,4vw,4.7rem)/.9 "Cormorant Garamond",serif; }
+.astrology-atlas__grid p { margin-top:1.2rem; color:#a6a19a; font-size:.8rem; line-height:1.7; }
+.astrology-atlas__grid i { position:absolute; bottom:2rem; left:2rem; font:500 .55rem "JetBrains Mono",monospace; font-style:normal; text-transform:uppercase; }
+.astrology-plates { display:grid; grid-template-columns:1.5fr .75fr; grid-template-rows:1fr 1fr; min-height:130vh; background:$paper; color:$ink; }
+.astrology-plate { position:relative; overflow:hidden; border:1px solid $ink; }
+.astrology-plate--wide { grid-row:1/3; }
+.astrology-plate img { width:100%; height:100%; object-fit:cover; filter:grayscale(.75) contrast(1.15); }
+.astrology-plate figcaption { position:absolute; right:1rem; bottom:1rem; left:1rem; display:flex; justify-content:space-between; padding:.7rem; background:rgba($paper,.92); font-size:.66rem; }
+.astrology-plate figcaption span { text-transform:uppercase; }
+.astrology-coda { display:grid; justify-items:center; padding:11rem 2rem; text-align:center; }
+.astrology-coda>p { color:#cf735c; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.astrology-coda h2 { max-width:62rem; margin-top:2rem; font:500 clamp(3.2rem,6vw,7rem)/.92 "Cormorant Garamond",serif; letter-spacing:-.04em; }
+.astrology-coda a { margin-top:3rem; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+
+/* Projects — workshop dossiers */
+.projects-page { background:$paper; color:$ink; }
+.projects-hero { min-height:96svh; display:grid; grid-template-rows:auto 1fr auto; padding:7rem 1rem 1.5rem; }
+.projects-hero__meta { display:flex; justify-content:space-between; border-block:2px solid $ink; padding:.6rem 0; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.projects-hero h1 { position:relative; align-self:center; height:46vw; max-height:39rem; min-height:24rem; letter-spacing:-.055em; text-transform:uppercase; }
+.projects-hero h1 span { position:absolute; display:block; font:900 clamp(7rem,15vw,17rem)/.72 "Barlow Condensed",sans-serif; }
+.projects-hero h1 span:last-child { font-size:clamp(7rem,14vw,16rem); }
+.projects-hero h1 span:first-child { top:0; left:0; }.projects-hero h1 span:last-child { right:0; bottom:0; }
+.projects-hero h1 em { position:absolute; z-index:2; top:42%; left:36%; font:italic 400 clamp(5rem,9vw,10rem)/1 "Cormorant Garamond",serif; text-transform:none; }
+.projects-hero__foot { display:grid; grid-template-columns:1fr auto; align-items:end; gap:4rem; border-top:2px solid $ink; padding-top:1rem; }
+.projects-hero__foot p { max-width:40rem; font:500 1.25rem/1.4 "Cormorant Garamond",serif; }
+.projects-hero__foot a { font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.projects-image-band { display:grid; grid-template-columns:1.2fr .8fr 1fr; min-height:70vh; background:$night; color:$cream; }
+.projects-image-band figure { overflow:hidden; }
+.projects-image-band img { width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(2.5); }
+.projects-image-band>div { align-self:center; padding:4vw; }
+.projects-image-band>div p { font:500 clamp(2.5rem,4.5vw,5rem)/.95 "Cormorant Garamond",serif; }
+.projects-image-band>div span { display:block; margin-top:2rem; color:#9d9890; font-size:.72rem; }
+.projects-method { padding:9rem 3vw; }
+.projects-method>header { display:grid; grid-template-columns:.7fr 2fr; gap:4vw; }
+.projects-method>header p { color:$rust; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.projects-method>header h2 { font:500 clamp(4.5rem,8vw,9rem)/.8 "Cormorant Garamond",serif; letter-spacing:-.05em; }
+.projects-method>header h2 em { font-weight:400; }
+.projects-method>div { display:grid; grid-template-columns:repeat(3,1fr); margin-top:7rem; border-top:1px solid $ink; }
+.projects-method article { min-height:19rem; padding:2rem; border-right:1px solid $ink; }
+.projects-method article:first-child { border-left:1px solid $ink; }
+.projects-method article span { font:500 .57rem "JetBrains Mono",monospace; }
+.projects-method h3 { margin-top:4rem; font:500 clamp(2.7rem,4vw,4.5rem)/.9 "Cormorant Garamond",serif; }
+.projects-method article p { max-width:20rem; margin-top:1rem; font-size:.78rem; line-height:1.6; }
+.projects-dossiers { padding:6rem 1rem 10rem; background:$night; color:$cream; }
+.projects-dossiers :where(h2,h3) { color:$cream!important; }
+.projects-dossiers>header>i { background:$cream; }
+.projects-dossiers>header p { border-color:$cream; }
+.projects-dossiers__list { border-top:1px solid rgba($cream,.5); }
+.project-dossier { position:relative; display:grid; grid-template-columns:4rem 1.2fr 1fr; gap:2rem 4vw; padding:4rem 0; border-bottom:1px solid rgba($cream,.45); text-decoration:none; }
+.project-dossier__number { color:#cf735c; font:italic 2.5rem "Cormorant Garamond",serif; }
+.project-dossier__title p,.project-dossier dt,.project-dossier strong { font:500 .56rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.project-dossier__title p { color:#9d9890; }
+.project-dossier__title h3 { margin-top:1rem; font:500 clamp(3rem,5.5vw,6rem)/.86 "Cormorant Garamond",serif; }
+.project-dossier__summary { color:#aaa49c; font-size:.86rem; line-height:1.7; }
+.project-dossier dl { grid-column:2/-1; display:grid; grid-template-columns:repeat(3,1fr); border:1px solid rgba($cream,.3); }
+.project-dossier dl div { padding:1rem; border-right:1px solid rgba($cream,.3); }
+.project-dossier dl div:last-child { border:0; }
+.project-dossier dt { color:#cf735c; }.project-dossier dd { margin-top:.6rem; color:#aaa49c; font-size:.72rem; }
+.project-dossier strong { position:absolute; right:0; bottom:1rem; }
+.projects-coda { display:grid; justify-items:center; padding:10rem 2rem; text-align:center; }
+.projects-coda>p { color:$rust; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.projects-coda h2 { max-width:66rem; margin-top:2rem; font:500 clamp(3.5rem,6vw,7rem)/.9 "Cormorant Garamond",serif; letter-spacing:-.04em; }
+.projects-coda a { margin-top:3rem; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+
+/* Calendrical Systems — art-directed archive entry */
+body.calendrical-remix { background:$paper; }
+body.calendrical-remix .calendar-page { width:100%; max-width:none; margin:0; padding:0; background:$paper; color:$ink; }
+body.calendrical-remix .calendar-hero { position:relative; max-width:none; min-height:94svh; margin:0; padding:7rem 1rem 2rem; border-bottom:2px solid $ink; }
+body.calendrical-remix .calendar-hero>a,body.calendrical-remix .calendar-hero>p { position:absolute; top:7rem; font:500 .57rem "JetBrains Mono",monospace; letter-spacing:.1em; text-transform:uppercase; }
+body.calendrical-remix .calendar-hero>a { left:1rem; color:$rust; }
+body.calendrical-remix .calendar-hero>p { right:1rem; margin:0; color:#6e6861; }
+body.calendrical-remix .calendar-hero h1 { position:relative; height:55vw; max-height:45rem; min-height:31rem; margin:3rem 0 0; text-transform:uppercase; }
+body.calendrical-remix .calendar-hero h1 span { position:absolute; top:0; left:0; font:900 clamp(7rem,18vw,21rem)/.72 "Barlow Condensed",sans-serif; letter-spacing:-.055em; }
+body.calendrical-remix .calendar-hero h1 em { position:absolute; right:0; bottom:0; font:500 clamp(7rem,16vw,18rem)/.72 "Cormorant Garamond",serif; letter-spacing:-.055em; }
+body.calendrical-remix .calendar-hero .summary { position:absolute; top:auto; right:auto; bottom:2rem; left:1rem; max-width:33rem; margin:0!important; color:#625d57!important; font:500 1.15rem/1.45 "Cormorant Garamond",serif!important; text-transform:none; }
+body.calendrical-remix .calendar-hero .entry-meta { position:absolute; right:1rem; bottom:2rem; display:flex; gap:2rem; margin:0; color:#6e6861; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+body.calendrical-remix .calendar-cover { position:relative; width:calc(100% - 2rem); max-height:none; min-height:90vh; margin:1rem; overflow:hidden; }
+body.calendrical-remix .calendar-cover img { width:100%; height:90vh; object-fit:cover; filter:grayscale(1) contrast(2.7); }
+body.calendrical-remix .calendar-cover figcaption { position:absolute; right:1rem; bottom:1rem; display:flex; gap:3rem; padding:.7rem; background:rgba($paper,.94); font-size:.66rem; }
+body.calendrical-remix .calendar-cover figcaption span { text-transform:uppercase; }
+.calendar-marquee { margin-top:0; border-color:$ink; background:$paper; color:$ink; }
+.calendar-preface { display:grid; grid-template-columns:.6fr 1.5fr 1fr; gap:5vw; padding:10rem 4vw; }
+.calendar-preface>p { color:$rust; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+.calendar-preface blockquote { font:500 clamp(2.7rem,4.5vw,5rem)/.96 "Cormorant Garamond",serif; letter-spacing:-.035em; }
+.calendar-preface figure img { width:100%; aspect-ratio:4/3; object-fit:cover; filter:grayscale(1) contrast(1.25); }
+.calendar-preface figcaption { margin-top:.6rem; font:500 .56rem "JetBrains Mono",monospace; text-transform:uppercase; }
+body.calendrical-remix .entry-body { display:grid; grid-template-columns:14rem minmax(0,48rem); gap:clamp(2rem,8vw,9rem); width:min(100% - 3rem,1180px); margin:0 auto; padding:2rem 0 10rem; border-top:1px solid $ink; }
+body.calendrical-remix .entry-body:not(.has-contents) { max-width:none; margin:0 auto; }
+body.calendrical-remix .entry-body::before { content:"Research notebook · active folio"; padding-top:1rem; color:$rust; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+body.calendrical-remix .entry-body .prose { grid-column:2; font:500 1.35rem/1.65 "Cormorant Garamond",serif; }
+body.calendrical-remix .entry-body .prose h2 { position:relative; margin:7rem 0 2rem; font:500 clamp(3.5rem,6vw,6rem)/.88 "Cormorant Garamond",serif; letter-spacing:-.04em; }
+body.calendrical-remix .entry-body .prose h2 { scroll-margin-top:6rem; }
+body.calendrical-remix .entry-body .prose h2:first-child { margin-top:1rem; }
+body.calendrical-remix .entry-body .prose h2::before { content:"§"; position:absolute; left:-3rem; color:$rust; font-style:italic; }
+.calendar-coda { display:grid; justify-items:center; margin:0 1rem 1rem; padding:8rem 2rem; border:1px solid $ink; text-align:center; }
+.calendar-coda span { font:italic 4rem "Cormorant Garamond",serif; }
+.calendar-coda p { max-width:44rem; font:500 clamp(1.8rem,3vw,3rem)/1.2 "Cormorant Garamond",serif; }
+.calendar-coda a { margin-top:2.5rem; font:500 .57rem "JetBrains Mono",monospace; text-transform:uppercase; }
+
+@media (max-width:800px) {
+  body.editorial-remix .realms-rights-footer>div { width:calc(100% - 2rem); }
+  .fear-hero__meta,.astrology-hero__meta { top:5.5rem; }
+  .fear-hero h1,.astrology-hero h1 { inset:19% 1rem auto; min-height:48vh; }
+  .fear-hero h1 span,.astrology-hero h1 span { font-size:28vw; }
+  .fear-hero h1 em,.astrology-hero h1 em { left:50%; font-size:16vw; }
+  .fear-hero__dek,.astrology-hero>p { left:1rem; bottom:1.2rem; width:72vw; }
+  .fear-hero__enter,.astrology-hero>a { right:1rem; bottom:1.35rem; font-size:.5rem; }
+  .fear-reading { grid-template-columns:1fr; width:calc(100% - 2rem); padding:5rem 0 7rem; }
+  .fear-reading__rail { position:static; min-height:auto; grid-template-columns:auto 1fr 1fr; }
+  .fear-reading__vertical { display:none; }
+  .fear-reading__opening { margin-bottom:7rem; }
+  .fear-interlude { width:calc(100% + 2rem); margin:8rem 0 8rem -1rem; }
+  .fear-verse { padding:2rem 1rem; }
+  .fear-translation { grid-template-columns:1fr; gap:.5rem; }
+  .fear-chapter+.fear-chapter { margin-top:8rem; }
+  .notes-hero,.projects-hero { min-height:82svh; padding:5.5rem .75rem 1rem; }
+  .notes-hero__meta span:nth-child(2),.projects-hero__meta span:nth-child(2) { display:none; }
+  .notes-hero h1,.projects-hero h1 { min-height:19rem; height:55vw; }
+  .notes-hero h1 span,.projects-hero h1 span { font-size:26vw; }
+  .projects-hero h1 span:last-child { font-size:14vw; }
+  .notes-hero h1 em,.projects-hero h1 em { font-size:16vw; }
+  .notes-hero__foot,.projects-hero__foot { grid-template-columns:1fr; gap:1rem; }
+  .notes-manuscript { grid-template-columns:1fr; min-height:auto; }
+  .notes-manuscript figure { height:60vh; }
+  .notes-manuscript>p { padding:5rem 1rem; }
+  .notes-shelves>header h2,.projects-dossiers>header h2 { font-size:24vw; }
+  .notes-shelves>header>i,.projects-dossiers>header>i { height:1rem; }
+  .notes-grid { grid-template-columns:1fr; }
+  .notes-card { min-height:18rem; }
+  .notes-method>div,.projects-method>div { grid-template-columns:1fr; }
+  .notes-method article,.projects-method article { min-height:auto; border-left:1px solid $ink; border-bottom:1px solid $ink; padding:2rem 1rem 3rem; }
+  .notes-method h2,.projects-method h3 { margin-top:2rem; }
+  .astrology-preface,.calendar-preface { grid-template-columns:1fr; padding:6rem 1rem; }
+  .astrology-preface blockquote { margin:2rem 0; }
+  .astrology-atlas { padding:6rem 1rem 8rem; }
+  .astrology-atlas>header,.projects-method>header { grid-template-columns:1fr; }
+  .astrology-atlas>header h2,.projects-method>header h2 { margin-top:2rem; font-size:16vw; }
+  .astrology-atlas__grid { grid-template-columns:1fr; margin-top:4rem; }
+  .astrology-atlas__grid article { min-height:20rem; border-left:1px solid rgba(232,228,220,.35); border-bottom:1px solid rgba(232,228,220,.35); }
+  .astrology-plates { grid-template-columns:1fr; grid-template-rows:70vh 50vh 50vh; min-height:auto; }
+  .astrology-plate--wide { grid-row:auto; }
+  .projects-image-band { grid-template-columns:1fr; }
+  .projects-image-band figure { height:55vh; }
+  .projects-image-band>div { padding:5rem 1rem; }
+  .projects-method { padding:6rem 1rem; }
+  .project-dossier { grid-template-columns:2rem 1fr; gap:2rem 1rem; }
+  .project-dossier__summary,.project-dossier dl { grid-column:2; }
+  .project-dossier dl { grid-template-columns:1fr; }
+  .project-dossier dl div { border-right:0; border-bottom:1px solid rgba($cream,.3); }
+  .project-dossier strong { position:static; grid-column:2; }
+  body.calendrical-remix .calendar-hero { min-height:82svh; padding-top:5.5rem; }
+  body.calendrical-remix .calendar-hero>a,body.calendrical-remix .calendar-hero>p { top:5.5rem; }
+  body.calendrical-remix .calendar-hero h1 { min-height:24rem; height:60vw; margin-top:4rem; }
+  body.calendrical-remix .calendar-hero h1 span { font-size:23vw; }
+  body.calendrical-remix .calendar-hero h1 em { font-size:22vw; }
+  body.calendrical-remix .calendar-hero .summary { bottom:4rem; max-width:80vw; }
+  body.calendrical-remix .calendar-hero .entry-meta { right:auto; bottom:1rem; left:1rem; }
+  body.calendrical-remix .calendar-cover { min-height:70vh; }
+  body.calendrical-remix .calendar-cover img { height:70vh; }
+  body.calendrical-remix .entry-body { grid-template-columns:1fr; width:calc(100% - 2rem); }
+  body.calendrical-remix .entry-body .prose { grid-column:1; }
+  body.calendrical-remix .entry-body .prose h2::before { position:static; margin-right:.6rem; }
+}
+
+@media (max-width:520px) {
+  .fear-hero h1,.astrology-hero h1 { min-height:42vh; }
+  .fear-hero h1 span { font-size:31vw; }
+  .astrology-hero h1 span { font-size:22vw; }
+  .fear-hero__meta span:last-child,.astrology-hero__meta span:last-child { display:none; }
+  .fear-hero__enter,.astrology-hero>a { display:none; }
+  .fear-hero__dek,.astrology-hero>p { width:calc(100% - 2rem); }
+  .fear-reading__opening blockquote { font-size:12vw; }
+  .fear-chapter h2 { font-size:13vw; }
+  .fear-interlude figcaption { grid-template-columns:1fr; gap:.3rem; }
+  .notes-hero h1 span,.projects-hero h1 span { font-size:28vw; }
+  .projects-hero h1 span:last-child { font-size:14vw; }
+  .notes-card>a { padding:1.3rem; }
+  .astrology-coda,.projects-coda { padding:7rem 1rem; }
+  .astrology-coda h2,.projects-coda h2 { font-size:12vw; }
+  .project-dossier__title h3 { font-size:13vw; }
+  body.calendrical-remix .calendar-hero h1 span { font-size:19vw; }
+  body.calendrical-remix .calendar-hero h1 em { font-size:24vw; }
+  .calendar-preface blockquote { font-size:11vw; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .editorial-marquee>div { animation:none; }
+}

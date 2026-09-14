@@ -3,6 +3,7 @@ import { getCollection, render, type CollectionEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
+import "../../styles/editorial-remix.scss";
 
 export async function getStaticPaths() {
   const entries = await getCollection("realms", ({ data }) => data.status !== "archived" && (!import.meta.env.PROD || data.status !== "draft"));
@@ -25,23 +26,29 @@ const sectionLinks = {
   essay: `${base}blog/essays/`,
 };
 const date = entry.data.date.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
+const isCalendrical = entry.slug === "calendrical-systems";
+const cover = isCalendrical ? `${base}essays/a-measure-of-days/projected-calendar.jpeg` : entry.data.cover;
+const bodyClass = `archive-entry-page${isCalendrical ? " editorial-remix calendrical-remix" : ""}`;
 ---
 
-<BaseLayout title={`${entry.data.title} | Kosh`} description={entry.data.summary} image={entry.data.cover ?? "/ananta-nihara-hero.png"} type="article" publishedDate={entry.data.date.toISOString()} bodyClass="archive-entry-page">
+<BaseLayout title={`${entry.data.title} | Kosh`} description={entry.data.summary} image={cover ?? "/ananta-nihara-hero.png"} type="article" publishedDate={entry.data.date.toISOString()} bodyClass={bodyClass}>
   <Nav />
-  <main class="entry-page">
-    <header class="entry-header">
+  <main class:list={["entry-page", isCalendrical && "calendar-page"]}>
+    <header class:list={["entry-header", isCalendrical && "calendar-hero"]}>
       <a href={sectionLinks[entry.data.category]}>{sectionNames[entry.data.category]}</a>
       <p>{entry.data.kind.replace("-", " ")} · {entry.data.status}</p>
-      <h1>{entry.data.title}</h1>
+      {isCalendrical ? <h1><span>Calendrical</span><em>Systems</em></h1> : <h1>{entry.data.title}</h1>}
       <p class="summary">{entry.data.summary}</p>
       <div class="entry-meta"><time datetime={entry.data.date.toISOString()}>{date}</time><span>Pranjal Prakash Pandey</span></div>
     </header>
-    {entry.data.cover && <img class="entry-cover editorial-curtain" src={entry.data.cover} alt="" />}
-    <div class:list={["entry-body", { "has-contents": headings.length > 2 }]}>
+    {cover && <figure class:list={["entry-cover", "editorial-curtain", isCalendrical && "calendar-cover"]}><img src={cover} alt={isCalendrical ? "A hand touching the center of a projected circular calendrical diagram" : ""} />{isCalendrical && <figcaption><span>Plate 01</span>The circle is useful only when its assumptions remain visible.</figcaption>}</figure>}
+    {isCalendrical && <div class="editorial-marquee calendar-marquee" aria-hidden="true"><div><span>Cycle · observation · correspondence</span><i>§</i><span>Source before synthesis</span><i>§</i><span>Cycle · observation · correspondence</span><i>§</i><span>Source before synthesis</span><i>§</i></div></div>}
+    {isCalendrical && <section class="calendar-preface"><p>Research premise · 00</p><blockquote>A calendar is never only a count of days. It is an agreement between observation, social life, ritual, memory, and the instruments available to a culture.</blockquote><figure><img src={base + "essays/a-measure-of-days/manuscript.jpeg"} alt="An open manuscript bearing handwritten records" loading="lazy" /><figcaption>Record before equivalence.</figcaption></figure></section>}
+    <div class:list={["entry-body", { "has-contents": headings.length > 2 }]}> 
       {headings.length > 2 && <aside><p>Contents</p>{headings.filter((heading) => heading.depth === 2).map((heading) => <a href={`#${heading.slug}`}>{heading.text}</a>)}</aside>}
       <article class="prose"><Content /></article>
     </div>
+    {isCalendrical && <footer class="calendar-coda"><span>§</span><p>This notebook remains open. Definitions, diagrams, sources, and computational sketches will be added without collapsing distinct traditions into one system.</p><a href={base + "experiments/a-measure-of-days/"}>Read A Measure of Days →</a></footer>}
   </main>
   <Footer />
 </BaseLayout>

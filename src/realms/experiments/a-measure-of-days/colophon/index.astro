@@ -1,0 +1,11 @@
+---
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+
+const document = await readFile(
+  resolve(process.cwd(), 'public/experiments/a-measure-of-days/colophon/index.html'),
+  'utf8',
+);
+---
+
+<Fragment set:html={document} />

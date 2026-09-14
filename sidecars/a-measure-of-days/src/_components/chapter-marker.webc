@@ -1,0 +1,7 @@
+<template webc:type="11ty" webc:is="chapter-marker">
+  <div class="chapter-marker" webc:root="override">
+    <span @text="number"></span>
+    <i aria-hidden="true"></i>
+    <em @text="label"></em>
+  </div>
+</template>

@@ -1,0 +1,277 @@
+---
+import "../../../styles/kosh-garden.scss";
+
+const base = import.meta.env.BASE_URL;
+const url = (path: string) => `${base}${path.replace(/^\//, "")}`;
+
+const garden = [
+  { index: "01", title: "Texts & Systems", note: "Research notes, symbolic systems, computation", href: url("technical-work/") },
+  { index: "02", title: "Kosh · कोश", note: "Essays, fragments, references, field notes", href: url("blog/") },
+  { index: "03", title: "Ananta N", note: "Perception, mythic language, inner experience", href: url("blog/ananta-nihara/") },
+  { index: "04", title: "Origins & Implementations", note: "Functional builds and empirical tools", href: url("projects/") },
+];
+
+const works = [
+  {
+    index: "01",
+    title: "A Measure of Days",
+    kind: "Immersive essay · Eleventy edition",
+    year: "2026",
+    href: url("experiments/a-measure-of-days/"),
+    image: url("essays/a-measure-of-days/hero-garden.jpeg"),
+  },
+  {
+    index: "02",
+    title: "Calendrical Systems",
+    kind: "Comparative research notebook",
+    year: "2026",
+    href: url("archive/calendrical-systems/"),
+    image: url("images/atmosphere/cosmic-horizon.webp"),
+  },
+  {
+    index: "03",
+    title: "Calendrical Mapper",
+    kind: "Visual instrument · ongoing",
+    year: "2026",
+    href: url("archive/calendrical-mapper/"),
+    image: url("essays/a-measure-of-days/projected-calendar.jpeg"),
+  },
+  {
+    index: "04",
+    title: "Ananta N",
+    kind: "Inner-world archive",
+    year: "2026",
+    href: url("blog/ananta-nihara/"),
+    image: url("ananta-nihara-hero.png"),
+  },
+  {
+    index: "05",
+    title: "Palate",
+    kind: "Food, process, memory",
+    year: "2026",
+    href: url("blog/cooking/"),
+    image: url("images/atmosphere/food-cover.webp"),
+  },
+];
+
+const notes = [
+  { type: "essay", tags: "calendrics · time", title: "A Measure of Days", date: "14.09.26", href: url("essays/a-measure-of-days/") },
+  { type: "research", tags: "observation · symbolic systems", title: "Calendrical Systems", date: "14.09.26", href: url("archive/calendrical-systems/") },
+  { type: "implementation", tags: "tool · visualization", title: "Calendrical Mapper", date: "14.09.26", href: url("archive/calendrical-mapper/") },
+  { type: "reading note", tags: "fear · cinema · attention", title: "On living without fear", date: "2026", href: url("blog/reading-notes/fear/") },
+  { type: "field note", tags: "food · memory · process", title: "Pizza, recorded as practice", date: "2026", href: url("blog/cooking/pizza/") },
+];
+---
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Kosh Garden: an experimental portfolio and living archive by Pranjal Prakash Pandey." />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#101310" />
+    <link rel="icon" type="image/png" href={url("favicon-realms.png")} />
+    <script is:inline>document.documentElement.classList.replace("no-js", "js");</script>
+    <title>Kosh Garden · Pranjal Prakash Pandey</title>
+  </head>
+  <body class="garden-body">
+    <a class="garden-skip" href="#garden-main">Skip to the garden</a>
+    <div class="garden-progress" aria-hidden="true"><span></span></div>
+    <div class="garden-cursor" aria-hidden="true"><span>Open</span></div>
+
+    <header class="garden-head">
+      <a class="garden-wordmark" href={base} aria-label="Return to Kosh home">✷ <span>ver. monsoon 26</span></a>
+      <p>Kosh from Bengaluru</p>
+      <button class="garden-index-toggle" type="button" aria-expanded="false" aria-controls="garden-index">Index <i>+</i></button>
+    </header>
+
+    <nav class="garden-index" id="garden-index" aria-label="Page index" aria-hidden="true">
+      <div class="garden-index__top"><p>The garden is always unfinished.</p><span>12°58′N · 77°35′E</span></div>
+      <ol>
+        <li><a href="#garden"><span>01</span>The garden</a></li>
+        <li><a href="#letter"><span>02</span>Letter from the editor</a></li>
+        <li><a href="#about"><span>03</span>About the author</a></li>
+        <li><a href="#works"><span>04</span>Selected works</a></li>
+        <li><a href="#notes"><span>05</span>Field notes</a></li>
+      </ol>
+      <div class="garden-index__foot"><a href="mailto:prakashpranjal001@gmail.com">Correspondence ↗</a><a href={url("rights/")}>Usage &amp; rights ↗</a></div>
+    </nav>
+
+    <main id="garden-main">
+      <section class="garden-hero" id="top">
+        <figure class="garden-hero__visual" aria-hidden="true">
+          <img src={url("images/atmosphere/storm-light.webp")} alt="" fetchpriority="high" />
+          <div class="garden-hero__veil"></div>
+        </figure>
+        <p class="garden-hero__kicker">The personal archive &amp; working garden of Pranjal Prakash Pandey</p>
+        <h1 class="garden-hero__title" aria-label="Kosh from Bengaluru"><span>Kosh</span><span>from</span><span>Bengaluru</span></h1>
+        <p class="garden-hero__caution">Scroll with patience<br />and with care.</p>
+        <div class="garden-hero__weather"><span>Monsoon edition</span><i></i><time data-garden-clock>00:00:00 IST</time></div>
+        <a class="garden-hero__enter" href="#garden"><span>Enter the garden</span><i>↓</i></a>
+      </section>
+
+      <div class="garden-mantra" aria-hidden="true"><div><span>observe carefully</span><b>✦</b><span>preserve context</span><b>✦</b><span>revise openly</span><b>✦</b><span>observe carefully</span><b>✦</b><span>preserve context</span><b>✦</b><span>revise openly</span></div></div>
+
+      <section class="garden-directory paper" id="garden">
+        <div class="garden-folio"><span>01</span><i></i><em>Garden</em></div>
+        <div class="garden-directory__intro garden-reveal">
+          <p>A living treasury</p>
+          <h2>Four paths into<br />the same garden.</h2>
+          <span>Enter through any field. Each is a different way of observing, preserving, and making sense of the world.</span>
+        </div>
+        <div class="garden-directory__list">
+          {garden.map((item) => (
+            <a class="garden-realm garden-reveal" href={item.href} data-cursor-label="Enter">
+              <span>{item.index}</span><h3>{item.title}</h3><p>{item.note}</p><i>↗</i>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="garden-letter" id="letter">
+        <figure class="garden-letter__image garden-parallax"><img src={url("ananta-nihara-hero.png")} alt="A pink lotus bud, held just before opening" loading="lazy" /></figure>
+        <div class="garden-letter__copy garden-reveal">
+          <p class="garden-label">02 · A brief letter from the editor</p>
+          <h2>Dear reader<br /><em>(and, in fact, dear friend),</em></h2>
+          <div class="garden-letter__body">
+            <p>Kosh began as a need for somewhere that different kinds of attention could remain beside one another: machine learning and inherited knowledge, visual experiments and private questions, finished studies and notes still finding their form.</p>
+            <p>This is a garden rather than a library because nothing here is fixed. Pages are revised. Paths cross. A tool may grow out of a text; a meal may become a record of method; an old system may ask a new computational question.</p>
+            <p>Tread carefully—the ground may have shifted.</p>
+          </div>
+          <p class="garden-letter__sign">With warmth,<br /><strong>Pranjal</strong><br /><span>(from Bengaluru)</span></p>
+        </div>
+      </section>
+
+      <section class="garden-about paper" id="about">
+        <div class="garden-folio"><span>03</span><i></i><em>About the author</em></div>
+        <blockquote class="garden-about__quote garden-split">Study inherited systems without flattening their context. Build new tools without pretending the model is the world.</blockquote>
+        <div class="garden-about__grid garden-reveal">
+          <div><p class="garden-label">At present</p><h2>Pranjal Prakash Pandey</h2></div>
+          <div class="garden-about__copy">
+            <p>I work across machine-learning systems, computer vision, spatial research, and an expanding study of calendrical and symbolic systems. Kosh is the public notebook where those worlds can remain adjacent without being collapsed into one another.</p>
+            <p>The recurring interests are observation, traceability, human interpretation, and the kinds of knowledge that lose something when they are made too neat.</p>
+          </div>
+          <dl>
+            <div><dt>Based</dt><dd>Bengaluru, India</dd></div>
+            <div><dt>Working in</dt><dd>ML · research · interactive systems</dd></div>
+            <div><dt>Correspondence</dt><dd><a href="mailto:prakashpranjal001@gmail.com">Send a letter ↗</a></dd></div>
+            <div><dt>Curriculum vitae</dt><dd><a href={url("pranjal-cv.pdf")}>Read the résumé ↗</a></dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="garden-works" id="works">
+        <header><p class="garden-label">04 · Selected works</p><p>Experiments, studies, and rooms in the archive.</p></header>
+        <div class="garden-works__preview" aria-hidden="true">
+          {works.map((work, index) => <img class:list={[index === 0 && "is-active"]} src={work.image} alt="" loading="lazy" data-work-image={index} />)}
+        </div>
+        <ol>
+          {works.map((work, index) => (
+            <li>
+              <a href={work.href} data-work={index} data-cursor-label="View">
+                <span>{work.index}</span><h2>{work.title}</h2><p>{work.kind}</p><em>{work.year}</em>
+                <div class="garden-work__marquee" aria-hidden="true"><i>{work.title} · {work.title} · {work.title} ·</i></div>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="garden-notes paper" id="notes">
+        <div class="garden-folio"><span>05</span><i></i><em>Field notes</em></div>
+        <header class="garden-notes__head garden-reveal"><h2>Recent additions<br />to the Kosh.</h2><p>Polished essays, working research, small records, and things worth preserving.</p></header>
+        <div class="garden-notes__list">
+          {notes.map((note) => (
+            <article class="garden-note garden-reveal">
+              <a href={note.href} data-cursor-label="Read">
+                <p><span>{note.type}</span><em>{note.tags}</em></p>
+                <h3>{note.title}</h3>
+                <time>{note.date}</time><i>↗</i>
+              </a>
+            </article>
+          ))}
+        </div>
+        <a class="garden-notes__all" href={url("blog/")}>Enter the complete archive <span>↗</span></a>
+      </section>
+
+      <footer class="garden-footer">
+        <p class="garden-footer__star">✷</p>
+        <p class="garden-footer__wish garden-split">Return often.<br />The garden changes.</p>
+        <div class="garden-footer__meta"><span>© 2026 Himavat · Pranjal Prakash Pandey</span><span>Kosh · Bengaluru · India</span></div>
+        <div class="garden-footer__links"><a href="#top">Back to the beginning ↑</a><a href={base}>Original Kosh home ↗</a><a href={url("rights/")}>Usage &amp; rights ↗</a></div>
+      </footer>
+    </main>
+
+    <script>
+      import gsap from "gsap";
+      import ScrollTrigger from "gsap/ScrollTrigger";
+      import SplitText from "gsap/SplitText";
+      import CustomEase from "gsap/CustomEase";
+
+      gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase);
+      CustomEase.create("gardenEase", "M0,0 C0.16,1 0.3,1 1,1");
+
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const toggle = document.querySelector<HTMLButtonElement>(".garden-index-toggle");
+      const index = document.querySelector<HTMLElement>(".garden-index");
+      let lastFocus: HTMLElement | null = null;
+
+      const setIndex = (open: boolean) => {
+        document.body.classList.toggle("garden-index-open", open);
+        toggle?.setAttribute("aria-expanded", String(open));
+        index?.setAttribute("aria-hidden", String(!open));
+        if (open) {
+          lastFocus = document.activeElement as HTMLElement;
+          index?.querySelector<HTMLAnchorElement>("a")?.focus();
+        } else {
+          lastFocus?.focus();
+        }
+      };
+      toggle?.addEventListener("click", () => setIndex(!document.body.classList.contains("garden-index-open")));
+      index?.addEventListener("click", (event) => { if ((event.target as Element).closest("a")) setIndex(false); });
+      addEventListener("keydown", (event) => { if (event.key === "Escape") setIndex(false); });
+
+      const clock = document.querySelector<HTMLElement>("[data-garden-clock]");
+      const updateClock = () => {
+        if (!clock) return;
+        const value = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }).format(new Date());
+        clock.textContent = `${value} IST`;
+      };
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      const workLinks = document.querySelectorAll<HTMLElement>("[data-work]");
+      const workImages = document.querySelectorAll<HTMLElement>("[data-work-image]");
+      workLinks.forEach((link) => link.addEventListener("mouseenter", () => {
+        workImages.forEach((image) => image.classList.toggle("is-active", image.dataset.workImage === link.dataset.work));
+      }));
+
+      const cursor = document.querySelector<HTMLElement>(".garden-cursor");
+      if (cursor && matchMedia("(pointer: fine)").matches && !reduced) {
+        const xTo = gsap.quickTo(cursor, "x", { duration: .35, ease: "power3" });
+        const yTo = gsap.quickTo(cursor, "y", { duration: .35, ease: "power3" });
+        addEventListener("pointermove", (event) => { xTo(event.clientX); yTo(event.clientY); });
+        document.querySelectorAll<HTMLElement>("[data-cursor-label]").forEach((element) => {
+          element.addEventListener("mouseenter", () => { cursor.classList.add("is-active"); const label = cursor.querySelector("span"); if (label) label.textContent = element.dataset.cursorLabel || "Open"; });
+          element.addEventListener("mouseleave", () => cursor.classList.remove("is-active"));
+        });
+      }
+
+      document.fonts.ready.then(() => {
+        gsap.to(".garden-progress span", { scaleX: 1, ease: "none", scrollTrigger: { trigger: "main", start: "top top", end: "bottom bottom", scrub: .1 } });
+        if (reduced) { gsap.set(".garden-reveal", { opacity: 1, y: 0 }); return; }
+
+        gsap.from(".garden-hero__title span", { yPercent: 112, rotate: 1.5, duration: 1.35, stagger: .11, ease: "gardenEase" });
+        gsap.from([".garden-hero__kicker", ".garden-hero__caution", ".garden-hero__weather", ".garden-hero__enter"], { opacity: 0, y: 18, duration: .85, stagger: .08, delay: .55, ease: "power3.out" });
+        gsap.to(".garden-hero__visual img", { yPercent: 10, scale: 1.08, ease: "none", scrollTrigger: { trigger: ".garden-hero", start: "top top", end: "bottom top", scrub: true } });
+        ScrollTrigger.batch(".garden-reveal", { start: "top 88%", once: true, onEnter: (elements) => gsap.fromTo(elements, { opacity: 0, y: 42 }, { opacity: 1, y: 0, duration: 1, stagger: .08, ease: "gardenEase" }) });
+        document.querySelectorAll(".garden-parallax img").forEach((image) => gsap.fromTo(image, { yPercent: -6 }, { yPercent: 7, ease: "none", scrollTrigger: { trigger: image.parentElement, start: "top bottom", end: "bottom top", scrub: true } }));
+        document.querySelectorAll<HTMLElement>(".garden-split").forEach((element) => {
+          const split = new SplitText(element, { type: "lines", linesClass: "garden-split-line", aria: "none" });
+          gsap.from(split.lines, { yPercent: 105, opacity: 0, duration: 1, stagger: .08, ease: "gardenEase", scrollTrigger: { trigger: element, start: "top 82%", once: true } });
+        });
+      });
+    </script>
+  </body>
+</html>

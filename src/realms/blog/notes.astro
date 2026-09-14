@@ -2,41 +2,71 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
+import "../../styles/editorial-remix.scss";
 
 const base = import.meta.env.BASE_URL;
-
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
 if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
+
+const shelves = [
+  { number: "01", kind: "Reading note", tags: "fear · cinema · attention", title: "On living without fear", summary: "Two textual passages on duality, self-restraint, and the conditions of fearlessness.", href: base + "blog/reading-notes/fear/" },
+  { number: "02", kind: "Research notebook", tags: "calendrics · observation", title: "Calendrical Systems", summary: "A comparative vocabulary for cycles, observation, and symbolic time.", href: base + "archive/calendrical-systems/" },
+  { number: "03", kind: "Instrument", tags: "mapping · traceability", title: "Calendrical Mapper", summary: "An interface for comparing cycles without presenting distinct traditions as equivalent.", href: base + "archive/calendrical-mapper/" },
+  { number: "04", kind: "Inner-world archive", tags: "myth · perception", title: "Ananta N", summary: "Fragments concerning perception, mythic language, and private cosmology.", href: base + "blog/ananta-nihara/" },
+  { number: "05", kind: "Process note", tags: "food · method · memory", title: "Pizza, recorded as practice", summary: "A recipe read as repetition, material knowledge, and remembered gesture.", href: base + "blog/cooking/pizza/" },
+  { number: "06", kind: "Celestial index", tags: "symbol · sky · time", title: "Calendrics & Celestial Symbolism", summary: "A nocturnal room for charts, transits, and disciplined symbolic observation.", href: base + "blog/astrology/" },
+];
 ---
 
-<BaseLayout title="Index | Clawd ML Portfolio">
+<BaseLayout title="Field Notes & Index | Kosh" description="Short notes, references, links, and reusable knowledge blocks from the Kosh archive." bodyClass="editorial-remix notes-remix">
   <Nav />
-  <main class="section-shell">
-    <section class="library-hero">
-      <p class="text-xs uppercase tracking-[0.35em] text-mist">Reference</p>
-      <h1 class="mt-5 max-w-4xl text-5xl md:text-7xl">Index</h1>
-      <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">
-        A place for short notes, glossary entries, useful links, and reusable knowledge blocks. This can become the
-        connective tissue between technical, spiritual, astrological, and cooking posts.
-      </p>
+  <main class="notes-page">
+    <header class="notes-hero">
+      <div class="notes-hero__meta"><span>Kosh · field index</span><span>Six active shelves</span><span>Bengaluru · 2026</span></div>
+      <h1><span>Field</span><em>&amp;</em><span>Notes</span></h1>
+      <div class="notes-hero__foot">
+        <p>A changing index of short studies, marginalia, visual references, and reusable fragments. Entries may be revised as their sources and questions become clearer.</p>
+        <a href="#shelves">Browse the shelves ↓</a>
+      </div>
+    </header>
+
+    <div class="notes-manuscript">
+      <figure><img src={base + "essays/a-measure-of-days/manuscript.jpeg"} alt="An open historical manuscript bearing handwritten notes and marks" loading="eager" /></figure>
+      <p><span>Working principle</span>Preserve the source. Separate observation from interpretation. Leave the revision visible.</p>
+    </div>
+
+    <section class="notes-shelves" id="shelves">
+      <header>
+        <i></i>
+        <h2>Index</h2>
+        <p>Garden · active notes</p>
+      </header>
+      <div class="notes-grid">
+        {shelves.map((item) => (
+          <article class="notes-card">
+            <a href={item.href}>
+              <div class="notes-card__meta"><span>{item.number}</span><p>{item.kind}<small>{item.tags}</small></p></div>
+              <h3>{item.title}</h3>
+              <p class="notes-card__summary">{item.summary}</p>
+              <strong>Open note →</strong>
+            </a>
+          </article>
+        ))}
+      </div>
     </section>
-    <section class="mt-12 grid gap-6 md:grid-cols-3">
-      <article class="glass-panel p-6">
-        <p class="text-xs uppercase tracking-[0.24em] text-mist">Index</p>
-        <h2 class="mt-4 text-2xl text-glass">Glossary</h2>
-        <p class="mt-3 text-sm leading-6 text-mist">Definitions that can be linked from future essays.</p>
-      </article>
-      <article class="glass-panel p-6">
-        <p class="text-xs uppercase tracking-[0.24em] text-mist">Index</p>
-        <h2 class="mt-4 text-2xl text-glass">Links</h2>
-        <p class="mt-3 text-sm leading-6 text-mist">Tools, papers, recipes, ephemeris resources, and readings.</p>
-      </article>
-      <article class="glass-panel p-6">
-        <p class="text-xs uppercase tracking-[0.24em] text-mist">Index</p>
-        <h2 class="mt-4 text-2xl text-glass">Patterns</h2>
-        <p class="mt-3 text-sm leading-6 text-mist">Cross-domain motifs that show up repeatedly in your writing.</p>
-      </article>
+
+    <section class="notes-method">
+      <p>Three ways through the archive</p>
+      <div>
+        <article><span>01</span><h2>Glossary</h2><p>Definitions that can be cited, questioned, and linked from future essays.</p></article>
+        <article><span>02</span><h2>References</h2><p>Books, papers, tools, ephemerides, images, and primary-source trails.</p></article>
+        <article><span>03</span><h2>Patterns</h2><p>Motifs recurring across technical, spiritual, celestial, and material work.</p></article>
+      </div>
     </section>
+
+    <div class="editorial-marquee editorial-marquee--light" aria-hidden="true">
+      <div><span>Nothing here is final</span><i>✦</i><span>Everything here is traceable</span><i>✦</i><span>Nothing here is final</span><i>✦</i><span>Everything here is traceable</span><i>✦</i></div>
+    </div>
   </main>
   <Footer />
 </BaseLayout>

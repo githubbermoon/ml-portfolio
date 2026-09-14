@@ -2,145 +2,80 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
+import "../../styles/editorial-remix.scss";
 
 const base = import.meta.env.BASE_URL;
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
 if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
+
+const atlas = [
+  { number: "I", title: "Transits journal", note: "Dated observations and recurring symbols, recorded before interpretation hardens around them." },
+  { number: "II", title: "Chart studies", note: "Structured readings that preserve sources, uncertainty, and a repeatable method." },
+  { number: "III", title: "Celestial glossary", note: "Working definitions for signs, houses, aspects, yogas, cycles, and points of disagreement." },
+];
 ---
 
-<BaseLayout title="Calendrics & Celestial Symbolism | Kosh">
+<BaseLayout
+  title="Calendrics & Celestial Symbolism | Kosh"
+  description="A nocturnal atlas of calendrical observation, charts, transits, and celestial symbolism."
+  image="/images/atmosphere/cosmic-horizon.webp"
+  bodyClass="editorial-remix astrology-remix"
+>
   <Nav />
   <main class="astrology-page">
-    <section class="astrology-hero" aria-labelledby="astrology-title">
-      <img
-        src={base + "images/atmosphere/cosmic-horizon.webp"}
-        alt="A celestial horizon for the Calendrics and Celestial Symbolism archive"
-        loading="eager"
-        decoding="async"
-      />
-      <div class="astrology-title-wrap">
-        <p>Astrology · Kosh</p>
-        <h1 id="astrology-title" style="view-transition-name: astrology-title">Calendrics &amp; Celestial Symbolism</h1>
+    <header class="astrology-hero">
+      <figure><img src={base + "images/atmosphere/cosmic-horizon.webp"} alt="A vast cloud formation suspended within a field of stars" loading="eager" decoding="async" /></figure>
+      <div class="astrology-hero__meta"><span>Celestial folio · Kosh</span><span>Observation before interpretation</span></div>
+      <h1 aria-label="Calendrics and celestial symbolism"><span>Celestial</span><em>&amp;</em><span>Symbolism</span></h1>
+      <p>Calendrics, chart studies, transits, and the disciplined reading of symbolic skies.</p>
+      <a href="#atlas">Enter the atlas ↓</a>
+    </header>
+
+    <div class="editorial-marquee editorial-marquee--night" aria-hidden="true">
+      <div><span>As above, observed below</span><i>☉</i><span>Cycles are not repetitions</span><i>☾</i><span>As above, observed below</span><i>☉</i><span>Cycles are not repetitions</span><i>☾</i></div>
+    </div>
+
+    <section class="astrology-preface">
+      <p>Preface · 00</p>
+      <blockquote>The sky does not arrive already interpreted. First there is position, movement, interval, recurrence. Symbol begins only after observation—and should never erase it.</blockquote>
+      <div><span>Location</span>Bengaluru, India</div>
+      <div><span>Method</span>Record · compare · annotate</div>
+    </section>
+
+    <section class="astrology-atlas" id="atlas">
+      <header><p>01 · Working atlas</p><h2>Three rooms<br /><em>under one sky.</em></h2></header>
+      <div class="astrology-atlas__grid">
+        {atlas.map((item) => (
+          <article>
+            <span>{item.number}</span>
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+            <i>Open soon ↗</i>
+          </article>
+        ))}
       </div>
     </section>
 
-    <section class="astrology-notes" aria-label="Astrology archive sections">
-      <article class="editorial-reveal">
-        <p>Seed</p>
-        <h2>Transits journal</h2>
-        <span>Short notes tied to dates, observations, and recurring symbols.</span>
-      </article>
-      <article class="editorial-reveal">
-        <p>Seed</p>
-        <h2>Chart studies</h2>
-        <span>Structured readings with sources, caveats, and repeatable method.</span>
-      </article>
-      <article class="editorial-reveal">
-        <p>Seed</p>
-        <h2>Glossary</h2>
-        <span>Reusable definitions for signs, houses, aspects, and yogas.</span>
-      </article>
+    <section class="astrology-plates" aria-label="Celestial image plates">
+      <figure class="astrology-plate astrology-plate--wide">
+        <img src={base + "essays/a-measure-of-days/nebula.jpeg"} alt="A red nebula rising through a field of stars" loading="lazy" />
+        <figcaption><span>Plate I</span>Cloud, distance, and apparent form</figcaption>
+      </figure>
+      <figure class="astrology-plate">
+        <img src={base + "essays/a-measure-of-days/projected-calendar.jpeg"} alt="A hand touching the center of a projected circular diagram" loading="lazy" />
+        <figcaption><span>Plate II</span>The circle as instrument</figcaption>
+      </figure>
+      <figure class="astrology-plate">
+        <img src={base + "essays/a-measure-of-days/material-spiritual.jpeg"} alt="A diagram labeled Material world, spiritual world" loading="lazy" />
+        <figcaption><span>Plate III</span>Worlds drawn into relation</figcaption>
+      </figure>
+    </section>
+
+    <section class="astrology-coda">
+      <p>02 · A note on certainty</p>
+      <h2>A symbolic system becomes more useful—not less—when the limits of its claims remain visible.</h2>
+      <a href={base + "archive/calendrical-systems/"}>Continue to Calendrical Systems →</a>
     </section>
   </main>
   <Footer />
 </BaseLayout>
-
-<style>
-  .astrology-page {
-    color: var(--inner-ink, #f1e2c9);
-    background: var(--inner-paper, #17120e);
-  }
-
-  .astrology-hero {
-    position: relative;
-    width: 100%;
-    height: 100svh;
-    background: #080706;
-  }
-
-  .astrology-title-wrap {
-    position: absolute;
-    right: max(1.5rem, calc((100vw - 1240px) / 2));
-    bottom: clamp(2rem, 7vw, 5rem);
-    left: max(1.5rem, calc((100vw - 1240px) / 2));
-    z-index: 1;
-  }
-
-  .astrology-title-wrap p {
-    color: #f3d1a2;
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    text-shadow: 0 2px 18px rgb(0 0 0 / 0.85);
-  }
-
-  .astrology-title-wrap h1 {
-    max-width: 14ch;
-    margin-top: 0.9rem;
-    color: #fff1da !important;
-    font-family: var(--font-display);
-    font-size: clamp(2.8rem, 6.8vw, 6.6rem);
-    font-weight: 400;
-    line-height: 0.92;
-    letter-spacing: -0.05em;
-    text-wrap: balance;
-    text-shadow: 0 3px 32px rgb(0 0 0 / 0.88);
-  }
-
-  .astrology-hero img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .astrology-notes {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: min(100% - 3rem, 1240px);
-    margin-inline: auto;
-    padding-block: clamp(4rem, 8vw, 7rem);
-  }
-
-  .astrology-notes article {
-    border-top: 1px solid var(--inner-rule, rgb(217 187 145 / 0.24));
-    padding: 1.5rem clamp(1rem, 3vw, 2rem) 0 0;
-  }
-
-  .astrology-notes article + article {
-    border-left: 1px solid var(--inner-rule, rgb(217 187 145 / 0.24));
-    padding-left: clamp(1rem, 3vw, 2rem);
-  }
-
-  .astrology-notes p {
-    color: var(--inner-accent, #c55b3f);
-    font-family: var(--font-mono);
-    font-size: 0.56rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
-
-  .astrology-notes h2 {
-    margin-top: 0.9rem;
-    color: inherit;
-    font-family: var(--font-display);
-    font-size: clamp(1.4rem, 2.4vw, 2rem);
-    font-weight: 400;
-  }
-
-  .astrology-notes span {
-    display: block;
-    margin-top: 0.75rem;
-    color: var(--inner-muted, #bca98d);
-    font-size: 0.9rem;
-    line-height: 1.7;
-  }
-
-  @media (max-width: 720px) {
-    .astrology-hero { height: 78svh; }
-    .astrology-notes { grid-template-columns: 1fr; }
-    .astrology-notes article + article { margin-top: 2.5rem; border-left: 0; padding-left: 0; }
-    .astrology-title-wrap h1 { font-size: clamp(2.45rem, 12vw, 4rem); }
-  }
-</style>

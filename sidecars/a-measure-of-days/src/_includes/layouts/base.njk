@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#111310" />
+    <meta name="description" content="{{ description or site.description }}" />
+    <meta name="generator" content="Eleventy" />
+    <title>{{ title }} · Kosh</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Italiana&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ site.pathPrefix }}/css/index.css" />
+    <script>document.documentElement.classList.replace('no-js','js')</script>
+    <script type="module" src="{{ site.pathPrefix }}/js/index.js"></script>
+  </head>
+  <body data-route="{{ route | default('measure-of-days') }}">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="page-progress" aria-hidden="true"><span></span></div>
+    <header class="site-head">
+      <a class="wordmark" href="{{ site.pathPrefix }}/" data-taxi-link>KOSH <span>कोश</span></a>
+      <p>{{ site.edition }}</p>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="folio-index">Index <span>+</span></button>
+    </header>
+    <nav class="folio-index" id="folio-index" aria-label="Essay index">
+      <p>A measure of days</p>
+      <ol>
+        <li><a href="{{ site.pathPrefix }}/#before"><span>00</span>Before the number</a></li>
+        <li><a href="{{ site.pathPrefix }}/#sky"><span>01</span>The sky as instrument</a></li>
+        <li><a href="{{ site.pathPrefix }}/#agreement"><span>02</span>An agreement with return</a></li>
+        <li><a href="{{ site.pathPrefix }}/#ritual"><span>03</span>Time made inhabitable</a></li>
+        <li><a href="{{ site.pathPrefix }}/#ledger"><span>04</span>The disciplined hour</a></li>
+        <li><a href="{{ site.pathPrefix }}/#rings"><span>05</span>What grows beside us</a></li>
+      </ol>
+      <a class="index-colophon" href="{{ site.pathPrefix }}/colophon/" data-taxi-link>Colophon &amp; architecture ↗</a>
+    </nav>
+    <div data-taxi>
+      <div data-taxi-view="{{ route | default('measure-of-days') }}">
+        {{ content | safe }}
+      </div>
+    </div>
+  </body>
+</html>

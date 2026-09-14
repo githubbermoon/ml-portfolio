@@ -1,0 +1,327 @@
+$ink: #1b1d19;
+$paper: #e8e4d8;
+$paper-deep: #d8d3c5;
+$red: #8c3126;
+$night: #0d1112;
+$display: "Italiana", "Times New Roman", serif;
+$serif: "Source Serif 4", Georgia, serif;
+$mono: "DM Mono", monospace;
+
+body.measure-of-days-page {
+  margin: 0;
+  overflow-x: hidden;
+  background: $night;
+  color: $ink;
+  font-family: $serif;
+  font-size: 18px;
+  line-height: 1.65;
+
+  &.days-index-open { overflow: hidden; }
+  .realms-back-link { display: none; }
+}
+
+.days-page {
+  background: $paper;
+  color: $ink;
+  font-family: $serif;
+
+  *, *::before, *::after { box-sizing: border-box; }
+  ::selection { background: $red; color: $paper; }
+  img { display: block; width: 100%; }
+  figure, blockquote, p, h1, h2 { margin: 0; }
+}
+
+.days-skip {
+  position: fixed;
+  z-index: 120;
+  top: 0;
+  left: 1rem;
+  padding: .7rem 1rem;
+  background: $paper;
+  color: $ink;
+  transform: translateY(-120%);
+  &:focus { transform: translateY(0); }
+}
+
+.days-progress {
+  position: fixed;
+  z-index: 100;
+  inset: 0 0 auto;
+  height: 2px;
+  pointer-events: none;
+
+  span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #cf5d45;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+}
+
+.days-masthead {
+  position: fixed;
+  z-index: 90;
+  inset: 0 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  color: #f1eee5;
+  font: .66rem/1 $mono;
+  letter-spacing: .12em;
+  mix-blend-mode: difference;
+  text-transform: uppercase;
+
+  > p { justify-self: center; margin: 0; }
+}
+
+.days-brand {
+  color: inherit;
+  font-size: .78rem;
+  text-decoration: none;
+
+  span { margin-left: .6rem; font-family: "Noto Serif Devanagari", serif; font-size: .86rem; }
+}
+
+.days-index-toggle {
+  justify-self: end;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+
+  span { display: inline-block; margin-left: .4rem; font-size: 1rem; transition: transform .3s ease; }
+}
+.days-index-open .days-index-toggle span { transform: rotate(45deg); }
+
+.days-index {
+  position: fixed;
+  z-index: 80;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  padding: 8rem 10vw 5rem;
+  visibility: hidden;
+  opacity: 0;
+  background: rgba(13, 17, 18, .98);
+  color: $paper;
+  transition: opacity .35s ease, visibility .35s;
+
+  > p { margin-bottom: 1rem; color: #b5b7af; font: .7rem $mono; letter-spacing: .16em; text-transform: uppercase; }
+  ol { margin: 0; padding: 0; border-top: 1px solid rgba($paper, .25); list-style: none; }
+  a {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    padding: .5rem 0;
+    border-bottom: 1px solid rgba($paper, .25);
+    color: inherit;
+    font: clamp(1.4rem, 4vw, 3.8rem)/1.15 $display;
+    text-decoration: none;
+    transition: padding .2s ease, color .2s ease;
+
+    &:hover, &:focus-visible { padding-left: 1rem; color: #c77863; }
+    span { align-self: center; color: #8f938b; font: .65rem $mono; }
+  }
+}
+.days-index-open .days-index { visibility: visible; opacity: 1; }
+
+.days-paper { background: $paper; }
+
+.days-hero {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: #6f756d;
+  color: #f4f0e6;
+}
+.days-hero-image {
+  position: absolute;
+  inset: -8%;
+  background: var(--days-hero) center 74% / cover no-repeat;
+  will-change: transform;
+}
+.days-hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(19,21,18,.58), rgba(19,21,18,.04) 58%), linear-gradient(0deg, rgba(17,19,16,.44), transparent 45%); }
+.days-hero-kicker { position: absolute; z-index: 1; top: 15%; left: 5vw; width: 16rem; font: .68rem/1.6 $mono; letter-spacing: .14em; text-transform: uppercase; }
+.days-hero h1 { position: absolute; z-index: 1; inset: 28% 3vw auto; color: #f4f0e6; font: 400 clamp(5rem, 15vw, 15rem)/.72 $display; letter-spacing: -.055em; text-shadow: 0 2px 25px rgba(0,0,0,.12); }
+.days-title-line { display: block; }
+.days-title-offset { padding-left: 24vw; white-space: nowrap; }
+.days-hero-meta { position: absolute; z-index: 1; left: 5vw; bottom: 2rem; display: flex; gap: 2.2rem; font: .63rem $mono; letter-spacing: .1em; text-transform: uppercase; }
+.days-descend { position: absolute; z-index: 1; right: 2rem; bottom: 2rem; display: flex; align-items: center; gap: 1rem; color: inherit; font: .62rem $mono; letter-spacing: .12em; text-decoration: none; text-transform: uppercase; }
+.days-descend i { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border: 1px solid; border-radius: 50%; font-style: normal; }
+
+.days-section-mark { display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: center; font: .66rem $mono; letter-spacing: .12em; text-transform: uppercase; }
+.days-section-mark i { height: 1px; background: rgba($ink, .35); }
+.days-section-mark em { font-style: normal; }
+
+.days-prologue { padding: 8rem 5vw 11rem; }
+.days-prologue-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2vw; margin-top: 8rem; }
+.days-lede { grid-column: 2 / 8; font: clamp(2.8rem, 5.3vw, 6.3rem)/.98 $display; letter-spacing: -.035em; }
+.days-copy { font-size: clamp(1.05rem, 1.35vw, 1.3rem); line-height: 1.7; }
+.days-copy p + p, .days-narrow-copy p + p { margin-top: 1.4em; }
+.days-prologue-grid .days-copy { grid-column: 3 / 7; margin-top: 5rem; }
+.days-flower { grid-column: 9 / 12; grid-row: 1 / span 2; align-self: center; }
+.days-flower img { aspect-ratio: 3 / 4; object-fit: cover; filter: saturate(.62) contrast(.95); }
+.days-page figcaption { display: flex; justify-content: space-between; gap: 1rem; margin-top: .7rem; font: .62rem/1.5 $mono; letter-spacing: .05em; text-transform: uppercase; }
+.days-page figcaption span:first-child { color: $red; }
+.days-thesis { width: min(1100px, 88vw); margin: 12rem auto 0; padding: 5rem 0; overflow: hidden; border-block: 1px solid rgba($ink, .35); font: clamp(2.3rem, 5vw, 5.6rem)/1.05 $display; text-align: center; }
+.days-thesis em { color: $red; font-style: normal; }
+
+.days-chapter { position: relative; }
+.days-first-clock { padding-bottom: 11rem; overflow: hidden; background: $night; color: $paper; }
+.days-projection-wrap { position: relative; height: min(90vw, 105vh); overflow: hidden; }
+.days-projection { width: 100%; height: 112%; object-fit: cover; filter: brightness(.74) saturate(.78); }
+.days-projection-wrap::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 52% 54%, transparent 0 15%, rgba(13,17,18,.18) 46%, rgba(13,17,18,.75)); }
+.days-orbit { position: absolute; z-index: 1; top: 50%; left: 50%; aspect-ratio: 1; border: 1px solid rgba($paper,.36); border-radius: 50%; transform: translate(-50%,-50%); }
+.days-orbit::after { content: ""; position: absolute; top: 50%; left: -4px; width: 7px; height: 7px; border-radius: 50%; background: #c85e45; box-shadow: 0 0 22px #dd765d; }
+.days-orbit-a { width: 56vw; }
+.days-orbit-b { width: 76vw; }
+.days-vertical-note { position: absolute; z-index: 2; right: 1rem; top: 50%; writing-mode: vertical-rl; font: .6rem $mono; letter-spacing: .15em; text-transform: uppercase; }
+.days-chapter-heading { position: relative; z-index: 3; width: 92vw; margin: -18vw auto 0; }
+.days-chapter-heading p, .days-archive-title > p, .days-discipline-head > p, .days-after-copy > p:first-child, .days-return-label { margin-bottom: 1rem; font: .65rem $mono; letter-spacing: .14em; text-transform: uppercase; }
+.days-chapter-heading h2 { font: clamp(4rem, 11vw, 11rem)/.82 $display; letter-spacing: -.04em; }
+.days-narrow-copy { width: min(620px, 82vw); margin: 8rem auto 0; font-size: clamp(1.08rem, 1.6vw, 1.35rem); }
+.days-dropcap::first-letter { float: left; margin: .18em .12em 0 0; color: #c65d47; font: 5.1em/.62 $display; }
+.days-cosmic-line { display: flex; align-items: center; width: 90vw; margin: 9rem auto 0; font: .58rem $mono; letter-spacing: .1em; text-transform: uppercase; }
+.days-cosmic-line i { flex: 1; height: 1px; background: rgba($paper,.28); }
+
+.days-archive { min-height: 1500px; padding: 8rem 5vw 14rem; overflow: hidden; }
+.days-archive::after { content: "काल"; position: absolute; left: -.03em; bottom: .1em; color: rgba($ink,.055); font: 300 clamp(13rem,36vw,38rem)/.7 "Noto Serif Devanagari",serif; pointer-events: none; }
+.days-archive-title { position: relative; z-index: 2; margin: 8rem 0 0 5vw; }
+.days-archive-title h2 { font: clamp(5rem, 11vw, 12rem)/.78 $display; letter-spacing: -.05em; }
+.days-archive-title h2 span { color: $red; }
+.days-manuscript { width: 58vw; margin: 8rem 3vw 0 auto; overflow: hidden; }
+.days-manuscript img { height: 112%; filter: saturate(.54) sepia(.12); }
+.days-symbol-card { position: absolute; left: 5vw; top: 54%; width: min(250px, 23vw); }
+.days-symbol-card img { border: 1px solid rgba($ink,.35); mix-blend-mode: multiply; }
+.days-symbol-card p { margin-top: 1rem; font-size: .93rem; line-height: 1.5; font-style: italic; }
+.days-archive-copy { width: min(620px, 48vw); margin: 7rem 12vw 0 auto; }
+
+.days-cosmos { position: relative; height: 115vh; min-height: 740px; overflow: hidden; background: $night; color: #fff; }
+.days-cosmos img { position: absolute; inset: -10%; width: 120%; height: 130%; object-fit: cover; filter: saturate(.7) brightness(.62); }
+.days-cosmos::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle, transparent 20%, rgba(4,7,8,.52) 90%); }
+.days-cosmos-caption { position: absolute; z-index: 2; inset: 50% 0 auto; overflow: hidden; transform: translateY(-50%); font: clamp(3rem,7vw,7rem)/.95 $display; text-align: center; }
+.days-cosmos > span { position: absolute; z-index: 2; bottom: 2rem; left: 50%; font: 2rem $display; }
+
+.days-ritual { padding: 8rem 5vw 13rem; min-height: 1800px; }
+.days-ritual-heading { margin: 9rem 0 0 4vw; }
+.days-ritual-heading h2 { font: clamp(4.2rem,10vw,10rem)/.82 $display; letter-spacing: -.04em; }
+.days-ritual-heading h2 span { margin-left: 16vw; color: $red; }
+.days-ritual-heading > p { margin: 2rem 0 0 17vw; font-style: italic; }
+.days-ritual-image { width: min(560px,43vw); margin: 9rem auto 0 7vw; }
+.days-ritual-image img { filter: saturate(.6) contrast(.95); }
+.days-ritual-copy { width: min(590px,43vw); margin: -25rem 8vw 0 auto; }
+.days-silence-card { position: absolute; right: 13vw; bottom: 8rem; width: min(245px,22vw); transform: rotate(2deg); }
+.days-silence-card img { filter: saturate(.5); }
+
+.days-discipline { min-height: 1450px; padding: 10rem 5vw 12rem; overflow: hidden; background: #aab3a6; }
+.days-discipline::before { content: ""; position: absolute; inset: 0; opacity: .14; background-image: linear-gradient(rgba($ink,.25) 1px,transparent 1px),linear-gradient(90deg,rgba($ink,.25) 1px,transparent 1px); background-size: 4vw 4vw; }
+.days-discipline-head { position: relative; z-index: 1; margin-left: 5vw; }
+.days-discipline-head h2 { font: clamp(4rem,8vw,8.5rem)/.9 $display; letter-spacing: -.04em; }
+.days-discipline-copy { position: relative; z-index: 1; margin-left: 11vw; }
+.days-metal-quote { position: absolute; z-index: 1; top: 50%; right: 7vw; width: min(420px,34vw); }
+.days-metal-quote img { mix-blend-mode: multiply; filter: saturate(0); }
+.days-future-card { position: absolute; z-index: 1; bottom: 8rem; left: 15vw; width: min(460px,40vw); transform: rotate(-3deg); }
+.days-future-card img { mix-blend-mode: multiply; }
+.days-giant-hour { position: absolute; right: -.08em; bottom: -.2em; color: rgba($ink,.09); font: clamp(19rem,48vw,52rem)/.7 $display; }
+
+.days-return { padding: 14rem 5vw; }
+.days-return-grid { display: grid; grid-template-columns: repeat(12,1fr); gap: 2vw; }
+.days-return-label { grid-column: 1/3; }
+.days-return blockquote { grid-column: 3/12; overflow: hidden; font: clamp(3.5rem,7.7vw,8rem)/.94 $display; letter-spacing: -.04em; }
+.days-return .days-copy { grid-column: 7/11; margin-top: 7rem; }
+
+.days-after { min-height: 100svh; display: grid; grid-template-columns: 1.15fr .85fr; background: #111410; color: $paper; }
+.days-after-image { min-height: 100svh; overflow: hidden; }
+.days-after-image img { height: 100%; object-fit: cover; filter: saturate(.5) brightness(.62); }
+.days-after-copy { align-self: center; padding: 8vw; }
+.days-after-copy h2 { margin-bottom: 3rem; font: clamp(4rem,7vw,7.7rem)/.86 $display; letter-spacing: -.04em; }
+.days-after-copy > p:not(:first-child) { max-width: 33rem; font-size: 1.1rem; }
+.days-after-copy > p + p { margin-top: 1.3rem; }
+
+.days-footer { min-height: 90vh; display: grid; grid-template-columns: repeat(12,1fr); align-items: center; gap: 2vw; padding: 6rem 5vw; }
+.days-end-mark { grid-column: 1/3; align-self: start; color: $red; font: 8rem $display; }
+.days-colophon { grid-column: 1/4; align-self: end; font: .62rem/1.7 $mono; letter-spacing: .12em; text-transform: uppercase; }
+.days-closing { grid-column: 4/12; font: clamp(3.5rem,7vw,7.5rem)/.92 $display; }
+.days-footer a { grid-column: 10/13; align-self: end; color: inherit; font: .62rem $mono; letter-spacing: .1em; text-transform: uppercase; text-underline-offset: .4em; }
+
+.days-reveal { opacity: 0; }
+.days-split-line { overflow: hidden; }
+
+@media (max-width: 800px) {
+  body.measure-of-days-page { font-size: 16px; }
+  .days-masthead { grid-template-columns: 1fr 1fr; padding: 1rem; }
+  .days-masthead > p { display: none; }
+  .days-index { padding: 6rem 1rem 3rem; }
+  .days-index a { grid-template-columns: 2.2rem 1fr; padding: .7rem 0; font-size: clamp(1.5rem,8vw,2.5rem); }
+  .days-hero-kicker { top: 14%; left: 1rem; }
+  .days-hero-image { inset: -5%; background-position: 63% 74%; }
+  .days-hero-shade { background: linear-gradient(0deg,rgba(19,21,18,.72),transparent 70%); }
+  .days-hero h1 { inset: auto 1rem 21%; font-size: clamp(5.1rem,23vw,8.5rem); line-height: .79; }
+  .days-title-offset { padding-left: .55em; }
+  .days-hero-meta { left: 1rem; bottom: 1.2rem; gap: 1.4rem; }
+  .days-hero-meta p:nth-child(3) { display: none; }
+  .days-descend { right: 1rem; bottom: 1rem; }
+  .days-descend span { display: none; }
+  .days-prologue, .days-archive, .days-ritual, .days-discipline, .days-return { padding-inline: 1rem; }
+  .days-prologue { padding-block: 6rem 8rem; }
+  .days-prologue-grid { grid-template-columns: 1fr; margin-top: 5rem; gap: 4rem; }
+  .days-lede, .days-prologue-grid .days-copy, .days-flower { grid-column: 1; grid-row: auto; margin: 0; }
+  .days-flower { width: 62vw; margin-left: auto; }
+  .days-thesis { margin-top: 7rem; padding: 3rem 0; }
+  .days-projection-wrap { height: 100svh; }
+  .days-orbit-a { width: 95vw; }
+  .days-orbit-b { width: 132vw; }
+  .days-chapter-heading { margin-top: -31vw; }
+  .days-chapter-heading h2 { font-size: 16vw; }
+  .days-narrow-copy { width: calc(100vw - 2rem); margin-top: 5rem; }
+  .days-cosmic-line { gap: .5rem; overflow: hidden; }
+  .days-cosmic-line i { min-width: 2rem; }
+  .days-archive { min-height: auto; padding-block: 6rem 11rem; }
+  .days-archive-title { margin: 5rem 0 0; }
+  .days-archive-title h2 { font-size: 20vw; }
+  .days-manuscript { width: calc(100vw - 2rem); margin: 6rem 0 0; }
+  .days-symbol-card { position: relative; left: auto; top: auto; width: 44vw; margin: 3rem 0 0 auto; }
+  .days-archive-copy { width: auto; margin: 5rem 0 0; }
+  .days-archive::after { bottom: .08em; font-size: 55vw; }
+  .days-cosmos { height: 95svh; min-height: 620px; }
+  .days-cosmos img { inset: -5%; width: 110%; height: 120%; }
+  .days-cosmos-caption { padding: 0 1rem; font-size: 13vw; }
+  .days-ritual { min-height: auto; padding-block: 6rem 9rem; }
+  .days-ritual-heading { margin: 5rem 0 0; }
+  .days-ritual-heading h2 { font-size: 18vw; }
+  .days-ritual-heading h2 span { margin-left: 0; }
+  .days-ritual-heading > p { margin-left: 1rem; }
+  .days-ritual-image { width: 82vw; margin: 6rem 0 0; }
+  .days-ritual-copy { width: auto; margin: 5rem 0 0; }
+  .days-silence-card { position: relative; right: auto; bottom: auto; width: 48vw; margin: 5rem 1rem 0 auto; }
+  .days-discipline { min-height: 1400px; padding-top: 7rem; }
+  .days-discipline::before { background-size: 12vw 12vw; }
+  .days-discipline-head { margin-left: 0; }
+  .days-discipline-head h2 { font-size: 16vw; }
+  .days-discipline-copy { margin: 5rem 0 0; }
+  .days-metal-quote { top: auto; right: 1rem; bottom: 25rem; width: 64vw; }
+  .days-future-card { left: 1rem; bottom: 7rem; width: 74vw; }
+  .days-giant-hour { bottom: 0; font-size: 105vw; }
+  .days-return { padding-block: 9rem; }
+  .days-return-grid { grid-template-columns: 1fr; }
+  .days-return-label, .days-return blockquote, .days-return .days-copy { grid-column: 1; }
+  .days-return .days-copy { margin-top: 4rem; }
+  .days-after { grid-template-columns: 1fr; }
+  .days-after-image { min-height: 68svh; }
+  .days-after-copy { padding: 6rem 1rem 8rem; }
+  .days-after-copy h2 { font-size: 18vw; }
+  .days-footer { min-height: 100svh; grid-template-columns: 1fr; padding: 5rem 1rem 2rem; }
+  .days-end-mark, .days-colophon, .days-closing, .days-footer a { grid-column: 1; }
+  .days-closing { font-size: 14vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .days-reveal { opacity: 1; }
+  .days-page *, .days-page *::before, .days-page *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+}

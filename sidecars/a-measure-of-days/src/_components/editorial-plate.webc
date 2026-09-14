@@ -1,0 +1,6 @@
+<template webc:type="11ty" webc:is="editorial-plate">
+  <figure :class="`plate ${className || ''}`" webc:root="override">
+    <img :src="src" :alt="alt" loading="lazy" decoding="async" />
+    <figcaption><span @text="folio"></span><span @text="caption"></span></figcaption>
+  </figure>
+</template>

@@ -1,0 +1,264 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/a-measure-of-days.scss";
+
+const base = import.meta.env.BASE_URL;
+const asset = (name: string) => `${base}essays/a-measure-of-days/${name}`;
+---
+
+<BaseLayout
+  title="A Measure of Days | Kosh"
+  description="An immersive essay on calendars, ritual, memory, and the human desire to give shape to time."
+  image={asset("hero-garden.jpeg")}
+  type="article"
+  publishedDate="2026-09-14T00:00:00.000Z"
+  tags={["calendrics", "time", "ritual", "cultural systems"]}
+  bodyClass="measure-of-days-page"
+>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Italiana&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&display=swap" rel="stylesheet" />
+  </Fragment>
+
+  <a class="days-skip" href="#days-essay">Skip to the essay</a>
+  <div class="days-progress" aria-hidden="true"><span></span></div>
+
+  <header class="days-masthead" aria-label="Essay header">
+    <a class="days-brand" href={base} aria-label="Kosh home">KOSH<span>कोश</span></a>
+    <p>Folio 01 · Studies in time</p>
+    <button class="days-index-toggle" type="button" aria-expanded="false" aria-controls="days-index">
+      Index <span aria-hidden="true">+</span>
+    </button>
+  </header>
+
+  <nav class="days-index" id="days-index" aria-label="Essay chapters">
+    <p>A Measure of Days</p>
+    <ol>
+      <li><a href="#before"><span>00</span>Before the number</a></li>
+      <li><a href="#first-clock"><span>01</span>The first clock</a></li>
+      <li><a href="#chosen-world"><span>02</span>A chosen world</a></li>
+      <li><a href="#ritual"><span>03</span>Time made inhabitable</a></li>
+      <li><a href="#discipline"><span>04</span>The disciplined hour</a></li>
+      <li><a href="#after"><span>05</span>What grows beside us</a></li>
+    </ol>
+  </nav>
+
+  <main class="days-page" id="days-essay">
+    <section class="days-hero" id="top" style={`--days-hero: url('${asset("hero-garden.jpeg")}')`}>
+      <div class="days-hero-image" aria-hidden="true"></div>
+      <div class="days-hero-shade" aria-hidden="true"></div>
+      <p class="days-hero-kicker">An essay on calendars, memory &amp; the shape of time</p>
+      <h1>
+        <span class="days-title-line">A measure</span>
+        <span class="days-title-line days-title-offset">of days</span>
+      </h1>
+      <div class="days-hero-meta">
+        <p>Words by Pranjal</p><p>12 minute read</p><p>September · MMXXVI</p>
+      </div>
+      <a class="days-descend" href="#before" aria-label="Enter the essay"><span>Enter the essay</span><i aria-hidden="true">↓</i></a>
+    </section>
+
+    <section class="days-prologue days-paper" id="before">
+      <div class="days-section-mark days-reveal"><span>00</span><i></i><em>Prologue</em></div>
+      <div class="days-prologue-grid">
+        <p class="days-lede days-reveal">Before a day was a square on a screen, it was a change in the light.</p>
+        <div class="days-copy days-reveal">
+          <p>Morning entered the room. A shadow crossed a stone. A flower opened, a bird returned, a river rose and then receded. Time did not announce itself as a number. It arrived as alteration—as the world becoming slightly different from what it had been.</p>
+          <p>To make a calendar is to gather these changes and give them edges. It is to say: this return belongs with that return; this moon begins something; this harvest closes it. A calendar looks like arithmetic, but underneath the numbers it is a portrait of attention.</p>
+        </div>
+        <figure class="days-flower days-reveal days-float">
+          <img src={asset("flower.jpeg")} alt="A pale flower opening into shadow" />
+          <figcaption><span>Plate 00</span><span>A brief clock, opening.</span></figcaption>
+        </figure>
+      </div>
+      <blockquote class="days-thesis days-split" role="group">Every calendar answers two questions: <em>what returns?</em> and <em>what must not be forgotten?</em></blockquote>
+    </section>
+
+    <section class="days-chapter days-first-clock" id="first-clock">
+      <div class="days-projection-wrap">
+        <img class="days-projection days-parallax" src={asset("projected-calendar.jpeg")} alt="A hand touches the illuminated centre of a circular celestial diagram" />
+        <div class="days-orbit days-orbit-a" aria-hidden="true"></div>
+        <div class="days-orbit days-orbit-b" aria-hidden="true"></div>
+        <p class="days-vertical-note">Observe · return · remember</p>
+      </div>
+      <div class="days-chapter-heading days-reveal">
+        <p>Part one</p><h2>The first clock<br />had no hands.</h2>
+      </div>
+      <div class="days-narrow-copy days-reveal">
+        <p class="days-dropcap">Look upward and the earliest instruments are already in motion. The sun makes a path without touching the ground. The moon changes its face. Certain stars disappear into one season and return in another.</p>
+        <p>What we call time began as a relationship between bodies: earth and sun, moon and tide, shadow and wall, sleeper and dawn. The sky offered repetition, but never sameness. Each return carried a difference—a colder wind, a fuller river, one more child old enough to ask when.</p>
+        <p>Counting was not a retreat from wonder. It was a way of staying close to it.</p>
+      </div>
+      <div class="days-cosmic-line days-reveal" role="group" aria-label="A year shown as a circular sequence">
+        <span>solstice</span><i></i><span>equinox</span><i></i><span>solstice</span><i></i><span>equinox</span><i></i>
+      </div>
+    </section>
+
+    <section class="days-chapter days-archive days-paper" id="chosen-world">
+      <div class="days-section-mark days-reveal"><span>02</span><i></i><em>To count is to choose</em></div>
+      <div class="days-archive-title days-reveal">
+        <p>The calendar is not discovered whole.</p>
+        <h2>It is a world,<br /><span>chosen.</span></h2>
+      </div>
+      <figure class="days-manuscript days-reveal">
+        <img class="days-parallax" src={asset("manuscript.jpeg")} alt="An open handwritten manuscript, its pages marked by age" />
+        <figcaption><span>Plate 02</span><span>Memory given a surface.</span></figcaption>
+      </figure>
+      <aside class="days-symbol-card days-reveal">
+        <img src={asset("material-spiritual.jpeg")} alt="A hand-drawn circle and square captioned Material world, spiritual world" />
+        <p>A useful calendar holds both: the material world of seasons and the invisible world of meaning.</p>
+      </aside>
+      <div class="days-copy days-archive-copy days-reveal">
+        <p>There is no neutral way to divide a life. One culture begins the day at midnight, another at sunset. One year follows the sun; another listens to the moon; another keeps both in conversation through careful adjustment.</p>
+        <p>These are not errors waiting to become one system. They are different agreements with the cosmos. A calendar reveals which threshold matters: a monsoon, a migration, a ritual, the settling of an account, the remembered birth of a teacher or a god.</p>
+        <p>When we inherit a calendar, we inherit its priorities. Workdays and holy days, fiscal quarters and seasons of fasting, birthdays and anniversaries—all are claims upon attention.</p>
+      </div>
+    </section>
+
+    <section class="days-cosmos" aria-label="Cosmic interlude">
+      <img class="days-parallax" src={asset("nebula.jpeg")} alt="A dark nebula scattered with brilliant stars" />
+      <p class="days-cosmos-caption days-split" role="group">The sky keeps no calendar.<br />We keep one beneath it.</p>
+      <span aria-hidden="true">§</span>
+    </section>
+
+    <section class="days-chapter days-ritual days-paper" id="ritual">
+      <div class="days-section-mark days-reveal"><span>03</span><i></i><em>Ritual time</em></div>
+      <div class="days-ritual-heading days-reveal">
+        <h2>Repetition<br />makes time<br /><span>inhabitable.</span></h2>
+        <p>We do not live in units. We live in returns.</p>
+      </div>
+      <figure class="days-ritual-image days-reveal">
+        <img src={asset("ritual-bathing.jpeg")} alt="Detail of a historical painting showing figures bathing among lotus flowers" />
+        <figcaption><span>Plate 03</span><span>Water, gesture, return.</span></figcaption>
+      </figure>
+      <div class="days-copy days-ritual-copy days-reveal">
+        <p>Ritual takes an abstract interval and gives it weight. A lamp is lit. Water is poured. A name is spoken again. The gesture may last only a minute, yet because it has been performed before—and will be performed after—it holds more than the present.</p>
+        <p>This is how a date becomes a day. The recurring act binds private memory to collective rhythm. It gives grief somewhere to return, gratitude a form, and anticipation a horizon.</p>
+        <p>A calendar without ritual is only a ledger. Ritual turns the ledger into a dwelling.</p>
+      </div>
+      <figure class="days-silence-card days-reveal days-float">
+        <img src={asset("silent-area.jpeg")} alt="A wooden sign in dense greenery reads Silent Area" />
+        <figcaption><span>Marginalia</span><span>A pause is also an interval.</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="days-chapter days-discipline" id="discipline">
+      <div class="days-discipline-head days-reveal">
+        <p>Part four · the measured self</p>
+        <h2>When every hour<br />must explain itself.</h2>
+      </div>
+      <div class="days-narrow-copy days-discipline-copy days-reveal">
+        <p class="days-dropcap">Modern time arrives pre-divided. It vibrates in a pocket, colours a meeting block, counts the sleep beneath our eyelids and asks whether the morning was productive.</p>
+        <p>The clock gives coordination, but it also creates a peculiar guilt: the feeling that an unclaimed hour has been wasted. We begin to speak about time as if it were a substance leaking from a damaged vessel—spent, saved, borrowed, lost.</p>
+        <p>But not every hour needs an outcome. Some hours ripen invisibly. Some are devoted to looking, waiting, grieving, wandering, or doing nothing that can be entered in a field.</p>
+      </div>
+      <figure class="days-metal-quote days-reveal">
+        <img src={asset("hour-revenge.jpeg")} alt="An oval metal plaque engraved with the words The hour is devoted to revenge" />
+        <figcaption><span>Found instruction</span><span>Taken literally at our peril.</span></figcaption>
+      </figure>
+      <figure class="days-future-card days-reveal">
+        <img src={asset("future-self.jpeg")} alt="A folded note reads Do something today that your future self will thank you for" />
+        <figcaption><span>Found instruction</span><span>Even the future becomes a creditor.</span></figcaption>
+      </figure>
+      <p class="days-giant-hour" aria-hidden="true">24</p>
+    </section>
+
+    <section class="days-return days-paper">
+      <div class="days-return-grid">
+        <p class="days-return-label days-reveal">A small proposition</p>
+        <blockquote class="days-split" role="group">Let the calendar be a trellis, not a cage.</blockquote>
+        <div class="days-copy days-reveal">
+          <p>Use it to hold what matters upright: the people who return, the seasons worth noticing, the work that asks for patience, the ceremonies that make a community visible to itself.</p>
+          <p>Leave some squares unclaimed. The unknown is not empty time. It is where attention can change direction.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="days-after" id="after">
+      <div class="days-after-image">
+        <img src={asset("tree-time.jpeg")} alt="A large old tree with a reflection about a tree born on the same day as you" />
+      </div>
+      <div class="days-after-copy days-reveal">
+        <p>Part five · after the date</p>
+        <h2>What grows<br />beside us.</h2>
+        <p>Somewhere, a tree may have begun on the day you did. It has not counted the years. It has made rings from weather: abundance, injury, drought, recovery. Its calendar is held inside the body.</p>
+        <p>Perhaps ours is too. We carry years in posture, memory, skill, scar, tenderness. The date is only the doorplate. Time is the room we have made behind it.</p>
+      </div>
+    </section>
+
+    <footer class="days-footer days-paper">
+      <p class="days-end-mark">§</p>
+      <p class="days-colophon">A Measure of Days<br />Kosh · Folio 01 · 2026</p>
+      <p class="days-closing">May your days be measured<br />by what they make possible.</p>
+      <a href="#top">Return to the beginning ↑</a>
+    </footer>
+  </main>
+
+  <script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import { SplitText } from "gsap/SplitText";
+    import { CustomEase } from "gsap/CustomEase";
+
+    gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase);
+    CustomEase.create("daysEase", "M0,0 C0.16,1 0.3,1 1,1");
+
+    const body = document.body;
+    const toggle = document.querySelector<HTMLButtonElement>(".days-index-toggle");
+    const index = document.querySelector<HTMLElement>(".days-index");
+
+    const closeIndex = () => {
+      body.classList.remove("days-index-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    };
+
+    toggle?.addEventListener("click", () => {
+      const isOpen = body.classList.toggle("days-index-open");
+      toggle.setAttribute("aria-expanded", String(isOpen));
+    });
+    index?.addEventListener("click", (event) => {
+      if ((event.target as Element).closest("a")) closeIndex();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeIndex();
+    });
+
+    const initialiseMotion = () => {
+      const mm = gsap.matchMedia();
+
+      gsap.to(".days-progress span", {
+        scaleX: 1,
+        ease: "none",
+        scrollTrigger: { trigger: ".days-page", start: "top top", end: "bottom bottom", scrub: 0.15 },
+      });
+
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.from(".days-title-line", { yPercent: 115, rotate: 2, duration: 1.4, stagger: 0.13, ease: "daysEase", delay: 0.15 });
+        gsap.from([".days-hero-kicker", ".days-hero-meta", ".days-descend"], { opacity: 0, y: 18, duration: 1, stagger: 0.12, ease: "power3.out", delay: 0.7 });
+        gsap.to(".days-hero-image", { yPercent: 9, scale: 1.04, ease: "none", scrollTrigger: { trigger: ".days-hero", start: "top top", end: "bottom top", scrub: true } });
+
+        ScrollTrigger.batch(".days-reveal", {
+          start: "top 88%",
+          once: true,
+          onEnter: (elements) => gsap.fromTo(elements, { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 1.05, stagger: 0.08, ease: "daysEase" }),
+        });
+
+        document.querySelectorAll<HTMLElement>(".days-parallax").forEach((element) => {
+          gsap.fromTo(element, { yPercent: -5 }, { yPercent: 7, ease: "none", scrollTrigger: { trigger: element.parentElement, start: "top bottom", end: "bottom top", scrub: true } });
+        });
+
+        document.querySelectorAll<HTMLElement>(".days-split").forEach((element) => {
+          const split = new SplitText(element, { type: "lines", linesClass: "days-split-line" });
+          gsap.from(split.lines, { yPercent: 105, opacity: 0, duration: 1.1, stagger: 0.1, ease: "daysEase", scrollTrigger: { trigger: element, start: "top 82%", once: true } });
+        });
+
+        gsap.to(".days-orbit-a", { rotation: 360, duration: 30, repeat: -1, ease: "none" });
+        gsap.to(".days-orbit-b", { rotation: -360, duration: 44, repeat: -1, ease: "none" });
+        gsap.to(".days-float", { y: -12, duration: 3.4, yoyo: true, repeat: -1, ease: "sine.inOut" });
+      });
+    };
+
+    document.fonts.ready.then(initialiseMotion);
+  </script>
+</BaseLayout>

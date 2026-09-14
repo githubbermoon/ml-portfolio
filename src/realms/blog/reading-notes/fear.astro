@@ -2,231 +2,107 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import Nav from "../../../components/Nav.astro";
 import Footer from "../../../components/Footer.astro";
+import "../../../styles/editorial-remix.scss";
 
 const base = import.meta.env.BASE_URL;
-
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
 if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
 ---
 
-<BaseLayout title="Fear | Reading Notes | Clawd ML Portfolio">
+<BaseLayout
+  title="Living Without Fear | Reading Notes | Kosh"
+  description="A reading folio on fear, duality, and self-restraint through passages from the Upaniṣads and Mahābhārata."
+  image="/images/atmosphere/reading-notes-cover-hq.webp"
+  type="article"
+  bodyClass="editorial-remix fear-remix"
+>
   <Nav />
-  <main class="reading-note-shell">
-    <section class="reading-note-cover" aria-label="Reading note cover image">
-      <img
-        src={base + "images/atmosphere/reading-notes-cover-hq.webp"}
-        alt="A dark film still with a face lit from below and subtitle text about living without fear."
-        loading="eager"
-        decoding="async"
-      />
-    </section>
+  <main class="fear-page">
+    <header class="fear-hero">
+      <figure>
+        <img src={base + "images/atmosphere/reading-notes-cover-hq.webp"} alt="A dark film still with a face lit from below and subtitle text about living without fear." loading="eager" decoding="async" />
+      </figure>
+      <div class="fear-hero__meta"><span>Reading folio · 01</span><span>Fear · duality · restraint</span></div>
+      <h1 aria-label="Living without fear"><span>Living</span><em>without</em><span>Fear</span></h1>
+      <p class="fear-hero__dek">Two passages on the moment fear enters—and the disciplines through which it loosens its hold.</p>
+      <a class="fear-hero__enter" href="#reading">Begin reading ↓</a>
+    </header>
 
-    <article class="reading-note-body">
-      <p class="note-label">Reading Notes</p>
-      <h1>Fear</h1>
-      <section class="note-section">
-        <p class="section-kicker">1. Fear arises from duality / separation</p>
-        <h2>Bṛhadāraṇyaka Upaniṣad 1.4.2</h2>
-        <p class="source-line">Śukla Yajurveda tradition</p>
+    <div class="editorial-marquee" aria-hidden="true">
+      <div><span>Dvitīyād vai bhayaṃ bhavati</span><i>§</i><span>Fear arises from a second</span><i>§</i><span>Dvitīyād vai bhayaṃ bhavati</span><i>§</i><span>Fear arises from a second</span><i>§</i></div>
+    </div>
 
-        <blockquote class="sanskrit-block" lang="sa">
-          <p>
+    <article class="fear-reading" id="reading">
+      <aside class="fear-reading__rail">
+        <p>Contents</p>
+        <a href="#duality"><span>01</span>Duality</a>
+        <a href="#restraint"><span>02</span>Restraint</a>
+        <p class="fear-reading__vertical">Kosh · reading notes · Bengaluru</p>
+      </aside>
+
+      <div class="fear-reading__body">
+        <header class="fear-reading__opening">
+          <p>On living without fear</p>
+          <blockquote>Fear is not treated here merely as an emotion. It is a relation: a distance imagined between the self and what appears outside it.</blockquote>
+        </header>
+
+        <section class="fear-chapter" id="duality">
+          <div class="fear-chapter__number">01</div>
+          <header>
+            <p>Fear arises from duality / separation</p>
+            <h2>Bṛhadāraṇyaka<br />Upaniṣad <em>1.4.2</em></h2>
+            <span>Śukla Yajurveda tradition</span>
+          </header>
+          <blockquote class="fear-verse" lang="sa">
             सोऽबिभेत् तस्मादेकाकी बिभेति ।<br />
             स हायमीक्षां चक्रे यन्मदन्यन्नास्ति कस्मान्नु बिभेमीति ।<br />
             तत एवास्य भयं वीयाय ।<br />
             कस्माद्ध्यभेष्यत् । द्वितीयाद्वै भयं भवति ॥
-          </p>
-        </blockquote>
+          </blockquote>
+          <div class="fear-translation">
+            <p>Transliteration</p>
+            <div>so’bibhet tasmād ekākī bibheti…<br /><strong>dvitīyād vai bhayaṃ bhavati.</strong></div>
+          </div>
+          <div class="fear-translation fear-translation--meaning">
+            <p>Meaning</p>
+            <div>“He was afraid; therefore one who is alone is afraid. Then he reflected: ‘Since there is nothing other than me, what should I fear?’ Then his fear vanished. For what was there to fear? Fear indeed arises from a second.”</div>
+          </div>
+        </section>
 
-        <div class="note-translation">
-          <p class="translation-label">Transliteration</p>
-          <p>so’bibhet tasmād ekākī bibheti… dvitīyād vai bhayaṃ bhavati.</p>
-        </div>
+        <figure class="fear-interlude">
+          <img src={base + "essays/a-measure-of-days/silent-area.jpeg"} alt="A weathered sign reading Silent Area in a green garden" loading="lazy" />
+          <figcaption><span>Interlude</span>Silence is not the absence of fear, but a room in which its shape becomes visible.</figcaption>
+        </figure>
 
-        <div class="note-translation">
-          <p class="translation-label">Meaning</p>
-          <p>
-            “He was afraid; therefore one who is alone is afraid. Then he reflected: ‘Since there is nothing other than
-            me, what should I fear?’ Then his fear vanished. For what was there to fear? Fear indeed arises from a
-            second.”
-          </p>
-        </div>
-      </section>
-
-      <section class="note-section">
-        <p class="section-kicker">2. Fearlessness through self-restraint</p>
-        <h2>Mahābhārata 12.213.4–5</h2>
-        <p class="source-line">Śānti Parva, Mokṣadharma Parva</p>
-
-        <p class="verse-label">Verse 4</p>
-        <blockquote class="sanskrit-block" lang="sa">
-          <p>
+        <section class="fear-chapter" id="restraint">
+          <div class="fear-chapter__number">02</div>
+          <header>
+            <p>Fearlessness through self-restraint</p>
+            <h2>Mahābhārata<br /><em>12.213.4–5</em></h2>
+            <span>Śānti Parva · Mokṣadharma Parva</span>
+          </header>
+          <p class="fear-verse-label">Verse 4</p>
+          <blockquote class="fear-verse" lang="sa">
             दमस्तेजो वर्धयति पवित्रं दम उच्यते ।<br />
             विपाप्मा निर्भयो दान्तः पुरुषो विन्दते महत् ॥ ४ ॥
-          </p>
-        </blockquote>
+          </blockquote>
+          <div class="fear-translation">
+            <p>IAST</p>
+            <div>damaḥ tejo vardhayati pavitraṃ dama ucyate |<br />vipāpmā nirbhayo dāntaḥ puruṣo vindate mahat || 4 ||</div>
+          </div>
+          <div class="fear-translation fear-translation--meaning">
+            <p>Meaning</p>
+            <div>“Self-restraint increases one’s energy; self-restraint is said to be purifying. The self-restrained person, free from sin and fearless, attains greatness.”</div>
+          </div>
+        </section>
 
-        <div class="note-translation">
-          <p class="translation-label">IAST</p>
-          <p>
-            damaḥ tejo vardhayati pavitraṃ dama ucyate |<br />
-            vipāpmā nirbhayo dāntaḥ puruṣo vindate mahat || 4 ||
-          </p>
-        </div>
-
-        <div class="note-translation">
-          <p class="translation-label">Meaning</p>
-          <p>
-            “Self-restraint increases one’s energy; self-restraint is said to be purifying. The self-restrained person,
-            free from sin and fearless, attains greatness.”
-          </p>
-        </div>
-      </section>
+        <footer class="fear-colophon">
+          <span>§</span>
+          <p>A note remains provisional: an invitation to return to the source, compare translations, and resist turning a passage into a slogan.</p>
+          <a href={base + "blog/notes/"}>Return to the field notes →</a>
+        </footer>
+      </div>
     </article>
   </main>
   <Footer />
 </BaseLayout>
-
-<style>
-  .reading-note-shell {
-    overflow: hidden;
-  }
-
-  .reading-note-cover {
-    position: relative;
-    width: 100dvw;
-    max-width: 100dvw;
-    height: clamp(22rem, 58vw, 46rem);
-    margin-left: calc(50% - 50dvw);
-    overflow: hidden;
-    background: rgb(var(--color-ink));
-  }
-
-  .reading-note-cover::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(to top, rgb(var(--color-ink) / 0.82), transparent 44%),
-      linear-gradient(90deg, rgb(var(--color-ink) / 0.24), transparent 44%, rgb(var(--color-ink) / 0.34));
-    pointer-events: none;
-  }
-
-  :global([data-theme="bright"]) .reading-note-cover::after {
-    background: linear-gradient(to top, rgb(2 6 23 / 0.42), transparent 28%);
-  }
-
-  .reading-note-cover img {
-    display: block;
-    width: 100%;
-    max-width: none;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 50%;
-    filter: saturate(1.03) contrast(1.04);
-  }
-
-  .reading-note-body {
-    max-width: 46rem;
-    margin: clamp(3rem, 8vw, 5rem) auto 0;
-    padding: 0 1.5rem;
-  }
-
-  .back-link,
-  .note-label {
-    color: rgb(var(--color-mist));
-    font-size: 0.72rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-  }
-
-  .back-link {
-    display: inline-flex;
-    text-decoration: none;
-    transition: color 180ms ease;
-  }
-
-  .back-link:hover {
-    color: rgb(var(--color-glass));
-  }
-
-  .note-label {
-    margin-top: 2.5rem;
-  }
-
-  .reading-note-body h1 {
-    margin-top: 1rem;
-    font-size: clamp(4rem, 13vw, 8.5rem);
-    line-height: 0.86;
-    letter-spacing: -0.045em;
-  }
-
-  .note-section {
-    margin-top: clamp(3rem, 8vw, 5rem);
-  }
-
-  .note-section + .note-section {
-    border-top: 1px solid rgb(var(--color-glass) / 0.12);
-    padding-top: clamp(3rem, 7vw, 4.5rem);
-  }
-
-  .section-kicker,
-  .source-line,
-  .translation-label,
-  .verse-label {
-    color: rgb(var(--color-mist));
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-  }
-
-  .note-section h2 {
-    margin-top: 1rem;
-    color: rgb(var(--color-glass));
-    font-size: clamp(1.75rem, 4vw, 3rem);
-    line-height: 1.08;
-    letter-spacing: -0.02em;
-  }
-
-  .source-line {
-    margin-top: 0.85rem;
-  }
-
-  .verse-label {
-    margin-top: 2.25rem;
-  }
-
-  .sanskrit-block {
-    margin-top: 1.15rem;
-    border-left: 1px solid rgb(var(--color-glass) / 0.28);
-    padding-left: clamp(1rem, 3vw, 1.5rem);
-  }
-
-  .sanskrit-block p {
-    color: rgb(var(--color-glass));
-    font-size: clamp(1.2rem, 2.3vw, 1.6rem);
-    line-height: 2;
-  }
-
-  .note-translation {
-    margin-top: 2rem;
-  }
-
-  .note-translation p:last-child {
-    margin-top: 0.75rem;
-    color: rgb(var(--color-mist));
-    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
-    line-height: 1.9;
-  }
-
-  @media (max-width: 640px) {
-    .reading-note-cover {
-      height: 72vw;
-      min-height: 18rem;
-    }
-
-    .reading-note-body {
-      margin-top: 2.5rem;
-    }
-  }
-</style>
