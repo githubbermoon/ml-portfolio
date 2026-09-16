@@ -39,4 +39,16 @@ const realms = defineCollection({
 	}),
 });
 
-export const collections = { projects, blog, realms };
+const dispatches = defineCollection({
+	type: 'data',
+	schema: z.object({
+		title: z.string(),
+		summary: z.string(),
+		canonicalPath: z.string().startsWith('/'),
+		publishedAt: z.coerce.date(),
+		cover: z.string().optional(),
+		announce: z.boolean().default(true),
+	}),
+});
+
+export const collections = { projects, blog, realms, dispatches };

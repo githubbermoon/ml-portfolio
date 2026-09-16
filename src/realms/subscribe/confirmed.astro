@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Subscription confirmed | Kosh Dispatches" description="Your Kosh Dispatches subscription is confirmed." noindex={true}>
+  <main class="dispatch-status">
+    <p>Kosh Dispatches</p>
+    <h1>You are on the list.</h1>
+    <p>Your address is confirmed. The next carefully reviewed dispatch will arrive when a new work is published.</p>
+    <a href={import.meta.env.BASE_URL}>Continue reading</a>
+  </main>
+</BaseLayout>
+
+<script is:inline>
+  localStorage.setItem("kosh_dispatches_subscribed", "true");
+</script>
+
+<style>
+  .dispatch-status { display: grid; min-height: 78svh; padding: 8rem max(1.5rem, calc((100vw - 1240px) / 2)); align-content: center; color: #241a13; background: #f4f3f1; }
+  .dispatch-status > p:first-child { color: #9f3d29; font: .62rem var(--font-mono); letter-spacing: .18em; text-transform: uppercase; }
+  .dispatch-status h1 { margin: .5rem 0 1rem; font: 400 clamp(3rem, 9vw, 6rem)/.95 var(--font-display); letter-spacing: -.05em; }
+  .dispatch-status > p:not(:first-child) { max-width: 42ch; font: 1.1rem/1.65 var(--font-reading, Georgia, serif); }
+  .dispatch-status a { width: fit-content; margin-top: 2rem; color: inherit; font: .65rem var(--font-mono); letter-spacing: .12em; text-transform: uppercase; text-underline-offset: .35em; }
+</style>

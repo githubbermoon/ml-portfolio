@@ -1,0 +1,42 @@
+name: Create Kosh Dispatches drafts
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "src/content/dispatches/*.yaml"
+      - "src/content/dispatches/*.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  create-drafts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out publication records
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.1
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Create unsent newsletter drafts
+        env:
+          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+          SITE_ORIGIN: https://realms-58q.pages.dev
+        run: node scripts/create-buttondown-drafts.mjs

@@ -1,0 +1,20 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Confirm your subscription | Kosh Dispatches" description="Confirm your email address to receive Kosh Dispatches." noindex={true}>
+  <main class="dispatch-status">
+    <p>Kosh Dispatches</p>
+    <h1>One more step.</h1>
+    <p>Open the confirmation message in your inbox and follow its link. You will not receive dispatches until your address is confirmed.</p>
+    <a href={import.meta.env.BASE_URL}>Return to Kosh</a>
+  </main>
+</BaseLayout>
+
+<style>
+  .dispatch-status { display: grid; min-height: 78svh; padding: 8rem max(1.5rem, calc((100vw - 1240px) / 2)); align-content: center; color: #241a13; background: #f4f3f1; }
+  .dispatch-status > p:first-child { color: #9f3d29; font: .62rem var(--font-mono); letter-spacing: .18em; text-transform: uppercase; }
+  .dispatch-status h1 { margin: .5rem 0 1rem; font: 400 clamp(3rem, 9vw, 6rem)/.95 var(--font-display); letter-spacing: -.05em; }
+  .dispatch-status > p:not(:first-child) { max-width: 42ch; font: 1.1rem/1.65 var(--font-reading, Georgia, serif); }
+  .dispatch-status a { width: fit-content; margin-top: 2rem; color: inherit; font: .65rem var(--font-mono); letter-spacing: .12em; text-transform: uppercase; text-underline-offset: .35em; }
+</style>

@@ -6,6 +6,7 @@ import ThemeToggle from "../islands/ThemeToggle";
 import AnalyticsHotkey from "../islands/AnalyticsHotkey";
 import ExperienceLayer from "../components/ExperienceLayer.astro";
 import VisitorMeasurement from "../components/VisitorMeasurement.astro";
+import DispatchesSubscription from "../components/DispatchesSubscription.astro";
 
 const {
   lang = "en",
@@ -92,6 +93,7 @@ const jsonLd = {
     {noindex ? <meta name="robots" content="noindex, nofollow" /> : <meta name="robots" content="index, follow, max-image-preview:large" />}
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" type="application/xml" href={base + "sitemap.xml"} />
+    {isRealmsMode && <link rel="alternate" type="application/rss+xml" title="Kosh Dispatches" href={base + "dispatches.xml"} />}
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#050505" />
     <meta name="author" content="Pranjal Prakash Pandey" />
@@ -174,6 +176,7 @@ const jsonLd = {
       </a>
     )}
     <slot />
+    {isRealmsMode && <DispatchesSubscription />}
     {isRealmsMode && <VisitorMeasurement />}
     {!isRealmsMode && <AnalyticsHotkey client:load goatCounterCode={goatCounterCode} />}
     <svg

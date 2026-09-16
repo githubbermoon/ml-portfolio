@@ -1,0 +1,162 @@
+---
+const username = import.meta.env.PUBLIC_BUTTONDOWN_USERNAME?.trim() || "kosh-dispatches";
+const enabled = Boolean(username);
+const action = enabled
+  ? `https://buttondown.com/api/emails/embed-subscribe/${username}`
+  : undefined;
+---
+
+<section class="dispatches-subscription" aria-labelledby="dispatches-footer-title" data-dispatches-root data-enabled={String(enabled)}>
+  <div class="dispatches-subscription__inner">
+    <div>
+      <p class="dispatches-subscription__eyebrow">Kosh Dispatches</p>
+      <h2 id="dispatches-footer-title">New writings and pages from Kosh.</h2>
+      <p class="dispatches-subscription__note">Occasional publication notices. Confirm by email. Unsubscribe at any time.</p>
+    </div>
+    {enabled ? (
+      <form class="dispatches-form" action={action} method="post" data-dispatches-form>
+        <label class="sr-only" for="dispatches-footer-email">Email address</label>
+        <input id="dispatches-footer-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required />
+        <input type="hidden" name="embed" value="1" />
+        <button type="submit">Subscribe</button>
+      </form>
+    ) : (
+      <p class="dispatches-subscription__unavailable">Subscriptions will open shortly.</p>
+    )}
+  </div>
+</section>
+
+{enabled && (
+  <dialog class="dispatches-dialog" data-dispatches-dialog aria-labelledby="dispatches-dialog-title" aria-describedby="dispatches-dialog-copy">
+    <button class="dispatches-dialog__close" type="button" data-dispatches-close aria-label="Close subscription invitation">×</button>
+    <p class="dispatches-subscription__eyebrow">Kosh Dispatches</p>
+    <h2 id="dispatches-dialog-title">Receive the next page.</h2>
+    <p id="dispatches-dialog-copy">New writings and pages from Kosh, sent only after publication. Confirm your address by email.</p>
+    <form class="dispatches-form dispatches-form--dialog" action={action} method="post" data-dispatches-form>
+      <label for="dispatches-dialog-email">Email address</label>
+      <div>
+        <input id="dispatches-dialog-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required />
+        <input type="hidden" name="embed" value="1" />
+        <button type="submit">Subscribe</button>
+      </div>
+    </form>
+    <small>No automatic mailings. Every dispatch is reviewed before it is sent.</small>
+  </dialog>
+)}
+
+<script>
+  const SUBSCRIBED_KEY = "kosh_dispatches_subscribed";
+  const root = document.querySelector<HTMLElement>("[data-dispatches-root]");
+  const dialog = document.querySelector<HTMLDialogElement>("[data-dispatches-dialog]");
+
+  if (root?.dataset.enabled === "true" && dialog && localStorage.getItem(SUBSCRIBED_KEY) !== "true") {
+    const showInvitation = () => {
+      if (!dialog.open && localStorage.getItem(SUBSCRIBED_KEY) !== "true") dialog.showModal();
+    };
+    const timers = [window.setTimeout(showInvitation, 40_000), window.setTimeout(showInvitation, 90_000)];
+    dialog.querySelector("[data-dispatches-close]")?.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    window.addEventListener("pagehide", () => timers.forEach(window.clearTimeout), { once: true });
+  }
+</script>
+
+<style>
+  .dispatches-subscription {
+    --dispatch-paper: #17120e;
+    --dispatch-ink: #f1e2c9;
+    --dispatch-muted: #ad9a80;
+    --dispatch-rule: rgb(217 187 145 / .22);
+    --dispatch-accent: #c55b3f;
+    border-top: 1px solid var(--dispatch-rule);
+    color: var(--dispatch-ink);
+    background: var(--dispatch-paper);
+  }
+  :global(html[data-theme="bright"]) .dispatches-subscription {
+    --dispatch-paper: #f4f3f1;
+    --dispatch-ink: #241a13;
+    --dispatch-muted: #716256;
+    --dispatch-rule: rgb(75 52 35 / .18);
+    --dispatch-accent: #9f3d29;
+  }
+  .dispatches-subscription__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, .75fr);
+    width: min(100% - 3rem, 1240px);
+    margin-inline: auto;
+    padding-block: clamp(2rem, 5vw, 4rem);
+    align-items: end;
+    gap: 2rem clamp(2rem, 8vw, 7rem);
+  }
+  .dispatches-subscription__eyebrow {
+    margin: 0 0 .65rem;
+    color: var(--dispatch-accent);
+    font-family: var(--font-mono, monospace);
+    font-size: .58rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+  .dispatches-subscription h2, .dispatches-dialog h2 {
+    margin: 0;
+    color: inherit;
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.8rem, 4vw, 3.6rem);
+    font-weight: 400;
+    letter-spacing: -.035em;
+    line-height: .98;
+  }
+  .dispatches-subscription__note, .dispatches-subscription__unavailable {
+    max-width: 50ch;
+    margin: .85rem 0 0;
+    color: var(--dispatch-muted);
+    font: .78rem/1.55 var(--font-mono, monospace);
+  }
+  .dispatches-form { display: flex; gap: .6rem; }
+  .dispatches-form input {
+    min-width: 0;
+    flex: 1;
+    border: 1px solid var(--dispatch-rule);
+    border-radius: 0;
+    padding: .85rem 1rem;
+    color: inherit;
+    background: transparent;
+    font: .78rem var(--font-mono, monospace);
+  }
+  .dispatches-form button {
+    border: 1px solid var(--dispatch-accent);
+    padding: .85rem 1.15rem;
+    color: #fff8ee;
+    background: var(--dispatch-accent);
+    font: .62rem var(--font-mono, monospace);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .dispatches-form input:focus-visible, .dispatches-form button:focus-visible, .dispatches-dialog__close:focus-visible { outline: 2px solid var(--dispatch-accent); outline-offset: 3px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+  .dispatches-dialog {
+    width: min(calc(100% - 2rem), 34rem);
+    max-height: calc(100svh - 2rem);
+    overflow: auto;
+    border: 1px solid rgb(75 52 35 / .24);
+    padding: clamp(1.5rem, 5vw, 3rem);
+    color: #241a13;
+    background: #f4f3f1;
+    box-shadow: 0 1.5rem 5rem rgb(0 0 0 / .28);
+  }
+  .dispatches-dialog::backdrop { background: rgb(16 12 9 / .64); backdrop-filter: blur(5px); }
+  .dispatches-dialog__close { position: absolute; top: .65rem; right: .8rem; border: 0; padding: .25rem; color: inherit; background: transparent; font: 1.5rem/1 sans-serif; cursor: pointer; }
+  .dispatches-dialog > p:not(.dispatches-subscription__eyebrow) { margin: 1rem 0 1.5rem; color: #716256; font: 1rem/1.55 Georgia, serif; }
+  .dispatches-form--dialog { display: block; }
+  .dispatches-form--dialog label { display: block; margin-bottom: .45rem; font: .6rem var(--font-mono, monospace); letter-spacing: .12em; text-transform: uppercase; }
+  .dispatches-form--dialog > div { display: flex; gap: .5rem; }
+  .dispatches-form--dialog input { border-color: rgb(75 52 35 / .3); }
+  .dispatches-dialog small { display: block; margin-top: 1rem; color: #827366; font: .63rem/1.5 var(--font-mono, monospace); }
+  @media (max-width: 680px) {
+    .dispatches-subscription__inner { grid-template-columns: 1fr; width: min(100% - 2rem, 1240px); }
+    .dispatches-form, .dispatches-form--dialog > div { flex-direction: column; }
+    .dispatches-form button { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) { .dispatches-dialog::backdrop { backdrop-filter: none; } }
+</style>

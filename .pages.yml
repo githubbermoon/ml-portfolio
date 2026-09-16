@@ -152,3 +152,45 @@ content:
           format: markdown
           rename: true
           switcher: true
+
+  - name: dispatches
+    label: Kosh Dispatches publications
+    type: collection
+    path: src/content/dispatches
+    filename: "{primary}.yaml"
+    format: yaml
+    view:
+      fields: [title, publishedAt, announce, canonicalPath]
+      primary: title
+      sort: [publishedAt, title]
+      default:
+        sort: publishedAt
+        order: desc
+    fields:
+      - name: title
+        label: Notification title
+        type: string
+        required: true
+      - name: summary
+        label: Short introduction
+        type: text
+        required: true
+        options:
+          minlength: 20
+          maxlength: 320
+      - name: canonicalPath
+        label: Page path
+        type: string
+        required: true
+        description: Begin with / and end with /, for example /essays/new-work/
+      - name: publishedAt
+        label: Publication date
+        type: date
+        required: true
+      - name: cover
+        label: Cover image
+        type: image
+      - name: announce
+        label: Announce this work
+        type: boolean
+        default: true
