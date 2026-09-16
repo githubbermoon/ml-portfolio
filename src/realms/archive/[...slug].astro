@@ -6,7 +6,7 @@ import Footer from "../../components/Footer.astro";
 import "../../styles/editorial-remix.scss";
 
 export async function getStaticPaths() {
-  const entries = await getCollection("realms", ({ data }) => data.status !== "archived" && (!import.meta.env.PROD || data.status !== "draft"));
+  const entries = await getCollection("realms", ({ data }) => data.status !== "archived");
   return entries.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
 }
 

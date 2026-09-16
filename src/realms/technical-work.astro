@@ -10,7 +10,7 @@ const isRealmsMode = import.meta.env.SITE_MODE === "realms";
 if (!isRealmsMode) return Astro.redirect("/ml-portfolio/");
 const entries = (await getCollection("realms"))
   .filter((entry) => !["calendrical-systems", "calendrical-mapper"].includes(entry.slug))
-  .filter((entry) => entry.data.category === "texts-systems" && entry.data.status !== "archived" && (!import.meta.env.PROD || entry.data.status !== "draft"))
+  .filter((entry) => entry.data.category === "texts-systems" && entry.data.status !== "archived")
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const formatDate = (date: Date) => date.toLocaleDateString("en-GB", { year: "numeric", month: "short" });
 ---
