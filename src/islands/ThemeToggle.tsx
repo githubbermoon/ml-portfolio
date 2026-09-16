@@ -20,19 +20,15 @@ const setDocumentTheme = (theme: ResolvedTheme) => {
 };
 
 const storeTheme = (mode: ThemeMode) => {
-	if (mode === 'auto') {
-		localStorage.removeItem(STORAGE_KEY);
-		return;
-	}
 	localStorage.setItem(STORAGE_KEY, mode);
 };
 
 export default function ThemeToggle() {
-	const [mode, setMode] = useState<ThemeMode>('auto');
+	const [mode, setMode] = useState<ThemeMode>('bright');
 	const resolved = useMemo(() => resolveTheme(mode), [mode]);
 
 	useEffect(() => {
-		const stored = (localStorage.getItem(STORAGE_KEY) as ThemeMode | null) ?? 'auto';
+		const stored = (localStorage.getItem(STORAGE_KEY) as ThemeMode | null) ?? 'bright';
 		setMode(stored);
 	}, []);
 

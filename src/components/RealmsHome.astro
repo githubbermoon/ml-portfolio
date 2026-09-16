@@ -68,6 +68,8 @@ const realms = [
           <span>A</span> <em>living</em> <span>treasury.</span>
         </h1>
 
+        <span class="hero-devanagari" data-no-translate>कोश</span>
+
         <figure class="home-hero-plate">
           <div class="home-hero-print">
             <img src={heroImage} alt="Rain falling through sunlight over a mountain landscape" loading="eager" fetchpriority="high" />
@@ -79,8 +81,7 @@ const realms = [
         </figure>
 
         <p class="home-stage-note home-stage-note--left">Empirical sciences,<br />symbolic systems,<br />material experiments.</p>
-        <p class="home-stage-note home-stage-note--right">Notes and essays<br />for the <em>world within.</em></p>
-        <span class="hero-devanagari" data-no-translate>कोश</span>
+        <p class="home-stage-note home-stage-note--right">Notes and essays<br />for the <em>world.</em></p>
       </div>
 
     </section>
@@ -404,10 +405,11 @@ const realms = [
   .home-hero-stage > .hero-devanagari {
     position: absolute;
     z-index: 5;
-    top: 12%;
-    right: 2%;
+    top: -3.7rem;
+    left: 50%;
     color: var(--vermillion);
     font: 500 clamp(1.7rem, 2.8vw, 3rem)/1 "Noto Serif Devanagari", Georgia, serif;
+    transform: translateX(-50%);
   }
 
   .home-hero-coda {
@@ -825,7 +827,7 @@ const realms = [
     .home-hero-print { inset: 3.2rem 1.2rem; }
     .home-cross-title { font-size: 10.8vw; letter-spacing: -.055em; }
     .home-stage-note { display: none; }
-    .home-hero-stage > .hero-devanagari { top: 8%; right: 0; font-size: 7vw; }
+    .home-hero-stage > .hero-devanagari { top: -3rem; left: 50%; font-size: 7vw; }
     .home-hero-coda { grid-template-columns: 1fr; gap: 3rem; padding-block: 4rem; }
     .home-hero-invitation { justify-self: start; }
 

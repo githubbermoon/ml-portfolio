@@ -125,9 +125,11 @@ const jsonLd = {
       const resolvedTheme =
         storedTheme === "bright" || storedTheme === "dark"
           ? storedTheme
-          : prefersLight
-            ? "bright"
-            : "dark";
+          : storedTheme === "auto"
+            ? prefersLight
+              ? "bright"
+              : "dark"
+            : "bright";
       document.documentElement.dataset.theme = resolvedTheme;
       const storedFilm = localStorage.getItem("clawd-film");
       const prefersReduced = window.matchMedia(
