@@ -94,12 +94,13 @@ async function recordEvent(request, env) {
   if (!body || !ALLOWED_EVENTS.has(body.event)) return json({ error: "Invalid analytics event." }, 400);
 
   const now = new Date();
+  const recordedAt = now.toLocaleString("sv-SE", { timeZone: "Asia/Kolkata", hour12: false }).replace(" ", "T") + "+05:30";
   const retentionDays = Math.min(90, Math.max(1, Number.parseInt(env.ANALYTICS_RETENTION_DAYS || "", 10) || DEFAULT_RETENTION_DAYS));
   const reverseTimestamp = String(9_999_999_999_999 - now.getTime()).padStart(13, "0");
   const key = `analytics:event:${reverseTimestamp}:${crypto.randomUUID()}`;
   const record = {
     schema: 1,
-    recordedAt: now.toISOString(),
+    recordedAt,
     event: body.event,
     rawIp: clientIp(request),
     location: requestLocation(request),
