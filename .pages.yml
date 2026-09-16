@@ -3,8 +3,27 @@ media:
   output: /images/uploads
 
 content:
+  - name: homepage
+    label: Homepage
+    type: file
+    path: src/components/RealmsHome.astro
+    format: code
+
+  - name: site-pages
+    label: Website pages
+    type: collection
+    path: src/realms
+    format: code
+    subfolders: true
+    operations:
+      create: false
+      delete: false
+      rename: false
+    view:
+      layout: tree
+
   - name: realms
-    label: Kosh Writing
+    label: Archive writing
     type: collection
     path: src/content/realms
     filename: "{primary}.mdx"
