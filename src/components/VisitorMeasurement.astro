@@ -4,10 +4,14 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
 
 <div class="visitor-measurement" data-visitor-measurement data-trial-ends={trialEndsAt}>
   <section class="visitor-banner" data-consent-banner hidden aria-label="Visitor analytics preferences">
-    <p>For this 30-day research trial, accepting enables analytics cookies, browser fingerprinting, and collection of your IP, approximate location and browsing activity. Tracking stays off until you accept.</p>
+    <div class="visitor-banner__copy">
+      <p>This site uses optional analytics cookies to understand visits and improve the work. Tracking stays off until you accept.</p>
+      <p id="visitor-analytics-more" class="visitor-banner__more" data-consent-more hidden>With permission, Kosh records a first-party visitor ID, a browser fingerprint, IP-derived approximate location, pages viewed, reading time and progress, navigation, media use, performance, and errors. Language preference and campaign attribution are not recorded.</p>
+    </div>
     <div class="visitor-banner__actions">
-      <button type="button" data-consent-accept>Accept</button>
+      <button type="button" data-consent-accept>Accept cookies</button>
       <button type="button" data-consent-preferences>Change preferences</button>
+      <button type="button" data-consent-read-more aria-expanded="false" aria-controls="visitor-analytics-more">Read more</button>
     </div>
   </section>
   <dialog class="visitor-preferences" data-consent-dialog>
@@ -461,6 +465,14 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
       startOnce();
     });
     root.querySelector("[data-consent-preferences]")?.addEventListener("click", showPreferences);
+    root.querySelector("[data-consent-read-more]")?.addEventListener("click", (event) => {
+      const button = event.currentTarget as HTMLButtonElement;
+      const more = root.querySelector<HTMLElement>("[data-consent-more]");
+      if (!more) return;
+      const expanded = button.getAttribute("aria-expanded") === "true";
+      button.setAttribute("aria-expanded", String(!expanded));
+      more.hidden = expanded;
+    });
 
     window.addEventListener("visitor-preferences-open", showPreferences);
     root.querySelector("[data-consent-close]")?.addEventListener("click", () => dialog?.close());
@@ -495,7 +507,9 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
     box-shadow: 0 4px 24px rgba(12, 10, 8, 0.15);
     font: 0.85rem/1.5 "Neue Montreal", system-ui, sans-serif;
   }
-  .visitor-banner p { margin: 0; max-width: 65rem; }
+  .visitor-banner__copy { max-width: 65rem; }
+  .visitor-banner p { margin: 0; }
+  .visitor-banner__more { margin-top: 0.55rem!important; color: #65594e; font-size: 0.76rem; line-height: 1.55; }
   .visitor-banner__actions { display: flex; flex-wrap: wrap; gap: 0.5rem; flex-shrink: 0; }
   .visitor-banner button {
     border: 1px solid currentColor;
