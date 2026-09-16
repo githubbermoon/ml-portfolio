@@ -9,25 +9,123 @@ const base = import.meta.env.BASE_URL;
   <Nav />
   <main class="abode-page">
     <a class="abode-back" href={base + "about/pranjal/"}>← Photos &amp; words</a>
-    <p class="abode-number">01</p>
-    <h1>Sacred<br /><em>Himalayan</em><br />abode</h1>
-    <p class="abode-intro">A quiet room for mountain paths, sacred geography, weather, memory, and the forms of attention that arise at altitude.</p>
+
+    <header class="abode-header">
+      <p class="abode-number">01 · Textual notebook</p>
+      <h1>Sacred<br /><em>Himalayan</em><br />abode</h1>
+      <p class="abode-intro">Three Vedic passages in which mountain, earth, and passage belong to a sacred geography.</p>
+    </header>
+
+    <figure class="abode-forest">
+      <img src={base + "about/sacred-himalayan-abode/mist-forest.jpeg"} alt="Trees receding into pale mountain mist" loading="eager" fetchpriority="high" />
+    </figure>
+
     <div class="abode-rule" aria-hidden="true">✦</div>
-    <p class="abode-note">This notebook remains open.</p>
+
+    <section class="abode-passage">
+      <p class="passage-number">I</p>
+      <div class="passage-body">
+        <p class="passage-source">Ṛgveda 10.121.4 · Hiraṇyagarbha Sūkta</p>
+        <h2>The Himalayas as a manifestation of the cosmic being</h2>
+        <blockquote class="sanskrit" lang="sa">
+          यस्येमे हिमवन्तो महित्वा<br />
+          यस्य समुद्रं रसया सहाहुः ।<br />
+          यस्येमाः प्रदिशो यस्य बाहू<br />
+          कस्मै देवाय हविषा विधेम ॥
+        </blockquote>
+        <div class="translation">
+          <p class="translation-label">Translation</p>
+          <p>“Through whose greatness these snow-covered mountains exist; whose, they say, is the ocean together with the cosmic stream; whose arms are the directions, unto which Deva shall we offer our oblation?”</p>
+        </div>
+        <p><i>Himavantaḥ</i> literally means “the snowy ones.” The mountains are more than terrain here. They stand as visible signs of the immeasurable power behind creation, set beside ocean, river, and the directions themselves.</p>
+      </div>
+    </section>
+
+    <section class="abode-passage">
+      <p class="passage-number">II</p>
+      <div class="passage-body">
+        <p class="passage-source">Atharvaveda 12.1.11 · Pṛthivī Sūkta</p>
+        <h2>Snow mountains as sacred dimensions of Earth</h2>
+        <blockquote class="sanskrit" lang="sa">
+          गिरयस्ते पर्वता हिमवन्तोऽरण्यं ते पृथिवि स्योनमस्तु ।<br />
+          बभ्रुं कृष्णां रोहिणीं विश्वरूपां ध्रुवां भूमिं पृथिवीमिन्द्रगुप्ताम् ।<br />
+          अजीतोऽहतो अक्षतोऽध्यष्ठां पृथिवीमहम् ॥
+        </blockquote>
+        <div class="translation">
+          <p class="translation-label">Translation</p>
+          <p>“May your hills, your mountains, your snow-covered heights, and your forests be gracious to us, O Earth. Upon the brown, black, red, many-formed, and firmly established Earth, protected by Indra, may I stand unconquered, unharmed, and uninjured.”</p>
+        </div>
+        <p>This is sacred ecology rather than portal mythology. Forest, mountain, snow, and coloured earth are not separate realms. They are distinct expressions of one living, many-formed Earth.</p>
+        <p class="source-link"><a href="https://en.wikisource.org/wiki/Atharva-Veda_Samhita/Book_XII/Hymn_1" target="_blank" rel="noreferrer">Read the Pṛthivī Sūkta ↗</a></p>
+      </div>
+    </section>
+
+    <figure class="abode-torus">
+      <img src={base + "about/sacred-himalayan-abode/torus-path.png"} alt="A transparent black wireframe torus forming a vessel-like opening" loading="lazy" />
+    </figure>
+
+    <section class="abode-passage abode-passage--last">
+      <p class="passage-number">III</p>
+      <div class="passage-body">
+        <p class="passage-source">Ṛgveda 10.14.1</p>
+        <h2>A path into the world of the ancestors</h2>
+        <p class="passage-preface">This verse is not specifically Himalayan. It belongs here because it gives an early Vedic account of a passage into another mode of existence.</p>
+        <blockquote class="sanskrit" lang="sa">
+          परेयिवांसं प्रवतो महीरनु<br />
+          बहुभ्यः पन्थामनुपस्पशानम् ।<br />
+          वैवस्वतं संगमनं जनानां<br />
+          यमं राजानं हविषा दुवस्य ॥
+        </blockquote>
+        <div class="translation">
+          <p class="translation-label">Translation</p>
+          <p>“Honour with the offering King Yama, son of Vivasvat, who departed across the great expanses, who discovered the path for many, and who is the gathering place of human beings.”</p>
+        </div>
+        <p>The important phrase is <i>bahubhyaḥ panthām anupaśpaśānam</i>: Yama found, surveyed, or made known the path for many. The route belongs to the ancestral state. It is metaphysical, but the hymn does not turn it into a physical door hidden inside a mountain.</p>
+      </div>
+    </section>
+
+    <footer class="abode-colophon">
+      <p>The passages are read here in their own registers: cosmic praise, sacred ecology, and the ancestral path.</p>
+    </footer>
   </main>
   <Footer />
 </BaseLayout>
 
 <style>
   :global(body.himalayan-abode-page) { background:#eae8e1; color:#2f302b; }
-  .abode-page { width:min(1100px,calc(100% - 2rem)); min-height:90svh; margin:auto; padding:8rem 0 6rem; font-family:"Louize Trial",Georgia,serif; }
-  .abode-back,.abode-number,.abode-note { font:500 .68rem/1.5 "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; }
+  .abode-page { width:min(1100px,calc(100% - 2rem)); min-height:90svh; margin:auto; padding:8rem 0 6rem; overflow:hidden; font-family:"Louize Trial",Georgia,serif; }
+  .abode-back,.abode-number { font:500 .68rem/1.5 "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; }
   .abode-back { color:inherit; text-decoration:none; }
-  .abode-number { margin-top:clamp(5rem,12vh,9rem); color:#a1442f; }
+  .abode-header { margin-top:clamp(5rem,12vh,9rem); }
+  .abode-number { color:#a1442f; }
   h1 { margin:1.2rem 0 2rem; font:500 clamp(4rem,11vw,10rem)/.78 "Louize Trial",Georgia,serif; letter-spacing:-.06em; }
   h1 em { color:#a1442f; font-weight:400; }
   .abode-intro { width:min(34rem,100%); margin-left:auto; font-size:clamp(1.2rem,2vw,1.65rem); line-height:1.55; }
-  .abode-rule { display:flex; align-items:center; gap:1rem; margin-top:6rem; color:#a1442f; }
+  .abode-forest { width:min(58rem,96%); margin:clamp(4rem,9vw,8rem) auto 0; }
+  .abode-forest img { display:block; width:100%; height:auto; -webkit-mask-image:radial-gradient(ellipse 82% 72% at 50% 50%,#000 44%,transparent 100%); mask-image:radial-gradient(ellipse 82% 72% at 50% 50%,#000 44%,transparent 100%); opacity:.9; }
+  .abode-rule { display:flex; align-items:center; gap:1rem; margin-top:clamp(3rem,7vw,6rem); color:#a1442f; }
   .abode-rule::before,.abode-rule::after { content:""; height:1px; flex:1; background:rgba(47,48,43,.3); }
-  .abode-note { margin-top:1.5rem; text-align:center; }
+  .abode-passage { display:grid; grid-template-columns:4rem minmax(0,1fr); gap:clamp(1rem,4vw,3.5rem); width:min(58rem,100%); margin-inline:auto; padding:clamp(4rem,8vw,7rem) 0; border-bottom:1px solid rgb(47 48 43/.22); }
+  .abode-passage--last { border-bottom:0; }
+  .passage-number { margin:.3rem 0 0; color:#a1442f; font:italic 400 1.15rem/1 "Louize Trial",Georgia,serif; }
+  .passage-body { max-width:47rem; }
+  .passage-source,.translation-label { margin:0 0 .75rem; color:#765f4f; font:600 .62rem/1.5 "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.13em; text-transform:uppercase; }
+  .passage-body h2 { max-width:43rem; margin:0 0 2rem; font:500 clamp(2.1rem,5vw,4.5rem)/.98 "Louize Trial",Georgia,serif; letter-spacing:-.04em; }
+  .sanskrit { margin:0; padding:clamp(1.5rem,4vw,2.6rem); border:0; color:#24251f; background:rgb(255 255 255/.28); font:400 clamp(1.05rem,2.1vw,1.45rem)/1.9 "Noto Serif Devanagari","Noto Serif",serif; }
+  .translation { margin:2rem 0; padding-left:clamp(1rem,3vw,2rem); border-left:2px solid #a1442f; }
+  .translation p:not(.translation-label) { margin:.55rem 0 0; font:italic 400 clamp(1.05rem,1.8vw,1.28rem)/1.65 "Louize Trial",Georgia,serif; }
+  .passage-body>p:not(.passage-source,.source-link) { max-width:42rem; margin:1.1rem 0 0; color:#3f4039; font:400 clamp(1rem,1.55vw,1.14rem)/1.75 "Louize Trial",Georgia,serif; }
+  .passage-preface { margin-bottom:2rem!important; color:#65665d!important; }
+  .source-link { margin:1.5rem 0 0; font:600 .63rem/1.5 "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.09em; text-transform:uppercase; }
+  .source-link a { color:#a1442f; text-underline-offset:.3em; }
+  .abode-torus { width:min(42rem,82vw); margin:clamp(2rem,5vw,4rem) auto clamp(-1rem,-2vw,-2rem); }
+  .abode-torus img { display:block; width:100%; height:auto; opacity:.78; mix-blend-mode:multiply; }
+  .abode-colophon { width:min(47rem,100%); margin:0 0 0 auto; padding-top:2rem; border-top:1px solid rgb(47 48 43/.3); color:#696a62; font:500 .68rem/1.65 "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.035em; }
+  @media(max-width:620px) {
+    .abode-page { padding-top:6.5rem; }
+    .abode-passage { grid-template-columns:1fr; gap:.8rem; }
+    .passage-number { font-size:.95rem; }
+    .sanskrit { margin-inline:-.25rem; }
+    .abode-torus { width:100%; }
+  }
 </style>
