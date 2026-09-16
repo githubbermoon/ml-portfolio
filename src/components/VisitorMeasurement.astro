@@ -457,7 +457,7 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
   if (root && trialActive) {
     const consent = readCookie(CONSENT_COOKIE);
     if (consent === "accepted") startOnce();
-    if (banner) banner.hidden = consent === "accepted" || consent === "declined";
+    if (banner) banner.hidden = consent === "accepted";
 
     root.querySelector("[data-consent-accept]")?.addEventListener("click", () => {
       writeCookie(CONSENT_COOKIE, "accepted", COOKIE_MAX_AGE);
