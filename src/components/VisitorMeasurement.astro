@@ -89,6 +89,72 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
     return `fallback-${(result >>> 0).toString(16)}`;
   }
 
+  function detectFonts() {
+    const baseFonts = ["monospace", "sans-serif", "serif"] as const;
+    const testFonts = [
+      "Arial", "Arial Black", "Calibri", "Cambria", "Comic Sans MS", "Consolas",
+      "Courier New", "Georgia", "Helvetica", "Impact", "Lucida Console",
+      "Lucida Sans Unicode", "Microsoft Sans Serif", "Palatino Linotype",
+      "Segoe UI", "Tahoma", "Times New Roman", "Trebuchet MS", "Verdana",
+      "Menlo", "Monaco", "SF Pro", "San Francisco", "Roboto", "Noto Sans",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Liberation Mono",
+    ];
+    try {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return "unavailable";
+      const testString = "mmmmmmmmmmlli";
+      const testSize = "72px";
+      const baseWidths: Record<string, number> = {};
+      for (const base of baseFonts) {
+        ctx.font = `${testSize} ${base}`;
+        baseWidths[base] = ctx.measureText(testString).width;
+      }
+      const detected: string[] = [];
+      for (const font of testFonts) {
+        for (const base of baseFonts) {
+          ctx.font = `${testSize} "${font}", ${base}`;
+          if (ctx.measureText(testString).width !== baseWidths[base]) {
+            detected.push(font);
+            break;
+          }
+        }
+      }
+      return detected.join(",");
+    } catch {
+      return "blocked";
+    }
+  }
+
+  async function getBatteryInfo() {
+    try {
+      const nav = navigator as Navigator & { getBattery?: () => Promise<{ charging: boolean; level: number }> };
+      if (!nav.getBattery) return null;
+      const battery = await nav.getBattery();
+      return { charging: battery.charging, level: Math.round(battery.level * 100) };
+    } catch {
+      return null;
+    }
+  }
+
+  function getColorGamut() {
+    if (matchMedia("(color-gamut: rec2020)").matches) return "rec2020";
+    if (matchMedia("(color-gamut: p3)").matches) return "p3";
+    if (matchMedia("(color-gamut: srgb)").matches) return "srgb";
+    return "unknown";
+  }
+
+  function getMediaCapabilities() {
+    return {
+      colorGamut: getColorGamut(),
+      hdr: matchMedia("(dynamic-range: high)").matches,
+      contrast: matchMedia("(prefers-contrast: more)").matches ? "more" : matchMedia("(prefers-contrast: less)").matches ? "less" : "no-preference",
+      reducedMotion: matchMedia("(prefers-reduced-motion: reduce)").matches,
+      darkMode: matchMedia("(prefers-color-scheme: dark)").matches,
+      forcedColors: matchMedia("(forced-colors: active)").matches,
+    };
+  }
+
   async function createFingerprint() {
     const nav = navigator as Navigator & { deviceMemory?: number };
     const components = [
@@ -106,6 +172,10 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
       Intl.DateTimeFormat().resolvedOptions().timeZone,
       canvasSignature(),
       webglSignature(),
+      detectFonts(),
+      getColorGamut(),
+      navigator.cookieEnabled,
+      navigator.pdfViewerEnabled,
     ];
     return hash(components.join("::"));
   }
@@ -154,7 +224,10 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
     const previousPath = sessionStorage.getItem("kosh_previous_path") || "";
     sessionStorage.setItem("kosh_previous_path", currentPath);
 
-    const connection = (navigator as Navigator & { connection?: { effectiveType?: string; saveData?: boolean } }).connection;
+    const connection = (navigator as Navigator & { connection?: { effectiveType?: string; saveData?: boolean; downlink?: number; rtt?: number } }).connection;
+    const nav = navigator as Navigator & { deviceMemory?: number };
+    const battery = await getBatteryInfo();
+    const mediaPrefs = getMediaCapabilities();
     sendEvent({
       event: "page_view",
       visitorId,
@@ -167,9 +240,31 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
       screen: `${screen.width}x${screen.height}@${window.devicePixelRatio}`,
       viewport: `${innerWidth}x${innerHeight}`,
       orientation: screen.orientation?.type || (innerWidth > innerHeight ? "landscape" : "portrait"),
+      colorDepth: screen.colorDepth,
       connection: connection?.effectiveType || "",
       saveData: connection?.saveData ?? null,
+      downlink: connection?.downlink ?? null,
+      rtt: connection?.rtt ?? null,
       touchPoints: navigator.maxTouchPoints,
+      language: navigator.language,
+      languages: navigator.languages?.join(",") || navigator.language,
+      hardwareConcurrency: nav.hardwareConcurrency ?? null,
+      deviceMemory: nav.deviceMemory ?? null,
+      cookieEnabled: navigator.cookieEnabled,
+      pdfViewerEnabled: (navigator as Navigator & { pdfViewerEnabled?: boolean }).pdfViewerEnabled ?? null,
+      doNotTrack: navigator.doNotTrack || null,
+      fonts: detectFonts(),
+      battery,
+      colorGamut: mediaPrefs.colorGamut,
+      hdr: mediaPrefs.hdr,
+      prefersContrast: mediaPrefs.contrast,
+      reducedMotion: mediaPrefs.reducedMotion,
+      darkMode: mediaPrefs.darkMode,
+      forcedColors: mediaPrefs.forcedColors,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      timezoneOffset: new Date().getTimezoneOffset(),
+      canvasHash: canvasSignature(),
+      webglRenderer: webglSignature(),
       firstVisitAt,
       visitNumber: Math.max(1, visitNumber),
       daysSinceLastVisit,
