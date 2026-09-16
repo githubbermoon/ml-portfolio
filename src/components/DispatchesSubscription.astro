@@ -14,11 +14,11 @@ const action = enabled
       <p class="dispatches-subscription__note">Occasional publication notices. Confirm by email. Unsubscribe at any time.</p>
     </div>
     {enabled ? (
-      <form class="dispatches-form" action={action} method="post" data-dispatches-form>
+      <form class="dispatches-form" action={action} method="post" target="_blank" data-dispatches-form>
         <label class="sr-only" for="dispatches-footer-email">Email address</label>
         <input id="dispatches-footer-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required />
         <input type="hidden" name="embed" value="1" />
-        <button type="submit">Subscribe</button>
+        <button type="submit">Subscribe <span class="sr-only">(opens Buttondown in a new tab)</span></button>
       </form>
       <p class="dispatches-form__status" data-dispatches-status role="status" aria-live="polite" hidden></p>
     ) : (
@@ -33,12 +33,12 @@ const action = enabled
     <p class="dispatches-subscription__eyebrow">Kosh Dispatches</p>
     <h2 id="dispatches-dialog-title">Receive the next page.</h2>
     <p id="dispatches-dialog-copy">New writings and pages from Kosh, sent only after publication. Confirm your address by email.</p>
-    <form class="dispatches-form dispatches-form--dialog" action={action} method="post" data-dispatches-form>
+    <form class="dispatches-form dispatches-form--dialog" action={action} method="post" target="_blank" data-dispatches-form>
       <label for="dispatches-dialog-email">Email address</label>
       <div>
         <input id="dispatches-dialog-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required />
         <input type="hidden" name="embed" value="1" />
-        <button type="submit">Subscribe</button>
+        <button type="submit">Subscribe <span class="sr-only">(opens Buttondown in a new tab)</span></button>
       </div>
     </form>
     <p class="dispatches-form__status" data-dispatches-status role="status" aria-live="polite" hidden></p>
@@ -93,49 +93,10 @@ const action = enabled
   }
 
   document.querySelectorAll<HTMLFormElement>("[data-dispatches-form]").forEach((form) => {
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      if (!form.reportValidity()) return;
-      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-      const status = form.nextElementSibling as HTMLElement | null;
-      const originalLabel = button?.textContent ?? "Subscribe";
-      if (button) {
-        button.disabled = true;
-        button.textContent = "Subscribing…";
-      }
-
-      try {
-        const body = new URLSearchParams();
-        new FormData(form).forEach((value, key) => body.append(key, String(value)));
-        const response = await fetch(form.action, {
-          method: "POST",
-          headers: { Accept: "text/html", "Content-Type": "application/x-www-form-urlencoded" },
-          body,
-        });
-        const responseText = await response.text();
-        if (!response.ok || /subscription error|captcha/i.test(responseText)) throw new Error("Buttondown needs additional verification.");
-
-        writeSession(SESSION_SHOWN_KEY, "true");
-        snoozeFor(30);
-        form.hidden = true;
-        if (status) {
-          status.hidden = false;
-          status.innerHTML = '<strong>Check your inbox.</strong> Buttondown will send a confirmation link. You are not subscribed until you open that message and confirm your address. Check the spam folder if it does not arrive shortly.';
-        }
-      } catch {
-        if (status) {
-          status.hidden = false;
-          status.innerHTML = `Buttondown needs to finish this signup securely. <a href="https://buttondown.com/kosh-dispatches">Continue to the confirmation form →</a>`;
-        }
-        if (button) {
-          button.disabled = false;
-          button.textContent = originalLabel;
-        }
-        return;
-      }
-
+    form.addEventListener("submit", () => {
       writeSession(SESSION_SHOWN_KEY, "true");
       snoozeFor(30);
+      if (form.closest("[data-dispatches-dialog]") && dialog?.open) dialog.close();
     });
   });
 </script>
