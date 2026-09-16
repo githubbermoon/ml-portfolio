@@ -24,7 +24,6 @@ const atlas = [
   <Nav />
   <main class="astrology-page">
     <header class="astrology-hero">
-      <figure><img src={base + "images/atmosphere/cosmic-horizon.webp"} alt="A vast cloud formation suspended within a field of stars" loading="eager" decoding="async" /></figure>
       <div class="astrology-hero__meta"><span>Celestial folio · Kosh</span><span>Observation before interpretation</span></div>
       <h1 aria-label="Calendrics and celestial symbolism"><span>Celestial</span><em>&amp;</em><span>Symbolism</span></h1>
       <p>Calendrics, chart studies, transits, and the disciplined reading of symbolic skies.</p>
@@ -42,7 +41,29 @@ const atlas = [
       <div><span>Method</span>Record · compare · annotate</div>
     </section>
 
-    <section class="astrology-atlas" id="atlas">
+    <figure class="celestial-panorama">
+      <button type="button" class="celestial-image-open" aria-label="Explore the celestial image in full screen">
+        <img src={base + "images/atmosphere/celestial-nasa-panorama.png"} alt="A vast field of stars surrounded by luminous white clouds and rust-red nebular filaments" loading="lazy" width="2000" height="1157" />
+      </button>
+      <figcaption><p lang="sa">नासदासीन्नो सदासीत्तदानीं नासीद्रजो नो व्योमा परो यत्</p><div><span>NASA · Celestial image</span><button type="button" class="celestial-image-open">Explore image ↗</button></div></figcaption>
+    </figure>
+
+    <dialog class="celestial-image-dialog" aria-label="Celestial image explorer">
+      <div class="celestial-image-toolbar"><button type="button" data-image-zoom>Zoom in +</button><button type="button" data-image-close>Close ×</button></div>
+      <div class="celestial-image-viewport"><img src={base + "images/atmosphere/celestial-nasa-panorama.png"} alt="Full celestial panorama of stars and glowing nebular clouds" /></div>
+    </dialog>
+
+    <section class="celestial-studies" aria-labelledby="celestial-studies-title">
+      <p>Research &amp; instruments</p>
+      <h2 id="celestial-studies-title">Calendrical studies</h2>
+      <div>
+        <a href={base + "archive/calendrical-systems/"}><span>01 · Research notebook</span><h3>Calendrical Systems</h3><p>A comparative vocabulary for cycles, observation, and symbolic time.</p><strong>Read the study ↗</strong></a>
+        <a href={base + "archive/calendrical-mapper/"}><span>02 · Instrument</span><h3>Calendrical Mapper</h3><p>Compare cycles while preserving the distinctions between traditions.</p><strong>Open the instrument ↗</strong></a>
+      </div>
+    </section>
+    <details class="celestial-curtain" id="atlas">
+      <summary><span>01 · Working atlas</span><strong>Three rooms under one sky</strong><i aria-hidden="true">+</i></summary>
+    <section class="astrology-atlas">
       <header><p>01 · Working atlas</p><h2>Three rooms<br /><em>under one sky.</em></h2></header>
       <div class="astrology-atlas__grid">
         {atlas.map((item) => (
@@ -55,21 +76,8 @@ const atlas = [
         ))}
       </div>
     </section>
+    </details>
 
-    <section class="astrology-plates" aria-label="Celestial image plates">
-      <figure class="astrology-plate astrology-plate--wide">
-        <img src={base + "essays/a-measure-of-days/nebula.jpeg"} alt="A red nebula rising through a field of stars" loading="lazy" />
-        <figcaption><span>Plate I</span>Cloud, distance, and apparent form</figcaption>
-      </figure>
-      <figure class="astrology-plate">
-        <img src={base + "essays/a-measure-of-days/projected-calendar.jpeg"} alt="A hand touching the center of a projected circular diagram" loading="lazy" />
-        <figcaption><span>Plate II</span>The circle as instrument</figcaption>
-      </figure>
-      <figure class="astrology-plate">
-        <img src={base + "essays/a-measure-of-days/material-spiritual.jpeg"} alt="A diagram labeled Material world, spiritual world" loading="lazy" />
-        <figcaption><span>Plate III</span>Worlds drawn into relation</figcaption>
-      </figure>
-    </section>
 
     <section class="astrology-coda">
       <p>02 · A note on certainty</p>
@@ -79,3 +87,55 @@ const atlas = [
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  .celestial-panorama { position:relative; width:100%; height:100dvh; margin:0; background:#090c10; color:#f4f3f1; overflow:hidden; }
+  .celestial-panorama > button { display:block; width:100%; height:100%; padding:0; border:0; background:transparent; cursor:zoom-in; }
+  .celestial-panorama img { display:block; width:100%; height:100%; object-fit:cover; object-position:center; border-radius:0; filter:none; }
+  .celestial-panorama figcaption { position:absolute; inset:auto 0 0; padding:3rem 4vw 1.25rem; background:linear-gradient(transparent, rgb(9 12 16 / .9)); pointer-events:none; }
+  .celestial-panorama figcaption p { margin:0 0 1.5rem; color:#f4f3f1; font:500 clamp(2rem,3.84vw,4.48rem)/1.6 "Louize Trial", "Noto Serif Devanagari",serif; text-align:center; }
+  .celestial-panorama figcaption > div { display:flex; justify-content:space-between; align-items:center; gap:1rem; font:500 .7rem/1.5 "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; }
+  .celestial-panorama figcaption button { color:#f4f3f1; pointer-events:auto; }
+  .celestial-image-dialog { position:fixed; inset:0; width:100vw; max-width:none; height:100dvh; max-height:none; margin:0; padding:0; border:0; background:#111410; color:#f4f3f1; }
+  .celestial-image-dialog::backdrop { background:#111410; }
+  .celestial-image-toolbar { display:flex; justify-content:space-between; align-items:center; height:4rem; padding:0 1.5rem; font:500 .8rem "Neue Montreal Trial",Arial,sans-serif; }
+  .celestial-image-viewport { height:calc(100dvh - 4rem); overflow:auto; }
+  .celestial-image-viewport img { display:block; width:100%; height:100%; object-fit:contain; }
+  .celestial-image-dialog.is-zoomed img { width:200vw; max-width:none; height:auto; object-fit:initial; }
+  .celestial-image-open:focus-visible,.celestial-image-toolbar button:focus-visible { outline:2px solid #a33e27; outline-offset:-4px; }
+  .celestial-curtain { width: 100%; background: #f4f3f1; color: #27231f; border-block: 2px solid #716456; }
+  .celestial-curtain summary { display: grid; grid-template-columns: 1fr 3fr auto; align-items: center; gap: 2rem; padding: 2rem 5vw; cursor: pointer; list-style: none; }
+  .celestial-curtain summary::-webkit-details-marker { display: none; }
+  .celestial-curtain summary > span { font: 500 .65rem/1.5 "Neue Montreal Trial",Arial,sans-serif; text-transform: uppercase; letter-spacing: .1em; color: #a33e27; }
+  .celestial-curtain summary strong { font: 500 clamp(1.8rem,3vw,3rem)/1.1 "Louize Trial",Georgia,serif; }
+  .celestial-curtain summary i { font-style: normal; font-size: 2rem; transition: transform .3s; }
+  .celestial-curtain[open] summary i { transform: rotate(45deg); }
+  .celestial-curtain summary:focus-visible { outline: 2px solid #a33e27; outline-offset: -6px; }
+  .celestial-curtain[open] .astrology-atlas { animation: curtain-open .45s ease-out; }
+  @keyframes curtain-open { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+  @media(max-width:720px) { .celestial-curtain summary { grid-template-columns: 1fr auto; gap: 1rem; } .celestial-curtain summary > span { grid-column: 1 / -1; } }
+  @media(prefers-reduced-motion:reduce) { .celestial-curtain[open] .astrology-atlas { animation: none; } .celestial-curtain summary i { transition: none; } }
+  .celestial-studies { padding: 5rem 3vw; background: #f1f0ec; color: #27231f; }
+  .celestial-studies > p, .celestial-studies span, .celestial-studies strong { font: 500 .65rem/1.5 "Neue Montreal Trial", Arial, sans-serif; text-transform: uppercase; letter-spacing: .1em; color: #9f3d29; }
+  .celestial-studies h2 { color: #27231f !important; margin: 1rem 0 3rem; font: 400 clamp(2.5rem,5vw,5rem)/1.1 "Louize Trial", Georgia, serif; }
+  .celestial-studies > div { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .celestial-studies a { display: block; border-top: 1px solid #aaa299; padding: 1.5rem 0; }
+  .celestial-studies h3 { color: #27231f !important; margin: 1rem 0; font: 400 clamp(2rem,3.5vw,3.5rem)/1.1 "Louize Trial", Georgia, serif; }
+  .celestial-studies a p { max-width: 35ch; margin-bottom: 2rem; color: #625d57; }
+  @media(max-width:720px) { .celestial-studies > div { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const imageDialog = document.querySelector<HTMLDialogElement>(".celestial-image-dialog");
+  const zoomButton = document.querySelector<HTMLButtonElement>("[data-image-zoom]");
+  document.querySelectorAll(".celestial-image-open").forEach(button => button.addEventListener("click", () => imageDialog?.showModal()));
+  document.querySelector("[data-image-close]")?.addEventListener("click", () => imageDialog?.close());
+  zoomButton?.addEventListener("click", () => {
+    const zoomed = imageDialog?.classList.toggle("is-zoomed");
+    zoomButton.textContent = zoomed ? "Zoom out −" : "Zoom in +";
+  });
+  imageDialog?.addEventListener("close", () => {
+    imageDialog.classList.remove("is-zoomed");
+    if (zoomButton) zoomButton.textContent = "Zoom in +";
+  });
+</script>

@@ -7,6 +7,7 @@ import "../../styles/editorial-remix.scss";
 
 const base = import.meta.env.BASE_URL;
 const entries = (await getCollection("realms"))
+  .filter((entry) => !["calendrical-systems", "calendrical-mapper"].includes(entry.slug))
   .filter((entry) => entry.data.category === "origins-implementations" && entry.data.status !== "archived" && (!import.meta.env.PROD || entry.data.status !== "draft"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
@@ -27,15 +28,15 @@ const methods = [
     </header>
 
     <section class="projects-image-band">
-      <figure><img src={base + "essays/a-measure-of-days/projected-calendar.jpeg"} alt="A projected circular diagram being touched at its center" loading="eager" /></figure>
+      <figure><img src={base + "images/projects/dew-spiderweb.jpeg"} alt="Dewdrops suspended along the threads of a spiderweb" loading="eager" /></figure>
       <div><p>The workshop does not begin with an answer.</p><span>It begins with something that can be observed.</span></div>
-      <figure><img src={base + "essays/a-measure-of-days/manuscript.jpeg"} alt="An open manuscript bearing handwritten notes and marks" loading="lazy" /></figure>
+      <figure><img src={base + "images/projects/garden-motion.gif"} alt="Black-and-white animation of a rabbit moving through a garden" loading="lazy" /></figure>
     </section>
 
     <section class="projects-method">
       <header><p>Operating method · 00</p><h2>Build <em>as a way</em><br />of asking.</h2></header>
       <div>
-        {methods.map(([number,title,note]) => <article><span>{number}</span><h3>{title}</h3><p>{note}</p></article>)}
+        {methods.map(([number,title,note], index) => <><article><span>{number}</span><h3>{title}</h3><p>{note}</p></article>{index < methods.length - 1 && <i class="method-arrow" aria-hidden="true">➳</i>}</>)}
       </div>
     </section>
 
@@ -47,7 +48,6 @@ const methods = [
             <span class="project-dossier__number">{String(index + 1).padStart(2, "0")}</span>
             <div class="project-dossier__title"><p>{entry.data.kind.replace("-", " ")} · {entry.data.status}</p><h3>{entry.data.title}</h3></div>
             <p class="project-dossier__summary">{entry.data.summary}</p>
-            <dl><div><dt>Question</dt><dd>What can be tested?</dd></div><div><dt>Method</dt><dd>Build · observe · revise</dd></div><div><dt>State</dt><dd>{entry.data.status}</dd></div></dl>
             <strong>Open dossier →</strong>
           </a>
         ))}

@@ -31,8 +31,8 @@ const isTextComputation = entry.slug === "text-and-computation";
 const cover = isCalendrical
   ? `${base}essays/a-measure-of-days/projected-calendar.jpeg`
   : isTextComputation
-    ? `${base}essays/a-measure-of-days/manuscript.jpeg`
-    : entry.data.cover;
+    ? `${base}images/atmosphere/text-computation-shape.png`
+    : entry.data.category === "origins-implementations" ? undefined : entry.data.cover;
 const bodyClass = `archive-entry-page${isCalendrical ? " editorial-remix calendrical-remix" : ""}${isTextComputation ? " editorial-remix text-computation-remix" : ""}`;
 ---
 
@@ -46,7 +46,7 @@ const bodyClass = `archive-entry-page${isCalendrical ? " editorial-remix calendr
       <p class="summary">{entry.data.summary}</p>
       <div class="entry-meta"><time datetime={entry.data.date.toISOString()}>{date}</time><span>Pranjal Prakash Pandey</span></div>
     </header>
-    {cover && <figure class:list={["entry-cover", "editorial-curtain", isCalendrical && "calendar-cover", isTextComputation && "computation-cover"]}><img src={cover} alt={isCalendrical ? "A hand touching the center of a projected circular calendrical diagram" : isTextComputation ? "An open historical manuscript bearing handwritten text and traces of use" : ""} />{isCalendrical && <figcaption><span>Plate 01</span>The circle is useful only when its assumptions remain visible.</figcaption>}{isTextComputation && <figcaption><span>Plate 01</span> The source has a body before the model gives it a structure.</figcaption>}</figure>}
+    {cover && <figure class:list={["entry-cover", "editorial-curtain", isCalendrical && "calendar-cover", isTextComputation && "computation-cover"]}><img src={cover} alt={isCalendrical ? "A hand touching the center of a projected circular calendrical diagram" : isTextComputation ? "A luminous blue multidimensional shape formed from overlapping translucent ribbons" : ""} />{isCalendrical && <figcaption><span>Plate 01</span>The circle is useful only when its assumptions remain visible.</figcaption>}{isTextComputation && <figcaption><span>Plate 01</span> The source has a body before the model gives it a structure.</figcaption>}</figure>}
     {isCalendrical && <div class="editorial-marquee calendar-marquee" aria-hidden="true"><div><span>Cycle · observation · correspondence</span><i>§</i><span>Source before synthesis</span><i>§</i><span>Cycle · observation · correspondence</span><i>§</i><span>Source before synthesis</span><i>§</i></div></div>}
     {isCalendrical && <section class="calendar-preface"><p>Research premise · 00</p><blockquote>A calendar is never only a count of days. It is an agreement between observation, social life, ritual, memory, and the instruments available to a culture.</blockquote><figure><img src={base + "essays/a-measure-of-days/manuscript.jpeg"} alt="An open manuscript bearing handwritten records" loading="lazy" /><figcaption>Record before equivalence.</figcaption></figure></section>}
     {isTextComputation && <div class="editorial-marquee editorial-marquee--light" aria-hidden="true"><div><span>Encode · compare · return</span><i>§</i><span>The model is not the source</span><i>§</i><span>Encode · compare · return</span><i>§</i><span>The model is not the source</span><i>§</i></div></div>}

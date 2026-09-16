@@ -91,7 +91,7 @@ body.fear-remix { background:$night; }
 .notes-hero__foot { display:grid; grid-template-columns:1fr auto; align-items:end; gap:4rem; border-top:2px solid $ink; padding-top:1rem; }
 .notes-hero__foot p { max-width:37rem; font:500 1.2rem/1.45 "Louize Trial",Georgia,serif; }
 .notes-hero__foot a { font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
-.notes-manuscript { display:grid; grid-template-columns:1.4fr 1fr; min-height:80vh; background:$night; color:$cream; }
+.notes-manuscript { display:grid; grid-template-columns:1fr; min-height:0; padding-top:5rem; background:$night; color:$cream; }
 .notes-manuscript figure { overflow:hidden; }
 .notes-manuscript img { width:100%; height:100%; object-fit:cover; filter:none; }
 .notes-manuscript>p { align-self:center; padding:8vw; font:500 clamp(2.6rem,5vw,5.5rem)/.95 "Louize Trial",Georgia,serif; letter-spacing:-.03em; }
@@ -267,19 +267,19 @@ body.calendrical-remix .entry-body .prose h2::before { content:"§"; position:ab
 .texts-preface>p,.texts-register header>p,.texts-method>div>p { color:$rust; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; }
 .texts-preface div { font:500 clamp(1.5rem,2.5vw,2.6rem)/1.18 "Louize Trial",Georgia,serif; }
 .texts-preface div:last-child { margin-top:10rem; }
-.texts-register { padding:8rem 1rem 11rem; background:$night; color:$cream; }
-.texts-register :where(h2,h3) { color:$cream!important; }
+.texts-register { padding:8rem 1rem 11rem; background:$paper; color:$ink; }
+.texts-register :where(h2,h3) { color:$ink!important; }
 .texts-register>header { display:grid; grid-template-columns:.55fr 1.5fr; gap:5vw; padding-bottom:7rem; }
 .texts-register header h2 { font:500 clamp(4.8rem,9vw,10rem)/.76 "Louize Trial",Georgia,serif; letter-spacing:-.055em; }
-.texts-register header h2 em { color:#d39a7d; font-weight:400; }
-.texts-register__list { border-top:1px solid rgba($cream,.55); }
-.texts-study { display:grid; grid-template-columns:4rem 1.3fr 1fr auto; gap:3vw; align-items:start; padding:3.5rem 0; border-bottom:1px solid rgba($cream,.4); text-decoration:none; }
-.texts-study__number { color:#d39a7d; font:italic 2.5rem "Louize Trial",Georgia,serif; }
-.texts-study>div>p,.texts-study time { color:#99948d; font:500 .55rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
+.texts-register header h2 em { color:$rust; font-weight:400; }
+.texts-register__list { border-top:1px solid rgba($ink,.55); }
+.texts-study { display:grid; grid-template-columns:4rem 1.3fr 1fr auto; gap:3vw; align-items:start; padding:3.5rem 0; border-bottom:1px solid rgba($ink,.4); text-decoration:none; }
+.texts-study__number { color:$rust; font:italic 2.5rem "Louize Trial",Georgia,serif; }
+.texts-study>div>p,.texts-study time { color:#70665c; font:500 .55rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .texts-study h3 { margin-top:1rem; font:500 clamp(2.8rem,4.7vw,5.5rem)/.88 "Louize Trial",Georgia,serif; letter-spacing:-.035em; }
-.texts-study__summary { max-width:28rem; color:#b4aea5; font-size:.84rem; line-height:1.7; }
-.texts-study:hover h3 { color:#d39a7d!important; }
-.texts-method { display:grid; grid-template-columns:1.15fr .85fr; min-height:95vh; }
+.texts-study__summary { max-width:28rem; color:#62584e; font-size:.84rem; line-height:1.7; }
+.texts-study:hover h3 { color:$rust!important; }
+.texts-method { display:grid; grid-template-columns:1fr; min-height:0; }
 .texts-method figure { position:relative; min-height:65vh; margin:0; overflow:hidden; }
 .texts-method figure img { width:100%; height:100%; object-fit:cover; filter:none; }
 .texts-method figcaption { position:absolute; bottom:1rem; left:1rem; padding:.6rem .8rem; background:rgba($paper,.9); font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
@@ -300,8 +300,8 @@ body.text-computation-remix .computation-hero h1 span:last-child { right:0; bott
 body.text-computation-remix .computation-hero h1 em { position:absolute; z-index:2; top:43%; left:48%; color:$rust; font:italic 400 clamp(5rem,9vw,10rem)/1 "Louize Trial",Georgia,serif; }
 body.text-computation-remix .computation-hero .summary { position:absolute; top:auto; right:auto; bottom:2rem; left:1rem; max-width:32rem; margin:0!important; color:#615c56!important; font:500 1.2rem/1.45 "Louize Trial",Georgia,serif!important; letter-spacing:0; text-transform:none; }
 body.text-computation-remix .computation-hero .entry-meta { position:absolute; right:1rem; bottom:2rem; margin:0; color:#706a63; }
-body.text-computation-remix .computation-cover { position:relative; width:min(58rem,70vw); max-height:none; margin:0 auto 8rem; padding:1rem; background:$night; }
-body.text-computation-remix .computation-cover img { display:block; width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; filter:none; }
+body.text-computation-remix .computation-cover { position:relative; width:min(58rem,70vw); max-height:none; margin:0 auto 8rem; padding:1rem; background:transparent; }
+body.text-computation-remix .computation-cover img { display:block; width:100%; height:auto; aspect-ratio:16/10; object-fit:contain; filter:none; }
 body.text-computation-remix .computation-cover figcaption { position:absolute; top:-2rem; right:0; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 body.text-computation-remix .computation-cover figcaption span { margin-right:1rem; color:$rust; }
 .computation-preface { display:grid; grid-template-columns:.55fr 1.5fr .7fr; gap:5vw; padding:10rem 4vw 14rem; }
@@ -332,7 +332,7 @@ body.text-computation-remix .computation-reading .prose li+li { margin-top:.8rem
 .essays-hero h1 { position:absolute; z-index:2; inset:19% 2vw auto; height:44vh; pointer-events:none; }
 .essays-hero h1 span { position:absolute; left:3%; font:500 clamp(9rem,21vw,24rem)/.72 "Louize Trial",Georgia,serif; letter-spacing:-.075em; }
 .essays-hero h1 em { position:absolute; right:0; bottom:-15%; color:$rust; font:italic 400 clamp(3.8rem,7vw,8rem)/1 "Louize Trial",Georgia,serif; }
-.essays-hero figure { position:absolute; top:20%; right:9%; width:min(45vw,47rem); height:50vh; margin:0; }
+.essays-hero figure { position:absolute; top:20%; right:5%; width:min(64vw,64rem); height:auto; aspect-ratio:16/9; margin:0; border-radius:1.5rem; overflow:hidden; }
 .essays-hero figure img { width:100%; height:100%; object-fit:cover; filter:none; }
 .essays-hero figure figcaption { position:absolute; top:-1.8rem; right:0; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 .essays-hero__note { position:absolute; right:3vw; bottom:2.5rem; display:grid; grid-template-columns:minmax(14rem,30rem) auto; gap:5vw; align-items:end; }
@@ -486,6 +486,7 @@ body.text-computation-remix .computation-reading .prose li+li { margin-top:.8rem
   body.calendrical-remix .calendar-hero h1 em { font-size:24vw; }
   .calendar-preface blockquote { font-size:11vw; }
   .texts-hero__image,.essays-hero figure { width:78vw; }
+  .essays-hero figure { height:auto; aspect-ratio:16/9; border-radius:1rem; }
   .texts-hero h1 span { font-size:25vw; }
   .texts-study { gap:1rem; }
   .texts-study h3 { font-size:12vw; }
@@ -500,4 +501,107 @@ body.text-computation-remix .computation-reading .prose li+li { margin-top:.8rem
 
 @media (prefers-reduced-motion:reduce) {
   .editorial-marquee>div { animation:none; }
+}
+
+/* Readable editorial covers: display type stays inside its own paper field. */
+.projects-dossiers { background:$paper!important; color:$ink!important; }
+.projects-dossiers :where(h2,h3) { color:$ink!important; }
+.projects-dossiers__list,.project-dossier { border-color:rgba($ink,.28); }
+.projects-dossiers>header p,.project-dossier__summary,.project-dossier__title p { color:#625d57!important; }
+.project-dossier strong { position:static; grid-column:2/-1; margin-top:1rem; color:$rust; }
+.project-dossier__number { color:$rust; }
+.notes-hero h1 { height:auto; min-height:0; max-height:none; padding-block:2rem; }
+.notes-hero h1 span { position:static; display:block; font-size:clamp(4rem,20vw,23rem); line-height:1; }
+.notes-hero h1 span:last-child { text-align:right; }
+.notes-hero h1 em { position:static; display:block; margin:.15em 0 .2em 46%; transform:none; font-size:clamp(3rem,7vw,8rem); line-height:1; color:$rust; }
+.notes-shelves>header { column-gap:2rem; row-gap:1.5rem; margin-bottom:2rem; }
+.notes-shelves>header h2 { font-size:clamp(4rem,12vw,14rem); line-height:1.1; padding-bottom:.12em; }
+.notes-shelves>header p { margin:0; }
+.astrology-hero { min-height:auto; padding:8rem 3vw 3rem; background:$paper; color:$ink; }
+.astrology-hero::after { display:none; }
+.astrology-hero__meta { position:static; border-color:rgba($ink,.4); }
+.astrology-hero h1 { position:static; min-height:0; margin:3rem 0; color:$ink!important; text-shadow:none; }
+.astrology-hero h1 span { position:static; font-size:clamp(2rem,12vw,14rem); line-height:1; letter-spacing:-.045em; }
+.astrology-hero h1 span:last-child { text-align:right; }
+.astrology-hero h1 em { position:static; display:block; text-align:center; transform:none; margin:.15em 0; font-size:clamp(3rem,6vw,7rem); line-height:1; color:$rust; }
+.astrology-hero>p { position:static; width:auto; max-width:34rem; margin:2rem 0; }
+.astrology-hero>a { position:static; display:block; padding-top:1rem; border-top:1px solid rgba($ink,.4); }
+body.calendrical-remix .calendar-hero { min-height:auto; padding:8rem 3vw 3rem; }
+body.calendrical-remix .calendar-hero>a,
+body.calendrical-remix .calendar-hero>p { position:static; display:block; margin:0 0 1rem; }
+body.calendrical-remix .calendar-hero h1 { height:auto; min-height:0; max-height:none; margin:3rem 0; }
+body.calendrical-remix .calendar-hero h1 span,
+body.calendrical-remix .calendar-hero h1 em { position:static; display:block; font-size:clamp(2rem,12.5vw,15rem); line-height:1; letter-spacing:-.045em; }
+body.calendrical-remix .calendar-hero h1 em { text-align:right; font-size:clamp(3rem,14vw,16rem); }
+body.calendrical-remix .calendar-hero .summary { position:static; max-width:38rem; }
+body.calendrical-remix .calendar-hero .entry-meta { position:static; flex-wrap:wrap; gap:1rem 2rem; margin-top:2rem; }
+.projects-hero { min-height:auto; padding:8rem 3vw 3rem; gap:2.5rem; }
+.projects-hero h1 { height:auto; min-height:0; max-height:none; margin:0; }
+.projects-hero h1 span { position:static; font-size:clamp(3rem,12vw,14rem); line-height:1; letter-spacing:-.045em; }
+.projects-hero h1 span:last-child { font-size:clamp(1.5rem,7.8vw,9rem); text-align:right; }
+.projects-hero h1 em { position:static; display:block; margin:.15em 0; text-align:center; font-size:clamp(3rem,6vw,7rem); line-height:1; color:$rust; }
+.texts-hero { display:grid; grid-template-columns:1fr 1fr; gap:2rem 4vw; min-height:auto; padding:8rem 3vw 4rem; overflow:visible; }
+.texts-hero__meta { grid-column:1/-1; }
+.texts-hero h1 { position:static; grid-column:1; grid-row:2; height:auto; margin:1rem 0; }
+.texts-hero h1 span,
+.texts-hero h1 span:first-child,
+.texts-hero h1 span:last-child { position:static; font-size:clamp(3rem,8.8vw,10rem); line-height:1; letter-spacing:-.05em; }
+.texts-hero h1 em { position:static; display:block; font-size:clamp(3rem,6vw,7rem); line-height:1; transform:none; margin:.1em 0; }
+.texts-hero__image { position:static; grid-column:2; grid-row:2/5; width:100%; height:auto; align-self:center; padding:1rem; background:#eee8dd; }
+.texts-hero__image img { display:block; height:auto; padding:0; object-fit:contain; }
+.texts-hero__image figcaption { position:static; margin-top:1rem; color:#29231e; font-size:.65rem; line-height:1.6; }
+.texts-hero__part { position:static; grid-column:1; grid-row:3; font-size:1.4rem; }
+.texts-hero__intro { position:static; grid-column:1; grid-row:4; width:auto; max-width:32rem; color:#51473e; }
+.projects-dossiers { padding:4rem 3vw 6rem; }
+.projects-dossiers>header { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:1rem; margin-bottom:2rem; }
+.projects-dossiers>header>i { display:none; }
+.projects-dossiers>header h2 { margin:0; font-size:clamp(3rem,8vw,9rem); line-height:1.1; }
+.projects-dossiers>header p { border:0; margin:0; padding:0; color:#c5bfb5; font-size:.7rem; letter-spacing:.12em; }
+.project-dossier__title h3 { line-height:1.08; font-size:clamp(2rem,4vw,4.5rem); }
+.project-dossier__summary,.project-dossier dd,.project-dossier__title p { color:#c5bfb5; }
+@media (max-width:720px) {
+  .texts-hero { grid-template-columns:1fr; padding-top:7rem; }
+  .texts-hero h1 { grid-column:1; grid-row:2; }
+  .texts-hero h1 span { font-size:18vw; }
+  .texts-hero__part { grid-row:3; }
+  .texts-hero__image { grid-column:1; grid-row:4; width:100%; }
+  .texts-hero__intro { grid-row:5; }
+  .projects-hero { padding-top:7rem; }
+  .projects-hero__foot { grid-template-columns:1fr; gap:1.5rem; }
+  body.calendrical-remix .calendar-hero { padding-top:7rem; }
+  .project-dossier { padding-block:2.5rem; }
+}
+
+/* Projects method: an open sequence rather than a table. */
+.projects-method>div {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);
+  align-items:center;
+  column-gap:clamp(1.25rem,2.8vw,3.5rem);
+  border:0;
+}
+.projects-method article,
+.projects-method article:first-child {
+  min-width:0;
+  min-height:0;
+  padding:1.5rem 0 2rem;
+  border:0;
+}
+.projects-method article span { color:#b99b59; }
+.method-arrow {
+  display:grid;
+  place-items:center;
+  width:clamp(3.5rem,5vw,6rem);
+  color:#c9ad6a;
+  font:400 clamp(3rem,4.5vw,5.25rem)/1 Georgia,serif;
+  font-style:normal;
+  text-align:center;
+  transform:translateY(1.2rem);
+  text-shadow:0 1px 0 rgba(255,255,255,.35);
+}
+@media (max-width:720px) {
+  .projects-method>div { grid-template-columns:1fr; row-gap:1.5rem; }
+  .projects-method article,
+  .projects-method article:first-child { border:0; padding:1rem 0 2rem; }
+  .method-arrow { width:100%; transform:rotate(90deg); font-size:3rem; }
 }

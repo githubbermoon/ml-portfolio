@@ -67,8 +67,8 @@ body.hindi-essay-page .realm-nav { color:#f5efe4; }
 .hindi-plate--soul img { padding:1rem; background:#fff; }
 
 .hindi-manuscript { display:grid; grid-template-columns:1.25fr .75fr; min-height:115vh; background:#c8c0b2; }
-.hindi-manuscript figure { min-height:75vh; overflow:hidden; }
-.hindi-manuscript figure img { width:100%; height:100%; object-fit:cover; }
+.hindi-manuscript figure { min-height:0; align-self:center; padding:2rem; }
+.hindi-manuscript figure img { display:block; width:100%; height:auto; object-fit:contain; }
 .hindi-manuscript>div { align-self:center; padding:6vw; }
 .hindi-manuscript h2 { margin-top:2rem; font-size:clamp(5rem,8vw,9rem); line-height:.77; }
 .hindi-manuscript>div>p:not(:first-child) { margin-top:2rem; font-size:1.15rem; line-height:1.65; }
@@ -128,7 +128,7 @@ body.is-glimm-leaving .hindi-coda>a { pointer-events:none; }
   .hindi-plate img,.hindi-plate figcaption { width:100%; }
   .hindi-plate figcaption { display:grid; gap:.5rem; }
   .hindi-manuscript,.hindi-horses { grid-template-columns:1fr; min-height:auto; }
-  .hindi-manuscript figure { height:60vh; min-height:0; }
+  .hindi-manuscript figure { height:auto; min-height:0; padding:2rem 1rem; }
   .hindi-manuscript>div,.hindi-horses>div { padding:7rem 1rem; }
   .hindi-manuscript h2,.hindi-horses h2 { font-size:18vw; }
   .hindi-forest { min-height:105vh; }

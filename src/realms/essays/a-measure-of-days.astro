@@ -129,8 +129,8 @@ const asset = (name: string) => `${base}essays/a-measure-of-days/${name}`;
         <p>We do not live in units. We live in returns.</p>
       </div>
       <figure class="days-ritual-image days-reveal">
-        <img src={asset("ritual-bathing.jpeg")} alt="Detail of a historical painting showing figures bathing among lotus flowers" />
-        <figcaption><span>Plate 03</span><span>Water, gesture, return.</span></figcaption>
+        <img src={asset("shared-time.jpeg")} alt="An older couple sitting together among purple wildflowers, one playing a flute" />
+        <figcaption><span>Plate 03</span><span>Shared time, held in a gesture.</span></figcaption>
       </figure>
       <div class="days-copy days-ritual-copy days-reveal">
         <p>Ritual takes an abstract interval and gives it weight. A lamp is lit. Water is poured. A name is spoken again. The gesture may last only a minute, yet because it has been performed before—and will be performed after—it holds more than the present.</p>
@@ -177,7 +177,7 @@ const asset = (name: string) => `${base}essays/a-measure-of-days/${name}`;
 
     <section class="days-after" id="after">
       <div class="days-after-image">
-        <img src={asset("tree-time.jpeg")} alt="A large old tree with a reflection about a tree born on the same day as you" />
+        <img src={asset("tree-time-hq.png")} alt="A large old tree with a reflection about a tree born on the same day as you" />
       </div>
       <div class="days-after-copy days-reveal">
         <p>Part five · after the date</p>
@@ -241,7 +241,7 @@ const asset = (name: string) => `${base}essays/a-measure-of-days/${name}`;
         ScrollTrigger.batch(".days-reveal", {
           start: "top 88%",
           once: true,
-          onEnter: (elements) => gsap.fromTo(elements, { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 1.05, stagger: 0.08, ease: "daysEase" }),
+          onEnter: (elements) => gsap.fromTo(elements, { y: 24 }, { y: 0, duration: 1.05, stagger: 0.08, ease: "daysEase" }),
         });
 
         document.querySelectorAll<HTMLElement>(".days-parallax").forEach((element) => {
@@ -250,7 +250,7 @@ const asset = (name: string) => `${base}essays/a-measure-of-days/${name}`;
 
         document.querySelectorAll<HTMLElement>(".days-split").forEach((element) => {
           const split = new SplitText(element, { type: "lines", linesClass: "days-split-line" });
-          gsap.from(split.lines, { yPercent: 105, opacity: 0, duration: 1.1, stagger: 0.1, ease: "daysEase", scrollTrigger: { trigger: element, start: "top 82%", once: true } });
+          gsap.from(split.lines, { y: 12, duration: 1.1, stagger: 0.1, ease: "daysEase", immediateRender: false, scrollTrigger: { trigger: element, start: "top 82%", once: true } });
         });
 
         gsap.to(".days-orbit-a", { rotation: 360, duration: 30, repeat: -1, ease: "none" });

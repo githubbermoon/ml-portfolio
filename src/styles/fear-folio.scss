@@ -1,0 +1,139 @@
+.fear-page {
+  --folio-paper: #f4f3f1;
+  --folio-ink: #27231f;
+  --folio-accent: #a33e27;
+  background: var(--folio-paper);
+  color: var(--folio-ink);
+}
+.fear-page .fear-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem 5vw;
+  align-items: center;
+  padding: 8rem 5vw 4rem;
+  background: var(--folio-paper);
+  color: var(--folio-ink);
+  overflow: visible;
+}
+.fear-hero__meta {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid currentColor;
+  padding-top: 1rem;
+  font: 500 .65rem/1.5 "Neue Montreal Trial", Arial, sans-serif;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.fear-page .fear-hero h1 {
+  position: static;
+  grid-column: 1;
+  grid-row: 2;
+  width: auto;
+  height: auto;
+  margin: 0;
+  clip: auto;
+  overflow: visible;
+  white-space: normal;
+  font: 500 clamp(5rem, 11vw, 12rem)/.87 "Louize Trial", Georgia, serif;
+  letter-spacing: -.045em;
+  color: var(--folio-ink);
+}
+.fear-hero h1 span, .fear-hero h1 em { display: block; }
+.fear-hero h1 em { color: var(--folio-accent); font-weight: 400; }
+.fear-page .fear-hero figure { position: relative; grid-column: 2; grid-row: 2; margin: 0; }
+.fear-page .fear-hero figure::after { display: none; }
+.fear-page .fear-hero figure img { height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+.fear-page .fear-hero figure blockquote {
+  position: static;
+  padding-top: 1.5rem;
+  color: var(--folio-ink);
+  font: 400 clamp(1.4rem, 2vw, 2rem)/1.35 "Louize Trial", Georgia, serif;
+  text-align: left;
+  text-shadow: none;
+}
+.fear-hero__enter { grid-column: 1 / -1; font: 500 .7rem "Neue Montreal Trial", Arial, sans-serif; text-transform: uppercase; letter-spacing: .08em; }
+.fear-page .fear-reading { display: block; width: 100%; padding: 0; }
+.fear-page .fear-reading__rail { position: static; display: flex; min-height: 0; gap: 2rem; padding: 2rem 5vw; border: 0; border-bottom: 1px solid #27231f33; }
+.fear-page .fear-reading__rail > p { margin: 0; }
+.fear-page .fear-reading__vertical { display: none; }
+.fear-page .fear-reading__opening { padding: clamp(5rem, 10vw, 10rem) 10vw; margin: 0; }
+.fear-page .fear-reading__opening blockquote { max-width: 22ch; font-size: clamp(2.8rem, 5.5vw, 6rem); line-height: 1.08; }
+.fear-page .fear-chapter { padding: clamp(4rem, 8vw, 8rem) 10vw; border: 0; background: #e8e6e0; }
+.fear-page .fear-chapter#restraint { background: #eee8dc; }
+.fear-page .fear-chapter__number { position: static; font: italic 500 3rem/1 "Louize Trial", Georgia, serif; color: var(--folio-accent); margin-bottom: 2rem; }
+.fear-page .fear-chapter h2 { font-size: clamp(3rem, 6vw, 7rem); line-height: 1.05; }
+.fear-page .fear-verse { padding: 2rem 0; border: 0; border-block: 1px solid #27231f40; background: none; line-height: 1.9; }
+.fear-page .fear-verse::before { display: none; }
+.fear-page .fear-translation { grid-template-columns: 8rem minmax(0, 1fr); max-width: 65rem; border: 0; margin-top: 3rem; }
+.fear-page .fear-translation > div { font-size: clamp(1.4rem, 2.2vw, 2rem); line-height: 1.55; }
+.fear-page .fear-interlude { width: 100%; margin: 0; padding: 5rem 10vw; background: #27231f; color: #f4f3f1; }
+.fear-page .fear-interlude img { width: min(100%, 40rem); height: auto; max-height: none; margin: auto; object-fit: contain; }
+.fear-page .fear-interlude figcaption { max-width: 40rem; margin: 1.5rem auto 0; border-color: #f4f3f155; }
+.fear-page .fear-colophon { margin: 0; padding: 6rem 10vw; border: 0; }
+@media (max-width: 720px) {
+  .fear-page .fear-hero { grid-template-columns: 1fr; padding: 7rem 6vw 3rem; gap: 2rem; }
+  .fear-page .fear-hero h1 { font-size: clamp(4.5rem, 20vw, 8rem); }
+  .fear-page .fear-hero figure { grid-column: 1; grid-row: 3; }
+  .fear-hero__meta { font-size: .55rem; }
+  .fear-page .fear-reading__rail { flex-wrap: wrap; gap: 1rem; }
+  .fear-page .fear-reading__opening, .fear-page .fear-chapter { padding-inline: 6vw; }
+  .fear-page .fear-translation, .fear-page .fear-interlude figcaption { grid-template-columns: 1fr; gap: .75rem; }
+  .fear-page .fear-interlude { padding: 3rem 6vw; }
+}
+
+/* Immersive opening plate; keep the article title available to screen readers. */
+.fear-page .fear-hero {
+  position: relative;
+  display: block;
+  height: 100svh;
+  min-height: 36rem;
+  padding: 0;
+  overflow: hidden;
+  background: #090705;
+}
+.fear-hero__meta, .fear-hero__enter { display: none; }
+.fear-page .fear-hero h1 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+.fear-page .fear-hero figure { position: absolute; inset: 0; margin: 0; }
+.fear-page .fear-hero figure img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: cover;
+  object-position: center 38%;
+}
+.fear-page .fear-hero figure::after {
+  display: block;
+  position: absolute;
+  inset: 0;
+  height: auto;
+  background: linear-gradient(0deg, rgb(0 0 0 / .82), rgb(0 0 0 / .12) 65%, transparent);
+}
+.fear-page .fear-hero figure blockquote {
+  position: absolute;
+  z-index: 2;
+  inset: auto 5vw 7vh;
+  padding: 0;
+  margin: 0;
+  max-width: none;
+  color: #f4f3f1;
+  font: 700 clamp(2.5rem, 5.8vw, 7rem)/1.08 "Louize Trial", Georgia, serif;
+  letter-spacing: -.025em;
+  text-align: left;
+  text-wrap: pretty;
+  text-shadow: 0 2px 20px rgb(0 0 0 / .4);
+}
+@media (max-width: 720px) {
+  .fear-page .fear-hero { min-height: 30rem; }
+  .fear-page .fear-hero figure blockquote { inset: auto 6vw 8vh; font-size: clamp(2.3rem, 8vw, 3.6rem); }
+}

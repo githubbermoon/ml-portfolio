@@ -3,6 +3,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import Nav from "../../../components/Nav.astro";
 import Footer from "../../../components/Footer.astro";
 import "../../../styles/editorial-remix.scss";
+import "../../../styles/fear-folio.scss";
 
 const base = import.meta.env.BASE_URL;
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
@@ -19,11 +20,13 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
   <Nav />
   <main class="fear-page">
     <header class="fear-hero">
+      <div class="fear-hero__meta"><span>Reading notes · Fear</span><span>Two passages · one reading</span></div>
       <figure>
         <img src={base + "images/atmosphere/reading-notes-cover-clean-hq.webp"} alt="A face emerging from darkness in warm amber light." loading="eager" decoding="async" />
         <blockquote>Live always without fear,<br />for your fate is set and you cannot scape it.</blockquote>
       </figure>
-      <h1>Living Without Fear</h1>
+      <h1><span>Living</span><em>without</em><span>fear</span></h1>
+      <a class="fear-hero__enter" href="#reading">Enter the reading ↓</a>
     </header>
 
     <div class="editorial-marquee" aria-hidden="true">

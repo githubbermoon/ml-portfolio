@@ -21,17 +21,8 @@ const shelves = [
 <BaseLayout title="Field Notes & Index | Kosh" description="Short notes, references, links, and reusable knowledge blocks from the Kosh archive." bodyClass="editorial-remix notes-remix">
   <Nav />
   <main class="notes-page">
-    <header class="notes-hero">
-      <div class="notes-hero__meta"><span>Kosh · field index</span><span>Six active shelves</span><span>Bengaluru · 2026</span></div>
-      <h1><span>Field</span><em>&amp;</em><span>Notes</span></h1>
-      <div class="notes-hero__foot">
-        <p>A changing index of short studies, marginalia, visual references, and reusable fragments. Entries may be revised as their sources and questions become clearer.</p>
-        <a href="#shelves">Browse the shelves ↓</a>
-      </div>
-    </header>
 
     <div class="notes-manuscript">
-      <figure><img src={base + "essays/a-measure-of-days/manuscript.jpeg"} alt="An open historical manuscript bearing handwritten notes and marks" loading="eager" /></figure>
       <p><span>Working principle</span>Preserve the source. Separate observation from interpretation. Leave the revision visible.</p>
     </div>
 
@@ -55,18 +46,15 @@ const shelves = [
       </div>
     </section>
 
-    <section class="notes-method">
-      <p>Three ways through the archive</p>
-      <div>
-        <article><span>01</span><h2>Glossary</h2><p>Definitions that can be cited, questioned, and linked from future essays.</p></article>
-        <article><span>02</span><h2>References</h2><p>Books, papers, tools, ephemerides, images, and primary-source trails.</p></article>
-        <article><span>03</span><h2>Patterns</h2><p>Motifs recurring across technical, spiritual, celestial, and material work.</p></article>
-      </div>
-    </section>
 
     <div class="editorial-marquee editorial-marquee--light" aria-hidden="true">
-      <div><span>Nothing here is final</span><i>✦</i><span>Everything here is traceable</span><i>✦</i><span>Nothing here is final</span><i>✦</i><span>Everything here is traceable</span><i>✦</i></div>
+      <div>{Array.from({length: 12}, () => <><span>Nothing here is final</span><i>✦</i><span>Everything here is traceable</span><i>✦</i></>)}</div>
     </div>
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  .notes-page > .editorial-marquee { width: 100%; max-width: none; margin-inline: 0; }
+  .notes-page > .editorial-marquee > div { margin: 0; justify-content: flex-start; }
+</style>

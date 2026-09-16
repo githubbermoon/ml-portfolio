@@ -3,6 +3,13 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
 ---
 
 <div class="visitor-measurement" data-visitor-measurement data-trial-ends={trialEndsAt}>
+  <section class="visitor-banner" data-consent-banner hidden aria-label="Visitor analytics preferences">
+    <p>For this 30-day research trial, accepting enables analytics cookies, browser fingerprinting, and collection of your IP, approximate location and browsing activity. Tracking stays off until you accept.</p>
+    <div class="visitor-banner__actions">
+      <button type="button" data-consent-accept>Accept</button>
+      <button type="button" data-consent-preferences>Change preferences</button>
+    </div>
+  </section>
   <dialog class="visitor-preferences" data-consent-dialog>
     <form method="dialog" data-consent-form>
       <header>
@@ -207,6 +214,7 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
 
   const root = document.querySelector<HTMLElement>("[data-visitor-measurement]");
   const dialog = root?.querySelector<HTMLDialogElement>("[data-consent-dialog]");
+  const banner = root?.querySelector<HTMLElement>("[data-consent-banner]");
   const toggle = root?.querySelector<HTMLInputElement>("[data-consent-toggle]");
   const trialEnd = Date.parse(root?.dataset.trialEnds ?? "");
   const trialActive = Number.isFinite(trialEnd) && Date.now() < trialEnd;
@@ -227,10 +235,19 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
   if (root && trialActive) {
     const consent = readCookie(CONSENT_COOKIE);
     if (consent === "accepted") startOnce();
+    if (banner) banner.hidden = consent === "accepted" || consent === "declined";
+
+    root.querySelector("[data-consent-accept]")?.addEventListener("click", () => {
+      writeCookie(CONSENT_COOKIE, "accepted", COOKIE_MAX_AGE);
+      if (banner) banner.hidden = true;
+      startOnce();
+    });
+    root.querySelector("[data-consent-preferences]")?.addEventListener("click", showPreferences);
 
     window.addEventListener("visitor-preferences-open", showPreferences);
     root.querySelector("[data-consent-close]")?.addEventListener("click", () => dialog?.close());
     root.querySelector("[data-consent-form]")?.addEventListener("submit", () => {
+      if (banner) banner.hidden = true;
       if (toggle?.checked) {
         writeCookie(CONSENT_COOKIE, "accepted", COOKIE_MAX_AGE);
         startOnce();
@@ -244,6 +261,37 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
 </script>
 
 <style>
+  .visitor-banner[hidden] { display: none; }
+  .visitor-banner {
+    position: fixed;
+    inset: auto 1rem 1rem;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid #51473e;
+    background: #eee8dd;
+    color: #29231e;
+    box-shadow: 0 4px 24px rgba(12, 10, 8, 0.15);
+    font: 0.85rem/1.5 "Neue Montreal", system-ui, sans-serif;
+  }
+  .visitor-banner p { margin: 0; max-width: 65rem; }
+  .visitor-banner__actions { display: flex; flex-wrap: wrap; gap: 0.5rem; flex-shrink: 0; }
+  .visitor-banner button {
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    padding: 0.5rem 0.8rem;
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+  }
+  .visitor-banner [data-consent-accept] { background: #29231e; color: #eee8dd; }
+  @media (max-width: 700px) {
+    .visitor-banner { flex-direction: column; align-items: flex-start; inset-inline: 0.6rem; bottom: 0.6rem; }
+  }
   .visitor-preferences button,
   .visitor-preferences__save {
     border: 1px solid currentColor;

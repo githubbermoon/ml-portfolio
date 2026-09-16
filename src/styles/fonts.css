@@ -104,3 +104,10 @@
   font-weight: 600 800;
   font-display: swap;
 }
+@font-face {
+  font-family: "Dingleberries";
+  src: url("/fonts/trial/Dingleberries-Xyrg.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

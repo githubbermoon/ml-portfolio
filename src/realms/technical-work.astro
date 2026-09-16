@@ -9,6 +9,7 @@ const base = import.meta.env.BASE_URL;
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
 if (!isRealmsMode) return Astro.redirect("/ml-portfolio/");
 const entries = (await getCollection("realms"))
+  .filter((entry) => !["calendrical-systems", "calendrical-mapper"].includes(entry.slug))
   .filter((entry) => entry.data.category === "texts-systems" && entry.data.status !== "archived" && (!import.meta.env.PROD || entry.data.status !== "draft"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const formatDate = (date: Date) => date.toLocaleDateString("en-GB", { year: "numeric", month: "short" });
@@ -54,7 +55,6 @@ const formatDate = (date: Date) => date.toLocaleDateString("en-GB", { year: "num
     </section>
 
     <section class="texts-method">
-      <figure><img src={base + "essays/a-measure-of-days/projected-calendar.jpeg"} alt="A hand meeting the center of a projected circular diagram" loading="lazy" /><figcaption>Plate 02 · Representation as an instrument of attention.</figcaption></figure>
       <div><p>Method · open notebook</p><blockquote>The useful model does not conceal its seams. It shows what entered, what changed, and what could not be carried through.</blockquote><a href={base + "archive/text-and-computation/"}>Enter Text and Computation →</a></div>
     </section>
   </main>

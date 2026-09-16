@@ -2,7 +2,6 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
-import LiquidOrb from "../../islands/LiquidOrb";
 
 const base = import.meta.env.BASE_URL;
 
@@ -114,39 +113,20 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
     </div>
   </div>
 
-  <!-- INFINITE COSMOS SECTION -->
-  <div
-    class="relative h-screen bg-black overflow-hidden flex items-center justify-center"
-  >
-    <LiquidOrb client:visible />
-
-    <!-- Text Overlay -->
-    <div
-      class="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
-    >
-      <div class="text-center space-y-6 mt-96">
-        <p
-          class="text-5xl md:text-7xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-blue-400 opacity-0 cosmic-text-fade"
-        >
-          अनंत
-        </p>
-        <p
-          class="text-xl md:text-2xl text-cyan-300/50 font-serif italic tracking-widest opacity-0 cosmic-text-fade"
-          style="animation-delay: 0.5s;"
-        >
-          The Infinite
-        </p>
-      </div>
-    </div>
-  </div>
+  <section class="ananta-status" aria-label="Work status"><p>Ongoing</p></section>
 </BaseLayout>
 
 <style>
+  .ananta-status { position: relative; z-index: 50; display: grid; place-items: center; min-height: 45svh; background: #f4f3f1; color: #a33e27; }
+  .ananta-status p { font: italic 500 clamp(3rem,6vw,6rem)/1.1 "Louize Trial",Georgia,serif; }
   :global(body.ananta-page-shell) { background: #050505; }
   .ananta-page { color: #e7e5e4; background: #050505; }
   .ananta-background { background: linear-gradient(to bottom, #0a0a0a, #000); }
   .ananta-devanagari, .ananta-quote { color: #a8a29e; }
-  .ananta-title { background-image: linear-gradient(to bottom, #e3dcd2, #8c8881); }
+  .ananta-title { font: 500 clamp(4rem,9vw,10rem)/.95 "Louize Trial",Georgia,serif; letter-spacing: -.035em; color: #e7e5e4; background-image: none; }
+  .ananta-devanagari, .ananta-quote { font-family: "Louize Trial",Georgia,serif; }
+  .ananta-quote { font-size: clamp(1.5rem,2.5vw,2.5rem); color: #c55b3f; }
+  .ananta-page .grid { font-family: "Neue Montreal Trial",Arial,sans-serif; }
 
   :global(html[data-theme="bright"] body.ananta-page-shell) { background: #fdfcfb; }
   :global(html[data-theme="bright"]) .ananta-page { color: #2b2119; background: #fdfcfb; }
@@ -156,7 +136,7 @@ if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
   :global(html[data-theme="bright"]) .ananta-devanagari,
   :global(html[data-theme="bright"]) .ananta-quote { color: #6d5e50; }
   :global(html[data-theme="bright"]) .ananta-title {
-    background-image: linear-gradient(to bottom, #2b2119, #756251);
+    background-image: none; color: #2b2119;
   }
   :global(html[data-theme="bright"]) .ananta-page .grid li,
   :global(html[data-theme="bright"]) .ananta-page .grid p { color: #3f342b; }
