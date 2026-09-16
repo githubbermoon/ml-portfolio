@@ -8,7 +8,7 @@ import "../../styles/editorial-remix.scss";
 const base = import.meta.env.BASE_URL;
 const entries = (await getCollection("realms"))
   .filter((entry) => !["calendrical-systems", "calendrical-mapper"].includes(entry.slug))
-  .filter((entry) => entry.data.category === "origins-implementations" && entry.data.status !== "archived" && (!import.meta.env.PROD || entry.data.status !== "draft"))
+  .filter((entry) => entry.data.category === "origins-implementations" && entry.data.status !== "archived")
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const methods = [
