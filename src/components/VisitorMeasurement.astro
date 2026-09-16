@@ -18,7 +18,7 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
       </header>
       <p>
         During this one-month test, accepted analytics use first-party identifiers and a browser fingerprint.
-        The server records the request IP, approximate location, visited page, referrer, device details and engagement.
+        The server records the request IP, approximate location, visited page, reading engagement, navigation, media activity, performance and errors. Language preference, campaign attribution and consent-choice events are not recorded.
       </p>
       <label>
         <input type="checkbox" data-consent-toggle />
@@ -155,61 +155,279 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
     const { visitorId, sessionId } = ensureIdentifiers();
     const fingerprint = await createFingerprint();
     const startedAt = Date.now();
+    const currentPath = location.pathname.slice(0, 500);
     let maximumScroll = 0;
+    let activeMilliseconds = 0;
+    let visibleSince = document.visibilityState === "visible" ? Date.now() : 0;
     let sentEngagement = false;
+    let sentPerformance = false;
 
-    const updateScroll = () => {
-      const scrollable = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-      maximumScroll = Math.max(maximumScroll, Math.min(100, Math.round((scrollY / scrollable) * 100)));
-    };
-    addEventListener("scroll", updateScroll, { passive: true });
+    const sessionMarker = `kosh-session-started:${sessionId}`;
+    const isNewSession = sessionStorage.getItem(sessionMarker) !== "1";
+    const firstVisitAt = readCookie("kosh_first_visit_at") || new Date().toISOString();
+    const priorVisitAt = readCookie("kosh_last_visit_at");
+    let visitNumber = Number.parseInt(readCookie("kosh_visit_count") || "0", 10) || 0;
+    if (isNewSession) {
+      visitNumber += 1;
+      sessionStorage.setItem(sessionMarker, "1");
+      writeCookie("kosh_first_visit_at", firstVisitAt, COOKIE_MAX_AGE);
+      writeCookie("kosh_last_visit_at", new Date().toISOString(), COOKIE_MAX_AGE);
+      writeCookie("kosh_visit_count", String(visitNumber), COOKIE_MAX_AGE);
+    }
+    const daysSinceLastVisit = priorVisitAt
+      ? Math.max(0, Math.round((startedAt - Date.parse(priorVisitAt)) / 86_400_000))
+      : null;
+    const previousPath = sessionStorage.getItem("kosh_previous_path") || "";
+    sessionStorage.setItem("kosh_previous_path", currentPath);
 
+    const connection = (navigator as Navigator & { connection?: { effectiveType?: string; saveData?: boolean } }).connection;
     sendEvent({
       event: "page_view",
       visitorId,
       sessionId,
       fingerprint,
-      path: `${location.pathname}${location.search}`.slice(0, 500),
+      path: currentPath,
+      previousPath,
       title: document.title.slice(0, 200),
-      referrer: document.referrer.slice(0, 500),
-      language: navigator.language,
       platform: navigator.platform,
       screen: `${screen.width}x${screen.height}@${window.devicePixelRatio}`,
+      viewport: `${innerWidth}x${innerHeight}`,
+      orientation: screen.orientation?.type || (innerWidth > innerHeight ? "landscape" : "portrait"),
+      connection: connection?.effectiveType || "",
+      saveData: connection?.saveData ?? null,
+      touchPoints: navigator.maxTouchPoints,
+      firstVisitAt,
+      visitNumber: Math.max(1, visitNumber),
+      daysSinceLastVisit,
     });
 
-    const finish = () => {
-      if (sentEngagement) return;
-      sentEngagement = true;
-      updateScroll();
+    const progressMilestones = new Set<number>();
+    const updateScroll = () => {
+      const scrollable = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+      maximumScroll = Math.max(maximumScroll, Math.min(100, Math.round((scrollY / scrollable) * 100)));
+      for (const milestone of [25, 50, 75, 100]) {
+        if (maximumScroll < milestone || progressMilestones.has(milestone)) continue;
+        progressMilestones.add(milestone);
+        sendEvent({ event: "reading_progress", visitorId, sessionId, fingerprint, path: currentPath, progress: milestone });
+      }
+    };
+    addEventListener("scroll", updateScroll, { passive: true });
+    updateScroll();
+
+    const sectionState = new Map<Element, { id: string; label: string; visibleSince: number; visibleMilliseconds: number }>();
+    const sections = Array.from(document.querySelectorAll("[data-section], main section, main article"));
+    sections.forEach((section, index) => {
+      const heading = section.querySelector("h1, h2, h3");
+      sectionState.set(section, {
+        id: (section.id || Array.from(section.classList)[0] || `section-${index + 1}`).slice(0, 120),
+        label: (heading?.textContent || section.getAttribute("aria-label") || `Section ${index + 1}`).trim().replace(/\s+/g, " ").slice(0, 200),
+        visibleSince: 0,
+        visibleMilliseconds: 0,
+      });
+    });
+    const sectionObserver = new IntersectionObserver((entries) => {
+      const now = Date.now();
+      entries.forEach((entry) => {
+        const state = sectionState.get(entry.target);
+        if (!state) return;
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.45) {
+          if (!state.visibleSince) state.visibleSince = now;
+        } else if (state.visibleSince) {
+          state.visibleMilliseconds += now - state.visibleSince;
+          state.visibleSince = 0;
+        }
+      });
+    }, { threshold: [0, 0.45, 0.75] });
+    sections.forEach((section) => sectionObserver.observe(section));
+
+    let largestContentfulPaint = 0;
+    let cumulativeLayoutShift = 0;
+    let interactionLatency = 0;
+    const performanceObservers: PerformanceObserver[] = [];
+    try {
+      const observer = new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) largestContentfulPaint = Math.max(largestContentfulPaint, entry.startTime);
+      });
+      observer.observe({ type: "largest-contentful-paint", buffered: true });
+      performanceObservers.push(observer);
+    } catch {}
+    try {
+      const observer = new PerformanceObserver((list) => {
+        for (const entry of list.getEntries() as Array<PerformanceEntry & { value?: number; hadRecentInput?: boolean }>) {
+          if (!entry.hadRecentInput) cumulativeLayoutShift += entry.value || 0;
+        }
+      });
+      observer.observe({ type: "layout-shift", buffered: true });
+      performanceObservers.push(observer);
+    } catch {}
+    try {
+      const observer = new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) interactionLatency = Math.max(interactionLatency, entry.duration);
+      });
+      observer.observe({ type: "event", buffered: true, durationThreshold: 40 } as PerformanceObserverInit);
+      performanceObservers.push(observer);
+    } catch {}
+
+    const reportError = (errorType: string, errorMessage: string, errorSource = "") => {
       sendEvent({
-        event: "engagement",
+        event: "client_error",
         visitorId,
         sessionId,
         fingerprint,
-        path: `${location.pathname}${location.search}`.slice(0, 500),
-        durationSeconds: Math.round((Date.now() - startedAt) / 1000),
-        scrollDepth: maximumScroll,
+        path: currentPath,
+        errorType,
+        errorMessage: errorMessage.slice(0, 500),
+        errorSource: errorSource.slice(0, 500),
       }, true);
     };
-    addEventListener("pagehide", finish, { once: true });
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "hidden") finish();
+    addEventListener("error", (event) => reportError("javascript", event.message || "Unknown error", event.filename || ""));
+    addEventListener("unhandledrejection", (event) => reportError("promise", String(event.reason?.message || event.reason || "Unhandled rejection")));
+
+    const mediaMilestones = new WeakMap<HTMLMediaElement, Set<number>>();
+    const mediaPayload = (media: HTMLMediaElement, action: string) => {
+      let mediaSrc = "";
+      try {
+        const url = new URL(media.currentSrc || media.getAttribute("src") || "", location.href);
+        mediaSrc = url.origin === location.origin ? url.pathname : url.hostname;
+      } catch {}
+      sendEvent({
+        event: "media_interaction",
+        visitorId,
+        sessionId,
+        fingerprint,
+        path: currentPath,
+        action,
+        mediaType: media.tagName.toLowerCase(),
+        mediaSrc,
+        mediaPosition: media.currentTime,
+        mediaDuration: Number.isFinite(media.duration) ? media.duration : null,
+      }, true);
+    };
+    document.querySelectorAll<HTMLMediaElement>("video, audio").forEach((media) => {
+      mediaMilestones.set(media, new Set());
+      media.addEventListener("play", () => mediaPayload(media, "play"));
+      media.addEventListener("pause", () => { if (!media.ended) mediaPayload(media, "pause"); });
+      media.addEventListener("volumechange", () => mediaPayload(media, media.muted || media.volume === 0 ? "mute" : "unmute"));
+      media.addEventListener("ended", () => mediaPayload(media, "complete"));
+      media.addEventListener("timeupdate", () => {
+        if (!Number.isFinite(media.duration) || media.duration <= 0) return;
+        const progress = Math.floor((media.currentTime / media.duration) * 100);
+        const seen = mediaMilestones.get(media)!;
+        for (const milestone of [25, 50, 75]) {
+          if (progress >= milestone && !seen.has(milestone)) {
+            seen.add(milestone);
+            mediaPayload(media, `${milestone}_percent`);
+          }
+        }
+      });
+    });
+    document.addEventListener("fullscreenchange", () => {
+      const media = document.fullscreenElement;
+      if (media instanceof HTMLMediaElement) mediaPayload(media, "fullscreen");
+    });
+
+    document.querySelectorAll<HTMLFormElement>('form[role="search"], form[data-search-form]').forEach((form) => {
+      form.addEventListener("submit", () => {
+        const input = form.querySelector<HTMLInputElement>('input[type="search"], input[name="q"], input[data-search-input]');
+        const resultCount = Number.parseInt(form.dataset.resultCount || "", 10);
+        sendEvent({
+          event: "search",
+          visitorId,
+          sessionId,
+          fingerprint,
+          path: currentPath,
+          query: (input?.value || "").trim().slice(0, 300),
+          resultCount: Number.isFinite(resultCount) ? resultCount : null,
+        });
+      });
     });
 
     document.addEventListener("click", (event) => {
       const target = event.target instanceof Element ? event.target.closest("a") : null;
       if (!(target instanceof HTMLAnchorElement)) return;
       const url = new URL(target.href, location.href);
-      if (url.origin === location.origin) return;
+      const targetKind = target.closest(".project-dossier, .realm-entry, [data-project-card]")
+        ? "project"
+        : target.closest("article, .prose, [data-essay-card]")
+          ? "content"
+          : target.closest("nav")
+            ? "navigation"
+            : "link";
+      if (url.protocol === "mailto:") {
+        sendEvent({ event: "contact_click", visitorId, sessionId, fingerprint, path: currentPath, action: "email" }, true);
+      } else if (url.origin === location.origin) {
+        sendEvent({ event: "internal_click", visitorId, sessionId, fingerprint, path: currentPath, targetPath: url.pathname.slice(0, 500), targetKind }, true);
+      } else {
+        sendEvent({ event: "outbound_click", visitorId, sessionId, fingerprint, path: currentPath, destinationHost: url.hostname, targetKind }, true);
+      }
+    });
+
+    const stopVisibleTimer = () => {
+      if (!visibleSince) return;
+      activeMilliseconds += Date.now() - visibleSince;
+      visibleSince = 0;
+    };
+    const startVisibleTimer = () => {
+      if (!visibleSince) visibleSince = Date.now();
+    };
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") stopVisibleTimer();
+      else startVisibleTimer();
+    });
+
+    const sendPerformance = () => {
+      if (sentPerformance) return;
+      sentPerformance = true;
+      const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+      const metrics = [
+        ["ttfb", navigation?.responseStart],
+        ["dom_content_loaded", navigation?.domContentLoadedEventEnd],
+        ["load", navigation?.loadEventEnd],
+        ["largest_contentful_paint", largestContentfulPaint],
+        ["cumulative_layout_shift", cumulativeLayoutShift],
+        ["interaction_to_next_paint", interactionLatency],
+      ] as const;
+      metrics.forEach(([metricName, metricValue]) => {
+        if (!Number.isFinite(metricValue) || Number(metricValue) <= 0) return;
+        sendEvent({ event: "performance", visitorId, sessionId, fingerprint, path: currentPath, metricName, metricValue }, true);
+      });
+    };
+
+    const finish = () => {
+      if (sentEngagement) return;
+      sentEngagement = true;
+      stopVisibleTimer();
+      updateScroll();
+      const now = Date.now();
+      sectionObserver.disconnect();
+      sectionState.forEach((state) => {
+        if (state.visibleSince) state.visibleMilliseconds += now - state.visibleSince;
+        if (state.visibleMilliseconds < 500) return;
+        sendEvent({
+          event: "section_engagement",
+          visitorId,
+          sessionId,
+          fingerprint,
+          path: currentPath,
+          sectionId: state.id,
+          sectionLabel: state.label,
+          visibleSeconds: Math.round(state.visibleMilliseconds / 1000),
+        }, true);
+      });
       sendEvent({
-        event: "outbound_click",
+        event: "engagement",
         visitorId,
         sessionId,
         fingerprint,
-        path: location.pathname,
-        destinationHost: url.hostname,
+        path: currentPath,
+        durationSeconds: Math.round((now - startedAt) / 1000),
+        activeSeconds: Math.round(activeMilliseconds / 1000),
+        scrollDepth: maximumScroll,
       }, true);
-    });
+      sendPerformance();
+      performanceObservers.forEach((observer) => observer.disconnect());
+    };
+    addEventListener("pagehide", finish, { once: true });
   }
 
   const root = document.querySelector<HTMLElement>("[data-visitor-measurement]");

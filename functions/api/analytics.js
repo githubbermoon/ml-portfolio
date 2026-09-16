@@ -1,7 +1,19 @@
 const DEFAULT_TRIAL_END = "2026-10-15T18:29:59.000Z";
 const DEFAULT_RETENTION_DAYS = 31;
 const MAX_BODY_BYTES = 12_000;
-const ALLOWED_EVENTS = new Set(["page_view", "engagement", "outbound_click"]);
+const ALLOWED_EVENTS = new Set([
+  "page_view",
+  "engagement",
+  "section_engagement",
+  "reading_progress",
+  "internal_click",
+  "outbound_click",
+  "contact_click",
+  "media_interaction",
+  "search",
+  "performance",
+  "client_error",
+]);
 
 function json(body, status = 200, headers = {}) {
   return new Response(JSON.stringify(body), {
@@ -96,13 +108,39 @@ async function recordEvent(request, env) {
     fingerprint: limitedString(body.fingerprint, 128),
     path: limitedString(body.path, 500),
     title: limitedString(body.title, 200),
-    referrer: limitedString(body.referrer, 500),
     destinationHost: limitedString(body.destinationHost, 200),
-    language: limitedString(body.language, 40),
     platform: limitedString(body.platform, 100),
     screen: limitedString(body.screen, 60),
+    viewport: limitedString(body.viewport, 60),
+    orientation: limitedString(body.orientation, 30),
+    connection: limitedString(body.connection, 30),
+    saveData: typeof body.saveData === "boolean" ? body.saveData : null,
+    touchPoints: Number.isFinite(body.touchPoints) ? Math.max(0, Math.min(20, Math.round(body.touchPoints))) : null,
+    previousPath: limitedString(body.previousPath, 500),
+    targetPath: limitedString(body.targetPath, 500),
+    targetKind: limitedString(body.targetKind, 80),
+    sectionId: limitedString(body.sectionId, 120),
+    sectionLabel: limitedString(body.sectionLabel, 200),
+    action: limitedString(body.action, 80),
+    mediaType: limitedString(body.mediaType, 30),
+    mediaSrc: limitedString(body.mediaSrc, 500),
+    query: limitedString(body.query, 300),
+    errorType: limitedString(body.errorType, 80),
+    errorMessage: limitedString(body.errorMessage, 500),
+    errorSource: limitedString(body.errorSource, 500),
+    metricName: limitedString(body.metricName, 80),
+    firstVisitAt: limitedString(body.firstVisitAt, 40),
+    visitNumber: Number.isFinite(body.visitNumber) ? Math.max(1, Math.min(100_000, Math.round(body.visitNumber))) : null,
+    daysSinceLastVisit: Number.isFinite(body.daysSinceLastVisit) ? Math.max(0, Math.min(10_000, Math.round(body.daysSinceLastVisit))) : null,
     durationSeconds: Number.isFinite(body.durationSeconds) ? Math.max(0, Math.min(86_400, Math.round(body.durationSeconds))) : null,
+    activeSeconds: Number.isFinite(body.activeSeconds) ? Math.max(0, Math.min(86_400, Math.round(body.activeSeconds))) : null,
+    visibleSeconds: Number.isFinite(body.visibleSeconds) ? Math.max(0, Math.min(86_400, Math.round(body.visibleSeconds))) : null,
     scrollDepth: Number.isFinite(body.scrollDepth) ? Math.max(0, Math.min(100, Math.round(body.scrollDepth))) : null,
+    progress: Number.isFinite(body.progress) ? Math.max(0, Math.min(100, Math.round(body.progress))) : null,
+    mediaPosition: Number.isFinite(body.mediaPosition) ? Math.max(0, Math.min(86_400, Math.round(body.mediaPosition))) : null,
+    mediaDuration: Number.isFinite(body.mediaDuration) ? Math.max(0, Math.min(86_400, Math.round(body.mediaDuration))) : null,
+    resultCount: Number.isFinite(body.resultCount) ? Math.max(0, Math.min(1_000_000, Math.round(body.resultCount))) : null,
+    metricValue: Number.isFinite(body.metricValue) ? Math.max(-1_000_000, Math.min(1_000_000, body.metricValue)) : null,
     userAgent: limitedString(request.headers.get("user-agent"), 500),
   };
 
