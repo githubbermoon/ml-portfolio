@@ -9,7 +9,7 @@ export default function FooterLinks({ base }: FooterLinksProps) {
     { name: 'Projects', href: `${base}projects/`, icon: FolderOpen },
     { name: 'LinkedIn', href: 'https://linkedin.com/in/pranjal-prakash', icon: Linkedin },
     { name: 'GitHub', href: 'https://github.com/githubbermoon', icon: Github },
-    { name: 'Email', href: 'mailto:pranjalprakashpandey1@gmail.com', icon: Mail },
+    { name: 'Email', href: 'mailto:pranjalp1@icloud.com', icon: Mail },
   ];
 
   return (

@@ -4,7 +4,7 @@ The website code never sends a broadcast. A free GitHub workflow creates an unse
 
 1. Create the newsletter **Kosh Dispatches** in Buttondown.
 2. Set its description to **New writings and pages from Kosh.**
-3. Set the reply-to address to `pranjalprakashpandey1@gmail.com` and keep double opt-in enabled.
+3. Set the reply-to address to `pranjalp1@icloud.com` and keep double opt-in enabled.
 4. The site defaults to the confirmed username `kosh-dispatches`. `PUBLIC_BUTTONDOWN_USERNAME` remains available as an optional override.
 5. In Buttondown, open **API → Keys** and create a key with **Email: write** and **Sending: none**. This restriction lets GitHub create and edit drafts but prevents it from sending them.
 6. In the GitHub repository, open **Settings → Secrets and variables → Actions → New repository secret**. Name it `BUTTONDOWN_API_KEY` and paste the key.
