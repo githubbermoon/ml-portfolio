@@ -46,20 +46,56 @@ const action = enabled
 
 <script>
   const SUBSCRIBED_KEY = "kosh_dispatches_subscribed";
+  const SNOOZE_UNTIL_KEY = "kosh_dispatches_snooze_until";
+  const SESSION_SHOWN_KEY = "kosh_dispatches_shown_this_session";
+  const DAY = 86_400_000;
   const root = document.querySelector<HTMLElement>("[data-dispatches-root]");
   const dialog = document.querySelector<HTMLDialogElement>("[data-dispatches-dialog]");
+  const readLocal = (key: string) => {
+    try { return localStorage.getItem(key); } catch { return null; }
+  };
+  const writeLocal = (key: string, value: string) => {
+    try { localStorage.setItem(key, value); } catch { /* Storage can be unavailable in private browsing. */ }
+  };
+  const readSession = (key: string) => {
+    try { return sessionStorage.getItem(key); } catch { return null; }
+  };
+  const writeSession = (key: string, value: string) => {
+    try { sessionStorage.setItem(key, value); } catch { /* The footer form remains available. */ }
+  };
+  const snoozeFor = (days: number) => writeLocal(SNOOZE_UNTIL_KEY, String(Date.now() + days * DAY));
+  const isSnoozed = () => Number(readLocal(SNOOZE_UNTIL_KEY) ?? 0) > Date.now();
+  const isSubscriptionPage = location.pathname.includes("/subscribe/");
 
-  if (root?.dataset.enabled === "true" && dialog && localStorage.getItem(SUBSCRIBED_KEY) !== "true") {
+  if (
+    root?.dataset.enabled === "true" &&
+    dialog &&
+    !isSubscriptionPage &&
+    readLocal(SUBSCRIBED_KEY) !== "true" &&
+    readSession(SESSION_SHOWN_KEY) !== "true" &&
+    !isSnoozed()
+  ) {
     const showInvitation = () => {
-      if (!dialog.open && localStorage.getItem(SUBSCRIBED_KEY) !== "true") dialog.showModal();
+      if (!dialog.open && readLocal(SUBSCRIBED_KEY) !== "true" && !isSnoozed()) {
+        writeSession(SESSION_SHOWN_KEY, "true");
+        dialog.showModal();
+      }
     };
-    const timers = [window.setTimeout(showInvitation, 40_000), window.setTimeout(showInvitation, 90_000)];
+    const timer = window.setTimeout(showInvitation, 40_000);
     dialog.querySelector("[data-dispatches-close]")?.addEventListener("click", () => dialog.close());
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) dialog.close();
     });
-    window.addEventListener("pagehide", () => timers.forEach(window.clearTimeout), { once: true });
+    dialog.addEventListener("close", () => snoozeFor(7));
+    window.addEventListener("pagehide", () => window.clearTimeout(timer), { once: true });
   }
+
+  document.querySelectorAll<HTMLFormElement>("[data-dispatches-form]").forEach((form) => {
+    form.addEventListener("submit", () => {
+      writeSession(SESSION_SHOWN_KEY, "true");
+      snoozeFor(30);
+    });
+  });
 </script>
 
 <style>
