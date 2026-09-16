@@ -28,31 +28,44 @@ const action = enabled
 </section>
 
 {enabled && (
-  <dialog class="dispatches-dialog" data-dispatches-dialog aria-labelledby="dispatches-dialog-title" aria-describedby="dispatches-dialog-copy">
-    <button class="dispatches-dialog__close" type="button" data-dispatches-close aria-label="Close subscription invitation">×</button>
-    <p class="dispatches-subscription__eyebrow">Kosh Dispatches</p>
-    <h2 id="dispatches-dialog-title">Receive the next page.</h2>
-    <p id="dispatches-dialog-copy">New writings and pages from Kosh, sent only after publication. Confirm your address by email.</p>
-    <form class="dispatches-form dispatches-form--dialog" action={action} method="post" target="_blank" data-dispatches-form>
-      <label for="dispatches-dialog-email">Email address</label>
-      <div>
-        <input id="dispatches-dialog-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required />
-        <input type="hidden" name="embed" value="1" />
-        <button type="submit">Subscribe <span class="sr-only">(opens Buttondown in a new tab)</span></button>
-      </div>
-    </form>
-    <p class="dispatches-form__status" data-dispatches-status role="status" aria-live="polite" hidden></p>
-    <small>No automatic mailings. Every dispatch is reviewed before it is sent.</small>
-  </dialog>
+  <>
+    <dialog class="dispatches-dialog" data-dispatches-dialog aria-labelledby="dispatches-dialog-title" aria-describedby="dispatches-dialog-copy">
+      <button class="dispatches-dialog__close" type="button" data-dispatches-close aria-label="Close subscription invitation">×</button>
+      <p class="dispatches-subscription__eyebrow">Kosh Dispatches</p>
+      <h2 id="dispatches-dialog-title">Receive the next page.</h2>
+      <p id="dispatches-dialog-copy">New writings and pages from Kosh, sent only after publication. Confirm your address by email.</p>
+      <form class="dispatches-form dispatches-form--dialog" action={action} method="post" target="_blank" data-dispatches-form>
+        <label for="dispatches-dialog-email">Email address</label>
+        <div>
+          <input id="dispatches-dialog-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required />
+          <input type="hidden" name="embed" value="1" />
+          <button type="submit">Subscribe <span class="sr-only">(opens Buttondown in a new tab)</span></button>
+        </div>
+      </form>
+      <p class="dispatches-form__status" data-dispatches-status role="status" aria-live="polite" hidden></p>
+      <small>No automatic mailings. Every dispatch is reviewed before it is sent.</small>
+    </dialog>
+
+    <dialog class="dispatches-dialog dispatches-confirm-dialog" data-dispatches-confirm-dialog aria-labelledby="dispatches-confirm-title" aria-describedby="dispatches-confirm-copy">
+      <button class="dispatches-dialog__close" type="button" data-dispatches-confirm-close aria-label="Close email confirmation reminder">×</button>
+      <p class="dispatches-subscription__eyebrow">One more step</p>
+      <h2 id="dispatches-confirm-title">Confirm your email.</h2>
+      <p id="dispatches-confirm-copy">Check your inbox for a message from Kosh Dispatches, then open it and confirm your address. If you do not see it, check your spam folder.</p>
+      <button class="dispatches-confirm-dialog__done" type="button" data-dispatches-confirm-close>Understood</button>
+    </dialog>
+  </>
 )}
 
 <script>
   const SUBSCRIBED_KEY = "kosh_dispatches_subscribed";
   const SNOOZE_UNTIL_KEY = "kosh_dispatches_snooze_until";
   const SESSION_SHOWN_KEY = "kosh_dispatches_shown_this_session";
+  const CONFIRM_PENDING_KEY = "kosh_dispatches_confirm_pending";
+  const BUTTONDOWN_LEFT_KEY = "kosh_dispatches_buttondown_left";
   const DAY = 86_400_000;
   const root = document.querySelector<HTMLElement>("[data-dispatches-root]");
   const dialog = document.querySelector<HTMLDialogElement>("[data-dispatches-dialog]");
+  const confirmDialog = document.querySelector<HTMLDialogElement>("[data-dispatches-confirm-dialog]");
   const readLocal = (key: string) => {
     try { return localStorage.getItem(key); } catch { return null; }
   };
@@ -88,16 +101,49 @@ const action = enabled
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) dialog.close();
     });
-    dialog.addEventListener("close", () => snoozeFor(7));
+    dialog.addEventListener("close", () => {
+      if (readSession(CONFIRM_PENDING_KEY) !== "true") snoozeFor(7);
+    });
     window.addEventListener("pagehide", () => window.clearTimeout(timer), { once: true });
   }
 
   document.querySelectorAll<HTMLFormElement>("[data-dispatches-form]").forEach((form) => {
     form.addEventListener("submit", () => {
       writeSession(SESSION_SHOWN_KEY, "true");
+      writeSession(CONFIRM_PENDING_KEY, "true");
+      writeSession(BUTTONDOWN_LEFT_KEY, "false");
       snoozeFor(30);
       if (form.closest("[data-dispatches-dialog]") && dialog?.open) dialog.close();
     });
+  });
+
+  const markButtondownOpened = () => {
+    if (readSession(CONFIRM_PENDING_KEY) === "true") writeSession(BUTTONDOWN_LEFT_KEY, "true");
+  };
+  const showConfirmationReminder = () => {
+    if (
+      readSession(CONFIRM_PENDING_KEY) === "true" &&
+      readSession(BUTTONDOWN_LEFT_KEY) === "true" &&
+      confirmDialog &&
+      !confirmDialog.open &&
+      !dialog?.open
+    ) {
+      try { sessionStorage.removeItem(CONFIRM_PENDING_KEY); } catch { /* Show at most once when storage is available. */ }
+      confirmDialog.showModal();
+    }
+  };
+  window.addEventListener("blur", markButtondownOpened);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) markButtondownOpened();
+    else showConfirmationReminder();
+  });
+  window.addEventListener("focus", showConfirmationReminder);
+  window.addEventListener("pageshow", showConfirmationReminder);
+  confirmDialog?.querySelectorAll("[data-dispatches-confirm-close]").forEach((button) => {
+    button.addEventListener("click", () => confirmDialog.close());
+  });
+  confirmDialog?.addEventListener("click", (event) => {
+    if (event.target === confirmDialog) confirmDialog.close();
   });
 </script>
 
@@ -200,6 +246,16 @@ const action = enabled
   .dispatches-form--dialog > div { display: flex; gap: .5rem; }
   .dispatches-form--dialog input { border-color: rgb(75 52 35 / .3); }
   .dispatches-dialog small { display: block; margin-top: 1rem; color: #827366; font: .63rem/1.5 var(--font-mono, monospace); }
+  .dispatches-confirm-dialog__done {
+    border: 1px solid #9f3d29;
+    padding: .8rem 1.15rem;
+    color: #fff8ee;
+    background: #9f3d29;
+    font: .62rem var(--font-mono, monospace);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
   @media (max-width: 680px) {
     .dispatches-subscription__inner { grid-template-columns: 1fr; width: min(100% - 2rem, 1240px); }
     .dispatches-form, .dispatches-form--dialog > div { flex-direction: column; }
