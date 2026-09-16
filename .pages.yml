@@ -3,24 +3,70 @@ media:
   output: /images/uploads
 
 content:
-  - name: homepage
-    label: Homepage
-    type: file
-    path: src/components/RealmsHome.astro
-    format: code
-
   - name: site-pages
     label: Website pages
-    type: collection
-    path: src/realms
-    format: code
-    subfolders: true
-    operations:
-      create: false
-      delete: false
-      rename: false
-    view:
-      layout: tree
+    type: group
+    items:
+      - name: homepage
+        label: Homepage
+        type: file
+        path: src/components/RealmsHome.astro
+        format: code
+        operations: { create: false, delete: false }
+      - name: about-pages
+        label: About
+        type: group
+        items:
+          - name: about-pranjal
+            label: Pranjal
+            type: file
+            path: src/realms/about/pranjal.astro
+            format: code
+            operations: { create: false, delete: false }
+      - name: main-pages
+        label: Main pages
+        type: group
+        items:
+          - { name: technical-work, label: Technical work, type: file, path: src/realms/technical-work.astro, format: code, operations: { create: false, delete: false } }
+          - { name: projects, label: Projects, type: file, path: src/realms/projects/index.astro, format: code, operations: { create: false, delete: false } }
+          - { name: rights, label: Usage and rights, type: file, path: src/realms/rights.astro, format: code, operations: { create: false, delete: false } }
+          - { name: living-manifesto, label: Living manifesto, type: file, path: src/realms/living-manifesto.astro, format: code, operations: { create: false, delete: false } }
+          - { name: ishputra, label: Ishputra, type: file, path: src/realms/ishputra.astro, format: code, operations: { create: false, delete: false } }
+          - { name: dharma-kshetra, label: Dharma Kshetra, type: file, path: src/realms/dharma-kshetra.astro, format: code, operations: { create: false, delete: false } }
+          - { name: canvas, label: Canvas, type: file, path: src/realms/canvas.astro, format: code, operations: { create: false, delete: false } }
+      - name: blog-pages
+        label: Blog and Kosh
+        type: group
+        items:
+          - { name: blog-index, label: Blog index, type: file, path: src/realms/blog/index.astro, format: code, operations: { create: false, delete: false } }
+          - { name: blog-notes, label: Notes, type: file, path: src/realms/blog/notes.astro, format: code, operations: { create: false, delete: false } }
+          - { name: blog-essays, label: Essays index, type: file, path: src/realms/blog/essays.astro, format: code, operations: { create: false, delete: false } }
+          - { name: astrology, label: Astrology, type: file, path: src/realms/blog/astrology.astro, format: code, operations: { create: false, delete: false } }
+          - { name: ananta-n, label: Ananta N, type: file, path: src/realms/blog/ananta-n.astro, format: code, operations: { create: false, delete: false } }
+          - { name: cooking-index, label: Cooking, type: file, path: src/realms/blog/cooking.astro, format: code, operations: { create: false, delete: false } }
+          - { name: pizza, label: Pizza, type: file, path: src/realms/blog/cooking/pizza.astro, format: code, operations: { create: false, delete: false } }
+          - { name: fear, label: Fear reading note, type: file, path: src/realms/blog/reading-notes/fear.astro, format: code, operations: { create: false, delete: false } }
+          - { name: blog-concept, label: Blog concept, type: file, path: src/realms/blog-concept.astro, format: code, operations: { create: false, delete: false } }
+          - { name: design-trial, label: Design trial, type: file, path: src/realms/blog/design-trial.astro, format: code, operations: { create: false, delete: false } }
+      - name: essay-pages
+        label: Essays
+        type: group
+        items:
+          - { name: measure-of-days, label: A Measure of Days, type: file, path: src/realms/essays/a-measure-of-days.astro, format: code, operations: { create: false, delete: false } }
+          - { name: jal-ke-neeche-ghode, label: Jal Ke Neeche Ghode, type: file, path: src/realms/essays/jal-ke-neeche-ghode.astro, format: code, operations: { create: false, delete: false } }
+      - name: experiment-pages
+        label: Experiments
+        type: group
+        items:
+          - { name: measure-of-days-experiment, label: A Measure of Days, type: file, path: src/realms/experiments/a-measure-of-days/index.astro, format: code, operations: { create: false, delete: false } }
+          - { name: measure-of-days-colophon, label: A Measure of Days colophon, type: file, path: src/realms/experiments/a-measure-of-days/colophon/index.astro, format: code, operations: { create: false, delete: false } }
+          - { name: kosh-garden, label: Kosh Garden, type: file, path: src/realms/experiments/kosh-garden/index.astro, format: code, operations: { create: false, delete: false } }
+      - name: system-pages
+        label: Page templates
+        type: group
+        items:
+          - { name: archive-template, label: Archive entry template, type: file, path: "src/realms/archive/[...slug].astro", format: code, operations: { create: false, delete: false } }
+          - { name: ananta-redirect, label: Ananta legacy redirect, type: file, path: src/realms/blog/ananta-nihara.astro, format: code, operations: { create: false, delete: false } }
 
   - name: realms
     label: Archive writing
