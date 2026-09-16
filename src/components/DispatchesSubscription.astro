@@ -20,6 +20,7 @@ const action = enabled
         <input type="hidden" name="embed" value="1" />
         <button type="submit">Subscribe</button>
       </form>
+      <p class="dispatches-form__status" data-dispatches-status role="status" aria-live="polite" hidden></p>
     ) : (
       <p class="dispatches-subscription__unavailable">Subscriptions will open shortly.</p>
     )}
@@ -40,6 +41,7 @@ const action = enabled
         <button type="submit">Subscribe</button>
       </div>
     </form>
+    <p class="dispatches-form__status" data-dispatches-status role="status" aria-live="polite" hidden></p>
     <small>No automatic mailings. Every dispatch is reviewed before it is sent.</small>
   </dialog>
 )}
@@ -91,7 +93,47 @@ const action = enabled
   }
 
   document.querySelectorAll<HTMLFormElement>("[data-dispatches-form]").forEach((form) => {
-    form.addEventListener("submit", () => {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const status = form.nextElementSibling as HTMLElement | null;
+      const originalLabel = button?.textContent ?? "Subscribe";
+      if (button) {
+        button.disabled = true;
+        button.textContent = "Subscribing…";
+      }
+
+      try {
+        const body = new URLSearchParams();
+        new FormData(form).forEach((value, key) => body.append(key, String(value)));
+        const response = await fetch(form.action, {
+          method: "POST",
+          headers: { Accept: "text/html", "Content-Type": "application/x-www-form-urlencoded" },
+          body,
+        });
+        const responseText = await response.text();
+        if (!response.ok || /subscription error|captcha/i.test(responseText)) throw new Error("Buttondown needs additional verification.");
+
+        writeSession(SESSION_SHOWN_KEY, "true");
+        snoozeFor(30);
+        form.hidden = true;
+        if (status) {
+          status.hidden = false;
+          status.innerHTML = '<strong>Check your inbox.</strong> Buttondown will send a confirmation link. You are not subscribed until you open that message and confirm your address. Check the spam folder if it does not arrive shortly.';
+        }
+      } catch {
+        if (status) {
+          status.hidden = false;
+          status.innerHTML = `Buttondown needs to finish this signup securely. <a href="https://buttondown.com/kosh-dispatches">Continue to the confirmation form →</a>`;
+        }
+        if (button) {
+          button.disabled = false;
+          button.textContent = originalLabel;
+        }
+        return;
+      }
+
       writeSession(SESSION_SHOWN_KEY, "true");
       snoozeFor(30);
     });
@@ -169,6 +211,14 @@ const action = enabled
     text-transform: uppercase;
     cursor: pointer;
   }
+  .dispatches-form button:disabled { cursor: wait; opacity: .7; }
+  .dispatches-form__status {
+    margin: 0;
+    color: var(--dispatch-muted, #716256);
+    font: .78rem/1.6 var(--font-mono, monospace);
+  }
+  .dispatches-form__status strong { display: block; margin-bottom: .2rem; color: var(--dispatch-ink, #241a13); font-weight: 600; }
+  .dispatches-form__status a { color: var(--dispatch-accent, #9f3d29); text-underline-offset: .25em; }
   .dispatches-form input:focus-visible, .dispatches-form button:focus-visible, .dispatches-dialog__close:focus-visible { outline: 2px solid var(--dispatch-accent); outline-offset: 3px; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
   .dispatches-dialog {
