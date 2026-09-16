@@ -19,6 +19,7 @@ const {
   publishedDate,
   modifiedDate,
   tags = [],
+  hideDispatchesSubscription = false,
 } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const isRealmsMode = import.meta.env.SITE_MODE === "realms";
@@ -178,7 +179,7 @@ const jsonLd = {
       </a>
     )}
     <slot />
-    {isRealmsMode && <DispatchesSubscription />}
+    {isRealmsMode && !hideDispatchesSubscription && <DispatchesSubscription />}
     {isRealmsMode && <VisitorMeasurement />}
     {!isRealmsMode && <AnalyticsHotkey client:load goatCounterCode={goatCounterCode} />}
     <svg
