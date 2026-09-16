@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Sacred Himalayan Abode | Pranjal" description="A quiet notebook devoted to the sacred Himalayan landscape." bodyClass="himalayan-abode-page">
+  <Nav />
+  <main class="abode-page">
+    <a class="abode-back" href={base + "about/pranjal/"}>← Photos &amp; words</a>
+    <p class="abode-number">01</p>
+    <h1>Sacred<br /><em>Himalayan</em><br />abode</h1>
+    <p class="abode-intro">A quiet room for mountain paths, sacred geography, weather, memory, and the forms of attention that arise at altitude.</p>
+    <div class="abode-rule" aria-hidden="true">✦</div>
+    <p class="abode-note">This notebook remains open.</p>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  :global(body.himalayan-abode-page) { background:#eae8e1; color:#2f302b; }
+  .abode-page { width:min(1100px,calc(100% - 2rem)); min-height:90svh; margin:auto; padding:8rem 0 6rem; font-family:"Louize Trial",Georgia,serif; }
+  .abode-back,.abode-number,.abode-note { font:500 .68rem/1.5 "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; }
+  .abode-back { color:inherit; text-decoration:none; }
+  .abode-number { margin-top:clamp(5rem,12vh,9rem); color:#a1442f; }
+  h1 { margin:1.2rem 0 2rem; font:500 clamp(4rem,11vw,10rem)/.78 "Louize Trial",Georgia,serif; letter-spacing:-.06em; }
+  h1 em { color:#a1442f; font-weight:400; }
+  .abode-intro { width:min(34rem,100%); margin-left:auto; font-size:clamp(1.2rem,2vw,1.65rem); line-height:1.55; }
+  .abode-rule { display:flex; align-items:center; gap:1rem; margin-top:6rem; color:#a1442f; }
+  .abode-rule::before,.abode-rule::after { content:""; height:1px; flex:1; background:rgba(47,48,43,.3); }
+  .abode-note { margin-top:1.5rem; text-align:center; }
+</style>

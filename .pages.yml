@@ -23,6 +23,18 @@ content:
             path: src/realms/about/pranjal.astro
             format: code
             operations: { create: false, delete: false }
+          - name: sacred-himalayan-abode
+            label: Sacred Himalayan abode
+            type: file
+            path: src/realms/about/sacred-himalayan-abode.astro
+            format: code
+            operations: { create: false, delete: false }
+          - name: metaphysical-secrets
+            label: Metaphysical secrets
+            type: file
+            path: src/realms/about/metaphysical-secrets.astro
+            format: code
+            operations: { create: false, delete: false }
       - name: main-pages
         label: Main pages
         type: group
