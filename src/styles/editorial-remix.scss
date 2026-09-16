@@ -37,7 +37,7 @@ body.editorial-remix ::selection { background:$rust; color:$paper; }
 .editorial-marquee--night { background:#080b12; }
 @keyframes editorial-run { to { transform:translateX(-50%); } }
 
-/* Fear — cinematic reading folio */
+/* Fear · cinematic reading folio */
 body.fear-remix { background:$night; }
 .fear-page { background:$paper; color:$ink; }
 .fear-hero { position:relative; min-height:100svh; overflow:hidden; background:#050505; color:$cream; }
@@ -79,7 +79,7 @@ body.fear-remix { background:$night; }
 .fear-colophon p { max-width:34rem; font:500 1.4rem/1.5 "Louize Trial",Georgia,serif; }
 .fear-colophon a { margin-top:2rem; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 
-/* Notes — graphic index */
+/* Notes · graphic index */
 .notes-page { background:$paper; color:$ink; }
 .notes-hero { min-height:92svh; display:grid; grid-template-rows:auto 1fr auto; padding:7rem 1rem 1.5rem; }
 .notes-hero__meta { display:flex; justify-content:space-between; border-block:2px solid $ink; padding:.6rem 0; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.08em; text-transform:uppercase; }
@@ -119,7 +119,7 @@ body.fear-remix { background:$night; }
 .notes-method h2 { margin-top:5rem; font:500 clamp(2.8rem,4vw,4.5rem)/1 "Louize Trial",Georgia,serif; }
 .notes-method article p { max-width:18rem; margin-top:1rem; font-size:.82rem; line-height:1.6; }
 
-/* Astrology — nocturnal atlas */
+/* Astrology · nocturnal atlas */
 body.astrology-remix { background:#080b12; }
 .astrology-page { background:#080b12; color:#e8e4dc; }
 .astrology-page :where(h1,h2,h3,blockquote) { color:#e8e4dc!important; }
@@ -163,7 +163,7 @@ body.astrology-remix { background:#080b12; }
 .astrology-coda h2 { max-width:62rem; margin-top:2rem; font:500 clamp(3.2rem,6vw,7rem)/.92 "Louize Trial",Georgia,serif; letter-spacing:-.04em; }
 .astrology-coda a { margin-top:3rem; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 
-/* Projects — workshop dossiers */
+/* Projects · workshop dossiers */
 .projects-page { background:$paper; color:$ink; }
 .projects-hero { min-height:96svh; display:grid; grid-template-rows:auto 1fr auto; padding:7rem 1rem 1.5rem; }
 .projects-hero__meta { display:flex; justify-content:space-between; border-block:2px solid $ink; padding:.6rem 0; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
@@ -213,7 +213,7 @@ body.astrology-remix { background:#080b12; }
 .projects-coda h2 { max-width:66rem; margin-top:2rem; font:500 clamp(3.5rem,6vw,7rem)/.9 "Louize Trial",Georgia,serif; letter-spacing:-.04em; }
 .projects-coda a { margin-top:3rem; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 
-/* Calendrical Systems — art-directed archive entry */
+/* Calendrical Systems · art-directed archive entry */
 body.calendrical-remix { background:$paper; }
 body.calendrical-remix .calendar-page { width:100%; max-width:none; margin:0; padding:0; background:$paper; color:$ink; }
 body.calendrical-remix .calendar-hero { position:relative; max-width:none; min-height:94svh; margin:0; padding:7rem 1rem 2rem; border-bottom:2px solid $ink; }
@@ -248,7 +248,7 @@ body.calendrical-remix .entry-body .prose h2::before { content:"§"; position:ab
 .calendar-coda p { max-width:44rem; font:500 clamp(1.8rem,3vw,3rem)/1.2 "Louize Trial",Georgia,serif; }
 .calendar-coda a { margin-top:2.5rem; font:500 .57rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 
-/* Texts & Systems — the research room */
+/* Texts & Systems · the research room */
 .texts-page { background:$paper; color:$ink; }
 .texts-hero { position:relative; min-height:100svh; overflow:hidden; padding:7rem 1rem 2rem; }
 .texts-hero__meta { display:flex; justify-content:space-between; border-top:1px solid $ink; padding-top:.65rem; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.1em; text-transform:uppercase; }
@@ -287,7 +287,7 @@ body.calendrical-remix .entry-body .prose h2::before { content:"§"; position:ab
 .texts-method blockquote { margin-top:2rem; font:500 clamp(2.6rem,4.4vw,5rem)/.95 "Louize Trial",Georgia,serif; letter-spacing:-.035em; }
 .texts-method a { display:inline-block; margin-top:3rem; border-bottom:1px solid $ink; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 
-/* Text & Computation — spatial study */
+/* Text & Computation · spatial study */
 body.text-computation-remix .entry-page { width:100%; max-width:none; margin:0; padding:0; background:$paper; }
 body.text-computation-remix .computation-hero { position:relative; max-width:none; min-height:92svh; margin:0; padding:7rem 1rem 2rem; }
 body.text-computation-remix .computation-hero>a,body.text-computation-remix .computation-hero>p { position:absolute; top:7rem; z-index:2; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.09em; text-transform:uppercase; }
@@ -324,7 +324,7 @@ body.text-computation-remix .computation-reading .prose li+li { margin-top:.8rem
 .computation-coda p { max-width:54rem; font:500 clamp(2.5rem,4.8vw,5.5rem)/.95 "Louize Trial",Georgia,serif; letter-spacing:-.035em; }
 .computation-coda a { margin-top:3rem; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; text-transform:uppercase; }
 
-/* Essays — a light-filled reading room */
+/* Essays · a light-filled reading room */
 .essays-room { background:$paper; color:$ink; }
 .essays-hero { position:relative; min-height:110svh; overflow:hidden; padding:7rem 1rem 2rem; }
 .essays-hero__meta { display:flex; justify-content:space-between; border-top:1px solid $ink; padding-top:.65rem; font:500 .56rem "Neue Montreal Trial",Arial,sans-serif; letter-spacing:.1em; text-transform:uppercase; }
@@ -604,4 +604,12 @@ body.calendrical-remix .calendar-hero .entry-meta { position:static; flex-wrap:w
   .projects-method article,
   .projects-method article:first-child { border:0; padding:1rem 0 2rem; }
   .method-arrow { width:100%; transform:rotate(90deg); font-size:3rem; }
+}
+
+@media (max-width:720px) {
+  .texts-study.editorial-reveal {
+    animation:none!important;
+    opacity:1!important;
+    transform:none!important;
+  }
 }

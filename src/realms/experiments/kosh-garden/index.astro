@@ -7,7 +7,7 @@ const url = (path: string) => `${base}${path.replace(/^\//, "")}`;
 const garden = [
   { index: "01", title: "Texts & Systems", note: "Research notes, symbolic systems, computation", href: url("technical-work/") },
   { index: "02", title: "Kosh · कोश", note: "Essays, fragments, references, field notes", href: url("blog/") },
-  { index: "03", title: "Ananta N", note: "Perception, mythic language, inner experience", href: url("blog/ananta-nihara/") },
+  { index: "03", title: "Ananta N", note: "Perception, mythic language, inner experience", href: url("blog/ananta-n/") },
   { index: "04", title: "Origins & Implementations", note: "Functional builds and empirical tools", href: url("projects/") },
 ];
 
@@ -41,7 +41,7 @@ const works = [
     title: "Ananta N",
     kind: "Inner-world archive",
     year: "2026",
-    href: url("blog/ananta-nihara/"),
+    href: url("blog/ananta-n/"),
     image: url("ananta-nihara-hero.png"),
   },
   {
@@ -109,10 +109,10 @@ const notes = [
         </div>
         <div class="garden-hero__lower">
           <div class="garden-hero__directory">
-            <div class="garden-hero__weather"><span>12°58′ N · 77°35′ E — Bengaluru, India</span><i></i><time data-garden-clock>00:00:00 IST</time></div>
+            <div class="garden-hero__weather"><span>12°58′ N · 77°35′ E · Bengaluru, India</span><i></i><time data-garden-clock>00:00:00 IST</time></div>
             <div class="garden-hero__links">
-              <div><p>Garden</p><a href={url("blog/")}>Essays <small>— complete studies and long-form thought</small></a><a href={url("blog/notes/")}>Notes <small>— research, fragments and marginalia</small></a><a href={url("projects/")}>Projects <small>— instruments, models and useful things</small></a></div>
-              <div><p>Meta</p><a href="#about">About <small>— a portrait of the author at present</small></a><a href="#works">Now <small>— current work and open questions</small></a></div>
+              <div><p>Garden</p><a href={url("blog/")}>Essays <small>,  complete studies and long-form thought</small></a><a href={url("blog/notes/")}>Notes <small>,  research, fragments and marginalia</small></a><a href={url("projects/")}>Projects <small>,  instruments, models and useful things</small></a></div>
+              <div><p>Meta</p><a href="#about">About <small>,  a portrait of the author at present</small></a><a href="#works">Now <small>,  current work and open questions</small></a></div>
             </div>
           </div>
           <figure class="garden-hero__visual">

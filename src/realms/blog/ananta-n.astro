@@ -1,0 +1,121 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+
+const isRealmsMode = import.meta.env.SITE_MODE === "realms";
+if (!isRealmsMode) return Astro.redirect("/ml-portfolio/blog/");
+---
+
+<BaseLayout title="Ananta N | Kosh" bodyClass="ananta-page-shell">
+  <div class="ananta-page">
+    <div class="ananta-viewport">
+      <div class="ananta-background" aria-hidden="true"></div>
+      <div id="mist-field" class="mist-field" aria-hidden="true">
+        <i class="mist-layer mist-layer-one"></i>
+        <i class="mist-layer mist-layer-two"></i>
+        <i class="mist-layer mist-layer-three"></i>
+      </div>
+      <div class="ananta-content">
+        <Nav />
+        <main class="ananta-main">
+          <div class="ananta-intro">
+            <div class="ananta-heading">
+              <p class="ananta-devanagari reveal">अनंत न</p>
+              <h1 class="ananta-title reveal">Ananta N</h1>
+            </div>
+            <p class="ananta-quote reveal">“The Endless Mist”</p>
+            <div class="ananta-notes reveal">
+              <div>
+                <p class="ananta-label">Themes</p>
+                <ul>
+                  <li>Embodied intelligence</li>
+                  <li>Machine narratives</li>
+                  <li>Speculative futures</li>
+                </ul>
+              </div>
+              <div>
+                <p class="ananta-label">Interaction</p>
+                <p>Scroll to dissolve the veil. The mist gives way without obscuring the words.</p>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+  <section class="ananta-status" aria-label="Work status"><p>Ongoing</p></section>
+</BaseLayout>
+
+<style>
+  :global(body.ananta-page-shell) { background: #050505; }
+  :global(body.ananta-page-shell .ananta-background) { animation: none; }
+  .ananta-page { position: relative; height: 240svh; color: #e7e5e4; background: #050505; }
+  .ananta-viewport { position: sticky; top: 0; width: 100%; height: 100svh; overflow: hidden; }
+  .ananta-background { position: absolute; inset: 0; background: radial-gradient(circle at 50% 40%, #171514 0, #090909 46%, #020202 100%); }
+  .ananta-content { position: relative; z-index: 20; display: flex; flex-direction: column; height: 100%; }
+  .ananta-main { display: grid; flex: 1; place-items: center; padding: clamp(5rem, 9vw, 8rem) clamp(1.25rem, 5vw, 5rem) 3rem; text-align: center; }
+  .ananta-intro { width: min(100%, 68rem); }
+  .ananta-heading { display: grid; gap: .4rem; }
+  .ananta-devanagari, .ananta-quote { font-family: "Louize Trial", Georgia, serif; }
+  .ananta-devanagari { color: #aaa39e; font-size: clamp(1.35rem, 2.3vw, 2rem); }
+  .ananta-title { margin: 0; color: #eeeae5; font: 500 clamp(4rem, 9vw, 10rem)/.9 "Louize Trial", Georgia, serif; letter-spacing: -.045em; text-shadow: 0 0 1.2rem rgb(231 229 228 / .14), 0 0 4rem rgb(197 91 63 / .07); }
+  .ananta-quote { margin-top: 1.9rem; color: #c55b3f; font-size: clamp(1.35rem, 2.5vw, 2.5rem); font-style: italic; letter-spacing: .025em; }
+  .ananta-notes { display: grid; gap: 2rem; margin-top: clamp(3rem, 7vh, 5.5rem); text-align: left; font-family: "Neue Montreal Trial", Arial, sans-serif; }
+  .ananta-notes > div { padding-left: 1.4rem; border-left: 1px solid rgb(255 255 255 / .18); }
+  .ananta-label { margin: 0 0 .8rem; color: #8e8883; font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; }
+  .ananta-notes ul { display: grid; gap: .45rem; margin: 0; padding: 0; list-style: none; }
+  .ananta-notes li, .ananta-notes div > p:last-child { margin: 0; color: #ddd8d2; font-size: clamp(1rem, 1.4vw, 1.15rem); font-weight: 300; line-height: 1.55; }
+  .mist-field { --mist-progress: 0; position: absolute; inset: -12%; z-index: 10; overflow: hidden; pointer-events: none; opacity: calc(.78 - var(--mist-progress) * .78); transform: translate3d(0, calc(var(--mist-progress) * -4rem), 0) scale(calc(1 + var(--mist-progress) * .05)); will-change: opacity, transform; }
+  .mist-layer { position: absolute; inset: -20%; display: block; opacity: .42; background-repeat: no-repeat; will-change: transform; }
+  .mist-layer-one { background-image: radial-gradient(ellipse at 20% 45%, rgb(238 232 224 / .48) 0, transparent 42%), radial-gradient(ellipse at 75% 60%, rgb(213 205 198 / .35) 0, transparent 40%); animation: mist-drift-one 24s ease-in-out infinite alternate; }
+  .mist-layer-two { opacity: .32; background-image: radial-gradient(ellipse at 75% 25%, rgb(255 249 241 / .42) 0, transparent 37%), radial-gradient(ellipse at 38% 78%, rgb(183 174 166 / .3) 0, transparent 43%); animation: mist-drift-two 31s ease-in-out infinite alternate; }
+  .mist-layer-three { opacity: .24; background-image: linear-gradient(105deg, transparent 15%, rgb(229 221 213 / .25) 46%, transparent 74%); animation: mist-drift-three 27s ease-in-out infinite alternate; }
+  .reveal { opacity: 0; transform: translateY(1.2rem); animation: reveal-through-mist 1.35s cubic-bezier(.22,.7,.22,1) forwards; }
+  .ananta-title { animation-delay: .12s; }
+  .ananta-quote { animation-delay: .28s; }
+  .ananta-notes { animation-delay: .46s; }
+  .ananta-status { position: relative; z-index: 50; display: grid; min-height: 45svh; place-items: center; background: #f4f3f1; color: #a33e27; }
+  .ananta-status p { font: italic 500 clamp(3rem, 6vw, 6rem)/1.1 "Louize Trial", Georgia, serif; }
+  @media (min-width: 720px) { .ananta-notes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; } }
+  @media (max-width: 719px) {
+    .ananta-page { height: 100svh; min-height: 43rem; }
+    .ananta-viewport { position: relative; min-height: 43rem; }
+    .ananta-main { align-items: center; padding-top: 5.5rem; }
+    .ananta-notes { margin-top: 2.7rem; }
+    .mist-field { inset: -5%; opacity: .5; transform: none; will-change: auto; }
+    .mist-layer { inset: -10%; animation: none; will-change: auto; }
+    .mist-layer-three { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mist-layer, .reveal { animation: none; }
+    .reveal { opacity: 1; transform: none; }
+    .mist-field { opacity: .45; transform: none; }
+  }
+  @keyframes reveal-through-mist { from { opacity: 0; transform: translateY(1.2rem); text-shadow: 0 0 2rem currentColor; } to { opacity: 1; transform: translateY(0); } }
+  @keyframes mist-drift-one { from { transform: translate3d(-3%, 1%, 0) scale(1); } to { transform: translate3d(4%, -2%, 0) scale(1.05); } }
+  @keyframes mist-drift-two { from { transform: translate3d(3%, -1%, 0) scale(1.03); } to { transform: translate3d(-4%, 2%, 0) scale(.98); } }
+  @keyframes mist-drift-three { from { transform: translate3d(-2%, 0, 0) rotate(-2deg); } to { transform: translate3d(3%, 1%, 0) rotate(2deg); } }
+  :global(html[data-theme="bright"] body.ananta-page-shell) { background: #fdfcfb; }
+  :global(html[data-theme="bright"]) .ananta-page { color: #2b2119; background: #fdfcfb; }
+  :global(html[data-theme="bright"]) .ananta-background { background: radial-gradient(circle at 50% 40%, #fff 0, #f8f5f1 55%, #eee9e2 100%); }
+  :global(html[data-theme="bright"]) .ananta-title { color: #2b2119; }
+  :global(html[data-theme="bright"]) .ananta-devanagari { color: #6d5e50; }
+  :global(html[data-theme="bright"]) .ananta-notes li,
+  :global(html[data-theme="bright"]) .ananta-notes div > p:last-child { color: #3f342b; }
+  :global(html[data-theme="bright"]) .ananta-notes > div { border-color: rgb(75 52 35 / .24); }
+</style>
+
+<script>
+  const mist = document.getElementById("mist-field");
+  const motionQuery = window.matchMedia("(min-width: 720px) and (prefers-reduced-motion: no-preference)");
+  let frame = 0;
+  const updateMist = () => {
+    frame = 0;
+    if (!mist || !motionQuery.matches) return;
+    const progress = Math.min(window.scrollY / (window.innerHeight * 1.25), 1);
+    mist.style.setProperty("--mist-progress", String(progress));
+  };
+  const requestMistUpdate = () => { if (!frame) frame = requestAnimationFrame(updateMist); };
+  window.addEventListener("scroll", requestMistUpdate, { passive: true });
+  updateMist();
+</script>

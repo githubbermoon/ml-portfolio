@@ -150,11 +150,6 @@ body.realms-manuscript-inner footer {
   background: var(--inner-paper) !important;
 }
 
-body.realms-manuscript-inner .blog-gate,
-body.realms-manuscript-inner + .blog-gate {
-  background: var(--inner-paper);
-}
-
 @media (max-width: 720px) {
   body.realms-manuscript-inner > main.section-shell,
   body.realms-manuscript-inner > .section-shell,
