@@ -47,11 +47,12 @@ async function receiveNote(request, env) {
   if (message.length > MAX_MESSAGE_LENGTH) return json({ error: "Message is too long." }, 413);
 
   const receivedAt = new Date();
+  const receivedAtStr = receivedAt.toLocaleString("sv-SE", { timeZone: "Asia/Kolkata", hour12: false }).replace(" ", "T") + "+05:30";
   const reverseTimestamp = String(9_999_999_999_999 - receivedAt.getTime()).padStart(13, "0");
   const key = `${KEY_PREFIX}${reverseTimestamp}:${crypto.randomUUID()}`;
   const note = {
     schema: 1,
-    receivedAt: receivedAt.toISOString(),
+    receivedAt: receivedAtStr,
     path: limitedString(body.path, 300) || "/about/pranjal/",
     message,
   };
