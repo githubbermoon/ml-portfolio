@@ -3,38 +3,10 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
 ---
 
 <div class="visitor-measurement" data-visitor-measurement data-trial-ends={trialEndsAt}>
-  <section class="visitor-banner" data-consent-banner hidden aria-label="Visitor analytics preferences">
-    <div class="visitor-banner__copy">
-      <p>This site uses optional analytics cookies to understand visits and improve the work. Tracking stays off until you accept.</p>
-      <p id="visitor-analytics-more" class="visitor-banner__more" data-consent-more hidden>With permission, Kosh records a first-party visitor ID, a browser fingerprint, IP-derived approximate location, pages viewed, reading time and progress, navigation, media use, performance, and errors. Language preference and campaign attribution are not recorded.</p>
-    </div>
-    <div class="visitor-banner__actions">
-      <button type="button" data-consent-accept>Accept cookies</button>
-      <button type="button" data-consent-preferences>Change preferences</button>
-      <button type="button" data-consent-read-more aria-expanded="false" aria-controls="visitor-analytics-more">Read more</button>
-    </div>
-  </section>
-  <dialog class="visitor-preferences" data-consent-dialog>
-    <form method="dialog" data-consent-form>
-      <header>
-        <p class="visitor-preferences__eyebrow">Visitor measurement</p>
-        <button type="button" data-consent-close aria-label="Close preferences">×</button>
-      </header>
-      <p>
-        During this one-month test, accepted analytics use first-party identifiers and a browser fingerprint.
-        The server records the request IP, approximate location, visited page, reading engagement, navigation, media activity, performance and errors. Language preference, campaign attribution and consent-choice events are not recorded.
-      </p>
-      <label>
-        <input type="checkbox" data-consent-toggle />
-        <span>Allow visitor analytics</span>
-      </label>
-      <button class="visitor-preferences__save" type="submit">Save changes</button>
-    </form>
-  </dialog>
 </div>
 
 <script>
-  const CONSENT_COOKIE = "kosh_consent";
+
   const VISITOR_COOKIE = "kosh_visitor_id";
   const SESSION_COOKIE = "kosh_session_id";
   const COOKIE_MAX_AGE = 31 * 24 * 60 * 60;
@@ -51,9 +23,7 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
     document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
   }
 
-  function removeCookie(name: string) {
-    document.cookie = `${encodeURIComponent(name)}=; Path=/; Max-Age=0; SameSite=Lax`;
-  }
+
 
   function randomId() {
     return crypto.randomUUID?.() ?? `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
@@ -435,141 +405,11 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
   }
 
   const root = document.querySelector<HTMLElement>("[data-visitor-measurement]");
-  const dialog = root?.querySelector<HTMLDialogElement>("[data-consent-dialog]");
-  const banner = root?.querySelector<HTMLElement>("[data-consent-banner]");
-  const toggle = root?.querySelector<HTMLInputElement>("[data-consent-toggle]");
   const trialEnd = Date.parse(root?.dataset.trialEnds ?? "");
   const trialActive = Number.isFinite(trialEnd) && Date.now() < trialEnd;
-  let measurementStarted = false;
 
-  function showPreferences() {
-    if (!dialog || !toggle) return;
-    toggle.checked = readCookie(CONSENT_COOKIE) === "accepted";
-    dialog.showModal();
-  }
-
-  function startOnce() {
-    if (measurementStarted || !trialActive) return;
-    measurementStarted = true;
+  if (trialActive) {
     beginMeasurement();
-  }
-
-  if (root && trialActive) {
-    const consent = readCookie(CONSENT_COOKIE);
-    if (consent === "accepted") startOnce();
-    if (banner) banner.hidden = consent === "accepted";
-
-    root.querySelector("[data-consent-accept]")?.addEventListener("click", () => {
-      writeCookie(CONSENT_COOKIE, "accepted", COOKIE_MAX_AGE);
-      if (banner) banner.hidden = true;
-      startOnce();
-    });
-    root.querySelector("[data-consent-preferences]")?.addEventListener("click", showPreferences);
-    root.querySelector("[data-consent-read-more]")?.addEventListener("click", (event) => {
-      const button = event.currentTarget as HTMLButtonElement;
-      const more = root.querySelector<HTMLElement>("[data-consent-more]");
-      if (!more) return;
-      const expanded = button.getAttribute("aria-expanded") === "true";
-      button.setAttribute("aria-expanded", String(!expanded));
-      more.hidden = expanded;
-    });
-
-    window.addEventListener("visitor-preferences-open", showPreferences);
-    root.querySelector("[data-consent-close]")?.addEventListener("click", () => dialog?.close());
-    root.querySelector("[data-consent-form]")?.addEventListener("submit", () => {
-      if (banner) banner.hidden = true;
-      if (toggle?.checked) {
-        writeCookie(CONSENT_COOKIE, "accepted", COOKIE_MAX_AGE);
-        startOnce();
-      } else {
-        writeCookie(CONSENT_COOKIE, "declined", COOKIE_MAX_AGE);
-        removeCookie(VISITOR_COOKIE);
-        removeCookie(SESSION_COOKIE);
-      }
-    });
   }
 </script>
 
-<style>
-  .visitor-banner[hidden] { display: none; }
-  .visitor-banner {
-    position: fixed;
-    inset: auto 1rem 1rem;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem 1.2rem;
-    border: 1px solid #51473e;
-    background: #eee8dd;
-    color: #29231e;
-    box-shadow: 0 4px 24px rgba(12, 10, 8, 0.15);
-    font: 0.85rem/1.5 "Neue Montreal", system-ui, sans-serif;
-  }
-  .visitor-banner__copy { max-width: 65rem; }
-  .visitor-banner p { margin: 0; }
-  .visitor-banner__more { margin-top: 0.55rem!important; color: #65594e; font-size: 0.76rem; line-height: 1.55; }
-  .visitor-banner__actions { display: flex; flex-wrap: wrap; gap: 0.5rem; flex-shrink: 0; }
-  .visitor-banner button {
-    border: 1px solid currentColor;
-    border-radius: 999px;
-    padding: 0.5rem 0.8rem;
-    color: inherit;
-    background: transparent;
-    cursor: pointer;
-    font: inherit;
-  }
-  .visitor-banner [data-consent-accept] { background: #29231e; color: #eee8dd; }
-  @media (max-width: 700px) {
-    .visitor-banner { flex-direction: column; align-items: flex-start; inset-inline: 0.6rem; bottom: 0.6rem; }
-  }
-  .visitor-preferences button,
-  .visitor-preferences__save {
-    border: 1px solid currentColor;
-    border-radius: 999px;
-    padding: 0.42rem 0.72rem;
-    color: inherit;
-    background: transparent;
-    cursor: pointer;
-  }
-  .visitor-preferences {
-    width: min(28rem, calc(100vw - 2rem));
-    padding: 0;
-    color: #29231e;
-    background: #eee8dd;
-    border: 1px solid #51473e;
-    font: 0.9rem/1.55 "Neue Montreal", system-ui, sans-serif;
-  }
-  .visitor-preferences::backdrop {
-    background: rgba(12, 10, 8, 0.58);
-    backdrop-filter: blur(5px);
-  }
-  .visitor-preferences form { padding: 1.2rem; }
-  .visitor-preferences header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-  .visitor-preferences__eyebrow {
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    font-size: 0.7rem;
-  }
-  .visitor-preferences header button {
-    border: 0;
-    padding: 0.1rem 0.35rem;
-    font-size: 1.35rem;
-  }
-  .visitor-preferences label {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin: 1.15rem 0;
-    padding: 0.8rem 0;
-    border-block: 1px solid rgba(41, 35, 30, 0.25);
-  }
-  .visitor-preferences__save { color: #eee8dd !important; background: #29231e !important; }
-</style>
