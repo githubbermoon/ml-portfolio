@@ -87,7 +87,7 @@ async function recordEvent(request, env) {
   if (contentLength > MAX_BODY_BYTES) return json({ error: "Payload too large." }, 413);
 
   const cookies = parseCookies(request.headers.get("cookie"));
-  if (cookies.kosh_consent !== "accepted") return json({ error: "Analytics consent is not active." }, 403);
+
   if (!cookies.kosh_visitor_id || !cookies.kosh_session_id) return json({ error: "Analytics identifiers are missing." }, 400);
 
   const body = await request.json().catch(() => null);
