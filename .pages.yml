@@ -78,7 +78,6 @@ content:
         type: group
         items:
           - { name: archive-template, label: Archive entry template, type: file, path: "src/realms/archive/[...slug].astro", format: code, operations: { create: false, delete: false } }
-          - { name: ananta-redirect, label: Ananta legacy redirect, type: file, path: src/realms/blog/ananta-nihara.astro, format: code, operations: { create: false, delete: false } }
 
   - name: realms
     label: Archive writing

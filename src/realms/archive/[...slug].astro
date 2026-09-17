@@ -36,7 +36,7 @@ const cover = isCalendrical
 const bodyClass = `archive-entry-page${isCalendrical ? " editorial-remix calendrical-remix" : ""}${isTextComputation ? " editorial-remix text-computation-remix" : ""}`;
 ---
 
-<BaseLayout title={`${entry.data.title} | Kosh`} description={entry.data.summary} image={cover ?? "/ananta-nihara-hero.png"} type="article" publishedDate={entry.data.date.toISOString()} bodyClass={bodyClass}>
+<BaseLayout title={`${entry.data.title} | Kosh`} description={entry.data.summary} image={cover ?? "/ananta-n-hero.png"} type="article" publishedDate={entry.data.date.toISOString()} bodyClass={bodyClass}>
   <Nav />
   <main class:list={["entry-page", isCalendrical && "calendar-page"]}>
     <header class:list={["entry-header", isCalendrical && "calendar-hero", isTextComputation && "computation-hero"]}>
