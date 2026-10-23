@@ -1,8 +1,4 @@
----
-const trialEndsAt = "2026-10-15T18:29:59.000Z";
----
-
-<div class="visitor-measurement" data-visitor-measurement data-trial-ends={trialEndsAt}>
+<div class="visitor-measurement" data-visitor-measurement>
 </div>
 
 <script>
@@ -499,12 +495,6 @@ const trialEndsAt = "2026-10-15T18:29:59.000Z";
     addEventListener("pagehide", finish, { once: true });
   }
 
-  const root = document.querySelector<HTMLElement>("[data-visitor-measurement]");
-  const trialEnd = Date.parse(root?.dataset.trialEnds ?? "");
-  const trialActive = Number.isFinite(trialEnd) && Date.now() < trialEnd;
-
-  if (trialActive) {
-    beginMeasurement();
-  }
+  beginMeasurement();
 </script>
 

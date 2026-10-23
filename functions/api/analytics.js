@@ -1,4 +1,3 @@
-const DEFAULT_TRIAL_END = "2026-10-15T18:29:59.000Z";
 const DEFAULT_RETENTION_DAYS = 31;
 const MAX_BODY_BYTES = 12_000;
 const ALLOWED_EVENTS = new Set([
@@ -70,14 +69,8 @@ function requestLocation(request) {
   };
 }
 
-function trialIsActive(env) {
-  const end = Date.parse(env.ANALYTICS_TEST_END || DEFAULT_TRIAL_END);
-  return Number.isFinite(end) && Date.now() < end;
-}
-
 async function recordEvent(request, env) {
   if (!env.REALMS_KV) return json({ error: "Analytics storage is unavailable." }, 503);
-  if (!trialIsActive(env)) return json({ accepted: false, reason: "trial-ended" }, 410);
 
   const requestUrl = new URL(request.url);
   const origin = request.headers.get("origin");
@@ -193,7 +186,7 @@ async function exportEvents(request, env) {
     events,
     count: events.length,
     cursor: listing.list_complete ? null : listing.cursor,
-    trialEndsAt: env.ANALYTICS_TEST_END || DEFAULT_TRIAL_END,
+    retentionDays: Math.min(90, Math.max(1, Number.parseInt(env.ANALYTICS_RETENTION_DAYS || "", 10) || DEFAULT_RETENTION_DAYS)),
   });
 }
 
