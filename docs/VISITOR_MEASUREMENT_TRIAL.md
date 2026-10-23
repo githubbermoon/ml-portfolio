@@ -1,6 +1,6 @@
-# Visitor measurement trial
+# Visitor measurement
 
-The Realms build contains a consent-gated visitor measurement trial ending at **2026-10-15 23:59:59 IST**.
+The Realms build contains visitor measurement with no fixed end date.
 
 ## What is recorded after acceptance
 
@@ -10,7 +10,7 @@ The Realms build contains a consent-gated visitor measurement trial ending at **
 - A SHA-256 browser fingerprint derived from browser, screen, hardware, timezone, canvas and WebGL properties
 - Page, title, referrer, device summary, reading duration, maximum scroll depth and outbound-link hostname
 
-Events expire from Cloudflare KV after 31 days. Tracking does not begin before the `kosh_consent=accepted` cookie exists. There is no opening-page prompt or persistent corner control; **Visitor measurement** lives inside the top-right navigation menu. Turning analytics off there removes the visitor and session cookies.
+Events expire from Cloudflare KV after 150 days. Browser preference and identifier cookies retain their shorter lifetimes described below.
 
 ## Cookies
 
@@ -26,11 +26,11 @@ Before deployment, configure a strong Cloudflare Pages secret named `ANALYTICS_A
 
 The public client never receives the raw IP address or Cloudflare location fields.
 
-## Ending or reverting the trial
+## Removing measurement
 
-The backend automatically rejects new events after the configured `ANALYTICS_TEST_END`. To remove the feature completely:
+To remove the feature completely:
 
 1. Remove `<VisitorMeasurement />` and its import from `src/layouts/BaseLayout.astro`.
 2. Delete `src/components/VisitorMeasurement.astro`.
 3. Delete `functions/api/analytics.js`.
-4. Remove `ANALYTICS_TEST_END` and `ANALYTICS_RETENTION_DAYS` from `wrangler.toml`.
+4. Remove `ANALYTICS_RETENTION_DAYS` from `wrangler.toml`.

@@ -55,14 +55,14 @@ The experimental full Henry-style architecture lives in `sidecars/a-measure-of-d
 - Full sidecar comparison: `/experiments/a-measure-of-days/`
 - Kosh Garden experiment: `/experiments/kosh-garden/`
 
-## Visitor-measurement trial
+## Visitor measurement
 
 The user requested a one-month experiment to compare visits from their own devices using raw IP storage, Cloudflare IP geolocation, first-party analytics cookies, and browser fingerprinting.
 
 ### Current behaviour
 
-- Trial ends automatically at `2026-10-15T18:29:59.000Z` (15 October 2026, 23:59:59 IST).
-- KV events expire after 31 days.
+- Measurement has no fixed end date.
+- KV events expire automatically after 150 days.
 - There is no opening consent banner.
 - There is no persistent bottom-corner preferences control.
 - New devices are not measured automatically.
@@ -88,7 +88,7 @@ This design deliberately keeps ordinary visits quiet while allowing explicit tes
 - `src/islands/MobileNav.tsx` — menu entry that opens visitor preferences
 - `src/islands/realms-menu.css` — menu-entry styling
 - `functions/api/analytics.js` — Cloudflare Pages Function for writes and protected exports
-- `wrangler.toml` — trial end, retention, and `REALMS_KV` binding
+- `wrangler.toml` — retention and `REALMS_KV` binding
 - `docs/VISITOR_MEASUREMENT_TRIAL.md` — operational and reversal notes
 
 The component is mounted only in the Realms build through `src/layouts/BaseLayout.astro`. The browser never receives its raw IP or Cloudflare location record.

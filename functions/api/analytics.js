@@ -1,4 +1,4 @@
-const DEFAULT_RETENTION_DAYS = 31;
+const DEFAULT_RETENTION_DAYS = 150;
 const MAX_BODY_BYTES = 12_000;
 const ALLOWED_EVENTS = new Set([
   "page_view",
@@ -88,7 +88,7 @@ async function recordEvent(request, env) {
 
   const now = new Date();
   const recordedAt = now.toLocaleString("sv-SE", { timeZone: "Asia/Kolkata", hour12: false }).replace(" ", "T") + "+05:30";
-  const retentionDays = Math.min(90, Math.max(1, Number.parseInt(env.ANALYTICS_RETENTION_DAYS || "", 10) || DEFAULT_RETENTION_DAYS));
+  const retentionDays = Math.min(365, Math.max(1, Number.parseInt(env.ANALYTICS_RETENTION_DAYS || "", 10) || DEFAULT_RETENTION_DAYS));
   const reverseTimestamp = String(9_999_999_999_999 - now.getTime()).padStart(13, "0");
   const key = `analytics:event:${reverseTimestamp}:${crypto.randomUUID()}`;
   const record = {
@@ -186,7 +186,7 @@ async function exportEvents(request, env) {
     events,
     count: events.length,
     cursor: listing.list_complete ? null : listing.cursor,
-    retentionDays: Math.min(90, Math.max(1, Number.parseInt(env.ANALYTICS_RETENTION_DAYS || "", 10) || DEFAULT_RETENTION_DAYS)),
+    retentionDays: Math.min(365, Math.max(1, Number.parseInt(env.ANALYTICS_RETENTION_DAYS || "", 10) || DEFAULT_RETENTION_DAYS)),
   });
 }
 

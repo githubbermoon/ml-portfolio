@@ -91,11 +91,10 @@ The combined value is hashed with SHA-256 when `crypto.subtle` is available; oth
 - Namespace ID: `41c4a281c6c54337a1726398260b50b2`
 - Event key prefix: `analytics:event:`
 - Reverse timestamps in keys produce newest-first lexical ordering.
-- Events expire after 31 days under the current configuration.
-- Trial end: `2026-10-15T18:29:59.000Z` = **15 October 2026, 23:59:59 IST**.
-- Backend rejects new events after the trial end. Existing events remain until their TTL expires.
+- Events expire automatically after 150 days under the current configuration.
+- Measurement has no fixed end date.
 
-`POST /api/analytics` checks storage, trial end, the Origin header when present, payload/event validity, accepted consent, and visitor/session cookies. The cookies are a collection gate, not authentication or cryptographic proof of consent. No abuse rate limiter has been implemented for this endpoint.
+`POST /api/analytics` checks storage, the Origin header when present, payload/event validity, and visitor/session cookies. The cookies are identifiers, not authentication or cryptographic proof of consent. No abuse rate limiter has been implemented for this endpoint.
 
 ## Secret: configured and verified
 
@@ -108,8 +107,7 @@ Current non-secret `[vars]` settings in `wrangler.toml`:
 ```toml
 DAILY_AI_LIMIT = "100"
 MAX_PROMPT_CHARS = "600"
-ANALYTICS_TEST_END = "2026-10-15T18:29:59.000Z"
-ANALYTICS_RETENTION_DAYS = "31"
+ANALYTICS_RETENTION_DAYS = "150"
 ```
 
 Never put the admin token under `[vars]`. Dashboard path: **Workers & Pages → realms → Settings → Variables and Secrets → Production → Add → Secret/Encrypt → Save**. Redeploy afterward.
@@ -158,7 +156,6 @@ Do not put the token in a URL, browser bundle, screenshot, handoff document, or 
 - GET without configured admin secret: `503 Analytics admin token is not configured`.
 - Missing KV binding: `503 Analytics storage is unavailable`.
 - POST without accepted consent: `403`.
-- POST after trial end: `410`.
 - Accepted valid POST: `202`.
 
 ## Changes and verified deployment after the earlier handoff

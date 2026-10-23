@@ -5,7 +5,7 @@ pages_build_output_dir = "dist"
 [vars]
 DAILY_AI_LIMIT = "100"
 MAX_PROMPT_CHARS = "600"
-ANALYTICS_RETENTION_DAYS = "31"
+ANALYTICS_RETENTION_DAYS = "150"
 
 [[kv_namespaces]]
 binding = "REALMS_KV"
